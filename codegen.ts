@@ -9,7 +9,7 @@ const config: CodegenConfig = {
       plugins: [
         'typescript',
         'typescript-operations',
-        'typescript-react-apollo'
+        'typescript-react-apollo',
       ],
       config: {
         dedupeOperationSuffix: true,

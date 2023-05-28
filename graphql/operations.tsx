@@ -1,20 +1,28 @@
-import { gql } from '@apollo/client';
+import {gql} from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type Exact<T extends {[key: string]: unknown}> = {[K in keyof T]: T[K]};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
+export type MakeEmpty<T extends {[key: string]: unknown}, K extends keyof T> = {
+  [_ in K]?: never;
+};
+export type Incremental<T> =
+  | T
+  | {[P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never};
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string | number; output: string; }
-  String: { input: string; output: string; }
-  Boolean: { input: boolean; output: boolean; }
-  Int: { input: number; output: number; }
-  Float: { input: number; output: number; }
+  ID: {input: string | number; output: string};
+  String: {input: string; output: string};
+  Boolean: {input: boolean; output: boolean};
+  Int: {input: number; output: number};
+  Float: {input: number; output: number};
 };
 
 export type Address = {
@@ -73,7 +81,7 @@ export enum CarType {
   Sedan = 'SEDAN',
   Suv = 'SUV',
   Truck = 'TRUCK',
-  Van = 'VAN'
+  Van = 'VAN',
 }
 
 export type Category = {
@@ -100,7 +108,7 @@ export type CoordinatesInput = {
 export enum Currency {
   Eur = 'EUR',
   Gel = 'GEL',
-  Usd = 'USD'
+  Usd = 'USD',
 }
 
 export enum DayOfWeek {
@@ -110,7 +118,7 @@ export enum DayOfWeek {
   Sunday = 'SUNDAY',
   Thursday = 'THURSDAY',
   Tuesday = 'TUESDAY',
-  Wednesday = 'WEDNESDAY'
+  Wednesday = 'WEDNESDAY',
 }
 
 export type LingualString = {
@@ -158,100 +166,81 @@ export type Mutation = {
   updateUser: User;
 };
 
-
 export type MutationAddCarArgs = {
   carInput: CarInput;
 };
-
 
 export type MutationAuthorizeArgs = {
   input: AuthenticationInput;
 };
 
-
 export type MutationCreateCategoryArgs = {
   input: CategoryInput;
 };
-
 
 export type MutationCreateOrderArgs = {
   order: OrderInput;
 };
 
-
 export type MutationCreateProductArgs = {
   input: ProductInput;
 };
-
 
 export type MutationCreateProductDetailsArgs = {
   input: ProductDetailsInput;
 };
 
-
 export type MutationCreateProviderArgs = {
   input: ProviderInput;
 };
-
 
 export type MutationRemoveCarArgs = {
   carId: Scalars['ID']['input'];
 };
 
-
 export type MutationRemoveCategoryArgs = {
   categoryId: Scalars['ID']['input'];
 };
-
 
 export type MutationRemoveProductArgs = {
   productId: Scalars['ID']['input'];
 };
 
-
 export type MutationRemoveProductDetailsArgs = {
   productDetailsId: Scalars['ID']['input'];
 };
-
 
 export type MutationRemoveProviderArgs = {
   providerId: Scalars['ID']['input'];
 };
 
-
 export type MutationSendOtpArgs = {
   phone: Scalars['String']['input'];
 };
-
 
 export type MutationUpdateCarArgs = {
   carId: Scalars['ID']['input'];
   carInput: CarInput;
 };
 
-
 export type MutationUpdateCategoryArgs = {
   categoryId: Scalars['ID']['input'];
   input: CategoryInput;
 };
-
 
 export type MutationUpdateProductArgs = {
   input: ProductInput;
   productId: Scalars['ID']['input'];
 };
 
-
 export type MutationUpdateProductDetailsArgs = {
   input: ProductDetailsInput;
   productDetailsId: Scalars['ID']['input'];
 };
 
-
 export type MutationUpdateProviderArgs = {
   input: ProviderInput;
 };
-
 
 export type MutationUpdateUserArgs = {
   input: UpdateUserInput;
@@ -280,7 +269,7 @@ export enum OrderStatus {
   Processing = 'PROCESSING',
   Reimbursed = 'REIMBURSED',
   Rejected = 'REJECTED',
-  Shipped = 'SHIPPED'
+  Shipped = 'SHIPPED',
 }
 
 export type OrderedProduct = {
@@ -406,61 +395,49 @@ export type Query = {
   searchProducts: Array<Product>;
 };
 
-
 export type QueryCheckPhoneArgs = {
   phone: Scalars['String']['input'];
 };
-
 
 export type QueryEchoArgs = {
   message: InputMaybe<Scalars['String']['input']>;
 };
 
-
 export type QueryEchoAuthorizedArgs = {
   message: InputMaybe<Scalars['String']['input']>;
 };
-
 
 export type QueryEchoMonoArgs = {
   message: InputMaybe<Scalars['String']['input']>;
 };
 
-
 export type QueryGetOrderArgs = {
   id: Scalars['ID']['input'];
 };
-
 
 export type QueryGetProductArgs = {
   productId: InputMaybe<Scalars['ID']['input']>;
 };
 
-
 export type QueryGetUserByIdArgs = {
   userId: Scalars['ID']['input'];
 };
-
 
 export type QueryListOrdersByUserIdArgs = {
   userId: Scalars['ID']['input'];
 };
 
-
 export type QueryListProductByCategoryIdArgs = {
   categoryId: Scalars['ID']['input'];
 };
-
 
 export type QueryListProductByProviderIdArgs = {
   providerId: Scalars['ID']['input'];
 };
 
-
 export type QueryListProductDetailsByProductIdArgs = {
   productId: Scalars['ID']['input'];
 };
-
 
 export type QuerySearchProductsArgs = {
   filter: ProductFilterInput;
@@ -492,7 +469,7 @@ export type User = {
 export enum UserRole {
   Admin = 'ADMIN',
   Manager = 'MANAGER',
-  User = 'USER'
+  User = 'USER',
 }
 
 export type WorkingHours = {
@@ -512,270 +489,701 @@ export type AddCarVariables = Exact<{
   carInput: CarInput;
 }>;
 
-
-export type AddCar = { __typename?: 'Mutation', addCar: { __typename?: 'Car', id: string, plateNumber: string, carType: CarType | null, techPassportNumber: string | null, vin: string | null, make: string | null, model: string | null, year: number | null, createdAt: string | null, updatedAt: string | null } };
+export type AddCar = {
+  __typename?: 'Mutation';
+  addCar: {
+    __typename?: 'Car';
+    id: string;
+    plateNumber: string;
+    carType: CarType | null;
+    techPassportNumber: string | null;
+    vin: string | null;
+    make: string | null;
+    model: string | null;
+    year: number | null;
+    createdAt: string | null;
+    updatedAt: string | null;
+  };
+};
 
 export type AuthorizeVariables = Exact<{
   input: AuthenticationInput;
 }>;
 
-
-export type Authorize = { __typename?: 'Mutation', authorize: { __typename?: 'AuthenticationOutput', accessToken: string, refreshToken: string | null } };
+export type Authorize = {
+  __typename?: 'Mutation';
+  authorize: {
+    __typename?: 'AuthenticationOutput';
+    accessToken: string;
+    refreshToken: string | null;
+  };
+};
 
 export type CreateCategoryVariables = Exact<{
   input: CategoryInput;
 }>;
 
-
-export type CreateCategory = { __typename?: 'Mutation', createCategory: { __typename?: 'Category', id: string, name: { __typename?: 'LingualString', ka: string, en: string } } };
+export type CreateCategory = {
+  __typename?: 'Mutation';
+  createCategory: {
+    __typename?: 'Category';
+    id: string;
+    name: {__typename?: 'LingualString'; ka: string; en: string};
+  };
+};
 
 export type CreateOrderVariables = Exact<{
   order: OrderInput;
 }>;
 
-
-export type CreateOrder = { __typename?: 'Mutation', createOrder: { __typename?: 'Order', id: string, userId: string, categoryId: string, providerId: string | null, orderStatus: OrderStatus | null, products: Array<{ __typename?: 'OrderedProduct', productId: string, quantity: number | null, schedulingDate: string | null, schedulingTime: string | null } | null> | null } };
+export type CreateOrder = {
+  __typename?: 'Mutation';
+  createOrder: {
+    __typename?: 'Order';
+    id: string;
+    userId: string;
+    categoryId: string;
+    providerId: string | null;
+    orderStatus: OrderStatus | null;
+    products: Array<{
+      __typename?: 'OrderedProduct';
+      productId: string;
+      quantity: number | null;
+      schedulingDate: string | null;
+      schedulingTime: string | null;
+    } | null> | null;
+  };
+};
 
 export type CreateProductVariables = Exact<{
   input: ProductInput;
 }>;
 
-
-export type CreateProduct = { __typename?: 'Mutation', createProduct: { __typename?: 'Product', id: string, providerId: string, categoryId: string, mainImage: string, images: Array<string> | null, tags: Array<string> | null, name: { __typename?: 'LingualString', ka: string, en: string }, description: { __typename?: 'LingualString', ka: string, en: string } | null, location: { __typename?: 'Location', address: { __typename?: 'Address', street: string, district: string, city: string }, coordinates: { __typename?: 'Coordinates', lat: number, lng: number } } | null } };
+export type CreateProduct = {
+  __typename?: 'Mutation';
+  createProduct: {
+    __typename?: 'Product';
+    id: string;
+    providerId: string;
+    categoryId: string;
+    mainImage: string;
+    images: Array<string> | null;
+    tags: Array<string> | null;
+    name: {__typename?: 'LingualString'; ka: string; en: string};
+    description: {__typename?: 'LingualString'; ka: string; en: string} | null;
+    location: {
+      __typename?: 'Location';
+      address: {
+        __typename?: 'Address';
+        street: string;
+        district: string;
+        city: string;
+      };
+      coordinates: {__typename?: 'Coordinates'; lat: number; lng: number};
+    } | null;
+  };
+};
 
 export type CreateProductDetailsVariables = Exact<{
   input: ProductDetailsInput;
 }>;
 
-
-export type CreateProductDetails = { __typename?: 'Mutation', createProductDetails: { __typename?: 'ProductDetails', id: string, productId: string, generalPrice: number, currency: Currency | null, averageDurationMinutes: number | null, name: { __typename?: 'LingualString', ka: string, en: string }, description: { __typename?: 'LingualString', ka: string, en: string } | null, pricesForCarTypes: Array<{ __typename?: 'ProductDetailsCarPrice', order: string | null, carType: CarType, price: number | null }> | null, availableServices: Array<{ __typename?: 'LingualString', ka: string, en: string }> | null, notAvailableServices: Array<{ __typename?: 'LingualString', ka: string, en: string } | null> | null } };
+export type CreateProductDetails = {
+  __typename?: 'Mutation';
+  createProductDetails: {
+    __typename?: 'ProductDetails';
+    id: string;
+    productId: string;
+    generalPrice: number;
+    currency: Currency | null;
+    averageDurationMinutes: number | null;
+    name: {__typename?: 'LingualString'; ka: string; en: string};
+    description: {__typename?: 'LingualString'; ka: string; en: string} | null;
+    pricesForCarTypes: Array<{
+      __typename?: 'ProductDetailsCarPrice';
+      order: string | null;
+      carType: CarType;
+      price: number | null;
+    }> | null;
+    availableServices: Array<{
+      __typename?: 'LingualString';
+      ka: string;
+      en: string;
+    }> | null;
+    notAvailableServices: Array<{
+      __typename?: 'LingualString';
+      ka: string;
+      en: string;
+    } | null> | null;
+  };
+};
 
 export type CreateProviderVariables = Exact<{
   input: ProviderInput;
 }>;
 
-
-export type CreateProvider = { __typename?: 'Mutation', createProvider: { __typename?: 'Provider', id: string, name: string, phone: string | null, email: string | null, logo: string | null, website: string | null } };
+export type CreateProvider = {
+  __typename?: 'Mutation';
+  createProvider: {
+    __typename?: 'Provider';
+    id: string;
+    name: string;
+    phone: string | null;
+    email: string | null;
+    logo: string | null;
+    website: string | null;
+  };
+};
 
 export type RemoveCarVariables = Exact<{
   carId: Scalars['ID']['input'];
 }>;
 
-
-export type RemoveCar = { __typename?: 'Mutation', removeCar: boolean };
+export type RemoveCar = {__typename?: 'Mutation'; removeCar: boolean};
 
 export type RemoveCategoryVariables = Exact<{
   categoryId: Scalars['ID']['input'];
 }>;
 
-
-export type RemoveCategory = { __typename?: 'Mutation', removeCategory: boolean };
+export type RemoveCategory = {__typename?: 'Mutation'; removeCategory: boolean};
 
 export type RemoveProductVariables = Exact<{
   productId: Scalars['ID']['input'];
 }>;
 
-
-export type RemoveProduct = { __typename?: 'Mutation', removeProduct: boolean };
+export type RemoveProduct = {__typename?: 'Mutation'; removeProduct: boolean};
 
 export type RemoveProductDetailsVariables = Exact<{
   productDetailsId: Scalars['ID']['input'];
 }>;
 
-
-export type RemoveProductDetails = { __typename?: 'Mutation', removeProductDetails: boolean };
+export type RemoveProductDetails = {
+  __typename?: 'Mutation';
+  removeProductDetails: boolean;
+};
 
 export type RemoveProviderVariables = Exact<{
   providerId: Scalars['ID']['input'];
 }>;
 
-
-export type RemoveProvider = { __typename?: 'Mutation', removeProvider: boolean };
+export type RemoveProvider = {__typename?: 'Mutation'; removeProvider: boolean};
 
 export type SendOtpVariables = Exact<{
   phone: Scalars['String']['input'];
 }>;
 
-
-export type SendOtp = { __typename?: 'Mutation', sendOtp: { __typename?: 'SendOptOutput', sent: boolean, expiresAt: string | null, isRegistered: boolean | null } };
+export type SendOtp = {
+  __typename?: 'Mutation';
+  sendOtp: {
+    __typename?: 'SendOptOutput';
+    sent: boolean;
+    expiresAt: string | null;
+    isRegistered: boolean | null;
+  };
+};
 
 export type UpdateCarVariables = Exact<{
   carId: Scalars['ID']['input'];
   carInput: CarInput;
 }>;
 
-
-export type UpdateCar = { __typename?: 'Mutation', updateCar: { __typename?: 'Car', id: string, plateNumber: string, carType: CarType | null, techPassportNumber: string | null, vin: string | null, make: string | null, model: string | null, year: number | null, createdAt: string | null, updatedAt: string | null } };
+export type UpdateCar = {
+  __typename?: 'Mutation';
+  updateCar: {
+    __typename?: 'Car';
+    id: string;
+    plateNumber: string;
+    carType: CarType | null;
+    techPassportNumber: string | null;
+    vin: string | null;
+    make: string | null;
+    model: string | null;
+    year: number | null;
+    createdAt: string | null;
+    updatedAt: string | null;
+  };
+};
 
 export type UpdateCategoryVariables = Exact<{
   categoryId: Scalars['ID']['input'];
   input: CategoryInput;
 }>;
 
-
-export type UpdateCategory = { __typename?: 'Mutation', updateCategory: { __typename?: 'Category', id: string, name: { __typename?: 'LingualString', ka: string, en: string } } };
+export type UpdateCategory = {
+  __typename?: 'Mutation';
+  updateCategory: {
+    __typename?: 'Category';
+    id: string;
+    name: {__typename?: 'LingualString'; ka: string; en: string};
+  };
+};
 
 export type UpdateProductVariables = Exact<{
   productId: Scalars['ID']['input'];
   input: ProductInput;
 }>;
 
-
-export type UpdateProduct = { __typename?: 'Mutation', updateProduct: { __typename?: 'Product', id: string, providerId: string, categoryId: string, mainImage: string, images: Array<string> | null, tags: Array<string> | null, name: { __typename?: 'LingualString', ka: string, en: string }, description: { __typename?: 'LingualString', ka: string, en: string } | null, location: { __typename?: 'Location', address: { __typename?: 'Address', street: string, district: string, city: string }, coordinates: { __typename?: 'Coordinates', lat: number, lng: number } } | null } };
+export type UpdateProduct = {
+  __typename?: 'Mutation';
+  updateProduct: {
+    __typename?: 'Product';
+    id: string;
+    providerId: string;
+    categoryId: string;
+    mainImage: string;
+    images: Array<string> | null;
+    tags: Array<string> | null;
+    name: {__typename?: 'LingualString'; ka: string; en: string};
+    description: {__typename?: 'LingualString'; ka: string; en: string} | null;
+    location: {
+      __typename?: 'Location';
+      address: {
+        __typename?: 'Address';
+        street: string;
+        district: string;
+        city: string;
+      };
+      coordinates: {__typename?: 'Coordinates'; lat: number; lng: number};
+    } | null;
+  };
+};
 
 export type UpdateProductDetailsVariables = Exact<{
   productDetailsId: Scalars['ID']['input'];
   input: ProductDetailsInput;
 }>;
 
-
-export type UpdateProductDetails = { __typename?: 'Mutation', updateProductDetails: { __typename?: 'ProductDetails', id: string, productId: string, generalPrice: number, currency: Currency | null, averageDurationMinutes: number | null, name: { __typename?: 'LingualString', ka: string, en: string }, description: { __typename?: 'LingualString', ka: string, en: string } | null, pricesForCarTypes: Array<{ __typename?: 'ProductDetailsCarPrice', order: string | null, carType: CarType, price: number | null }> | null, availableServices: Array<{ __typename?: 'LingualString', ka: string, en: string }> | null, notAvailableServices: Array<{ __typename?: 'LingualString', ka: string, en: string } | null> | null } };
+export type UpdateProductDetails = {
+  __typename?: 'Mutation';
+  updateProductDetails: {
+    __typename?: 'ProductDetails';
+    id: string;
+    productId: string;
+    generalPrice: number;
+    currency: Currency | null;
+    averageDurationMinutes: number | null;
+    name: {__typename?: 'LingualString'; ka: string; en: string};
+    description: {__typename?: 'LingualString'; ka: string; en: string} | null;
+    pricesForCarTypes: Array<{
+      __typename?: 'ProductDetailsCarPrice';
+      order: string | null;
+      carType: CarType;
+      price: number | null;
+    }> | null;
+    availableServices: Array<{
+      __typename?: 'LingualString';
+      ka: string;
+      en: string;
+    }> | null;
+    notAvailableServices: Array<{
+      __typename?: 'LingualString';
+      ka: string;
+      en: string;
+    } | null> | null;
+  };
+};
 
 export type UpdateProviderVariables = Exact<{
   input: ProviderInput;
 }>;
 
-
-export type UpdateProvider = { __typename?: 'Mutation', updateProvider: { __typename?: 'Provider', id: string, name: string, phone: string | null, email: string | null, logo: string | null, website: string | null } };
+export type UpdateProvider = {
+  __typename?: 'Mutation';
+  updateProvider: {
+    __typename?: 'Provider';
+    id: string;
+    name: string;
+    phone: string | null;
+    email: string | null;
+    logo: string | null;
+    website: string | null;
+  };
+};
 
 export type UpdateUserVariables = Exact<{
   input: UpdateUserInput;
 }>;
 
-
-export type UpdateUser = { __typename?: 'Mutation', updateUser: { __typename?: 'User', id: string, phone: string, role: UserRole, firstname: string | null, lastname: string | null, createdAt: string | null, updatedAt: string | null } };
+export type UpdateUser = {
+  __typename?: 'Mutation';
+  updateUser: {
+    __typename?: 'User';
+    id: string;
+    phone: string;
+    role: UserRole;
+    firstname: string | null;
+    lastname: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
+  };
+};
 
 export type CheckPhoneVariables = Exact<{
   phone: Scalars['String']['input'];
 }>;
 
-
-export type CheckPhone = { __typename?: 'Query', checkPhone: boolean };
+export type CheckPhone = {__typename?: 'Query'; checkPhone: boolean};
 
 export type EchoVariables = Exact<{
   message: InputMaybe<Scalars['String']['input']>;
 }>;
 
-
-export type Echo = { __typename?: 'Query', echo: string | null };
+export type Echo = {__typename?: 'Query'; echo: string | null};
 
 export type EchoAuthorizedVariables = Exact<{
   message: InputMaybe<Scalars['String']['input']>;
 }>;
 
-
-export type EchoAuthorized = { __typename?: 'Query', echoAuthorized: string | null };
+export type EchoAuthorized = {
+  __typename?: 'Query';
+  echoAuthorized: string | null;
+};
 
 export type EchoMonoVariables = Exact<{
   message: InputMaybe<Scalars['String']['input']>;
 }>;
 
+export type EchoMono = {__typename?: 'Query'; echoMono: string | null};
 
-export type EchoMono = { __typename?: 'Query', echoMono: string | null };
+export type GetMeVariables = Exact<{[key: string]: never}>;
 
-export type GetMeVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetMe = { __typename?: 'Query', getMe: { __typename?: 'User', id: string, phone: string, role: UserRole, firstname: string | null, lastname: string | null, createdAt: string | null, updatedAt: string | null } };
+export type GetMe = {
+  __typename?: 'Query';
+  getMe: {
+    __typename?: 'User';
+    id: string;
+    phone: string;
+    role: UserRole;
+    firstname: string | null;
+    lastname: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
+  };
+};
 
 export type GetOrderVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
-
-export type GetOrder = { __typename?: 'Query', getOrder: { __typename?: 'Order', id: string, userId: string, categoryId: string, providerId: string | null, orderStatus: OrderStatus | null, products: Array<{ __typename?: 'OrderedProduct', productId: string, quantity: number | null, schedulingDate: string | null, schedulingTime: string | null } | null> | null } };
+export type GetOrder = {
+  __typename?: 'Query';
+  getOrder: {
+    __typename?: 'Order';
+    id: string;
+    userId: string;
+    categoryId: string;
+    providerId: string | null;
+    orderStatus: OrderStatus | null;
+    products: Array<{
+      __typename?: 'OrderedProduct';
+      productId: string;
+      quantity: number | null;
+      schedulingDate: string | null;
+      schedulingTime: string | null;
+    } | null> | null;
+  };
+};
 
 export type GetProductVariables = Exact<{
   productId: InputMaybe<Scalars['ID']['input']>;
 }>;
 
-
-export type GetProduct = { __typename?: 'Query', getProduct: { __typename?: 'Product', id: string, providerId: string, categoryId: string, mainImage: string, images: Array<string> | null, tags: Array<string> | null, name: { __typename?: 'LingualString', ka: string, en: string }, description: { __typename?: 'LingualString', ka: string, en: string } | null, location: { __typename?: 'Location', address: { __typename?: 'Address', street: string, district: string, city: string }, coordinates: { __typename?: 'Coordinates', lat: number, lng: number } } | null } | null };
+export type GetProduct = {
+  __typename?: 'Query';
+  getProduct: {
+    __typename?: 'Product';
+    id: string;
+    providerId: string;
+    categoryId: string;
+    mainImage: string;
+    images: Array<string> | null;
+    tags: Array<string> | null;
+    name: {__typename?: 'LingualString'; ka: string; en: string};
+    description: {__typename?: 'LingualString'; ka: string; en: string} | null;
+    location: {
+      __typename?: 'Location';
+      address: {
+        __typename?: 'Address';
+        street: string;
+        district: string;
+        city: string;
+      };
+      coordinates: {__typename?: 'Coordinates'; lat: number; lng: number};
+    } | null;
+  } | null;
+};
 
 export type GetUserByIdVariables = Exact<{
   userId: Scalars['ID']['input'];
 }>;
 
+export type GetUserById = {
+  __typename?: 'Query';
+  getUserById: {
+    __typename?: 'User';
+    id: string;
+    phone: string;
+    role: UserRole;
+    firstname: string | null;
+    lastname: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
+  };
+};
 
-export type GetUserById = { __typename?: 'Query', getUserById: { __typename?: 'User', id: string, phone: string, role: UserRole, firstname: string | null, lastname: string | null, createdAt: string | null, updatedAt: string | null } };
+export type ListCarsVariables = Exact<{[key: string]: never}>;
 
-export type ListCarsVariables = Exact<{ [key: string]: never; }>;
+export type ListCars = {
+  __typename?: 'Query';
+  listCars: Array<{
+    __typename?: 'Car';
+    id: string;
+    plateNumber: string;
+    carType: CarType | null;
+    techPassportNumber: string | null;
+    vin: string | null;
+    make: string | null;
+    model: string | null;
+    year: number | null;
+    createdAt: string | null;
+    updatedAt: string | null;
+  }>;
+};
 
+export type ListCategoriesVariables = Exact<{[key: string]: never}>;
 
-export type ListCars = { __typename?: 'Query', listCars: Array<{ __typename?: 'Car', id: string, plateNumber: string, carType: CarType | null, techPassportNumber: string | null, vin: string | null, make: string | null, model: string | null, year: number | null, createdAt: string | null, updatedAt: string | null }> };
+export type ListCategories = {
+  __typename?: 'Query';
+  listCategories: Array<{
+    __typename?: 'Category';
+    id: string;
+    name: {__typename?: 'LingualString'; ka: string; en: string};
+  }>;
+};
 
-export type ListCategoriesVariables = Exact<{ [key: string]: never; }>;
+export type ListOrdersVariables = Exact<{[key: string]: never}>;
 
-
-export type ListCategories = { __typename?: 'Query', listCategories: Array<{ __typename?: 'Category', id: string, name: { __typename?: 'LingualString', ka: string, en: string } }> };
-
-export type ListOrdersVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ListOrders = { __typename?: 'Query', listOrders: Array<{ __typename?: 'Order', id: string, userId: string, categoryId: string, providerId: string | null, orderStatus: OrderStatus | null, products: Array<{ __typename?: 'OrderedProduct', productId: string, quantity: number | null, schedulingDate: string | null, schedulingTime: string | null } | null> | null }> };
+export type ListOrders = {
+  __typename?: 'Query';
+  listOrders: Array<{
+    __typename?: 'Order';
+    id: string;
+    userId: string;
+    categoryId: string;
+    providerId: string | null;
+    orderStatus: OrderStatus | null;
+    products: Array<{
+      __typename?: 'OrderedProduct';
+      productId: string;
+      quantity: number | null;
+      schedulingDate: string | null;
+      schedulingTime: string | null;
+    } | null> | null;
+  }>;
+};
 
 export type ListOrdersByUserIdVariables = Exact<{
   userId: Scalars['ID']['input'];
 }>;
 
-
-export type ListOrdersByUserId = { __typename?: 'Query', listOrdersByUserId: Array<{ __typename?: 'Order', id: string, userId: string, categoryId: string, providerId: string | null, orderStatus: OrderStatus | null, products: Array<{ __typename?: 'OrderedProduct', productId: string, quantity: number | null, schedulingDate: string | null, schedulingTime: string | null } | null> | null }> };
+export type ListOrdersByUserId = {
+  __typename?: 'Query';
+  listOrdersByUserId: Array<{
+    __typename?: 'Order';
+    id: string;
+    userId: string;
+    categoryId: string;
+    providerId: string | null;
+    orderStatus: OrderStatus | null;
+    products: Array<{
+      __typename?: 'OrderedProduct';
+      productId: string;
+      quantity: number | null;
+      schedulingDate: string | null;
+      schedulingTime: string | null;
+    } | null> | null;
+  }>;
+};
 
 export type ListProductByCategoryIdVariables = Exact<{
   categoryId: Scalars['ID']['input'];
 }>;
 
-
-export type ListProductByCategoryId = { __typename?: 'Query', listProductByCategoryId: Array<{ __typename?: 'Product', id: string, providerId: string, categoryId: string, mainImage: string, images: Array<string> | null, tags: Array<string> | null, name: { __typename?: 'LingualString', ka: string, en: string }, description: { __typename?: 'LingualString', ka: string, en: string } | null, location: { __typename?: 'Location', address: { __typename?: 'Address', street: string, district: string, city: string }, coordinates: { __typename?: 'Coordinates', lat: number, lng: number } } | null }> };
+export type ListProductByCategoryId = {
+  __typename?: 'Query';
+  listProductByCategoryId: Array<{
+    __typename?: 'Product';
+    id: string;
+    providerId: string;
+    categoryId: string;
+    mainImage: string;
+    images: Array<string> | null;
+    tags: Array<string> | null;
+    name: {__typename?: 'LingualString'; ka: string; en: string};
+    description: {__typename?: 'LingualString'; ka: string; en: string} | null;
+    location: {
+      __typename?: 'Location';
+      address: {
+        __typename?: 'Address';
+        street: string;
+        district: string;
+        city: string;
+      };
+      coordinates: {__typename?: 'Coordinates'; lat: number; lng: number};
+    } | null;
+  }>;
+};
 
 export type ListProductByProviderIdVariables = Exact<{
   providerId: Scalars['ID']['input'];
 }>;
 
-
-export type ListProductByProviderId = { __typename?: 'Query', listProductByProviderId: Array<{ __typename?: 'Product', id: string, providerId: string, categoryId: string, mainImage: string, images: Array<string> | null, tags: Array<string> | null, name: { __typename?: 'LingualString', ka: string, en: string }, description: { __typename?: 'LingualString', ka: string, en: string } | null, location: { __typename?: 'Location', address: { __typename?: 'Address', street: string, district: string, city: string }, coordinates: { __typename?: 'Coordinates', lat: number, lng: number } } | null }> };
+export type ListProductByProviderId = {
+  __typename?: 'Query';
+  listProductByProviderId: Array<{
+    __typename?: 'Product';
+    id: string;
+    providerId: string;
+    categoryId: string;
+    mainImage: string;
+    images: Array<string> | null;
+    tags: Array<string> | null;
+    name: {__typename?: 'LingualString'; ka: string; en: string};
+    description: {__typename?: 'LingualString'; ka: string; en: string} | null;
+    location: {
+      __typename?: 'Location';
+      address: {
+        __typename?: 'Address';
+        street: string;
+        district: string;
+        city: string;
+      };
+      coordinates: {__typename?: 'Coordinates'; lat: number; lng: number};
+    } | null;
+  }>;
+};
 
 export type ListProductDetailsByProductIdVariables = Exact<{
   productId: Scalars['ID']['input'];
 }>;
 
+export type ListProductDetailsByProductId = {
+  __typename?: 'Query';
+  listProductDetailsByProductId: Array<{
+    __typename?: 'ProductDetails';
+    id: string;
+    productId: string;
+    generalPrice: number;
+    currency: Currency | null;
+    averageDurationMinutes: number | null;
+    name: {__typename?: 'LingualString'; ka: string; en: string};
+    description: {__typename?: 'LingualString'; ka: string; en: string} | null;
+    pricesForCarTypes: Array<{
+      __typename?: 'ProductDetailsCarPrice';
+      order: string | null;
+      carType: CarType;
+      price: number | null;
+    }> | null;
+    availableServices: Array<{
+      __typename?: 'LingualString';
+      ka: string;
+      en: string;
+    }> | null;
+    notAvailableServices: Array<{
+      __typename?: 'LingualString';
+      ka: string;
+      en: string;
+    } | null> | null;
+  }>;
+};
 
-export type ListProductDetailsByProductId = { __typename?: 'Query', listProductDetailsByProductId: Array<{ __typename?: 'ProductDetails', id: string, productId: string, generalPrice: number, currency: Currency | null, averageDurationMinutes: number | null, name: { __typename?: 'LingualString', ka: string, en: string }, description: { __typename?: 'LingualString', ka: string, en: string } | null, pricesForCarTypes: Array<{ __typename?: 'ProductDetailsCarPrice', order: string | null, carType: CarType, price: number | null }> | null, availableServices: Array<{ __typename?: 'LingualString', ka: string, en: string }> | null, notAvailableServices: Array<{ __typename?: 'LingualString', ka: string, en: string } | null> | null }> };
+export type ListProductsVariables = Exact<{[key: string]: never}>;
 
-export type ListProductsVariables = Exact<{ [key: string]: never; }>;
+export type ListProducts = {
+  __typename?: 'Query';
+  listProducts: Array<{
+    __typename?: 'Product';
+    id: string;
+    providerId: string;
+    categoryId: string;
+    mainImage: string;
+    images: Array<string> | null;
+    tags: Array<string> | null;
+    name: {__typename?: 'LingualString'; ka: string; en: string};
+    description: {__typename?: 'LingualString'; ka: string; en: string} | null;
+    location: {
+      __typename?: 'Location';
+      address: {
+        __typename?: 'Address';
+        street: string;
+        district: string;
+        city: string;
+      };
+      coordinates: {__typename?: 'Coordinates'; lat: number; lng: number};
+    } | null;
+  }>;
+};
 
+export type ListProvidersVariables = Exact<{[key: string]: never}>;
 
-export type ListProducts = { __typename?: 'Query', listProducts: Array<{ __typename?: 'Product', id: string, providerId: string, categoryId: string, mainImage: string, images: Array<string> | null, tags: Array<string> | null, name: { __typename?: 'LingualString', ka: string, en: string }, description: { __typename?: 'LingualString', ka: string, en: string } | null, location: { __typename?: 'Location', address: { __typename?: 'Address', street: string, district: string, city: string }, coordinates: { __typename?: 'Coordinates', lat: number, lng: number } } | null }> };
-
-export type ListProvidersVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ListProviders = { __typename?: 'Query', listProviders: Array<{ __typename?: 'Provider', id: string, name: string, phone: string | null, email: string | null, logo: string | null, website: string | null }> };
+export type ListProviders = {
+  __typename?: 'Query';
+  listProviders: Array<{
+    __typename?: 'Provider';
+    id: string;
+    name: string;
+    phone: string | null;
+    email: string | null;
+    logo: string | null;
+    website: string | null;
+  }>;
+};
 
 export type SearchProductsVariables = Exact<{
   filter: ProductFilterInput;
 }>;
 
-
-export type SearchProducts = { __typename?: 'Query', searchProducts: Array<{ __typename?: 'Product', id: string, providerId: string, categoryId: string, mainImage: string, images: Array<string> | null, tags: Array<string> | null, name: { __typename?: 'LingualString', ka: string, en: string }, description: { __typename?: 'LingualString', ka: string, en: string } | null, location: { __typename?: 'Location', address: { __typename?: 'Address', street: string, district: string, city: string }, coordinates: { __typename?: 'Coordinates', lat: number, lng: number } } | null }> };
-
+export type SearchProducts = {
+  __typename?: 'Query';
+  searchProducts: Array<{
+    __typename?: 'Product';
+    id: string;
+    providerId: string;
+    categoryId: string;
+    mainImage: string;
+    images: Array<string> | null;
+    tags: Array<string> | null;
+    name: {__typename?: 'LingualString'; ka: string; en: string};
+    description: {__typename?: 'LingualString'; ka: string; en: string} | null;
+    location: {
+      __typename?: 'Location';
+      address: {
+        __typename?: 'Address';
+        street: string;
+        district: string;
+        city: string;
+      };
+      coordinates: {__typename?: 'Coordinates'; lat: number; lng: number};
+    } | null;
+  }>;
+};
 
 export const AddCarDocument = gql`
-    mutation addCar($carInput: CarInput!) {
-  addCar(carInput: $carInput) {
-    id
-    plateNumber
-    carType
-    techPassportNumber
-    vin
-    make
-    model
-    year
-    createdAt
-    updatedAt
+  mutation addCar($carInput: CarInput!) {
+    addCar(carInput: $carInput) {
+      id
+      plateNumber
+      carType
+      techPassportNumber
+      vin
+      make
+      model
+      year
+      createdAt
+      updatedAt
+    }
   }
-}
-    `;
+`;
 export type AddCarMutationFn = Apollo.MutationFunction<AddCar, AddCarVariables>;
 
 /**
@@ -795,22 +1203,30 @@ export type AddCarMutationFn = Apollo.MutationFunction<AddCar, AddCarVariables>;
  *   },
  * });
  */
-export function useAddCar(baseOptions?: Apollo.MutationHookOptions<AddCar, AddCarVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<AddCar, AddCarVariables>(AddCarDocument, options);
-      }
+export function useAddCar(
+  baseOptions?: Apollo.MutationHookOptions<AddCar, AddCarVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<AddCar, AddCarVariables>(AddCarDocument, options);
+}
 export type AddCarHookResult = ReturnType<typeof useAddCar>;
 export type AddCarMutationResult = Apollo.MutationResult<AddCar>;
-export type AddCarMutationOptions = Apollo.BaseMutationOptions<AddCar, AddCarVariables>;
+export type AddCarMutationOptions = Apollo.BaseMutationOptions<
+  AddCar,
+  AddCarVariables
+>;
 export const AuthorizeDocument = gql`
-    mutation authorize($input: AuthenticationInput!) {
-  authorize(input: $input) {
-    accessToken
-    refreshToken
+  mutation authorize($input: AuthenticationInput!) {
+    authorize(input: $input) {
+      accessToken
+      refreshToken
+    }
   }
-}
-    `;
-export type AuthorizeMutationFn = Apollo.MutationFunction<Authorize, AuthorizeVariables>;
+`;
+export type AuthorizeMutationFn = Apollo.MutationFunction<
+  Authorize,
+  AuthorizeVariables
+>;
 
 /**
  * __useAuthorize__
@@ -829,25 +1245,36 @@ export type AuthorizeMutationFn = Apollo.MutationFunction<Authorize, AuthorizeVa
  *   },
  * });
  */
-export function useAuthorize(baseOptions?: Apollo.MutationHookOptions<Authorize, AuthorizeVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<Authorize, AuthorizeVariables>(AuthorizeDocument, options);
-      }
+export function useAuthorize(
+  baseOptions?: Apollo.MutationHookOptions<Authorize, AuthorizeVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<Authorize, AuthorizeVariables>(
+    AuthorizeDocument,
+    options,
+  );
+}
 export type AuthorizeHookResult = ReturnType<typeof useAuthorize>;
 export type AuthorizeMutationResult = Apollo.MutationResult<Authorize>;
-export type AuthorizeMutationOptions = Apollo.BaseMutationOptions<Authorize, AuthorizeVariables>;
+export type AuthorizeMutationOptions = Apollo.BaseMutationOptions<
+  Authorize,
+  AuthorizeVariables
+>;
 export const CreateCategoryDocument = gql`
-    mutation createCategory($input: CategoryInput!) {
-  createCategory(input: $input) {
-    id
-    name {
-      ka
-      en
+  mutation createCategory($input: CategoryInput!) {
+    createCategory(input: $input) {
+      id
+      name {
+        ka
+        en
+      }
     }
   }
-}
-    `;
-export type CreateCategoryMutationFn = Apollo.MutationFunction<CreateCategory, CreateCategoryVariables>;
+`;
+export type CreateCategoryMutationFn = Apollo.MutationFunction<
+  CreateCategory,
+  CreateCategoryVariables
+>;
 
 /**
  * __useCreateCategory__
@@ -866,31 +1293,46 @@ export type CreateCategoryMutationFn = Apollo.MutationFunction<CreateCategory, C
  *   },
  * });
  */
-export function useCreateCategory(baseOptions?: Apollo.MutationHookOptions<CreateCategory, CreateCategoryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateCategory, CreateCategoryVariables>(CreateCategoryDocument, options);
-      }
-export type CreateCategoryHookResult = ReturnType<typeof useCreateCategory>;
-export type CreateCategoryMutationResult = Apollo.MutationResult<CreateCategory>;
-export type CreateCategoryMutationOptions = Apollo.BaseMutationOptions<CreateCategory, CreateCategoryVariables>;
-export const CreateOrderDocument = gql`
-    mutation createOrder($order: OrderInput!) {
-  createOrder(order: $order) {
-    id
-    userId
-    categoryId
-    providerId
-    products {
-      productId
-      quantity
-      schedulingDate
-      schedulingTime
-    }
-    orderStatus
-  }
+export function useCreateCategory(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateCategory,
+    CreateCategoryVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<CreateCategory, CreateCategoryVariables>(
+    CreateCategoryDocument,
+    options,
+  );
 }
-    `;
-export type CreateOrderMutationFn = Apollo.MutationFunction<CreateOrder, CreateOrderVariables>;
+export type CreateCategoryHookResult = ReturnType<typeof useCreateCategory>;
+export type CreateCategoryMutationResult =
+  Apollo.MutationResult<CreateCategory>;
+export type CreateCategoryMutationOptions = Apollo.BaseMutationOptions<
+  CreateCategory,
+  CreateCategoryVariables
+>;
+export const CreateOrderDocument = gql`
+  mutation createOrder($order: OrderInput!) {
+    createOrder(order: $order) {
+      id
+      userId
+      categoryId
+      providerId
+      products {
+        productId
+        quantity
+        schedulingDate
+        schedulingTime
+      }
+      orderStatus
+    }
+  }
+`;
+export type CreateOrderMutationFn = Apollo.MutationFunction<
+  CreateOrder,
+  CreateOrderVariables
+>;
 
 /**
  * __useCreateOrder__
@@ -909,45 +1351,56 @@ export type CreateOrderMutationFn = Apollo.MutationFunction<CreateOrder, CreateO
  *   },
  * });
  */
-export function useCreateOrder(baseOptions?: Apollo.MutationHookOptions<CreateOrder, CreateOrderVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateOrder, CreateOrderVariables>(CreateOrderDocument, options);
-      }
+export function useCreateOrder(
+  baseOptions?: Apollo.MutationHookOptions<CreateOrder, CreateOrderVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<CreateOrder, CreateOrderVariables>(
+    CreateOrderDocument,
+    options,
+  );
+}
 export type CreateOrderHookResult = ReturnType<typeof useCreateOrder>;
 export type CreateOrderMutationResult = Apollo.MutationResult<CreateOrder>;
-export type CreateOrderMutationOptions = Apollo.BaseMutationOptions<CreateOrder, CreateOrderVariables>;
+export type CreateOrderMutationOptions = Apollo.BaseMutationOptions<
+  CreateOrder,
+  CreateOrderVariables
+>;
 export const CreateProductDocument = gql`
-    mutation createProduct($input: ProductInput!) {
-  createProduct(input: $input) {
-    id
-    name {
-      ka
-      en
-    }
-    providerId
-    categoryId
-    description {
-      ka
-      en
-    }
-    location {
-      address {
-        street
-        district
-        city
+  mutation createProduct($input: ProductInput!) {
+    createProduct(input: $input) {
+      id
+      name {
+        ka
+        en
       }
-      coordinates {
-        lat
-        lng
+      providerId
+      categoryId
+      description {
+        ka
+        en
       }
+      location {
+        address {
+          street
+          district
+          city
+        }
+        coordinates {
+          lat
+          lng
+        }
+      }
+      mainImage
+      images
+      tags
     }
-    mainImage
-    images
-    tags
   }
-}
-    `;
-export type CreateProductMutationFn = Apollo.MutationFunction<CreateProduct, CreateProductVariables>;
+`;
+export type CreateProductMutationFn = Apollo.MutationFunction<
+  CreateProduct,
+  CreateProductVariables
+>;
 
 /**
  * __useCreateProduct__
@@ -966,46 +1419,60 @@ export type CreateProductMutationFn = Apollo.MutationFunction<CreateProduct, Cre
  *   },
  * });
  */
-export function useCreateProduct(baseOptions?: Apollo.MutationHookOptions<CreateProduct, CreateProductVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateProduct, CreateProductVariables>(CreateProductDocument, options);
-      }
+export function useCreateProduct(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateProduct,
+    CreateProductVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<CreateProduct, CreateProductVariables>(
+    CreateProductDocument,
+    options,
+  );
+}
 export type CreateProductHookResult = ReturnType<typeof useCreateProduct>;
 export type CreateProductMutationResult = Apollo.MutationResult<CreateProduct>;
-export type CreateProductMutationOptions = Apollo.BaseMutationOptions<CreateProduct, CreateProductVariables>;
+export type CreateProductMutationOptions = Apollo.BaseMutationOptions<
+  CreateProduct,
+  CreateProductVariables
+>;
 export const CreateProductDetailsDocument = gql`
-    mutation createProductDetails($input: ProductDetailsInput!) {
-  createProductDetails(input: $input) {
-    id
-    productId
-    name {
-      ka
-      en
+  mutation createProductDetails($input: ProductDetailsInput!) {
+    createProductDetails(input: $input) {
+      id
+      productId
+      name {
+        ka
+        en
+      }
+      description {
+        ka
+        en
+      }
+      pricesForCarTypes {
+        order
+        carType
+        price
+      }
+      availableServices {
+        ka
+        en
+      }
+      notAvailableServices {
+        ka
+        en
+      }
+      generalPrice
+      currency
+      averageDurationMinutes
     }
-    description {
-      ka
-      en
-    }
-    pricesForCarTypes {
-      order
-      carType
-      price
-    }
-    availableServices {
-      ka
-      en
-    }
-    notAvailableServices {
-      ka
-      en
-    }
-    generalPrice
-    currency
-    averageDurationMinutes
   }
-}
-    `;
-export type CreateProductDetailsMutationFn = Apollo.MutationFunction<CreateProductDetails, CreateProductDetailsVariables>;
+`;
+export type CreateProductDetailsMutationFn = Apollo.MutationFunction<
+  CreateProductDetails,
+  CreateProductDetailsVariables
+>;
 
 /**
  * __useCreateProductDetails__
@@ -1024,26 +1491,43 @@ export type CreateProductDetailsMutationFn = Apollo.MutationFunction<CreateProdu
  *   },
  * });
  */
-export function useCreateProductDetails(baseOptions?: Apollo.MutationHookOptions<CreateProductDetails, CreateProductDetailsVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateProductDetails, CreateProductDetailsVariables>(CreateProductDetailsDocument, options);
-      }
-export type CreateProductDetailsHookResult = ReturnType<typeof useCreateProductDetails>;
-export type CreateProductDetailsMutationResult = Apollo.MutationResult<CreateProductDetails>;
-export type CreateProductDetailsMutationOptions = Apollo.BaseMutationOptions<CreateProductDetails, CreateProductDetailsVariables>;
-export const CreateProviderDocument = gql`
-    mutation createProvider($input: ProviderInput!) {
-  createProvider(input: $input) {
-    id
-    name
-    phone
-    email
-    logo
-    website
-  }
+export function useCreateProductDetails(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateProductDetails,
+    CreateProductDetailsVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<
+    CreateProductDetails,
+    CreateProductDetailsVariables
+  >(CreateProductDetailsDocument, options);
 }
-    `;
-export type CreateProviderMutationFn = Apollo.MutationFunction<CreateProvider, CreateProviderVariables>;
+export type CreateProductDetailsHookResult = ReturnType<
+  typeof useCreateProductDetails
+>;
+export type CreateProductDetailsMutationResult =
+  Apollo.MutationResult<CreateProductDetails>;
+export type CreateProductDetailsMutationOptions = Apollo.BaseMutationOptions<
+  CreateProductDetails,
+  CreateProductDetailsVariables
+>;
+export const CreateProviderDocument = gql`
+  mutation createProvider($input: ProviderInput!) {
+    createProvider(input: $input) {
+      id
+      name
+      phone
+      email
+      logo
+      website
+    }
+  }
+`;
+export type CreateProviderMutationFn = Apollo.MutationFunction<
+  CreateProvider,
+  CreateProviderVariables
+>;
 
 /**
  * __useCreateProvider__
@@ -1062,19 +1546,34 @@ export type CreateProviderMutationFn = Apollo.MutationFunction<CreateProvider, C
  *   },
  * });
  */
-export function useCreateProvider(baseOptions?: Apollo.MutationHookOptions<CreateProvider, CreateProviderVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateProvider, CreateProviderVariables>(CreateProviderDocument, options);
-      }
-export type CreateProviderHookResult = ReturnType<typeof useCreateProvider>;
-export type CreateProviderMutationResult = Apollo.MutationResult<CreateProvider>;
-export type CreateProviderMutationOptions = Apollo.BaseMutationOptions<CreateProvider, CreateProviderVariables>;
-export const RemoveCarDocument = gql`
-    mutation removeCar($carId: ID!) {
-  removeCar(carId: $carId)
+export function useCreateProvider(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateProvider,
+    CreateProviderVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<CreateProvider, CreateProviderVariables>(
+    CreateProviderDocument,
+    options,
+  );
 }
-    `;
-export type RemoveCarMutationFn = Apollo.MutationFunction<RemoveCar, RemoveCarVariables>;
+export type CreateProviderHookResult = ReturnType<typeof useCreateProvider>;
+export type CreateProviderMutationResult =
+  Apollo.MutationResult<CreateProvider>;
+export type CreateProviderMutationOptions = Apollo.BaseMutationOptions<
+  CreateProvider,
+  CreateProviderVariables
+>;
+export const RemoveCarDocument = gql`
+  mutation removeCar($carId: ID!) {
+    removeCar(carId: $carId)
+  }
+`;
+export type RemoveCarMutationFn = Apollo.MutationFunction<
+  RemoveCar,
+  RemoveCarVariables
+>;
 
 /**
  * __useRemoveCar__
@@ -1093,19 +1592,30 @@ export type RemoveCarMutationFn = Apollo.MutationFunction<RemoveCar, RemoveCarVa
  *   },
  * });
  */
-export function useRemoveCar(baseOptions?: Apollo.MutationHookOptions<RemoveCar, RemoveCarVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<RemoveCar, RemoveCarVariables>(RemoveCarDocument, options);
-      }
+export function useRemoveCar(
+  baseOptions?: Apollo.MutationHookOptions<RemoveCar, RemoveCarVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<RemoveCar, RemoveCarVariables>(
+    RemoveCarDocument,
+    options,
+  );
+}
 export type RemoveCarHookResult = ReturnType<typeof useRemoveCar>;
 export type RemoveCarMutationResult = Apollo.MutationResult<RemoveCar>;
-export type RemoveCarMutationOptions = Apollo.BaseMutationOptions<RemoveCar, RemoveCarVariables>;
+export type RemoveCarMutationOptions = Apollo.BaseMutationOptions<
+  RemoveCar,
+  RemoveCarVariables
+>;
 export const RemoveCategoryDocument = gql`
-    mutation removeCategory($categoryId: ID!) {
-  removeCategory(categoryId: $categoryId)
-}
-    `;
-export type RemoveCategoryMutationFn = Apollo.MutationFunction<RemoveCategory, RemoveCategoryVariables>;
+  mutation removeCategory($categoryId: ID!) {
+    removeCategory(categoryId: $categoryId)
+  }
+`;
+export type RemoveCategoryMutationFn = Apollo.MutationFunction<
+  RemoveCategory,
+  RemoveCategoryVariables
+>;
 
 /**
  * __useRemoveCategory__
@@ -1124,19 +1634,34 @@ export type RemoveCategoryMutationFn = Apollo.MutationFunction<RemoveCategory, R
  *   },
  * });
  */
-export function useRemoveCategory(baseOptions?: Apollo.MutationHookOptions<RemoveCategory, RemoveCategoryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<RemoveCategory, RemoveCategoryVariables>(RemoveCategoryDocument, options);
-      }
-export type RemoveCategoryHookResult = ReturnType<typeof useRemoveCategory>;
-export type RemoveCategoryMutationResult = Apollo.MutationResult<RemoveCategory>;
-export type RemoveCategoryMutationOptions = Apollo.BaseMutationOptions<RemoveCategory, RemoveCategoryVariables>;
-export const RemoveProductDocument = gql`
-    mutation removeProduct($productId: ID!) {
-  removeProduct(productId: $productId)
+export function useRemoveCategory(
+  baseOptions?: Apollo.MutationHookOptions<
+    RemoveCategory,
+    RemoveCategoryVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<RemoveCategory, RemoveCategoryVariables>(
+    RemoveCategoryDocument,
+    options,
+  );
 }
-    `;
-export type RemoveProductMutationFn = Apollo.MutationFunction<RemoveProduct, RemoveProductVariables>;
+export type RemoveCategoryHookResult = ReturnType<typeof useRemoveCategory>;
+export type RemoveCategoryMutationResult =
+  Apollo.MutationResult<RemoveCategory>;
+export type RemoveCategoryMutationOptions = Apollo.BaseMutationOptions<
+  RemoveCategory,
+  RemoveCategoryVariables
+>;
+export const RemoveProductDocument = gql`
+  mutation removeProduct($productId: ID!) {
+    removeProduct(productId: $productId)
+  }
+`;
+export type RemoveProductMutationFn = Apollo.MutationFunction<
+  RemoveProduct,
+  RemoveProductVariables
+>;
 
 /**
  * __useRemoveProduct__
@@ -1155,19 +1680,33 @@ export type RemoveProductMutationFn = Apollo.MutationFunction<RemoveProduct, Rem
  *   },
  * });
  */
-export function useRemoveProduct(baseOptions?: Apollo.MutationHookOptions<RemoveProduct, RemoveProductVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<RemoveProduct, RemoveProductVariables>(RemoveProductDocument, options);
-      }
+export function useRemoveProduct(
+  baseOptions?: Apollo.MutationHookOptions<
+    RemoveProduct,
+    RemoveProductVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<RemoveProduct, RemoveProductVariables>(
+    RemoveProductDocument,
+    options,
+  );
+}
 export type RemoveProductHookResult = ReturnType<typeof useRemoveProduct>;
 export type RemoveProductMutationResult = Apollo.MutationResult<RemoveProduct>;
-export type RemoveProductMutationOptions = Apollo.BaseMutationOptions<RemoveProduct, RemoveProductVariables>;
+export type RemoveProductMutationOptions = Apollo.BaseMutationOptions<
+  RemoveProduct,
+  RemoveProductVariables
+>;
 export const RemoveProductDetailsDocument = gql`
-    mutation removeProductDetails($productDetailsId: ID!) {
-  removeProductDetails(productDetailsId: $productDetailsId)
-}
-    `;
-export type RemoveProductDetailsMutationFn = Apollo.MutationFunction<RemoveProductDetails, RemoveProductDetailsVariables>;
+  mutation removeProductDetails($productDetailsId: ID!) {
+    removeProductDetails(productDetailsId: $productDetailsId)
+  }
+`;
+export type RemoveProductDetailsMutationFn = Apollo.MutationFunction<
+  RemoveProductDetails,
+  RemoveProductDetailsVariables
+>;
 
 /**
  * __useRemoveProductDetails__
@@ -1186,19 +1725,36 @@ export type RemoveProductDetailsMutationFn = Apollo.MutationFunction<RemoveProdu
  *   },
  * });
  */
-export function useRemoveProductDetails(baseOptions?: Apollo.MutationHookOptions<RemoveProductDetails, RemoveProductDetailsVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<RemoveProductDetails, RemoveProductDetailsVariables>(RemoveProductDetailsDocument, options);
-      }
-export type RemoveProductDetailsHookResult = ReturnType<typeof useRemoveProductDetails>;
-export type RemoveProductDetailsMutationResult = Apollo.MutationResult<RemoveProductDetails>;
-export type RemoveProductDetailsMutationOptions = Apollo.BaseMutationOptions<RemoveProductDetails, RemoveProductDetailsVariables>;
-export const RemoveProviderDocument = gql`
-    mutation removeProvider($providerId: ID!) {
-  removeProvider(providerId: $providerId)
+export function useRemoveProductDetails(
+  baseOptions?: Apollo.MutationHookOptions<
+    RemoveProductDetails,
+    RemoveProductDetailsVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<
+    RemoveProductDetails,
+    RemoveProductDetailsVariables
+  >(RemoveProductDetailsDocument, options);
 }
-    `;
-export type RemoveProviderMutationFn = Apollo.MutationFunction<RemoveProvider, RemoveProviderVariables>;
+export type RemoveProductDetailsHookResult = ReturnType<
+  typeof useRemoveProductDetails
+>;
+export type RemoveProductDetailsMutationResult =
+  Apollo.MutationResult<RemoveProductDetails>;
+export type RemoveProductDetailsMutationOptions = Apollo.BaseMutationOptions<
+  RemoveProductDetails,
+  RemoveProductDetailsVariables
+>;
+export const RemoveProviderDocument = gql`
+  mutation removeProvider($providerId: ID!) {
+    removeProvider(providerId: $providerId)
+  }
+`;
+export type RemoveProviderMutationFn = Apollo.MutationFunction<
+  RemoveProvider,
+  RemoveProviderVariables
+>;
 
 /**
  * __useRemoveProvider__
@@ -1217,23 +1773,38 @@ export type RemoveProviderMutationFn = Apollo.MutationFunction<RemoveProvider, R
  *   },
  * });
  */
-export function useRemoveProvider(baseOptions?: Apollo.MutationHookOptions<RemoveProvider, RemoveProviderVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<RemoveProvider, RemoveProviderVariables>(RemoveProviderDocument, options);
-      }
-export type RemoveProviderHookResult = ReturnType<typeof useRemoveProvider>;
-export type RemoveProviderMutationResult = Apollo.MutationResult<RemoveProvider>;
-export type RemoveProviderMutationOptions = Apollo.BaseMutationOptions<RemoveProvider, RemoveProviderVariables>;
-export const SendOtpDocument = gql`
-    mutation sendOtp($phone: String!) {
-  sendOtp(phone: $phone) {
-    sent
-    expiresAt
-    isRegistered
-  }
+export function useRemoveProvider(
+  baseOptions?: Apollo.MutationHookOptions<
+    RemoveProvider,
+    RemoveProviderVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<RemoveProvider, RemoveProviderVariables>(
+    RemoveProviderDocument,
+    options,
+  );
 }
-    `;
-export type SendOtpMutationFn = Apollo.MutationFunction<SendOtp, SendOtpVariables>;
+export type RemoveProviderHookResult = ReturnType<typeof useRemoveProvider>;
+export type RemoveProviderMutationResult =
+  Apollo.MutationResult<RemoveProvider>;
+export type RemoveProviderMutationOptions = Apollo.BaseMutationOptions<
+  RemoveProvider,
+  RemoveProviderVariables
+>;
+export const SendOtpDocument = gql`
+  mutation sendOtp($phone: String!) {
+    sendOtp(phone: $phone) {
+      sent
+      expiresAt
+      isRegistered
+    }
+  }
+`;
+export type SendOtpMutationFn = Apollo.MutationFunction<
+  SendOtp,
+  SendOtpVariables
+>;
 
 /**
  * __useSendOtp__
@@ -1252,30 +1823,41 @@ export type SendOtpMutationFn = Apollo.MutationFunction<SendOtp, SendOtpVariable
  *   },
  * });
  */
-export function useSendOtp(baseOptions?: Apollo.MutationHookOptions<SendOtp, SendOtpVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<SendOtp, SendOtpVariables>(SendOtpDocument, options);
-      }
+export function useSendOtp(
+  baseOptions?: Apollo.MutationHookOptions<SendOtp, SendOtpVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<SendOtp, SendOtpVariables>(
+    SendOtpDocument,
+    options,
+  );
+}
 export type SendOtpHookResult = ReturnType<typeof useSendOtp>;
 export type SendOtpMutationResult = Apollo.MutationResult<SendOtp>;
-export type SendOtpMutationOptions = Apollo.BaseMutationOptions<SendOtp, SendOtpVariables>;
+export type SendOtpMutationOptions = Apollo.BaseMutationOptions<
+  SendOtp,
+  SendOtpVariables
+>;
 export const UpdateCarDocument = gql`
-    mutation updateCar($carId: ID!, $carInput: CarInput!) {
-  updateCar(carId: $carId, carInput: $carInput) {
-    id
-    plateNumber
-    carType
-    techPassportNumber
-    vin
-    make
-    model
-    year
-    createdAt
-    updatedAt
+  mutation updateCar($carId: ID!, $carInput: CarInput!) {
+    updateCar(carId: $carId, carInput: $carInput) {
+      id
+      plateNumber
+      carType
+      techPassportNumber
+      vin
+      make
+      model
+      year
+      createdAt
+      updatedAt
+    }
   }
-}
-    `;
-export type UpdateCarMutationFn = Apollo.MutationFunction<UpdateCar, UpdateCarVariables>;
+`;
+export type UpdateCarMutationFn = Apollo.MutationFunction<
+  UpdateCar,
+  UpdateCarVariables
+>;
 
 /**
  * __useUpdateCar__
@@ -1295,25 +1877,36 @@ export type UpdateCarMutationFn = Apollo.MutationFunction<UpdateCar, UpdateCarVa
  *   },
  * });
  */
-export function useUpdateCar(baseOptions?: Apollo.MutationHookOptions<UpdateCar, UpdateCarVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateCar, UpdateCarVariables>(UpdateCarDocument, options);
-      }
+export function useUpdateCar(
+  baseOptions?: Apollo.MutationHookOptions<UpdateCar, UpdateCarVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<UpdateCar, UpdateCarVariables>(
+    UpdateCarDocument,
+    options,
+  );
+}
 export type UpdateCarHookResult = ReturnType<typeof useUpdateCar>;
 export type UpdateCarMutationResult = Apollo.MutationResult<UpdateCar>;
-export type UpdateCarMutationOptions = Apollo.BaseMutationOptions<UpdateCar, UpdateCarVariables>;
+export type UpdateCarMutationOptions = Apollo.BaseMutationOptions<
+  UpdateCar,
+  UpdateCarVariables
+>;
 export const UpdateCategoryDocument = gql`
-    mutation updateCategory($categoryId: ID!, $input: CategoryInput!) {
-  updateCategory(categoryId: $categoryId, input: $input) {
-    id
-    name {
-      ka
-      en
+  mutation updateCategory($categoryId: ID!, $input: CategoryInput!) {
+    updateCategory(categoryId: $categoryId, input: $input) {
+      id
+      name {
+        ka
+        en
+      }
     }
   }
-}
-    `;
-export type UpdateCategoryMutationFn = Apollo.MutationFunction<UpdateCategory, UpdateCategoryVariables>;
+`;
+export type UpdateCategoryMutationFn = Apollo.MutationFunction<
+  UpdateCategory,
+  UpdateCategoryVariables
+>;
 
 /**
  * __useUpdateCategory__
@@ -1333,45 +1926,60 @@ export type UpdateCategoryMutationFn = Apollo.MutationFunction<UpdateCategory, U
  *   },
  * });
  */
-export function useUpdateCategory(baseOptions?: Apollo.MutationHookOptions<UpdateCategory, UpdateCategoryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateCategory, UpdateCategoryVariables>(UpdateCategoryDocument, options);
-      }
-export type UpdateCategoryHookResult = ReturnType<typeof useUpdateCategory>;
-export type UpdateCategoryMutationResult = Apollo.MutationResult<UpdateCategory>;
-export type UpdateCategoryMutationOptions = Apollo.BaseMutationOptions<UpdateCategory, UpdateCategoryVariables>;
-export const UpdateProductDocument = gql`
-    mutation updateProduct($productId: ID!, $input: ProductInput!) {
-  updateProduct(productId: $productId, input: $input) {
-    id
-    name {
-      ka
-      en
-    }
-    providerId
-    categoryId
-    description {
-      ka
-      en
-    }
-    location {
-      address {
-        street
-        district
-        city
-      }
-      coordinates {
-        lat
-        lng
-      }
-    }
-    mainImage
-    images
-    tags
-  }
+export function useUpdateCategory(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateCategory,
+    UpdateCategoryVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<UpdateCategory, UpdateCategoryVariables>(
+    UpdateCategoryDocument,
+    options,
+  );
 }
-    `;
-export type UpdateProductMutationFn = Apollo.MutationFunction<UpdateProduct, UpdateProductVariables>;
+export type UpdateCategoryHookResult = ReturnType<typeof useUpdateCategory>;
+export type UpdateCategoryMutationResult =
+  Apollo.MutationResult<UpdateCategory>;
+export type UpdateCategoryMutationOptions = Apollo.BaseMutationOptions<
+  UpdateCategory,
+  UpdateCategoryVariables
+>;
+export const UpdateProductDocument = gql`
+  mutation updateProduct($productId: ID!, $input: ProductInput!) {
+    updateProduct(productId: $productId, input: $input) {
+      id
+      name {
+        ka
+        en
+      }
+      providerId
+      categoryId
+      description {
+        ka
+        en
+      }
+      location {
+        address {
+          street
+          district
+          city
+        }
+        coordinates {
+          lat
+          lng
+        }
+      }
+      mainImage
+      images
+      tags
+    }
+  }
+`;
+export type UpdateProductMutationFn = Apollo.MutationFunction<
+  UpdateProduct,
+  UpdateProductVariables
+>;
 
 /**
  * __useUpdateProduct__
@@ -1391,46 +1999,63 @@ export type UpdateProductMutationFn = Apollo.MutationFunction<UpdateProduct, Upd
  *   },
  * });
  */
-export function useUpdateProduct(baseOptions?: Apollo.MutationHookOptions<UpdateProduct, UpdateProductVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateProduct, UpdateProductVariables>(UpdateProductDocument, options);
-      }
+export function useUpdateProduct(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateProduct,
+    UpdateProductVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<UpdateProduct, UpdateProductVariables>(
+    UpdateProductDocument,
+    options,
+  );
+}
 export type UpdateProductHookResult = ReturnType<typeof useUpdateProduct>;
 export type UpdateProductMutationResult = Apollo.MutationResult<UpdateProduct>;
-export type UpdateProductMutationOptions = Apollo.BaseMutationOptions<UpdateProduct, UpdateProductVariables>;
+export type UpdateProductMutationOptions = Apollo.BaseMutationOptions<
+  UpdateProduct,
+  UpdateProductVariables
+>;
 export const UpdateProductDetailsDocument = gql`
-    mutation updateProductDetails($productDetailsId: ID!, $input: ProductDetailsInput!) {
-  updateProductDetails(productDetailsId: $productDetailsId, input: $input) {
-    id
-    productId
-    name {
-      ka
-      en
+  mutation updateProductDetails(
+    $productDetailsId: ID!
+    $input: ProductDetailsInput!
+  ) {
+    updateProductDetails(productDetailsId: $productDetailsId, input: $input) {
+      id
+      productId
+      name {
+        ka
+        en
+      }
+      description {
+        ka
+        en
+      }
+      pricesForCarTypes {
+        order
+        carType
+        price
+      }
+      availableServices {
+        ka
+        en
+      }
+      notAvailableServices {
+        ka
+        en
+      }
+      generalPrice
+      currency
+      averageDurationMinutes
     }
-    description {
-      ka
-      en
-    }
-    pricesForCarTypes {
-      order
-      carType
-      price
-    }
-    availableServices {
-      ka
-      en
-    }
-    notAvailableServices {
-      ka
-      en
-    }
-    generalPrice
-    currency
-    averageDurationMinutes
   }
-}
-    `;
-export type UpdateProductDetailsMutationFn = Apollo.MutationFunction<UpdateProductDetails, UpdateProductDetailsVariables>;
+`;
+export type UpdateProductDetailsMutationFn = Apollo.MutationFunction<
+  UpdateProductDetails,
+  UpdateProductDetailsVariables
+>;
 
 /**
  * __useUpdateProductDetails__
@@ -1450,26 +2075,43 @@ export type UpdateProductDetailsMutationFn = Apollo.MutationFunction<UpdateProdu
  *   },
  * });
  */
-export function useUpdateProductDetails(baseOptions?: Apollo.MutationHookOptions<UpdateProductDetails, UpdateProductDetailsVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateProductDetails, UpdateProductDetailsVariables>(UpdateProductDetailsDocument, options);
-      }
-export type UpdateProductDetailsHookResult = ReturnType<typeof useUpdateProductDetails>;
-export type UpdateProductDetailsMutationResult = Apollo.MutationResult<UpdateProductDetails>;
-export type UpdateProductDetailsMutationOptions = Apollo.BaseMutationOptions<UpdateProductDetails, UpdateProductDetailsVariables>;
-export const UpdateProviderDocument = gql`
-    mutation updateProvider($input: ProviderInput!) {
-  updateProvider(input: $input) {
-    id
-    name
-    phone
-    email
-    logo
-    website
-  }
+export function useUpdateProductDetails(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateProductDetails,
+    UpdateProductDetailsVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<
+    UpdateProductDetails,
+    UpdateProductDetailsVariables
+  >(UpdateProductDetailsDocument, options);
 }
-    `;
-export type UpdateProviderMutationFn = Apollo.MutationFunction<UpdateProvider, UpdateProviderVariables>;
+export type UpdateProductDetailsHookResult = ReturnType<
+  typeof useUpdateProductDetails
+>;
+export type UpdateProductDetailsMutationResult =
+  Apollo.MutationResult<UpdateProductDetails>;
+export type UpdateProductDetailsMutationOptions = Apollo.BaseMutationOptions<
+  UpdateProductDetails,
+  UpdateProductDetailsVariables
+>;
+export const UpdateProviderDocument = gql`
+  mutation updateProvider($input: ProviderInput!) {
+    updateProvider(input: $input) {
+      id
+      name
+      phone
+      email
+      logo
+      website
+    }
+  }
+`;
+export type UpdateProviderMutationFn = Apollo.MutationFunction<
+  UpdateProvider,
+  UpdateProviderVariables
+>;
 
 /**
  * __useUpdateProvider__
@@ -1488,27 +2130,42 @@ export type UpdateProviderMutationFn = Apollo.MutationFunction<UpdateProvider, U
  *   },
  * });
  */
-export function useUpdateProvider(baseOptions?: Apollo.MutationHookOptions<UpdateProvider, UpdateProviderVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateProvider, UpdateProviderVariables>(UpdateProviderDocument, options);
-      }
-export type UpdateProviderHookResult = ReturnType<typeof useUpdateProvider>;
-export type UpdateProviderMutationResult = Apollo.MutationResult<UpdateProvider>;
-export type UpdateProviderMutationOptions = Apollo.BaseMutationOptions<UpdateProvider, UpdateProviderVariables>;
-export const UpdateUserDocument = gql`
-    mutation updateUser($input: UpdateUserInput!) {
-  updateUser(input: $input) {
-    id
-    phone
-    role
-    firstname
-    lastname
-    createdAt
-    updatedAt
-  }
+export function useUpdateProvider(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateProvider,
+    UpdateProviderVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<UpdateProvider, UpdateProviderVariables>(
+    UpdateProviderDocument,
+    options,
+  );
 }
-    `;
-export type UpdateUserMutationFn = Apollo.MutationFunction<UpdateUser, UpdateUserVariables>;
+export type UpdateProviderHookResult = ReturnType<typeof useUpdateProvider>;
+export type UpdateProviderMutationResult =
+  Apollo.MutationResult<UpdateProvider>;
+export type UpdateProviderMutationOptions = Apollo.BaseMutationOptions<
+  UpdateProvider,
+  UpdateProviderVariables
+>;
+export const UpdateUserDocument = gql`
+  mutation updateUser($input: UpdateUserInput!) {
+    updateUser(input: $input) {
+      id
+      phone
+      role
+      firstname
+      lastname
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export type UpdateUserMutationFn = Apollo.MutationFunction<
+  UpdateUser,
+  UpdateUserVariables
+>;
 
 /**
  * __useUpdateUser__
@@ -1527,18 +2184,26 @@ export type UpdateUserMutationFn = Apollo.MutationFunction<UpdateUser, UpdateUse
  *   },
  * });
  */
-export function useUpdateUser(baseOptions?: Apollo.MutationHookOptions<UpdateUser, UpdateUserVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateUser, UpdateUserVariables>(UpdateUserDocument, options);
-      }
+export function useUpdateUser(
+  baseOptions?: Apollo.MutationHookOptions<UpdateUser, UpdateUserVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<UpdateUser, UpdateUserVariables>(
+    UpdateUserDocument,
+    options,
+  );
+}
 export type UpdateUserHookResult = ReturnType<typeof useUpdateUser>;
 export type UpdateUserMutationResult = Apollo.MutationResult<UpdateUser>;
-export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<UpdateUser, UpdateUserVariables>;
+export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<
+  UpdateUser,
+  UpdateUserVariables
+>;
 export const CheckPhoneDocument = gql`
-    query checkPhone($phone: String!) {
-  checkPhone(phone: $phone)
-}
-    `;
+  query checkPhone($phone: String!) {
+    checkPhone(phone: $phone)
+  }
+`;
 
 /**
  * __useCheckPhone__
@@ -1556,22 +2221,37 @@ export const CheckPhoneDocument = gql`
  *   },
  * });
  */
-export function useCheckPhone(baseOptions: Apollo.QueryHookOptions<CheckPhone, CheckPhoneVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<CheckPhone, CheckPhoneVariables>(CheckPhoneDocument, options);
-      }
-export function useCheckPhoneLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CheckPhone, CheckPhoneVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<CheckPhone, CheckPhoneVariables>(CheckPhoneDocument, options);
-        }
-export type CheckPhoneHookResult = ReturnType<typeof useCheckPhone>;
-export type CheckPhoneLazyQueryHookResult = ReturnType<typeof useCheckPhoneLazyQuery>;
-export type CheckPhoneQueryResult = Apollo.QueryResult<CheckPhone, CheckPhoneVariables>;
-export const EchoDocument = gql`
-    query echo($message: String) {
-  echo(message: $message)
+export function useCheckPhone(
+  baseOptions: Apollo.QueryHookOptions<CheckPhone, CheckPhoneVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<CheckPhone, CheckPhoneVariables>(
+    CheckPhoneDocument,
+    options,
+  );
 }
-    `;
+export function useCheckPhoneLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<CheckPhone, CheckPhoneVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<CheckPhone, CheckPhoneVariables>(
+    CheckPhoneDocument,
+    options,
+  );
+}
+export type CheckPhoneHookResult = ReturnType<typeof useCheckPhone>;
+export type CheckPhoneLazyQueryHookResult = ReturnType<
+  typeof useCheckPhoneLazyQuery
+>;
+export type CheckPhoneQueryResult = Apollo.QueryResult<
+  CheckPhone,
+  CheckPhoneVariables
+>;
+export const EchoDocument = gql`
+  query echo($message: String) {
+    echo(message: $message)
+  }
+`;
 
 /**
  * __useEcho__
@@ -1589,22 +2269,26 @@ export const EchoDocument = gql`
  *   },
  * });
  */
-export function useEcho(baseOptions?: Apollo.QueryHookOptions<Echo, EchoVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<Echo, EchoVariables>(EchoDocument, options);
-      }
-export function useEchoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Echo, EchoVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<Echo, EchoVariables>(EchoDocument, options);
-        }
+export function useEcho(
+  baseOptions?: Apollo.QueryHookOptions<Echo, EchoVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<Echo, EchoVariables>(EchoDocument, options);
+}
+export function useEchoLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<Echo, EchoVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<Echo, EchoVariables>(EchoDocument, options);
+}
 export type EchoHookResult = ReturnType<typeof useEcho>;
 export type EchoLazyQueryHookResult = ReturnType<typeof useEchoLazyQuery>;
 export type EchoQueryResult = Apollo.QueryResult<Echo, EchoVariables>;
 export const EchoAuthorizedDocument = gql`
-    query echoAuthorized($message: String) {
-  echoAuthorized(message: $message)
-}
-    `;
+  query echoAuthorized($message: String) {
+    echoAuthorized(message: $message)
+  }
+`;
 
 /**
  * __useEchoAuthorized__
@@ -1622,22 +2306,43 @@ export const EchoAuthorizedDocument = gql`
  *   },
  * });
  */
-export function useEchoAuthorized(baseOptions?: Apollo.QueryHookOptions<EchoAuthorized, EchoAuthorizedVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<EchoAuthorized, EchoAuthorizedVariables>(EchoAuthorizedDocument, options);
-      }
-export function useEchoAuthorizedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EchoAuthorized, EchoAuthorizedVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<EchoAuthorized, EchoAuthorizedVariables>(EchoAuthorizedDocument, options);
-        }
-export type EchoAuthorizedHookResult = ReturnType<typeof useEchoAuthorized>;
-export type EchoAuthorizedLazyQueryHookResult = ReturnType<typeof useEchoAuthorizedLazyQuery>;
-export type EchoAuthorizedQueryResult = Apollo.QueryResult<EchoAuthorized, EchoAuthorizedVariables>;
-export const EchoMonoDocument = gql`
-    query echoMono($message: String) {
-  echoMono(message: $message)
+export function useEchoAuthorized(
+  baseOptions?: Apollo.QueryHookOptions<
+    EchoAuthorized,
+    EchoAuthorizedVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<EchoAuthorized, EchoAuthorizedVariables>(
+    EchoAuthorizedDocument,
+    options,
+  );
 }
-    `;
+export function useEchoAuthorizedLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    EchoAuthorized,
+    EchoAuthorizedVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<EchoAuthorized, EchoAuthorizedVariables>(
+    EchoAuthorizedDocument,
+    options,
+  );
+}
+export type EchoAuthorizedHookResult = ReturnType<typeof useEchoAuthorized>;
+export type EchoAuthorizedLazyQueryHookResult = ReturnType<
+  typeof useEchoAuthorizedLazyQuery
+>;
+export type EchoAuthorizedQueryResult = Apollo.QueryResult<
+  EchoAuthorized,
+  EchoAuthorizedVariables
+>;
+export const EchoMonoDocument = gql`
+  query echoMono($message: String) {
+    echoMono(message: $message)
+  }
+`;
 
 /**
  * __useEchoMono__
@@ -1655,30 +2360,45 @@ export const EchoMonoDocument = gql`
  *   },
  * });
  */
-export function useEchoMono(baseOptions?: Apollo.QueryHookOptions<EchoMono, EchoMonoVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<EchoMono, EchoMonoVariables>(EchoMonoDocument, options);
-      }
-export function useEchoMonoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EchoMono, EchoMonoVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<EchoMono, EchoMonoVariables>(EchoMonoDocument, options);
-        }
-export type EchoMonoHookResult = ReturnType<typeof useEchoMono>;
-export type EchoMonoLazyQueryHookResult = ReturnType<typeof useEchoMonoLazyQuery>;
-export type EchoMonoQueryResult = Apollo.QueryResult<EchoMono, EchoMonoVariables>;
-export const GetMeDocument = gql`
-    query getMe {
-  getMe {
-    id
-    phone
-    role
-    firstname
-    lastname
-    createdAt
-    updatedAt
-  }
+export function useEchoMono(
+  baseOptions?: Apollo.QueryHookOptions<EchoMono, EchoMonoVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<EchoMono, EchoMonoVariables>(
+    EchoMonoDocument,
+    options,
+  );
 }
-    `;
+export function useEchoMonoLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<EchoMono, EchoMonoVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<EchoMono, EchoMonoVariables>(
+    EchoMonoDocument,
+    options,
+  );
+}
+export type EchoMonoHookResult = ReturnType<typeof useEchoMono>;
+export type EchoMonoLazyQueryHookResult = ReturnType<
+  typeof useEchoMonoLazyQuery
+>;
+export type EchoMonoQueryResult = Apollo.QueryResult<
+  EchoMono,
+  EchoMonoVariables
+>;
+export const GetMeDocument = gql`
+  query getMe {
+    getMe {
+      id
+      phone
+      role
+      firstname
+      lastname
+      createdAt
+      updatedAt
+    }
+  }
+`;
 
 /**
  * __useGetMe__
@@ -1695,34 +2415,38 @@ export const GetMeDocument = gql`
  *   },
  * });
  */
-export function useGetMe(baseOptions?: Apollo.QueryHookOptions<GetMe, GetMeVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetMe, GetMeVariables>(GetMeDocument, options);
-      }
-export function useGetMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMe, GetMeVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetMe, GetMeVariables>(GetMeDocument, options);
-        }
+export function useGetMe(
+  baseOptions?: Apollo.QueryHookOptions<GetMe, GetMeVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<GetMe, GetMeVariables>(GetMeDocument, options);
+}
+export function useGetMeLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<GetMe, GetMeVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<GetMe, GetMeVariables>(GetMeDocument, options);
+}
 export type GetMeHookResult = ReturnType<typeof useGetMe>;
 export type GetMeLazyQueryHookResult = ReturnType<typeof useGetMeLazyQuery>;
 export type GetMeQueryResult = Apollo.QueryResult<GetMe, GetMeVariables>;
 export const GetOrderDocument = gql`
-    query getOrder($id: ID!) {
-  getOrder(id: $id) {
-    id
-    userId
-    categoryId
-    providerId
-    products {
-      productId
-      quantity
-      schedulingDate
-      schedulingTime
+  query getOrder($id: ID!) {
+    getOrder(id: $id) {
+      id
+      userId
+      categoryId
+      providerId
+      products {
+        productId
+        quantity
+        schedulingDate
+        schedulingTime
+      }
+      orderStatus
     }
-    orderStatus
   }
-}
-    `;
+`;
 
 /**
  * __useGetOrder__
@@ -1740,48 +2464,63 @@ export const GetOrderDocument = gql`
  *   },
  * });
  */
-export function useGetOrder(baseOptions: Apollo.QueryHookOptions<GetOrder, GetOrderVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetOrder, GetOrderVariables>(GetOrderDocument, options);
-      }
-export function useGetOrderLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOrder, GetOrderVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetOrder, GetOrderVariables>(GetOrderDocument, options);
-        }
-export type GetOrderHookResult = ReturnType<typeof useGetOrder>;
-export type GetOrderLazyQueryHookResult = ReturnType<typeof useGetOrderLazyQuery>;
-export type GetOrderQueryResult = Apollo.QueryResult<GetOrder, GetOrderVariables>;
-export const GetProductDocument = gql`
-    query getProduct($productId: ID) {
-  getProduct(productId: $productId) {
-    id
-    name {
-      ka
-      en
-    }
-    providerId
-    categoryId
-    description {
-      ka
-      en
-    }
-    location {
-      address {
-        street
-        district
-        city
-      }
-      coordinates {
-        lat
-        lng
-      }
-    }
-    mainImage
-    images
-    tags
-  }
+export function useGetOrder(
+  baseOptions: Apollo.QueryHookOptions<GetOrder, GetOrderVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<GetOrder, GetOrderVariables>(
+    GetOrderDocument,
+    options,
+  );
 }
-    `;
+export function useGetOrderLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<GetOrder, GetOrderVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<GetOrder, GetOrderVariables>(
+    GetOrderDocument,
+    options,
+  );
+}
+export type GetOrderHookResult = ReturnType<typeof useGetOrder>;
+export type GetOrderLazyQueryHookResult = ReturnType<
+  typeof useGetOrderLazyQuery
+>;
+export type GetOrderQueryResult = Apollo.QueryResult<
+  GetOrder,
+  GetOrderVariables
+>;
+export const GetProductDocument = gql`
+  query getProduct($productId: ID) {
+    getProduct(productId: $productId) {
+      id
+      name {
+        ka
+        en
+      }
+      providerId
+      categoryId
+      description {
+        ka
+        en
+      }
+      location {
+        address {
+          street
+          district
+          city
+        }
+        coordinates {
+          lat
+          lng
+        }
+      }
+      mainImage
+      images
+      tags
+    }
+  }
+`;
 
 /**
  * __useGetProduct__
@@ -1799,30 +2538,45 @@ export const GetProductDocument = gql`
  *   },
  * });
  */
-export function useGetProduct(baseOptions?: Apollo.QueryHookOptions<GetProduct, GetProductVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetProduct, GetProductVariables>(GetProductDocument, options);
-      }
-export function useGetProductLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProduct, GetProductVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetProduct, GetProductVariables>(GetProductDocument, options);
-        }
-export type GetProductHookResult = ReturnType<typeof useGetProduct>;
-export type GetProductLazyQueryHookResult = ReturnType<typeof useGetProductLazyQuery>;
-export type GetProductQueryResult = Apollo.QueryResult<GetProduct, GetProductVariables>;
-export const GetUserByIdDocument = gql`
-    query getUserById($userId: ID!) {
-  getUserById(userId: $userId) {
-    id
-    phone
-    role
-    firstname
-    lastname
-    createdAt
-    updatedAt
-  }
+export function useGetProduct(
+  baseOptions?: Apollo.QueryHookOptions<GetProduct, GetProductVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<GetProduct, GetProductVariables>(
+    GetProductDocument,
+    options,
+  );
 }
-    `;
+export function useGetProductLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<GetProduct, GetProductVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<GetProduct, GetProductVariables>(
+    GetProductDocument,
+    options,
+  );
+}
+export type GetProductHookResult = ReturnType<typeof useGetProduct>;
+export type GetProductLazyQueryHookResult = ReturnType<
+  typeof useGetProductLazyQuery
+>;
+export type GetProductQueryResult = Apollo.QueryResult<
+  GetProduct,
+  GetProductVariables
+>;
+export const GetUserByIdDocument = gql`
+  query getUserById($userId: ID!) {
+    getUserById(userId: $userId) {
+      id
+      phone
+      role
+      firstname
+      lastname
+      createdAt
+      updatedAt
+    }
+  }
+`;
 
 /**
  * __useGetUserById__
@@ -1840,33 +2594,48 @@ export const GetUserByIdDocument = gql`
  *   },
  * });
  */
-export function useGetUserById(baseOptions: Apollo.QueryHookOptions<GetUserById, GetUserByIdVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetUserById, GetUserByIdVariables>(GetUserByIdDocument, options);
-      }
-export function useGetUserByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserById, GetUserByIdVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetUserById, GetUserByIdVariables>(GetUserByIdDocument, options);
-        }
-export type GetUserByIdHookResult = ReturnType<typeof useGetUserById>;
-export type GetUserByIdLazyQueryHookResult = ReturnType<typeof useGetUserByIdLazyQuery>;
-export type GetUserByIdQueryResult = Apollo.QueryResult<GetUserById, GetUserByIdVariables>;
-export const ListCarsDocument = gql`
-    query listCars {
-  listCars {
-    id
-    plateNumber
-    carType
-    techPassportNumber
-    vin
-    make
-    model
-    year
-    createdAt
-    updatedAt
-  }
+export function useGetUserById(
+  baseOptions: Apollo.QueryHookOptions<GetUserById, GetUserByIdVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<GetUserById, GetUserByIdVariables>(
+    GetUserByIdDocument,
+    options,
+  );
 }
-    `;
+export function useGetUserByIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<GetUserById, GetUserByIdVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<GetUserById, GetUserByIdVariables>(
+    GetUserByIdDocument,
+    options,
+  );
+}
+export type GetUserByIdHookResult = ReturnType<typeof useGetUserById>;
+export type GetUserByIdLazyQueryHookResult = ReturnType<
+  typeof useGetUserByIdLazyQuery
+>;
+export type GetUserByIdQueryResult = Apollo.QueryResult<
+  GetUserById,
+  GetUserByIdVariables
+>;
+export const ListCarsDocument = gql`
+  query listCars {
+    listCars {
+      id
+      plateNumber
+      carType
+      techPassportNumber
+      vin
+      make
+      model
+      year
+      createdAt
+      updatedAt
+    }
+  }
+`;
 
 /**
  * __useListCars__
@@ -1883,28 +2652,43 @@ export const ListCarsDocument = gql`
  *   },
  * });
  */
-export function useListCars(baseOptions?: Apollo.QueryHookOptions<ListCars, ListCarsVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ListCars, ListCarsVariables>(ListCarsDocument, options);
-      }
-export function useListCarsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListCars, ListCarsVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ListCars, ListCarsVariables>(ListCarsDocument, options);
-        }
+export function useListCars(
+  baseOptions?: Apollo.QueryHookOptions<ListCars, ListCarsVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<ListCars, ListCarsVariables>(
+    ListCarsDocument,
+    options,
+  );
+}
+export function useListCarsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ListCars, ListCarsVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<ListCars, ListCarsVariables>(
+    ListCarsDocument,
+    options,
+  );
+}
 export type ListCarsHookResult = ReturnType<typeof useListCars>;
-export type ListCarsLazyQueryHookResult = ReturnType<typeof useListCarsLazyQuery>;
-export type ListCarsQueryResult = Apollo.QueryResult<ListCars, ListCarsVariables>;
+export type ListCarsLazyQueryHookResult = ReturnType<
+  typeof useListCarsLazyQuery
+>;
+export type ListCarsQueryResult = Apollo.QueryResult<
+  ListCars,
+  ListCarsVariables
+>;
 export const ListCategoriesDocument = gql`
-    query listCategories {
-  listCategories {
-    id
-    name {
-      ka
-      en
+  query listCategories {
+    listCategories {
+      id
+      name {
+        ka
+        en
+      }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useListCategories__
@@ -1921,34 +2705,55 @@ export const ListCategoriesDocument = gql`
  *   },
  * });
  */
-export function useListCategories(baseOptions?: Apollo.QueryHookOptions<ListCategories, ListCategoriesVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ListCategories, ListCategoriesVariables>(ListCategoriesDocument, options);
-      }
-export function useListCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListCategories, ListCategoriesVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ListCategories, ListCategoriesVariables>(ListCategoriesDocument, options);
-        }
-export type ListCategoriesHookResult = ReturnType<typeof useListCategories>;
-export type ListCategoriesLazyQueryHookResult = ReturnType<typeof useListCategoriesLazyQuery>;
-export type ListCategoriesQueryResult = Apollo.QueryResult<ListCategories, ListCategoriesVariables>;
-export const ListOrdersDocument = gql`
-    query listOrders {
-  listOrders {
-    id
-    userId
-    categoryId
-    providerId
-    products {
-      productId
-      quantity
-      schedulingDate
-      schedulingTime
-    }
-    orderStatus
-  }
+export function useListCategories(
+  baseOptions?: Apollo.QueryHookOptions<
+    ListCategories,
+    ListCategoriesVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<ListCategories, ListCategoriesVariables>(
+    ListCategoriesDocument,
+    options,
+  );
 }
-    `;
+export function useListCategoriesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ListCategories,
+    ListCategoriesVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<ListCategories, ListCategoriesVariables>(
+    ListCategoriesDocument,
+    options,
+  );
+}
+export type ListCategoriesHookResult = ReturnType<typeof useListCategories>;
+export type ListCategoriesLazyQueryHookResult = ReturnType<
+  typeof useListCategoriesLazyQuery
+>;
+export type ListCategoriesQueryResult = Apollo.QueryResult<
+  ListCategories,
+  ListCategoriesVariables
+>;
+export const ListOrdersDocument = gql`
+  query listOrders {
+    listOrders {
+      id
+      userId
+      categoryId
+      providerId
+      products {
+        productId
+        quantity
+        schedulingDate
+        schedulingTime
+      }
+      orderStatus
+    }
+  }
+`;
 
 /**
  * __useListOrders__
@@ -1965,34 +2770,49 @@ export const ListOrdersDocument = gql`
  *   },
  * });
  */
-export function useListOrders(baseOptions?: Apollo.QueryHookOptions<ListOrders, ListOrdersVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ListOrders, ListOrdersVariables>(ListOrdersDocument, options);
-      }
-export function useListOrdersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListOrders, ListOrdersVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ListOrders, ListOrdersVariables>(ListOrdersDocument, options);
-        }
-export type ListOrdersHookResult = ReturnType<typeof useListOrders>;
-export type ListOrdersLazyQueryHookResult = ReturnType<typeof useListOrdersLazyQuery>;
-export type ListOrdersQueryResult = Apollo.QueryResult<ListOrders, ListOrdersVariables>;
-export const ListOrdersByUserIdDocument = gql`
-    query listOrdersByUserId($userId: ID!) {
-  listOrdersByUserId(userId: $userId) {
-    id
-    userId
-    categoryId
-    providerId
-    products {
-      productId
-      quantity
-      schedulingDate
-      schedulingTime
-    }
-    orderStatus
-  }
+export function useListOrders(
+  baseOptions?: Apollo.QueryHookOptions<ListOrders, ListOrdersVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<ListOrders, ListOrdersVariables>(
+    ListOrdersDocument,
+    options,
+  );
 }
-    `;
+export function useListOrdersLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ListOrders, ListOrdersVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<ListOrders, ListOrdersVariables>(
+    ListOrdersDocument,
+    options,
+  );
+}
+export type ListOrdersHookResult = ReturnType<typeof useListOrders>;
+export type ListOrdersLazyQueryHookResult = ReturnType<
+  typeof useListOrdersLazyQuery
+>;
+export type ListOrdersQueryResult = Apollo.QueryResult<
+  ListOrders,
+  ListOrdersVariables
+>;
+export const ListOrdersByUserIdDocument = gql`
+  query listOrdersByUserId($userId: ID!) {
+    listOrdersByUserId(userId: $userId) {
+      id
+      userId
+      categoryId
+      providerId
+      products {
+        productId
+        quantity
+        schedulingDate
+        schedulingTime
+      }
+      orderStatus
+    }
+  }
+`;
 
 /**
  * __useListOrdersByUserId__
@@ -2010,48 +2830,71 @@ export const ListOrdersByUserIdDocument = gql`
  *   },
  * });
  */
-export function useListOrdersByUserId(baseOptions: Apollo.QueryHookOptions<ListOrdersByUserId, ListOrdersByUserIdVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ListOrdersByUserId, ListOrdersByUserIdVariables>(ListOrdersByUserIdDocument, options);
-      }
-export function useListOrdersByUserIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListOrdersByUserId, ListOrdersByUserIdVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ListOrdersByUserId, ListOrdersByUserIdVariables>(ListOrdersByUserIdDocument, options);
-        }
-export type ListOrdersByUserIdHookResult = ReturnType<typeof useListOrdersByUserId>;
-export type ListOrdersByUserIdLazyQueryHookResult = ReturnType<typeof useListOrdersByUserIdLazyQuery>;
-export type ListOrdersByUserIdQueryResult = Apollo.QueryResult<ListOrdersByUserId, ListOrdersByUserIdVariables>;
-export const ListProductByCategoryIdDocument = gql`
-    query listProductByCategoryId($categoryId: ID!) {
-  listProductByCategoryId(categoryId: $categoryId) {
-    id
-    name {
-      ka
-      en
-    }
-    providerId
-    categoryId
-    description {
-      ka
-      en
-    }
-    location {
-      address {
-        street
-        district
-        city
-      }
-      coordinates {
-        lat
-        lng
-      }
-    }
-    mainImage
-    images
-    tags
-  }
+export function useListOrdersByUserId(
+  baseOptions: Apollo.QueryHookOptions<
+    ListOrdersByUserId,
+    ListOrdersByUserIdVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<ListOrdersByUserId, ListOrdersByUserIdVariables>(
+    ListOrdersByUserIdDocument,
+    options,
+  );
 }
-    `;
+export function useListOrdersByUserIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ListOrdersByUserId,
+    ListOrdersByUserIdVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<ListOrdersByUserId, ListOrdersByUserIdVariables>(
+    ListOrdersByUserIdDocument,
+    options,
+  );
+}
+export type ListOrdersByUserIdHookResult = ReturnType<
+  typeof useListOrdersByUserId
+>;
+export type ListOrdersByUserIdLazyQueryHookResult = ReturnType<
+  typeof useListOrdersByUserIdLazyQuery
+>;
+export type ListOrdersByUserIdQueryResult = Apollo.QueryResult<
+  ListOrdersByUserId,
+  ListOrdersByUserIdVariables
+>;
+export const ListProductByCategoryIdDocument = gql`
+  query listProductByCategoryId($categoryId: ID!) {
+    listProductByCategoryId(categoryId: $categoryId) {
+      id
+      name {
+        ka
+        en
+      }
+      providerId
+      categoryId
+      description {
+        ka
+        en
+      }
+      location {
+        address {
+          street
+          district
+          city
+        }
+        coordinates {
+          lat
+          lng
+        }
+      }
+      mainImage
+      images
+      tags
+    }
+  }
+`;
 
 /**
  * __useListProductByCategoryId__
@@ -2069,48 +2912,71 @@ export const ListProductByCategoryIdDocument = gql`
  *   },
  * });
  */
-export function useListProductByCategoryId(baseOptions: Apollo.QueryHookOptions<ListProductByCategoryId, ListProductByCategoryIdVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ListProductByCategoryId, ListProductByCategoryIdVariables>(ListProductByCategoryIdDocument, options);
-      }
-export function useListProductByCategoryIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListProductByCategoryId, ListProductByCategoryIdVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ListProductByCategoryId, ListProductByCategoryIdVariables>(ListProductByCategoryIdDocument, options);
-        }
-export type ListProductByCategoryIdHookResult = ReturnType<typeof useListProductByCategoryId>;
-export type ListProductByCategoryIdLazyQueryHookResult = ReturnType<typeof useListProductByCategoryIdLazyQuery>;
-export type ListProductByCategoryIdQueryResult = Apollo.QueryResult<ListProductByCategoryId, ListProductByCategoryIdVariables>;
-export const ListProductByProviderIdDocument = gql`
-    query listProductByProviderId($providerId: ID!) {
-  listProductByProviderId(providerId: $providerId) {
-    id
-    name {
-      ka
-      en
-    }
-    providerId
-    categoryId
-    description {
-      ka
-      en
-    }
-    location {
-      address {
-        street
-        district
-        city
-      }
-      coordinates {
-        lat
-        lng
-      }
-    }
-    mainImage
-    images
-    tags
-  }
+export function useListProductByCategoryId(
+  baseOptions: Apollo.QueryHookOptions<
+    ListProductByCategoryId,
+    ListProductByCategoryIdVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<
+    ListProductByCategoryId,
+    ListProductByCategoryIdVariables
+  >(ListProductByCategoryIdDocument, options);
 }
-    `;
+export function useListProductByCategoryIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ListProductByCategoryId,
+    ListProductByCategoryIdVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<
+    ListProductByCategoryId,
+    ListProductByCategoryIdVariables
+  >(ListProductByCategoryIdDocument, options);
+}
+export type ListProductByCategoryIdHookResult = ReturnType<
+  typeof useListProductByCategoryId
+>;
+export type ListProductByCategoryIdLazyQueryHookResult = ReturnType<
+  typeof useListProductByCategoryIdLazyQuery
+>;
+export type ListProductByCategoryIdQueryResult = Apollo.QueryResult<
+  ListProductByCategoryId,
+  ListProductByCategoryIdVariables
+>;
+export const ListProductByProviderIdDocument = gql`
+  query listProductByProviderId($providerId: ID!) {
+    listProductByProviderId(providerId: $providerId) {
+      id
+      name {
+        ka
+        en
+      }
+      providerId
+      categoryId
+      description {
+        ka
+        en
+      }
+      location {
+        address {
+          street
+          district
+          city
+        }
+        coordinates {
+          lat
+          lng
+        }
+      }
+      mainImage
+      images
+      tags
+    }
+  }
+`;
 
 /**
  * __useListProductByProviderId__
@@ -2128,49 +2994,72 @@ export const ListProductByProviderIdDocument = gql`
  *   },
  * });
  */
-export function useListProductByProviderId(baseOptions: Apollo.QueryHookOptions<ListProductByProviderId, ListProductByProviderIdVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ListProductByProviderId, ListProductByProviderIdVariables>(ListProductByProviderIdDocument, options);
-      }
-export function useListProductByProviderIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListProductByProviderId, ListProductByProviderIdVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ListProductByProviderId, ListProductByProviderIdVariables>(ListProductByProviderIdDocument, options);
-        }
-export type ListProductByProviderIdHookResult = ReturnType<typeof useListProductByProviderId>;
-export type ListProductByProviderIdLazyQueryHookResult = ReturnType<typeof useListProductByProviderIdLazyQuery>;
-export type ListProductByProviderIdQueryResult = Apollo.QueryResult<ListProductByProviderId, ListProductByProviderIdVariables>;
-export const ListProductDetailsByProductIdDocument = gql`
-    query listProductDetailsByProductId($productId: ID!) {
-  listProductDetailsByProductId(productId: $productId) {
-    id
-    productId
-    name {
-      ka
-      en
-    }
-    description {
-      ka
-      en
-    }
-    pricesForCarTypes {
-      order
-      carType
-      price
-    }
-    availableServices {
-      ka
-      en
-    }
-    notAvailableServices {
-      ka
-      en
-    }
-    generalPrice
-    currency
-    averageDurationMinutes
-  }
+export function useListProductByProviderId(
+  baseOptions: Apollo.QueryHookOptions<
+    ListProductByProviderId,
+    ListProductByProviderIdVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<
+    ListProductByProviderId,
+    ListProductByProviderIdVariables
+  >(ListProductByProviderIdDocument, options);
 }
-    `;
+export function useListProductByProviderIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ListProductByProviderId,
+    ListProductByProviderIdVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<
+    ListProductByProviderId,
+    ListProductByProviderIdVariables
+  >(ListProductByProviderIdDocument, options);
+}
+export type ListProductByProviderIdHookResult = ReturnType<
+  typeof useListProductByProviderId
+>;
+export type ListProductByProviderIdLazyQueryHookResult = ReturnType<
+  typeof useListProductByProviderIdLazyQuery
+>;
+export type ListProductByProviderIdQueryResult = Apollo.QueryResult<
+  ListProductByProviderId,
+  ListProductByProviderIdVariables
+>;
+export const ListProductDetailsByProductIdDocument = gql`
+  query listProductDetailsByProductId($productId: ID!) {
+    listProductDetailsByProductId(productId: $productId) {
+      id
+      productId
+      name {
+        ka
+        en
+      }
+      description {
+        ka
+        en
+      }
+      pricesForCarTypes {
+        order
+        carType
+        price
+      }
+      availableServices {
+        ka
+        en
+      }
+      notAvailableServices {
+        ka
+        en
+      }
+      generalPrice
+      currency
+      averageDurationMinutes
+    }
+  }
+`;
 
 /**
  * __useListProductDetailsByProductId__
@@ -2188,48 +3077,71 @@ export const ListProductDetailsByProductIdDocument = gql`
  *   },
  * });
  */
-export function useListProductDetailsByProductId(baseOptions: Apollo.QueryHookOptions<ListProductDetailsByProductId, ListProductDetailsByProductIdVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ListProductDetailsByProductId, ListProductDetailsByProductIdVariables>(ListProductDetailsByProductIdDocument, options);
-      }
-export function useListProductDetailsByProductIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListProductDetailsByProductId, ListProductDetailsByProductIdVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ListProductDetailsByProductId, ListProductDetailsByProductIdVariables>(ListProductDetailsByProductIdDocument, options);
-        }
-export type ListProductDetailsByProductIdHookResult = ReturnType<typeof useListProductDetailsByProductId>;
-export type ListProductDetailsByProductIdLazyQueryHookResult = ReturnType<typeof useListProductDetailsByProductIdLazyQuery>;
-export type ListProductDetailsByProductIdQueryResult = Apollo.QueryResult<ListProductDetailsByProductId, ListProductDetailsByProductIdVariables>;
-export const ListProductsDocument = gql`
-    query listProducts {
-  listProducts {
-    id
-    name {
-      ka
-      en
-    }
-    providerId
-    categoryId
-    description {
-      ka
-      en
-    }
-    location {
-      address {
-        street
-        district
-        city
-      }
-      coordinates {
-        lat
-        lng
-      }
-    }
-    mainImage
-    images
-    tags
-  }
+export function useListProductDetailsByProductId(
+  baseOptions: Apollo.QueryHookOptions<
+    ListProductDetailsByProductId,
+    ListProductDetailsByProductIdVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<
+    ListProductDetailsByProductId,
+    ListProductDetailsByProductIdVariables
+  >(ListProductDetailsByProductIdDocument, options);
 }
-    `;
+export function useListProductDetailsByProductIdLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ListProductDetailsByProductId,
+    ListProductDetailsByProductIdVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<
+    ListProductDetailsByProductId,
+    ListProductDetailsByProductIdVariables
+  >(ListProductDetailsByProductIdDocument, options);
+}
+export type ListProductDetailsByProductIdHookResult = ReturnType<
+  typeof useListProductDetailsByProductId
+>;
+export type ListProductDetailsByProductIdLazyQueryHookResult = ReturnType<
+  typeof useListProductDetailsByProductIdLazyQuery
+>;
+export type ListProductDetailsByProductIdQueryResult = Apollo.QueryResult<
+  ListProductDetailsByProductId,
+  ListProductDetailsByProductIdVariables
+>;
+export const ListProductsDocument = gql`
+  query listProducts {
+    listProducts {
+      id
+      name {
+        ka
+        en
+      }
+      providerId
+      categoryId
+      description {
+        ka
+        en
+      }
+      location {
+        address {
+          street
+          district
+          city
+        }
+        coordinates {
+          lat
+          lng
+        }
+      }
+      mainImage
+      images
+      tags
+    }
+  }
+`;
 
 /**
  * __useListProducts__
@@ -2246,29 +3158,47 @@ export const ListProductsDocument = gql`
  *   },
  * });
  */
-export function useListProducts(baseOptions?: Apollo.QueryHookOptions<ListProducts, ListProductsVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ListProducts, ListProductsVariables>(ListProductsDocument, options);
-      }
-export function useListProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListProducts, ListProductsVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ListProducts, ListProductsVariables>(ListProductsDocument, options);
-        }
-export type ListProductsHookResult = ReturnType<typeof useListProducts>;
-export type ListProductsLazyQueryHookResult = ReturnType<typeof useListProductsLazyQuery>;
-export type ListProductsQueryResult = Apollo.QueryResult<ListProducts, ListProductsVariables>;
-export const ListProvidersDocument = gql`
-    query listProviders {
-  listProviders {
-    id
-    name
-    phone
-    email
-    logo
-    website
-  }
+export function useListProducts(
+  baseOptions?: Apollo.QueryHookOptions<ListProducts, ListProductsVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<ListProducts, ListProductsVariables>(
+    ListProductsDocument,
+    options,
+  );
 }
-    `;
+export function useListProductsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ListProducts,
+    ListProductsVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<ListProducts, ListProductsVariables>(
+    ListProductsDocument,
+    options,
+  );
+}
+export type ListProductsHookResult = ReturnType<typeof useListProducts>;
+export type ListProductsLazyQueryHookResult = ReturnType<
+  typeof useListProductsLazyQuery
+>;
+export type ListProductsQueryResult = Apollo.QueryResult<
+  ListProducts,
+  ListProductsVariables
+>;
+export const ListProvidersDocument = gql`
+  query listProviders {
+    listProviders {
+      id
+      name
+      phone
+      email
+      logo
+      website
+    }
+  }
+`;
 
 /**
  * __useListProviders__
@@ -2285,48 +3215,66 @@ export const ListProvidersDocument = gql`
  *   },
  * });
  */
-export function useListProviders(baseOptions?: Apollo.QueryHookOptions<ListProviders, ListProvidersVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ListProviders, ListProvidersVariables>(ListProvidersDocument, options);
-      }
-export function useListProvidersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListProviders, ListProvidersVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ListProviders, ListProvidersVariables>(ListProvidersDocument, options);
-        }
-export type ListProvidersHookResult = ReturnType<typeof useListProviders>;
-export type ListProvidersLazyQueryHookResult = ReturnType<typeof useListProvidersLazyQuery>;
-export type ListProvidersQueryResult = Apollo.QueryResult<ListProviders, ListProvidersVariables>;
-export const SearchProductsDocument = gql`
-    query searchProducts($filter: ProductFilterInput!) {
-  searchProducts(filter: $filter) {
-    id
-    name {
-      ka
-      en
-    }
-    providerId
-    categoryId
-    description {
-      ka
-      en
-    }
-    location {
-      address {
-        street
-        district
-        city
-      }
-      coordinates {
-        lat
-        lng
-      }
-    }
-    mainImage
-    images
-    tags
-  }
+export function useListProviders(
+  baseOptions?: Apollo.QueryHookOptions<ListProviders, ListProvidersVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<ListProviders, ListProvidersVariables>(
+    ListProvidersDocument,
+    options,
+  );
 }
-    `;
+export function useListProvidersLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ListProviders,
+    ListProvidersVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<ListProviders, ListProvidersVariables>(
+    ListProvidersDocument,
+    options,
+  );
+}
+export type ListProvidersHookResult = ReturnType<typeof useListProviders>;
+export type ListProvidersLazyQueryHookResult = ReturnType<
+  typeof useListProvidersLazyQuery
+>;
+export type ListProvidersQueryResult = Apollo.QueryResult<
+  ListProviders,
+  ListProvidersVariables
+>;
+export const SearchProductsDocument = gql`
+  query searchProducts($filter: ProductFilterInput!) {
+    searchProducts(filter: $filter) {
+      id
+      name {
+        ka
+        en
+      }
+      providerId
+      categoryId
+      description {
+        ka
+        en
+      }
+      location {
+        address {
+          street
+          district
+          city
+        }
+        coordinates {
+          lat
+          lng
+        }
+      }
+      mainImage
+      images
+      tags
+    }
+  }
+`;
 
 /**
  * __useSearchProducts__
@@ -2344,14 +3292,32 @@ export const SearchProductsDocument = gql`
  *   },
  * });
  */
-export function useSearchProducts(baseOptions: Apollo.QueryHookOptions<SearchProducts, SearchProductsVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<SearchProducts, SearchProductsVariables>(SearchProductsDocument, options);
-      }
-export function useSearchProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchProducts, SearchProductsVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<SearchProducts, SearchProductsVariables>(SearchProductsDocument, options);
-        }
+export function useSearchProducts(
+  baseOptions: Apollo.QueryHookOptions<SearchProducts, SearchProductsVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<SearchProducts, SearchProductsVariables>(
+    SearchProductsDocument,
+    options,
+  );
+}
+export function useSearchProductsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    SearchProducts,
+    SearchProductsVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<SearchProducts, SearchProductsVariables>(
+    SearchProductsDocument,
+    options,
+  );
+}
 export type SearchProductsHookResult = ReturnType<typeof useSearchProducts>;
-export type SearchProductsLazyQueryHookResult = ReturnType<typeof useSearchProductsLazyQuery>;
-export type SearchProductsQueryResult = Apollo.QueryResult<SearchProducts, SearchProductsVariables>;
+export type SearchProductsLazyQueryHookResult = ReturnType<
+  typeof useSearchProductsLazyQuery
+>;
+export type SearchProductsQueryResult = Apollo.QueryResult<
+  SearchProducts,
+  SearchProductsVariables
+>;

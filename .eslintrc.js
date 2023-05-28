@@ -1,4 +1,7 @@
 module.exports = {
   root: true,
-  extends: '@react-native-community',
+  extends: ['@react-native-community', 'prettier'],
+  rules: {
+    '@typescript-eslint/no-unused-vars': 'warn',
+  },
 };
