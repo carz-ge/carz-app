@@ -31,7 +31,7 @@ const CarItem = ({item}: {item: Car}) => {
   );
 };
 
-export function PressableCarItem({item, router}: {item: Car, router: any}) {
+export function PressableCarItem({item, router}: {item: Car; router: any}) {
   return (
     <Pressable
       onPress={() => {

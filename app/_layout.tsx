@@ -49,7 +49,9 @@ function Layouts() {
       <Stack.Screen name="(drawer)" options={{headerShown: false}} />
       <Stack.Screen name="modal" options={{presentation: 'modal'}} />
       <Stack.Screen name="customer-info" options={{headerShown: false}} />
-      <Stack.Screen name="search/[categoryId]" options={{headerShown: false}} />
+      <Stack.Screen name="search" options={{headerShown: false}} />
+      <Stack.Screen name="product" options={{headerShown: false}} />
+      <Stack.Screen name="category" options={{headerShown: false}} />
     </Stack>
   );
 }
