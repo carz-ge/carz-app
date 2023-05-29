@@ -28,11 +28,8 @@ const AuthContextProvider = ({children}: PropsWithChildren) => {
   const [authToken, setAuthToken] = useState<string | null>(null);
   const segments = useSegments();
   const router = useRouter();
-  console.log('AuthContextProvider');
   useEffect(() => {
     const isAuthGroup = segments[0] === '(auth)';
-    console.log('group', isAuthGroup);
-    console.log('token', authToken);
     if ((!authToken || !isValidToken(authToken)) && !isAuthGroup) {
       if (authToken) {
         SecureStore.deleteItemAsync(ACCESS_TOKEN_KEY);
@@ -40,7 +37,7 @@ const AuthContextProvider = ({children}: PropsWithChildren) => {
       router.replace('/sign-in');
     }
     if (authToken && isValidToken(authToken) && isAuthGroup) {
-      router.replace('/');
+      router.replace('/home');
     }
   }, [segments, authToken]);
 

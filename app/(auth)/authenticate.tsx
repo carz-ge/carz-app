@@ -75,12 +75,13 @@ const Authenticate = () => {
       }
 
       await updateAuthToken(data?.authorize.accessToken);
+      // TODO save refresh token
 
-      if (isRegistered && isRegistered === "false") {
-        router.push('/(tabs)');
-      } else {
+      // if (isRegistered && isRegistered === "false") {
+      //   router.push('/(tabs)/home');
+      // } else {
         router.push('/customer-info');
-      }
+      // }
     } catch (e) {
       setError('code', new Error('დაფიქსორდა შეცდომა'));
     }

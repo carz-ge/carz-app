@@ -52,6 +52,7 @@ const SignIn = () => {
           expiresAt: data.sendOtp.expiresAt}
       });
     } catch (e) {
+      console.warn(e);
       Alert.alert('შეცდომა');
     }
   };
