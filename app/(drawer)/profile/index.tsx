@@ -27,7 +27,6 @@ export default function Profile() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FAFFF3',
     flex: 1,
     justifyContent: 'center',
     padding: 24,
