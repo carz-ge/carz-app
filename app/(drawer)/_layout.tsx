@@ -1,10 +1,11 @@
-import { withLayoutContext } from 'expo-router';
+import {useRouter, withLayoutContext} from 'expo-router';
 import {
   DrawerContentScrollView,
   DrawerItemList,
   createDrawerNavigator, DrawerContentComponentProps, DrawerNavigationOptions,
 } from '@react-navigation/drawer';
 import { Text } from 'react-native';
+import {usePathname} from "expo-router/src/LocationProvider";
 
 const DrawerNavigator = createDrawerNavigator().Navigator;
 
@@ -13,7 +14,7 @@ const Drawer = withLayoutContext<DrawerNavigationOptions,
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: 'index',
+  initialRouteName: '(tabs)',
 };
 
 function CustomDrawerContent(props: DrawerContentComponentProps) {
@@ -26,13 +27,22 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
   );
 }
 
+function useTitleNameForTabs() {
+  const pathname = usePathname();
+  if (pathname === "/bookings") {
+    return "ჯავშნები";
+  }
+  return "მთავარი"
+}
+
 export default function DrawerLayout() {
-  console.log("DrawerLayout")
+  const titleNameForTabs = useTitleNameForTabs()
+
   return (
     <Drawer drawerContent={(props) => <CustomDrawerContent {...props} />}>
       <Drawer.Screen
-        name={"index"}
-        options={{  title: 'მთავარი' }}
+        name={"(tabs)"}
+        options={{ title:"მთავარი",  headerTitle: titleNameForTabs}}
       />
       <Drawer.Screen name="profile" options={{ title: 'პროფილი' }} />
       {/*<Drawer.Screen name="bookmarks" options={{ title: 'დამახსოვრებული' }} />*/}

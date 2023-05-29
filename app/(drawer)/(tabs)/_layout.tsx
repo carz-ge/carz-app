@@ -1,7 +1,7 @@
 import React from "react";
 import {Link, Tabs, useNavigation} from 'expo-router';
 import {Pressable, useColorScheme} from 'react-native';
-import Colors from '../../lib/styles/colors';
+import Colors from '../../../lib/styles/colors';
 import {FontAwesome, MaterialCommunityIcons, Octicons} from '@expo/vector-icons';
 import {DrawerActions} from "@react-navigation/native";
 

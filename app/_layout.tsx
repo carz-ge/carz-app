@@ -16,7 +16,7 @@ export {
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
+  initialRouteName: '(drawer)',
 };
 
 export default function RootLayout() {
@@ -45,7 +45,7 @@ function Layouts() {
   return (
     <Stack>
       <Stack.Screen name="(auth)" options={{headerShown: false}} />
-      <Stack.Screen name="(tabs)" options={{headerShown: false}} />
+      <Stack.Screen name="(drawer)" options={{headerShown: false}} />
       <Stack.Screen name="modal" options={{presentation: 'modal'}} />
     </Stack>
   );
