@@ -1,13 +1,28 @@
 import React from 'react';
-import {Text, StyleSheet, View} from 'react-native';
-import {useSearchParams} from 'expo-router';
+import {StyleSheet, View} from 'react-native';
+import {useRouter, useSearchParams} from 'expo-router';
+import ChooseCar from '../../components/castomer-car/choose-car';
+import AddCarButton from '../../components/castomer-car/add-car-button';
 
 export default function Search() {
+  const router = useRouter();
   const params = useSearchParams();
   const categoryId = params.categoryId || '';
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Search category {categoryId} </Text>
+      <ChooseCar
+        onNextHandler={car => {
+          router.push({
+            pathname: '/search/pick-date-time',
+            params: {
+              carId: car.id,
+              carType: car.carType,
+              categoryId,
+            },
+          });
+        }}
+      />
+      <AddCarButton />
     </View>
   );
 }

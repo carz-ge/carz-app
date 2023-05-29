@@ -9,6 +9,7 @@ import {ApolloProvider} from '@apollo/client';
 import {DarkTheme, LightTheme} from '../lib/styles/themes';
 import AuthContextProvider from '../lib/context/auth-context';
 import {usePathname} from 'expo-router';
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -62,12 +63,14 @@ function RootLayoutNav() {
   const params = useSearchParams();
   const segments = useSegments();
 
-  console.log('RootLayoutNav path:', pathname, params, segments);
+  console.log('RootLayout path:', pathname, JSON.stringify(params), segments);
   return (
     <AuthContextProvider>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : LightTheme}>
         <ApolloProvider client={client}>
-          <Layouts />
+          <BottomSheetModalProvider>
+            <Layouts />
+          </BottomSheetModalProvider>
         </ApolloProvider>
       </ThemeProvider>
     </AuthContextProvider>

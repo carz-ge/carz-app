@@ -3,6 +3,7 @@ import {Text, StyleSheet, View, ScrollView, FlatList} from 'react-native';
 import {useListCars} from '../../../graphql/operations';
 import {PressableCarItem} from '../../../components/castomer-car/car-item';
 import {useRouter} from 'expo-router';
+import AddCarButton from '../../../components/castomer-car/add-car-button';
 
 export default function Cars() {
   const router = useRouter();
@@ -29,6 +30,7 @@ export default function Cars() {
         />
       )}
       {noData && <Text>დააამატე მანქანა</Text>}
+      <AddCarButton />
     </View>
   );
 }
