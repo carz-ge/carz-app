@@ -1,27 +1,34 @@
 import React from 'react';
-import {Text, StyleSheet, View} from 'react-native';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import CategoryList from '../../../../components/category/category-list';
 
-export default function TabTwoScreen() {
+export default () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>HOME</Text>
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        showsVerticalScrollIndicator={false}>
+        {/* Categories */}
+        <CategoryList />
+
+        {/* Popular */}
+        <View style={styles.popularWrapper}>
+          <Text style={styles.popularTitle}>პოპულარული</Text>
+        </View>
+        {/* TODO */}
+      </ScrollView>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  popularWrapper: {
+    paddingHorizontal: 20,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  popularTitle: {
+    fontSize: 16,
   },
 });
