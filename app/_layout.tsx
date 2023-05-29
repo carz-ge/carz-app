@@ -8,7 +8,7 @@ import {client} from '../lib/graphql/client';
 import {ApolloProvider} from '@apollo/client';
 import {DarkTheme, LightTheme} from '../lib/styles/themes';
 import AuthContextProvider from '../lib/context/auth-context';
-import {usePathname} from "expo-router/src/LocationProvider";
+import {usePathname} from 'expo-router';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -59,7 +59,7 @@ function RootLayoutNav() {
   const params = useSearchParams();
   const segments = useSegments();
 
-  console.log('RootLayoutNav path:',pathname, params, segments);
+  console.log('RootLayoutNav path:', pathname, params, segments);
   return (
     <AuthContextProvider>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : LightTheme}>

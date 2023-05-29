@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import {isValidToken} from '../auth/utils';
-import {usePathname} from "expo-router/src/LocationProvider";
+import {usePathname} from 'expo-router';
 export const ACCESS_TOKEN_KEY = 'access_token';
 
 interface AuthContextType {
@@ -35,11 +35,15 @@ const AuthContextProvider = ({children}: PropsWithChildren) => {
       if (authToken) {
         SecureStore.deleteItemAsync(ACCESS_TOKEN_KEY);
       }
-      console.log(`AuthContextProvider replace ${segments[0]} ${pathname} to sign-in`);
+      console.log(
+        `AuthContextProvider replace ${segments[0]} ${pathname} to sign-in`,
+      );
       router.replace('/sign-in');
     }
     if (authToken && isValidToken(authToken) && isAuthGroup) {
-      console.log(`AuthContextProvider replace ${segments[0]} ${pathname} to home`);
+      console.log(
+        `AuthContextProvider replace ${segments[0]} ${pathname} to home`,
+      );
       router.replace('/home');
     }
   }, [segments, authToken]);

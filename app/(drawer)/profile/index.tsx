@@ -2,18 +2,23 @@ import React from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 import colors from '../../../lib/styles/colors';
 import {useAuth} from '../../../lib/context/auth-context';
+import useUser from '../../../lib/hooks/user';
 
 export default function Profile() {
+  const user = useUser();
   const {removeAuthToken} = useAuth();
+
   const onLogOut = () => {
     removeAuthToken();
   };
   return (
     <View style={styles.container}>
-      {/*name*/}
-      <Text style={styles.title}>სახელი</Text>
-      {/*last Name*/}
-      <Text style={styles.title}>გვარი</Text>
+      {user && (
+        <>
+          <Text style={styles.title}>{user.firstname}</Text>
+          <Text style={styles.title}>{user.lastname}</Text>
+        </>
+      )}
 
       {/* log out button */}
       <Pressable

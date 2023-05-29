@@ -75,8 +75,8 @@ const Authenticate = () => {
 
       await updateAuthToken(data?.authorize.accessToken);
       // TODO save refresh token
-      console.log("is registered", isRegistered);
-      if (isRegistered && isRegistered === "true") {
+      console.log('is registered', isRegistered);
+      if (isRegistered && isRegistered === 'true') {
         router.push('/home');
       } else {
         router.push('/customer-info');

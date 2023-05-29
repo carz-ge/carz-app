@@ -2,9 +2,9 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {useRouter} from 'expo-router';
 import {FieldValues, useForm} from 'react-hook-form';
-import FormInput from "../components/form/form-input";
-import {useUpdateUser} from "../graphql/operations";
-import FormButton from "../components/form/form-button";
+import FormInput from '../components/form/form-input';
+import {useUpdateUser} from '../graphql/operations';
+import FormButton from '../components/form/form-button';
 
 interface FormData extends FieldValues {
   firstname: string;
