@@ -1,10 +1,10 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
 import {useRouter} from 'expo-router';
 import {FieldValues, useForm} from 'react-hook-form';
 import {useUpdateUser} from '../../graphql/operations';
 import FormButton from '../../components/form/form-button';
-import FormInput from "../../components/form/form-input";
+import FormInput from '../../components/form/form-input';
 
 interface FormData extends FieldValues {
   firstname: string;
@@ -25,21 +25,21 @@ const SignIn = () => {
   });
 
   const onUpdateUser = async (formData: FormData) => {
-    console.warn('on Update User: ', formData);
+    console.log('on Update User: ', formData);
     try {
       const {data, errors} = await updateUser({
         variables: {
           input: formData,
-        }
+        },
       });
 
       if (errors) {
-        console.warn("errors : ", errors);
+        console.warn('errors : ', errors);
         return;
       }
 
       if (!data) {
-        console.warn("data is empty : ");
+        console.warn('data is empty : ');
         return;
       }
 
@@ -55,8 +55,22 @@ const SignIn = () => {
     <View style={styles.container}>
       <Text style={styles.label}>შეიყვანე მონაცემები</Text>
 
-      <FormInput control={control} name={'firstname'} placeholder={'სახელი'}/>
-      <FormInput control={control} name={'lastname'} placeholder={'გვარი'}/>
+      <FormInput
+        control={control}
+        name={'firstname'}
+        placeholder={'სახელი'}
+        rules={{
+          required: 'შეავსე სახელი',
+        }}
+      />
+      <FormInput
+        control={control}
+        name={'lastname'}
+        placeholder={'გვარი'}
+        rules={{
+          required: 'შეავსე გვარი',
+        }}
+      />
 
       <FormButton
         text={'შემდეგი'}

@@ -1,5 +1,5 @@
-import {Alert, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {Alert, StyleSheet, Text, View} from 'react-native';
 import {useRouter} from 'expo-router';
 import {FieldValues, useForm} from 'react-hook-form';
 import {useSendOtp} from '../../graphql/operations';
@@ -23,23 +23,23 @@ const SignIn = () => {
   });
 
   const onSignIn = async (formData: FormData) => {
-    console.warn('Sign in: ', formData);
+    console.log('Sign in: ', formData);
     try {
-      const phone = `+995${formData.phone}`
+      const phone = `+995${formData.phone}`;
       const {data, errors} = await sendOtp({variables: {phone}});
 
       if (errors) {
-        console.warn("errors : ", errors);
+        console.warn('errors : ', errors);
         return;
       }
 
       if (!data) {
-        console.warn("data is empty : ");
+        console.warn('data is empty : ');
         return;
       }
 
       if (!data.sendOtp.sent) {
-        console.warn("SMS was not sent ");
+        console.warn('SMS was not sent ');
         return;
       }
 
@@ -49,7 +49,8 @@ const SignIn = () => {
           phone: encodeURIComponent(phone), // need to encode in order to send plus (+) as an parameter
           // phone,
           isRegistered: String(data.sendOtp.isRegistered),
-          expiresAt: data.sendOtp.expiresAt}
+          expiresAt: data.sendOtp.expiresAt,
+        },
       });
     } catch (e) {
       console.warn(e);
@@ -61,7 +62,7 @@ const SignIn = () => {
     <View style={styles.container}>
       <Text style={styles.label}>შეიყვანე მობილურის ნომერი</Text>
 
-      <PhoneInput control={control} name={'phone'} placeholder={'512345678'}/>
+      <PhoneInput control={control} name={'phone'} placeholder={'512345678'} />
 
       <FormButton
         text={'კოდის გაგზავნა'}

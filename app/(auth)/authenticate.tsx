@@ -1,5 +1,5 @@
-import {View, Text, StyleSheet, Alert} from 'react-native';
 import React from 'react';
+import {View, Text, StyleSheet, Alert} from 'react-native';
 import {useRouter, useSearchParams} from 'expo-router';
 import {useAuth} from '../../lib/context/auth-context';
 import {useForm} from 'react-hook-form';
@@ -14,11 +14,10 @@ interface FormData {
 type SearchParams = Record<string, string | string[]>;
 
 interface CustomSearchParams extends SearchParams {
-  phone: string,
-  isRegistered: string,
-  expiresAt: string,
+  phone: string;
+  isRegistered: string;
+  expiresAt: string;
 }
-
 
 const Authenticate = () => {
   const router = useRouter();
@@ -29,7 +28,7 @@ const Authenticate = () => {
 
   const {phone, isRegistered} = useSearchParams<CustomSearchParams>();
 
-  console.log("phone -> ", phone, isRegistered);
+  console.log('phone -> ', phone, isRegistered);
 
   const {updateAuthToken} = useAuth();
 
@@ -64,7 +63,7 @@ const Authenticate = () => {
       console.log('Authenticate resp: ', JSON.stringify({data, errors}));
 
       if (errors) {
-        setError("code", new Error("დაფიქსირდა შეცდომა"));
+        setError('code', new Error('დაფიქსირდა შეცდომა'));
         return;
       }
 
@@ -80,7 +79,7 @@ const Authenticate = () => {
       // if (isRegistered && isRegistered === "false") {
       //   router.push('/(tabs)/home');
       // } else {
-        router.push('/customer-info');
+      router.push('/customer-info');
       // }
     } catch (e) {
       setError('code', new Error('დაფიქსორდა შეცდომა'));
@@ -98,7 +97,7 @@ const Authenticate = () => {
       if (data?.sendOtp) {
         Alert.alert('Success', 'ახალი კოდი გამოგზავნიალია თქვენს ნომერზე');
       } else {
-        console.warn("code has not been sent");
+        console.warn('code has not been sent');
       }
     } catch (e) {
       setError('code', e as Error);
@@ -125,7 +124,7 @@ const Authenticate = () => {
         loadingText={'ვამოწმებთ...'}
       />
 
-      <FormButton text="ახლიდან გაგზავნა" onPress={onResend}/>
+      <FormButton text="ახლიდან გაგზავნა" onPress={onResend} />
     </View>
   );
 };

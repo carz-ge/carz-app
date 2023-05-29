@@ -1,15 +1,16 @@
+import React from 'react';
 import {Link, Stack, useSearchParams, useSegments} from 'expo-router';
 import {StyleSheet} from 'react-native';
 
 import {Text, View} from '../components/Themed';
-import {usePathname} from "expo-router/src/LocationProvider";
+import {usePathname} from 'expo-router/src/LocationProvider';
 
 export default function NotFoundScreen() {
   const pathname = usePathname();
   const params = useSearchParams();
   const segments = useSegments();
 
-  console.log("not found", pathname, params, segments)
+  console.log('not found', pathname, params, segments);
   return (
     <>
       <Stack.Screen options={{title: 'Oops!'}} />

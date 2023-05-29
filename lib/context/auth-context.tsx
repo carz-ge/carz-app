@@ -1,5 +1,5 @@
 import {useRouter, useSegments} from 'expo-router';
-import {
+import React, {
   PropsWithChildren,
   createContext,
   useState,
@@ -9,7 +9,6 @@ import {
 } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import {isValidToken} from '../auth/utils';
-
 export const ACCESS_TOKEN_KEY = 'access_token';
 
 interface AuthContextType {
@@ -36,9 +35,9 @@ const AuthContextProvider = ({children}: PropsWithChildren) => {
       }
       router.replace('/sign-in');
     }
-    if (authToken && isValidToken(authToken) && isAuthGroup) {
-      router.replace('/home');
-    }
+    // if (authToken && isValidToken(authToken) && isAuthGroup) {
+    //   router.replace('/home');
+    // }
   }, [segments, authToken]);
 
   useEffect(() => {

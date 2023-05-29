@@ -1,8 +1,13 @@
-import {Stack} from "expo-router";
-
+import React from 'react';
+import {Stack} from 'expo-router';
 
 export default function Layout() {
-  return <Stack >
-    <Stack.Screen name={"index"} options={{headerTitle: "ჯავშნები", headerShown: false}} />
-  </Stack>
+  return (
+    <Stack>
+      <Stack.Screen
+        name={'index'}
+        options={{headerTitle: 'ჯავშნები', headerShown: false}}
+      />
+    </Stack>
+  );
 }
