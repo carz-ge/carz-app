@@ -1,67 +1,76 @@
-import CategoryWrapper from '../../lib/types/category-wrapper';
 import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {useListCategories} from '../../graphql/operations';
+import {Category, useListCategories} from '../../graphql/operations';
 import colors from '../../lib/styles/colors';
 import CategoryImage from './category-image';
 import {Feather} from '@expo/vector-icons';
 import {useRouter} from 'expo-router';
-import {Router} from '@react-navigation/native';
 
 export default function CategoryList() {
   const router = useRouter();
 
   const {data, loading, error} = useListCategories({
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
 
-  console.log('useListCategories', data, loading, error);
+  // console.log('useListCategories', data, loading, error);
 
   return (
     <View style={styles.categoriesWrapper}>
       <Text style={styles.categoriesTitle}>კატეგორიები</Text>
-      {!loading && (
-        <View style={styles.categoriesListWrapper}>
+      <View style={styles.categoriesListWrapper}>
+        {!loading && (
           <FlatList
-            data={data?.listCategories.map((category, index) => ({
-              index,
-              category,
-            }))}
-            renderItem={item => RenderCategoryItemWrapper(router, item.item)}
-            keyExtractor={item => item.category.id}
+            data={data?.listCategories}
+            renderItem={({item, index}) => (
+              <RenderCategoryItemWrapper
+                router={router}
+                item={item}
+                index={index}
+              />
+            )}
+            keyExtractor={item => item.id}
             horizontal={true}
           />
-        </View>
-      )}
-      {/* TODO */}
-      {loading && <Text>loading</Text>}
+        )}
+        {/* TODO Remder skeletons */}
+        {loading && <Text>loading</Text>}
+      </View>
     </View>
   );
 }
 
-function RenderCategoryItemWrapper(router: any, item: CategoryWrapper) {
+function RenderCategoryItemWrapper({
+  router,
+  item,
+  index,
+}: {
+  router: any;
+  item: Category;
+  index: number;
+}) {
   return (
     <Pressable
       onPress={() => {
-        router.push(`/search/${item.category.id}`);
+        router.push(`/search/${item.id}`);
       }}>
-      <RenderCategoryItem item={item} />
+      <RenderCategoryItem item={item} index={index} />
     </Pressable>
   );
 }
 
-const RenderCategoryItem = ({item}: {item: CategoryWrapper}) => {
+const RenderCategoryItem = ({item, index}: {item: Category; index: number}) => {
   return (
     <View
       style={[
         styles.categoryItemWrapper,
         {
           backgroundColor: colors.white,
-          marginLeft: item.index === 0 ? 20 : 0,
+          marginLeft: index === 0 ? 20 : 0,
         },
       ]}>
-      <CategoryImage item={item.category} style={styles.categoryItemImage} />
-      <Text style={styles.categoryItemTitle}>{item.category.name.ka}</Text>
+      <CategoryImage item={item} style={styles.categoryItemImage} />
+      <Text style={styles.categoryItemTitle}>{item.name.ka}</Text>
       <View
         style={[
           styles.categorySelectWrapper,
@@ -103,7 +112,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.05,
     shadowRadius: 10,
-    elevation: 2,
+    // elevation: 2,
   },
   categoryItemImage: {
     width: 60,

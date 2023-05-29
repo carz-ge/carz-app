@@ -44,13 +44,13 @@ export default function DrawerLayout() {
   const titleNameForTabs = useTitleNameForTabs();
 
   return (
-    <Drawer drawerContent={props => <CustomDrawerContent {...props} />}>
+    <Drawer drawerContent={CustomDrawerContent}>
       <Drawer.Screen
         name={'(tabs)'}
         options={{title: 'მთავარი', headerTitle: titleNameForTabs}}
       />
       <Drawer.Screen name="profile" options={{title: 'პროფილი'}} />
-      {/*<Drawer.Screen name="bookmarks" options={{ title: 'დამახსოვრებული' }} />*/}
+      <Drawer.Screen name="car" options={{title: 'ავტომობილები'}} />
     </Drawer>
   );
 }

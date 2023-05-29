@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import {useRouter} from 'expo-router';
 import {FieldValues, useForm} from 'react-hook-form';
 import FormInput from '../components/form/form-input';
-import {useUpdateUser} from '../graphql/operations';
+import {Language, useUpdateUser} from '../graphql/operations';
 import FormButton from '../components/form/form-button';
 
 interface FormData extends FieldValues {
@@ -29,7 +29,7 @@ const SignIn = () => {
     try {
       const {data, errors} = await updateUser({
         variables: {
-          input: formData,
+          input: {...formData, language: Language.Ka},
         },
       });
 

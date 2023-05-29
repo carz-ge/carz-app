@@ -10,6 +10,7 @@ import React, {
 import * as SecureStore from 'expo-secure-store';
 import {isValidToken} from '../auth/utils';
 import {usePathname} from 'expo-router';
+
 export const ACCESS_TOKEN_KEY = 'access_token';
 
 interface AuthContextType {
@@ -28,25 +29,24 @@ const AuthContextProvider = ({children}: PropsWithChildren) => {
   const [authToken, setAuthToken] = useState<string | null>(null);
   const segments = useSegments();
   const pathname = usePathname();
-  const router = useRouter();
+  const {replace} = useRouter();
   useEffect(() => {
     const isAuthGroup = segments[0] === '(auth)';
-    if ((!authToken || !isValidToken(authToken)) && !isAuthGroup) {
-      if (authToken) {
-        SecureStore.deleteItemAsync(ACCESS_TOKEN_KEY);
+
+    // console.log("auth Token is valid", authToken ? isValidToken(authToken) : null);
+    if (isAuthGroup) {
+      if (authToken && isValidToken(authToken)) {
+        replace('/home');
       }
-      console.log(
-        `AuthContextProvider replace ${segments[0]} ${pathname} to sign-in`,
-      );
-      router.replace('/sign-in');
+    } else {
+      if (authToken && !isValidToken(authToken)) {
+        SecureStore.deleteItemAsync(ACCESS_TOKEN_KEY);
+        replace('/sign-in');
+      } else if (!authToken) {
+        replace('/sign-in');
+      }
     }
-    if (authToken && isValidToken(authToken) && isAuthGroup) {
-      console.log(
-        `AuthContextProvider replace ${segments[0]} ${pathname} to home`,
-      );
-      router.replace('/home');
-    }
-  }, [segments, authToken]);
+  }, [segments, authToken, replace]);
 
   useEffect(() => {
     const loadAuthToken = async () => {

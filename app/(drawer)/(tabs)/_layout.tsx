@@ -35,7 +35,6 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
-  console.log('TabLayout');
   const colorScheme = useColorScheme();
 
   return (
@@ -49,21 +48,21 @@ export default function TabLayout() {
           title: 'Home',
           headerShown: false,
           tabBarIcon: ({color}) => <TabBarIcon name="home" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({pressed}) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{marginRight: 15, opacity: pressed ? 0.5 : 1}}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
-          headerLeft: () => <AvatarHeader />,
+          // headerRight: () => (
+          //   <Link href="/modal" asChild>
+          //     <Pressable>
+          //       {({pressed}) => (
+          //         <FontAwesome
+          //           name="info-circle"
+          //           size={25}
+          //           color={Colors[colorScheme ?? 'light'].text}
+          //           style={{marginRight: 15, opacity: pressed ? 0.5 : 1}}
+          //         />
+          //       )}
+          //     </Pressable>
+          //   </Link>
+          // ),
+          // headerLeft: () => <AvatarHeader />,
         }}
       />
       <Tabs.Screen
