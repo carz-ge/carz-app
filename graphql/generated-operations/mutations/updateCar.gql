@@ -1,0 +1,14 @@
+mutation updateCar($carId: ID!, $carInput: CarInput!){
+    updateCar(carId: $carId, carInput: $carInput){
+        id
+        plateNumber
+        carType
+        techPassportNumber
+        vin
+        make
+        model
+        year
+        createdAt
+        updatedAt
+    }
+}

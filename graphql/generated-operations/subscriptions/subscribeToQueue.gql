@@ -1,0 +1,3 @@
+subscription subscribeToQueue($providerId: ID){
+    subscribeToQueue(providerId: $providerId)
+}

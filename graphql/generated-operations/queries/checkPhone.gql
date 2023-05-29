@@ -1,0 +1,3 @@
+query checkPhone($phone: String!){
+    checkPhone(phone: $phone)
+}

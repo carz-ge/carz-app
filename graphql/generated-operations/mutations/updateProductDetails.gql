@@ -1,0 +1,30 @@
+mutation updateProductDetails($productDetailsId: ID!, $input: ProductDetailsInput!){
+    updateProductDetails(productDetailsId: $productDetailsId, input: $input){
+        id
+        productId
+        name{
+            ka
+            en
+        }
+        description{
+            ka
+            en
+        }
+        pricesForCarTypes{
+            order
+            carType
+            price
+        }
+        availableServices{
+            ka
+            en
+        }
+        notAvailableServices{
+            ka
+            en
+        }
+        generalPrice
+        currency
+        averageDurationMinutes
+    }
+}

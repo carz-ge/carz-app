@@ -1,0 +1,29 @@
+mutation updateProduct($productId: ID!, $input: ProductInput!){
+    updateProduct(productId: $productId, input: $input){
+        id
+        name{
+            ka
+            en
+        }
+        providerId
+        categoryId
+        description{
+            ka
+            en
+        }
+        location{
+            address{
+                street
+                district
+                city
+            }
+            coordinates{
+                lat
+                lng
+            }
+        }
+        mainImage
+        images
+        tags
+    }
+}

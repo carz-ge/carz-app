@@ -1,0 +1,13 @@
+query listCategories{
+    listCategories{
+        id
+        name{
+            ka
+            en
+        }
+        internalName
+        image
+        priority
+        active
+    }
+}

@@ -1,0 +1,3 @@
+mutation removeCategory($categoryId: ID!){
+    removeCategory(categoryId: $categoryId)
+}

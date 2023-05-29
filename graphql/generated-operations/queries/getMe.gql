@@ -1,0 +1,12 @@
+query getMe{
+    getMe{
+        id
+        phone
+        role
+        firstname
+        lastname
+        language
+        createdAt
+        updatedAt
+    }
+}

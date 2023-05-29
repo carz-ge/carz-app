@@ -1,0 +1,14 @@
+mutation addCar($carInput: CarInput!){
+    addCar(carInput: $carInput){
+        id
+        plateNumber
+        carType
+        techPassportNumber
+        vin
+        make
+        model
+        year
+        createdAt
+        updatedAt
+    }
+}

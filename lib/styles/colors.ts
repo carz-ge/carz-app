@@ -2,7 +2,12 @@ const tintColorLight = '#2f95dc';
 const tintColorDark = '#fff';
 
 export default {
-  buttonPrimary: '#0062a7',
+  primary: '#0A84FF',
+  primaryGreen: '#00A793',
+  secondary: `#6A9DA7`,
+  white: 'white',
+  black: 'black',
+  buttonPrimary: '#0A84FF',
   buttonGray: '#A2BBC1',
   inputFocus: '#007AFF',
   inputError: '#f53200',

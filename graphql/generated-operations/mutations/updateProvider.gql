@@ -1,0 +1,10 @@
+mutation updateProvider($input: ProviderInput!){
+    updateProvider(input: $input){
+        id
+        name
+        phone
+        email
+        logo
+        website
+    }
+}

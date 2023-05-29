@@ -1,0 +1,10 @@
+query listProviders{
+    listProviders{
+        id
+        name
+        phone
+        email
+        logo
+        website
+    }
+}

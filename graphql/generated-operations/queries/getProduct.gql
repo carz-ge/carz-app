@@ -1,0 +1,29 @@
+query getProduct($productId: ID){
+    getProduct(productId: $productId){
+        id
+        name{
+            ka
+            en
+        }
+        providerId
+        categoryId
+        description{
+            ka
+            en
+        }
+        location{
+            address{
+                street
+                district
+                city
+            }
+            coordinates{
+                lat
+                lng
+            }
+        }
+        mainImage
+        images
+        tags
+    }
+}

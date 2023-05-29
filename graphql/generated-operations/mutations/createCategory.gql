@@ -1,0 +1,13 @@
+mutation createCategory($input: CategoryInput!){
+    createCategory(input: $input){
+        id
+        name{
+            ka
+            en
+        }
+        internalName
+        image
+        priority
+        active
+    }
+}

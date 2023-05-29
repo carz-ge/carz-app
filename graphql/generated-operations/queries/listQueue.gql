@@ -1,0 +1,7 @@
+query listQueue($providerId: ID){
+    listQueue(providerId: $providerId){
+        orderNumber
+        carPlateNumber
+        timeSlot
+    }
+}

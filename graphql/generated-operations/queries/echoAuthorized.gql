@@ -1,0 +1,3 @@
+query echoAuthorized($message: String){
+    echoAuthorized(message: $message)
+}

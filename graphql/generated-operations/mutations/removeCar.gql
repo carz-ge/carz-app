@@ -1,0 +1,3 @@
+mutation removeCar($carId: ID!){
+    removeCar(carId: $carId)
+}

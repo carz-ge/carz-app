@@ -1,0 +1,15 @@
+query listOrders{
+    listOrders{
+        id
+        userId
+        categoryId
+        providerId
+        products{
+            productId
+            quantity
+            schedulingDate
+            schedulingTime
+        }
+        orderStatus
+    }
+}

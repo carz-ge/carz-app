@@ -1,0 +1,15 @@
+query getOrder($id: ID!){
+    getOrder(id: $id){
+        id
+        userId
+        categoryId
+        providerId
+        products{
+            productId
+            quantity
+            schedulingDate
+            schedulingTime
+        }
+        orderStatus
+    }
+}

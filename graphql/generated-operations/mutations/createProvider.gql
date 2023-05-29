@@ -1,0 +1,10 @@
+mutation createProvider($input: ProviderInput!){
+    createProvider(input: $input){
+        id
+        name
+        phone
+        email
+        logo
+        website
+    }
+}

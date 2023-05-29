@@ -1,0 +1,15 @@
+query listOrdersByUserId($userId: ID!){
+    listOrdersByUserId(userId: $userId){
+        id
+        userId
+        categoryId
+        providerId
+        products{
+            productId
+            quantity
+            schedulingDate
+            schedulingTime
+        }
+        orderStatus
+    }
+}

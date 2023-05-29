@@ -1,0 +1,12 @@
+query getUserById($userId: ID!){
+    getUserById(userId: $userId){
+        id
+        phone
+        role
+        firstname
+        lastname
+        language
+        createdAt
+        updatedAt
+    }
+}

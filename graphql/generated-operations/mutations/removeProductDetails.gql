@@ -1,0 +1,3 @@
+mutation removeProductDetails($productDetailsId: ID!){
+    removeProductDetails(productDetailsId: $productDetailsId)
+}

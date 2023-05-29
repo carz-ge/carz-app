@@ -86,12 +86,20 @@ export enum CarType {
 
 export type Category = {
   __typename?: 'Category';
+  active: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
+  image: Maybe<Scalars['String']['output']>;
+  internalName: Scalars['String']['output'];
   name: LingualString;
+  priority: Scalars['Int']['output'];
 };
 
 export type CategoryInput = {
+  active: InputMaybe<Scalars['Boolean']['input']>;
+  image: InputMaybe<Scalars['String']['input']>;
+  internalName: Scalars['String']['input'];
   name: LingualStringInput;
+  priority: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type Coordinates = {
@@ -119,6 +127,11 @@ export enum DayOfWeek {
   Thursday = 'THURSDAY',
   Tuesday = 'TUESDAY',
   Wednesday = 'WEDNESDAY',
+}
+
+export enum Language {
+  En = 'EN',
+  Ka = 'KA',
 }
 
 export type LingualString = {
@@ -157,6 +170,7 @@ export type Mutation = {
   removeProduct: Scalars['Boolean']['output'];
   removeProductDetails: Scalars['Boolean']['output'];
   removeProvider: Scalars['Boolean']['output'];
+  scheduleCarForService: Maybe<Array<Maybe<ScheduledTimeSlotSchema>>>;
   sendOtp: SendOptOutput;
   updateCar: Car;
   updateCategory: Category;
@@ -212,6 +226,10 @@ export type MutationRemoveProductDetailsArgs = {
 
 export type MutationRemoveProviderArgs = {
   providerId: Scalars['ID']['input'];
+};
+
+export type MutationScheduleCarForServiceArgs = {
+  input: InputMaybe<ScheduleCarForServiceInput>;
 };
 
 export type MutationSendOtpArgs = {
@@ -392,6 +410,7 @@ export type Query = {
   listProductDetailsByProductId: Array<ProductDetails>;
   listProducts: Array<Product>;
   listProviders: Array<Provider>;
+  listQueue: Maybe<Array<Maybe<ScheduledTimeSlotSchema>>>;
   searchProducts: Array<Product>;
 };
 
@@ -439,8 +458,27 @@ export type QueryListProductDetailsByProductIdArgs = {
   productId: Scalars['ID']['input'];
 };
 
+export type QueryListQueueArgs = {
+  providerId: InputMaybe<Scalars['ID']['input']>;
+};
+
 export type QuerySearchProductsArgs = {
   filter: ProductFilterInput;
+};
+
+export type ScheduleCarForServiceInput = {
+  carPlateNumber: InputMaybe<Scalars['String']['input']>;
+  customerPhoneNumber: InputMaybe<Scalars['String']['input']>;
+  productId: Scalars['ID']['input'];
+  schedulingDay: InputMaybe<Scalars['String']['input']>;
+  schedulingTime: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ScheduledTimeSlotSchema = {
+  __typename?: 'ScheduledTimeSlotSchema';
+  carPlateNumber: Maybe<Scalars['String']['output']>;
+  orderNumber: Maybe<Scalars['String']['output']>;
+  timeSlot: Maybe<Scalars['String']['output']>;
 };
 
 export type SendOptOutput = {
@@ -450,8 +488,18 @@ export type SendOptOutput = {
   sent: Scalars['Boolean']['output'];
 };
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  subscribeToQueue: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+};
+
+export type SubscriptionSubscribeToQueueArgs = {
+  providerId: InputMaybe<Scalars['ID']['input']>;
+};
+
 export type UpdateUserInput = {
   firstname: Scalars['String']['input'];
+  language: InputMaybe<Language>;
   lastname: Scalars['String']['input'];
 };
 
@@ -460,6 +508,7 @@ export type User = {
   createdAt: Maybe<Scalars['String']['output']>;
   firstname: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
+  language: Language;
   lastname: Maybe<Scalars['String']['output']>;
   phone: Scalars['String']['output'];
   role: UserRole;
@@ -528,6 +577,10 @@ export type CreateCategory = {
   createCategory: {
     __typename?: 'Category';
     id: string;
+    internalName: string;
+    image: string | null;
+    priority: number;
+    active: boolean;
     name: {__typename?: 'LingualString'; ka: string; en: string};
   };
 };
@@ -668,6 +721,20 @@ export type RemoveProviderVariables = Exact<{
 
 export type RemoveProvider = {__typename?: 'Mutation'; removeProvider: boolean};
 
+export type ScheduleCarForServiceVariables = Exact<{
+  input: InputMaybe<ScheduleCarForServiceInput>;
+}>;
+
+export type ScheduleCarForService = {
+  __typename?: 'Mutation';
+  scheduleCarForService: Array<{
+    __typename?: 'ScheduledTimeSlotSchema';
+    orderNumber: string | null;
+    carPlateNumber: string | null;
+    timeSlot: string | null;
+  } | null> | null;
+};
+
 export type SendOtpVariables = Exact<{
   phone: Scalars['String']['input'];
 }>;
@@ -714,6 +781,10 @@ export type UpdateCategory = {
   updateCategory: {
     __typename?: 'Category';
     id: string;
+    internalName: string;
+    image: string | null;
+    priority: number;
+    active: boolean;
     name: {__typename?: 'LingualString'; ka: string; en: string};
   };
 };
@@ -813,6 +884,7 @@ export type UpdateUser = {
     role: UserRole;
     firstname: string | null;
     lastname: string | null;
+    language: Language;
     createdAt: string | null;
     updatedAt: string | null;
   };
@@ -856,6 +928,7 @@ export type GetMe = {
     role: UserRole;
     firstname: string | null;
     lastname: string | null;
+    language: Language;
     createdAt: string | null;
     updatedAt: string | null;
   };
@@ -926,6 +999,7 @@ export type GetUserById = {
     role: UserRole;
     firstname: string | null;
     lastname: string | null;
+    language: Language;
     createdAt: string | null;
     updatedAt: string | null;
   };
@@ -957,6 +1031,10 @@ export type ListCategories = {
   listCategories: Array<{
     __typename?: 'Category';
     id: string;
+    internalName: string;
+    image: string | null;
+    priority: number;
+    active: boolean;
     name: {__typename?: 'LingualString'; ka: string; en: string};
   }>;
 };
@@ -1139,6 +1217,20 @@ export type ListProviders = {
   }>;
 };
 
+export type ListQueueVariables = Exact<{
+  providerId: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+export type ListQueue = {
+  __typename?: 'Query';
+  listQueue: Array<{
+    __typename?: 'ScheduledTimeSlotSchema';
+    orderNumber: string | null;
+    carPlateNumber: string | null;
+    timeSlot: string | null;
+  } | null> | null;
+};
+
 export type SearchProductsVariables = Exact<{
   filter: ProductFilterInput;
 }>;
@@ -1166,6 +1258,15 @@ export type SearchProducts = {
       coordinates: {__typename?: 'Coordinates'; lat: number; lng: number};
     } | null;
   }>;
+};
+
+export type SubscribeToQueueVariables = Exact<{
+  providerId: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+export type SubscribeToQueue = {
+  __typename?: 'Subscription';
+  subscribeToQueue: Array<string | null> | null;
 };
 
 export const AddCarDocument = gql`
@@ -1268,6 +1369,10 @@ export const CreateCategoryDocument = gql`
         ka
         en
       }
+      internalName
+      image
+      priority
+      active
     }
   }
 `;
@@ -1792,6 +1897,58 @@ export type RemoveProviderMutationOptions = Apollo.BaseMutationOptions<
   RemoveProvider,
   RemoveProviderVariables
 >;
+export const ScheduleCarForServiceDocument = gql`
+  mutation scheduleCarForService($input: ScheduleCarForServiceInput) {
+    scheduleCarForService(input: $input) {
+      orderNumber
+      carPlateNumber
+      timeSlot
+    }
+  }
+`;
+export type ScheduleCarForServiceMutationFn = Apollo.MutationFunction<
+  ScheduleCarForService,
+  ScheduleCarForServiceVariables
+>;
+
+/**
+ * __useScheduleCarForService__
+ *
+ * To run a mutation, you first call `useScheduleCarForService` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useScheduleCarForService` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [scheduleCarForService, { data, loading, error }] = useScheduleCarForService({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useScheduleCarForService(
+  baseOptions?: Apollo.MutationHookOptions<
+    ScheduleCarForService,
+    ScheduleCarForServiceVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<
+    ScheduleCarForService,
+    ScheduleCarForServiceVariables
+  >(ScheduleCarForServiceDocument, options);
+}
+export type ScheduleCarForServiceHookResult = ReturnType<
+  typeof useScheduleCarForService
+>;
+export type ScheduleCarForServiceMutationResult =
+  Apollo.MutationResult<ScheduleCarForService>;
+export type ScheduleCarForServiceMutationOptions = Apollo.BaseMutationOptions<
+  ScheduleCarForService,
+  ScheduleCarForServiceVariables
+>;
 export const SendOtpDocument = gql`
   mutation sendOtp($phone: String!) {
     sendOtp(phone: $phone) {
@@ -1900,6 +2057,10 @@ export const UpdateCategoryDocument = gql`
         ka
         en
       }
+      internalName
+      image
+      priority
+      active
     }
   }
 `;
@@ -2157,6 +2318,7 @@ export const UpdateUserDocument = gql`
       role
       firstname
       lastname
+      language
       createdAt
       updatedAt
     }
@@ -2394,6 +2556,7 @@ export const GetMeDocument = gql`
       role
       firstname
       lastname
+      language
       createdAt
       updatedAt
     }
@@ -2572,6 +2735,7 @@ export const GetUserByIdDocument = gql`
       role
       firstname
       lastname
+      language
       createdAt
       updatedAt
     }
@@ -2686,6 +2850,10 @@ export const ListCategoriesDocument = gql`
         ka
         en
       }
+      internalName
+      image
+      priority
+      active
     }
   }
 `;
@@ -3244,6 +3412,58 @@ export type ListProvidersQueryResult = Apollo.QueryResult<
   ListProviders,
   ListProvidersVariables
 >;
+export const ListQueueDocument = gql`
+  query listQueue($providerId: ID) {
+    listQueue(providerId: $providerId) {
+      orderNumber
+      carPlateNumber
+      timeSlot
+    }
+  }
+`;
+
+/**
+ * __useListQueue__
+ *
+ * To run a query within a React component, call `useListQueue` and pass it any options that fit your needs.
+ * When your component renders, `useListQueue` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListQueue({
+ *   variables: {
+ *      providerId: // value for 'providerId'
+ *   },
+ * });
+ */
+export function useListQueue(
+  baseOptions?: Apollo.QueryHookOptions<ListQueue, ListQueueVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<ListQueue, ListQueueVariables>(
+    ListQueueDocument,
+    options,
+  );
+}
+export function useListQueueLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ListQueue, ListQueueVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<ListQueue, ListQueueVariables>(
+    ListQueueDocument,
+    options,
+  );
+}
+export type ListQueueHookResult = ReturnType<typeof useListQueue>;
+export type ListQueueLazyQueryHookResult = ReturnType<
+  typeof useListQueueLazyQuery
+>;
+export type ListQueueQueryResult = Apollo.QueryResult<
+  ListQueue,
+  ListQueueVariables
+>;
 export const SearchProductsDocument = gql`
   query searchProducts($filter: ProductFilterInput!) {
     searchProducts(filter: $filter) {
@@ -3321,3 +3541,40 @@ export type SearchProductsQueryResult = Apollo.QueryResult<
   SearchProducts,
   SearchProductsVariables
 >;
+export const SubscribeToQueueDocument = gql`
+  subscription subscribeToQueue($providerId: ID) {
+    subscribeToQueue(providerId: $providerId)
+  }
+`;
+
+/**
+ * __useSubscribeToQueue__
+ *
+ * To run a query within a React component, call `useSubscribeToQueue` and pass it any options that fit your needs.
+ * When your component renders, `useSubscribeToQueue` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSubscribeToQueue({
+ *   variables: {
+ *      providerId: // value for 'providerId'
+ *   },
+ * });
+ */
+export function useSubscribeToQueue(
+  baseOptions?: Apollo.SubscriptionHookOptions<
+    SubscribeToQueue,
+    SubscribeToQueueVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useSubscription<SubscribeToQueue, SubscribeToQueueVariables>(
+    SubscribeToQueueDocument,
+    options,
+  );
+}
+export type SubscribeToQueueHookResult = ReturnType<typeof useSubscribeToQueue>;
+export type SubscribeToQueueSubscriptionResult =
+  Apollo.SubscriptionResult<SubscribeToQueue>;

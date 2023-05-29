@@ -1,0 +1,14 @@
+query listCars{
+    listCars{
+        id
+        plateNumber
+        carType
+        techPassportNumber
+        vin
+        make
+        model
+        year
+        createdAt
+        updatedAt
+    }
+}

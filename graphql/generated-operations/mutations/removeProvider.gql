@@ -1,0 +1,3 @@
+mutation removeProvider($providerId: ID!){
+    removeProvider(providerId: $providerId)
+}

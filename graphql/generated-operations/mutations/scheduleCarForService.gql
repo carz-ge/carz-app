@@ -1,0 +1,7 @@
+mutation scheduleCarForService($input: ScheduleCarForServiceInput){
+    scheduleCarForService(input: $input){
+        orderNumber
+        carPlateNumber
+        timeSlot
+    }
+}

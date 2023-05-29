@@ -1,0 +1,7 @@
+mutation sendOtp($phone: String!){
+    sendOtp(phone: $phone){
+        sent
+        expiresAt
+        isRegistered
+    }
+}
