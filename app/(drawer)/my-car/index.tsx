@@ -2,8 +2,8 @@ import React from 'react';
 import {Text, StyleSheet, View, FlatList} from 'react-native';
 import {useRouter} from 'expo-router';
 import {useListCars} from '../../../graphql/operations';
-import {PressableCarItem} from '../../../components/customer-car/car-item';
-import AddCarButton from '../../../components/customer-car/add-car-button';
+import {PressableCarItem} from '../../../components/car/car-item';
+import AddCarButton from '../../../components/car/add-car-button';
 
 export default function Cars() {
   const router = useRouter();

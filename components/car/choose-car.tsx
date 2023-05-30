@@ -3,7 +3,6 @@ import {Text, StyleSheet, View, Pressable} from 'react-native';
 
 import {Car, useListCars} from '../../graphql/operations';
 import {Ionicons} from '@expo/vector-icons';
-import {useRouter} from 'expo-router';
 import colors from '../../lib/styles/colors';
 
 interface ChooseCarProps {
@@ -13,7 +12,7 @@ interface ChooseCarProps {
 const ChooseCar = ({onNextHandler}: ChooseCarProps) => {
   const [selectedCar, setSelectedCar] = useState<Car | null>(null);
   const {data, loading, error} = useListCars();
-  const router = useRouter();
+
   const handleCarSelection = (car: Car) => {
     setSelectedCar(car);
   };

@@ -1,8 +1,7 @@
 import React from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {Car} from '../../graphql/operations';
 import colors from '../../lib/styles/colors';
-import {useRouter} from 'expo-router';
 
 const CarItem = ({item}: {item: Car}) => {
   return (

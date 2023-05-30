@@ -1,12 +1,9 @@
 import React from 'react';
-import {Text, StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
+import AddCar from '../../components/car/add-car';
 
 export default function Add() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Bookings</Text>
-    </View>
-  );
+  return <AddCar />;
 }
 
 const styles = StyleSheet.create({

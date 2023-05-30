@@ -16,6 +16,13 @@ export default function Layout() {
         name={'[carId]'}
         options={{headerTitle: 'ავტომობილი', headerBackVisible: true}}
       />
+      <Stack.Screen
+        name={'tech-card-qr-scan'}
+        options={{
+          headerTitle: 'დაასკანერე ტექ. პასპორტი',
+          headerBackVisible: true,
+        }}
+      />
     </Stack>
   );
 }

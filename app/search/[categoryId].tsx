@@ -1,8 +1,8 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useRouter, useSearchParams} from 'expo-router';
-import ChooseCar from '../../components/customer-car/choose-car';
-import AddCarButton from '../../components/customer-car/add-car-button';
+import ChooseCar from '../../components/car/choose-car';
+import AddCarButton from '../../components/car/add-car-button';
 
 export default function Search() {
   const router = useRouter();
