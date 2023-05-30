@@ -53,6 +53,7 @@ function Layouts() {
       <Stack.Screen name="search" options={{headerShown: false}} />
       <Stack.Screen name="product" options={{headerShown: false}} />
       <Stack.Screen name="category" options={{headerShown: false}} />
+      <Stack.Screen name="map" options={{headerShown: false}} />
     </Stack>
   );
 }

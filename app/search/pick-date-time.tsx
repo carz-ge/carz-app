@@ -18,7 +18,7 @@ export default function PickDateTime() {
     }
     const splittedTime = time.split(' - ')[0];
     router.push({
-      pathname: '/map-result',
+      pathname: '/map/result',
       params: {
         carType: params.carType,
         categoryId: params.categoryId,

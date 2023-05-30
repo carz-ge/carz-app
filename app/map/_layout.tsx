@@ -5,8 +5,8 @@ export default function Layout() {
   return (
     <Stack>
       <Stack.Screen
-        name={'index'}
-        options={{headerTitle: 'რუკა', headerShown: false}}
+        name={'result'}
+        options={{headerTitle: 'რუკა', headerBackVisible: true}}
       />
     </Stack>
   );

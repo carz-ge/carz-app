@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "carbook-new",
-    "slug": "carbook-new",
+    "name": "carbook",
+    "slug": "carbook",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -19,7 +19,7 @@
       "bundleIdentifier": "ge.carapp.carbook",
       "supportsTablet": true,
       "config": {
-        "googleMapsApiKey": ""
+        "googleMapsApiKey": "AIzaSyCqIwF1AEqWV3wEI1Iq-weNuFwhsF393aE"
       }
     },
     "android": {
@@ -30,7 +30,7 @@
       },
       "config": {
         "googleMaps": {
-          "apiKey": ""
+          "apiKey": "AIzaSyCqIwF1AEqWV3wEI1Iq-weNuFwhsF393aE"
         }
       }
     },

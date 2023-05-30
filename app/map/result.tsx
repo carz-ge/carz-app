@@ -2,8 +2,9 @@ import React from 'react';
 import {Text, StyleSheet, View} from 'react-native';
 import {CarType, useSearchProducts} from '../../graphql/operations';
 import {useRouter, useSearchParams} from 'expo-router';
+import SearchResultMap from '../../components/map/search-result-map';
 
-export default function MapResult() {
+export default function Result() {
   const router = useRouter();
   const params = useSearchParams();
   console.log('MapResult', JSON.stringify(params));
@@ -20,9 +21,7 @@ export default function MapResult() {
 
   console.log('search data: ', data, loading, error);
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>MAP</Text>
-    </View>
+    <SearchResultMap products={data?.searchProducts||[]} />
   );
 }
 

@@ -6,7 +6,7 @@ export default function Layout() {
     <Stack>
       <Stack.Screen
         name={'[productId]'}
-        options={{headerTitle: 'ძიება', headerShown: false}}
+        options={{headerTitle: 'პროდუცტი', headerShown: false}}
       />
     </Stack>
   );
