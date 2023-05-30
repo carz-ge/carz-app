@@ -5,7 +5,6 @@ import {Product} from '../../graphql/operations';
 import CustomMarker from './custom-marker';
 import ProductCarouselItem from './product-carousel-item';
 
-
 interface SearchResultsMapsProps {
   products: Product[];
 }
@@ -41,6 +40,10 @@ const SearchResultMap = ({products}: SearchResultsMapsProps) => {
     console.log(index);
     if (!flatlist.current) {
       console.log('flatlist.current is null');
+      return;
+    }
+    if (index === -1) {
+      console.log('index is -1');
       return;
     }
     flatlist.current.scrollToIndex({index});

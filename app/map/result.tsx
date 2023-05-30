@@ -1,11 +1,10 @@
 import React from 'react';
-import {Text, StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {CarType, useSearchProducts} from '../../graphql/operations';
-import {useRouter, useSearchParams} from 'expo-router';
+import {useSearchParams} from 'expo-router';
 import SearchResultMap from '../../components/map/search-result-map';
 
 export default function Result() {
-  const router = useRouter();
   const params = useSearchParams();
   console.log('MapResult', JSON.stringify(params));
   const {data, loading, error} = useSearchProducts({
@@ -17,12 +16,12 @@ export default function Result() {
         time: params.time as string,
       },
     },
+    fetchPolicy: 'cache-first',
+    initialFetchPolicy: 'network-only',
   });
 
   console.log('search data: ', data, loading, error);
-  return (
-    <SearchResultMap products={data?.searchProducts||[]} />
-  );
+  return <SearchResultMap products={data?.searchProducts || []} />;
 }
 
 const styles = StyleSheet.create({

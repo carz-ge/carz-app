@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, Text, Image, useWindowDimensions, Pressable, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  useWindowDimensions,
+  Pressable,
+  StyleSheet,
+} from 'react-native';
 import {Product} from '../../graphql/operations';
 import {useRouter} from 'expo-router';
 
@@ -13,7 +20,7 @@ const ProductCarouselItem = ({product}: ProductCarouselItemProps) => {
   const router = useRouter();
 
   const goToPostPage = () => {
-    router.push(`/product/${product.id}`);
+    router.replace(`/product/${product.id}`);
   };
 
   return (
@@ -21,7 +28,6 @@ const ProductCarouselItem = ({product}: ProductCarouselItemProps) => {
       onPress={goToPostPage}
       style={[styles.container, {width: width - 60}]}>
       <View style={styles.innerContainer}>
-        {/* Image  */}
         <Image style={styles.image} source={{uri: product.mainImage}} />
 
         <View style={{flex: 1, marginHorizontal: 10}}>
@@ -73,27 +79,7 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     resizeMode: 'cover',
   },
-
-  bedrooms: {
-    marginVertical: 10,
-    color: '#5b5b5b',
-  },
   description: {
     fontSize: 15,
-  },
-  prices: {
-    fontSize: 15,
-    marginVertical: 10,
-  },
-  oldPrice: {
-    color: '#5b5b5b',
-    textDecorationLine: 'line-through',
-  },
-  price: {
-    fontWeight: 'bold',
-  },
-  totalPrice: {
-    color: '#5b5b5b',
-    textDecorationLine: 'underline',
   },
 });
