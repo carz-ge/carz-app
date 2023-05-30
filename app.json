@@ -20,6 +20,10 @@
       "supportsTablet": true,
       "config": {
         "googleMapsApiKey": "AIzaSyCqIwF1AEqWV3wEI1Iq-weNuFwhsF393aE"
+      },
+      "infoPlist": {
+        "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access camera.",
+        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
       }
     },
     "android": {
@@ -32,7 +36,10 @@
         "googleMaps": {
           "apiKey": "AIzaSyCqIwF1AEqWV3wEI1Iq-weNuFwhsF393aE"
         }
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -45,6 +52,11 @@
           "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "9b0a3a89-5177-4e85-80d7-cb01e99b1204"
+      }
+    }
   }
 }
