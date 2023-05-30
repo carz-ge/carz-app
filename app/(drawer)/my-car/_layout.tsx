@@ -8,10 +8,6 @@ export default function Layout() {
         name={'index'}
         options={{headerTitle: 'ავტომობილები', headerShown: false}}
       />
-      <Stack.Screen
-        name={'[carId]'}
-        options={{headerTitle: 'ავტომობილი', headerShown: false}}
-      />
     </Stack>
   );
 }

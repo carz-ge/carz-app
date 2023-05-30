@@ -10,7 +10,11 @@ export default function Layout() {
       />
       <Stack.Screen
         name={'add'}
-        options={{headerTitle: 'მანქანის დამატება', headerShown: false}}
+        options={{headerTitle: 'მანქანის დამატება', headerBackVisible: true}}
+      />
+      <Stack.Screen
+        name={'[carId]'}
+        options={{headerTitle: 'ავტომობილი', headerBackVisible: true}}
       />
     </Stack>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, StyleSheet, View} from 'react-native';
 
-export default function TabTwoScreen() {
+export default function CarId() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Car</Text>
@@ -18,10 +18,5 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
   },
 });

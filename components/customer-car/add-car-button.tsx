@@ -8,7 +8,7 @@ export default function AddCarButton() {
   const router = useRouter();
 
   return (
-    <Pressable onPress={() => router.push('add-car')} style={styles.addButton}>
+    <Pressable onPress={() => router.push('/car/add')} style={styles.addButton}>
       <Ionicons name="ios-add" size={30} color="#fff" />
     </Pressable>
   );

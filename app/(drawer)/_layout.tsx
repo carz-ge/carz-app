@@ -50,7 +50,7 @@ export default function DrawerLayout() {
         options={{title: 'მთავარი', headerTitle: titleNameForTabs}}
       />
       <Drawer.Screen name="profile" options={{title: 'პროფილი'}} />
-      <Drawer.Screen name="car" options={{title: 'ავტომობილები'}} />
+      <Drawer.Screen name="my-car" options={{title: 'ავტომობილები'}} />
     </Drawer>
   );
 }

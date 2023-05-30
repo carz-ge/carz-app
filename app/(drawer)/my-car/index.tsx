@@ -1,9 +1,9 @@
 import React from 'react';
-import {Text, StyleSheet, View, ScrollView, FlatList} from 'react-native';
-import {useListCars} from '../../../graphql/operations';
-import {PressableCarItem} from '../../../components/castomer-car/car-item';
+import {Text, StyleSheet, View, FlatList} from 'react-native';
 import {useRouter} from 'expo-router';
-import AddCarButton from '../../../components/castomer-car/add-car-button';
+import {useListCars} from '../../../graphql/operations';
+import {PressableCarItem} from '../../../components/customer-car/car-item';
+import AddCarButton from '../../../components/customer-car/add-car-button';
 
 export default function Cars() {
   const router = useRouter();

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, StyleSheet, View} from 'react-native';
 
-export default function TabTwoScreen() {
+export default function Add() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Bookings</Text>
