@@ -10,6 +10,7 @@ import {onError} from '@apollo/client/link/error';
 import * as SecureStore from 'expo-secure-store';
 import {ACCESS_TOKEN_KEY} from '../context/auth-context';
 import {API_URL} from './config';
+import {isValidToken} from '../auth/utils';
 
 const defaultOptions: DefaultOptions = {
   watchQuery: {
@@ -26,6 +27,17 @@ const defaultOptions: DefaultOptions = {
 };
 
 export const cache = new InMemoryCache();
+
+function getAuthHeaders(headers: any, token: string | null) {
+  const headersClone = {
+    ...headers,
+  };
+  if (token) {
+    headersClone.authorization = `Bearer ${token}`;
+  }
+  return headersClone;
+}
+
 const setupApollo = (uri: string) => {
   const httpLink = createHttpLink({
     uri,
@@ -36,11 +48,12 @@ const setupApollo = (uri: string) => {
     // get the authentication token from local storage if it exists
     const token = await SecureStore.getItemAsync(ACCESS_TOKEN_KEY);
     // return the headers to the context so httpLink can read them
+    console.log('apollo token', token, token ? isValidToken(token) : null);
+
+    const authHeaders = getAuthHeaders(headers, token);
+
     return {
-      headers: {
-        ...headers,
-        authorization: token ? `Bearer ${token}` : '',
-      },
+      headers: authHeaders,
     };
   });
 

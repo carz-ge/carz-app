@@ -1,14 +1,19 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import {ThemeProvider} from '@react-navigation/native';
 import {useFonts} from 'expo-font';
-import {SplashScreen, Stack, useSearchParams, useSegments} from 'expo-router';
+import {
+  SplashScreen,
+  Stack,
+  usePathname,
+  useSearchParams,
+  useSegments,
+} from 'expo-router';
 import React, {useEffect} from 'react';
 import {useColorScheme} from 'react-native';
 import {client} from '../lib/graphql/client';
 import {ApolloProvider} from '@apollo/client';
 import {DarkTheme, LightTheme} from '../lib/styles/themes';
 import AuthContextProvider from '../lib/context/auth-context';
-import {usePathname} from 'expo-router';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 
 export {
@@ -46,8 +51,8 @@ export default function RootLayout() {
 function Layouts() {
   return (
     <Stack>
-      <Stack.Screen name="(auth)" options={{headerShown: false}} />
       <Stack.Screen name="(drawer)" options={{headerShown: false}} />
+      <Stack.Screen name="(auth)" options={{headerShown: false}} />
       <Stack.Screen name="modal" options={{presentation: 'modal'}} />
       <Stack.Screen name="customer-info" options={{headerShown: false}} />
       <Stack.Screen name="search" options={{headerShown: false}} />

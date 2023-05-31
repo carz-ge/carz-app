@@ -314,6 +314,8 @@ export type Product = {
   location: Maybe<Location>;
   mainImage: Scalars['String']['output'];
   name: LingualString;
+  packages: Maybe<Array<ProductDetails>>;
+  provider: Provider;
   providerId: Scalars['ID']['output'];
   tags: Maybe<Array<Scalars['String']['output']>>;
 };
@@ -324,7 +326,6 @@ export type ProductDetails = {
   averageDurationMinutes: Maybe<Scalars['Int']['output']>;
   currency: Maybe<Currency>;
   description: Maybe<LingualString>;
-  generalPrice: Scalars['Int']['output'];
   id: Scalars['ID']['output'];
   name: LingualString;
   notAvailableServices: Maybe<Array<Maybe<LingualString>>>;
@@ -396,10 +397,11 @@ export type Query = {
   checkPhone: Scalars['Boolean']['output'];
   echo: Maybe<Scalars['String']['output']>;
   echoAuthorized: Maybe<Scalars['String']['output']>;
+  echoFlux: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   echoMono: Maybe<Scalars['String']['output']>;
   getMe: User;
   getOrder: Order;
-  getProduct: Maybe<Product>;
+  getProduct: Product;
   getUserById: User;
   listCars: Array<Car>;
   listCategories: Array<Category>;
@@ -426,6 +428,10 @@ export type QueryEchoAuthorizedArgs = {
   message: InputMaybe<Scalars['String']['input']>;
 };
 
+export type QueryEchoFluxArgs = {
+  message: InputMaybe<Scalars['String']['input']>;
+};
+
 export type QueryEchoMonoArgs = {
   message: InputMaybe<Scalars['String']['input']>;
 };
@@ -435,7 +441,7 @@ export type QueryGetOrderArgs = {
 };
 
 export type QueryGetProductArgs = {
-  productId: InputMaybe<Scalars['ID']['input']>;
+  productId: Scalars['ID']['input'];
 };
 
 export type QueryGetUserByIdArgs = {
@@ -624,6 +630,44 @@ export type CreateProduct = {
     tags: Array<string> | null;
     name: {__typename?: 'LingualString'; ka: string; en: string};
     description: {__typename?: 'LingualString'; ka: string; en: string} | null;
+    packages: Array<{
+      __typename?: 'ProductDetails';
+      id: string;
+      productId: string;
+      currency: Currency | null;
+      averageDurationMinutes: number | null;
+      name: {__typename?: 'LingualString'; ka: string; en: string};
+      description: {
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      } | null;
+      pricesForCarTypes: Array<{
+        __typename?: 'ProductDetailsCarPrice';
+        order: string | null;
+        carType: CarType;
+        price: number | null;
+      }> | null;
+      availableServices: Array<{
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      }> | null;
+      notAvailableServices: Array<{
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      } | null> | null;
+    }> | null;
+    provider: {
+      __typename?: 'Provider';
+      id: string;
+      name: string;
+      phone: string | null;
+      email: string | null;
+      logo: string | null;
+      website: string | null;
+    };
     location: {
       __typename?: 'Location';
       address: {
@@ -647,7 +691,6 @@ export type CreateProductDetails = {
     __typename?: 'ProductDetails';
     id: string;
     productId: string;
-    generalPrice: number;
     currency: Currency | null;
     averageDurationMinutes: number | null;
     name: {__typename?: 'LingualString'; ka: string; en: string};
@@ -806,6 +849,44 @@ export type UpdateProduct = {
     tags: Array<string> | null;
     name: {__typename?: 'LingualString'; ka: string; en: string};
     description: {__typename?: 'LingualString'; ka: string; en: string} | null;
+    packages: Array<{
+      __typename?: 'ProductDetails';
+      id: string;
+      productId: string;
+      currency: Currency | null;
+      averageDurationMinutes: number | null;
+      name: {__typename?: 'LingualString'; ka: string; en: string};
+      description: {
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      } | null;
+      pricesForCarTypes: Array<{
+        __typename?: 'ProductDetailsCarPrice';
+        order: string | null;
+        carType: CarType;
+        price: number | null;
+      }> | null;
+      availableServices: Array<{
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      }> | null;
+      notAvailableServices: Array<{
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      } | null> | null;
+    }> | null;
+    provider: {
+      __typename?: 'Provider';
+      id: string;
+      name: string;
+      phone: string | null;
+      email: string | null;
+      logo: string | null;
+      website: string | null;
+    };
     location: {
       __typename?: 'Location';
       address: {
@@ -830,7 +911,6 @@ export type UpdateProductDetails = {
     __typename?: 'ProductDetails';
     id: string;
     productId: string;
-    generalPrice: number;
     currency: Currency | null;
     averageDurationMinutes: number | null;
     name: {__typename?: 'LingualString'; ka: string; en: string};
@@ -911,6 +991,15 @@ export type EchoAuthorized = {
   echoAuthorized: string | null;
 };
 
+export type EchoFluxVariables = Exact<{
+  message: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type EchoFlux = {
+  __typename?: 'Query';
+  echoFlux: Array<string | null> | null;
+};
+
 export type EchoMonoVariables = Exact<{
   message: InputMaybe<Scalars['String']['input']>;
 }>;
@@ -958,7 +1047,7 @@ export type GetOrder = {
 };
 
 export type GetProductVariables = Exact<{
-  productId: InputMaybe<Scalars['ID']['input']>;
+  productId: Scalars['ID']['input'];
 }>;
 
 export type GetProduct = {
@@ -973,6 +1062,44 @@ export type GetProduct = {
     tags: Array<string> | null;
     name: {__typename?: 'LingualString'; ka: string; en: string};
     description: {__typename?: 'LingualString'; ka: string; en: string} | null;
+    packages: Array<{
+      __typename?: 'ProductDetails';
+      id: string;
+      productId: string;
+      currency: Currency | null;
+      averageDurationMinutes: number | null;
+      name: {__typename?: 'LingualString'; ka: string; en: string};
+      description: {
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      } | null;
+      pricesForCarTypes: Array<{
+        __typename?: 'ProductDetailsCarPrice';
+        order: string | null;
+        carType: CarType;
+        price: number | null;
+      }> | null;
+      availableServices: Array<{
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      }> | null;
+      notAvailableServices: Array<{
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      } | null> | null;
+    }> | null;
+    provider: {
+      __typename?: 'Provider';
+      id: string;
+      name: string;
+      phone: string | null;
+      email: string | null;
+      logo: string | null;
+      website: string | null;
+    };
     location: {
       __typename?: 'Location';
       address: {
@@ -983,7 +1110,7 @@ export type GetProduct = {
       };
       coordinates: {__typename?: 'Coordinates'; lat: number; lng: number};
     } | null;
-  } | null;
+  };
 };
 
 export type GetUserByIdVariables = Exact<{
@@ -1099,6 +1226,44 @@ export type ListProductByCategoryId = {
     tags: Array<string> | null;
     name: {__typename?: 'LingualString'; ka: string; en: string};
     description: {__typename?: 'LingualString'; ka: string; en: string} | null;
+    packages: Array<{
+      __typename?: 'ProductDetails';
+      id: string;
+      productId: string;
+      currency: Currency | null;
+      averageDurationMinutes: number | null;
+      name: {__typename?: 'LingualString'; ka: string; en: string};
+      description: {
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      } | null;
+      pricesForCarTypes: Array<{
+        __typename?: 'ProductDetailsCarPrice';
+        order: string | null;
+        carType: CarType;
+        price: number | null;
+      }> | null;
+      availableServices: Array<{
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      }> | null;
+      notAvailableServices: Array<{
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      } | null> | null;
+    }> | null;
+    provider: {
+      __typename?: 'Provider';
+      id: string;
+      name: string;
+      phone: string | null;
+      email: string | null;
+      logo: string | null;
+      website: string | null;
+    };
     location: {
       __typename?: 'Location';
       address: {
@@ -1128,6 +1293,44 @@ export type ListProductByProviderId = {
     tags: Array<string> | null;
     name: {__typename?: 'LingualString'; ka: string; en: string};
     description: {__typename?: 'LingualString'; ka: string; en: string} | null;
+    packages: Array<{
+      __typename?: 'ProductDetails';
+      id: string;
+      productId: string;
+      currency: Currency | null;
+      averageDurationMinutes: number | null;
+      name: {__typename?: 'LingualString'; ka: string; en: string};
+      description: {
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      } | null;
+      pricesForCarTypes: Array<{
+        __typename?: 'ProductDetailsCarPrice';
+        order: string | null;
+        carType: CarType;
+        price: number | null;
+      }> | null;
+      availableServices: Array<{
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      }> | null;
+      notAvailableServices: Array<{
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      } | null> | null;
+    }> | null;
+    provider: {
+      __typename?: 'Provider';
+      id: string;
+      name: string;
+      phone: string | null;
+      email: string | null;
+      logo: string | null;
+      website: string | null;
+    };
     location: {
       __typename?: 'Location';
       address: {
@@ -1151,7 +1354,6 @@ export type ListProductDetailsByProductId = {
     __typename?: 'ProductDetails';
     id: string;
     productId: string;
-    generalPrice: number;
     currency: Currency | null;
     averageDurationMinutes: number | null;
     name: {__typename?: 'LingualString'; ka: string; en: string};
@@ -1189,6 +1391,44 @@ export type ListProducts = {
     tags: Array<string> | null;
     name: {__typename?: 'LingualString'; ka: string; en: string};
     description: {__typename?: 'LingualString'; ka: string; en: string} | null;
+    packages: Array<{
+      __typename?: 'ProductDetails';
+      id: string;
+      productId: string;
+      currency: Currency | null;
+      averageDurationMinutes: number | null;
+      name: {__typename?: 'LingualString'; ka: string; en: string};
+      description: {
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      } | null;
+      pricesForCarTypes: Array<{
+        __typename?: 'ProductDetailsCarPrice';
+        order: string | null;
+        carType: CarType;
+        price: number | null;
+      }> | null;
+      availableServices: Array<{
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      }> | null;
+      notAvailableServices: Array<{
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      } | null> | null;
+    }> | null;
+    provider: {
+      __typename?: 'Provider';
+      id: string;
+      name: string;
+      phone: string | null;
+      email: string | null;
+      logo: string | null;
+      website: string | null;
+    };
     location: {
       __typename?: 'Location';
       address: {
@@ -1247,6 +1487,44 @@ export type SearchProducts = {
     tags: Array<string> | null;
     name: {__typename?: 'LingualString'; ka: string; en: string};
     description: {__typename?: 'LingualString'; ka: string; en: string} | null;
+    packages: Array<{
+      __typename?: 'ProductDetails';
+      id: string;
+      productId: string;
+      currency: Currency | null;
+      averageDurationMinutes: number | null;
+      name: {__typename?: 'LingualString'; ka: string; en: string};
+      description: {
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      } | null;
+      pricesForCarTypes: Array<{
+        __typename?: 'ProductDetailsCarPrice';
+        order: string | null;
+        carType: CarType;
+        price: number | null;
+      }> | null;
+      availableServices: Array<{
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      }> | null;
+      notAvailableServices: Array<{
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      } | null> | null;
+    }> | null;
+    provider: {
+      __typename?: 'Provider';
+      id: string;
+      name: string;
+      phone: string | null;
+      email: string | null;
+      logo: string | null;
+      website: string | null;
+    };
     location: {
       __typename?: 'Location';
       address: {
@@ -1485,6 +1763,41 @@ export const CreateProductDocument = gql`
         ka
         en
       }
+      packages {
+        id
+        productId
+        name {
+          ka
+          en
+        }
+        description {
+          ka
+          en
+        }
+        pricesForCarTypes {
+          order
+          carType
+          price
+        }
+        availableServices {
+          ka
+          en
+        }
+        notAvailableServices {
+          ka
+          en
+        }
+        currency
+        averageDurationMinutes
+      }
+      provider {
+        id
+        name
+        phone
+        email
+        logo
+        website
+      }
       location {
         address {
           street
@@ -1568,7 +1881,6 @@ export const CreateProductDetailsDocument = gql`
         ka
         en
       }
-      generalPrice
       currency
       averageDurationMinutes
     }
@@ -2120,6 +2432,41 @@ export const UpdateProductDocument = gql`
         ka
         en
       }
+      packages {
+        id
+        productId
+        name {
+          ka
+          en
+        }
+        description {
+          ka
+          en
+        }
+        pricesForCarTypes {
+          order
+          carType
+          price
+        }
+        availableServices {
+          ka
+          en
+        }
+        notAvailableServices {
+          ka
+          en
+        }
+        currency
+        averageDurationMinutes
+      }
+      provider {
+        id
+        name
+        phone
+        email
+        logo
+        website
+      }
       location {
         address {
           street
@@ -2207,7 +2554,6 @@ export const UpdateProductDetailsDocument = gql`
         ka
         en
       }
-      generalPrice
       currency
       averageDurationMinutes
     }
@@ -2500,6 +2846,54 @@ export type EchoAuthorizedQueryResult = Apollo.QueryResult<
   EchoAuthorized,
   EchoAuthorizedVariables
 >;
+export const EchoFluxDocument = gql`
+  query echoFlux($message: String) {
+    echoFlux(message: $message)
+  }
+`;
+
+/**
+ * __useEchoFlux__
+ *
+ * To run a query within a React component, call `useEchoFlux` and pass it any options that fit your needs.
+ * When your component renders, `useEchoFlux` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEchoFlux({
+ *   variables: {
+ *      message: // value for 'message'
+ *   },
+ * });
+ */
+export function useEchoFlux(
+  baseOptions?: Apollo.QueryHookOptions<EchoFlux, EchoFluxVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<EchoFlux, EchoFluxVariables>(
+    EchoFluxDocument,
+    options,
+  );
+}
+export function useEchoFluxLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<EchoFlux, EchoFluxVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<EchoFlux, EchoFluxVariables>(
+    EchoFluxDocument,
+    options,
+  );
+}
+export type EchoFluxHookResult = ReturnType<typeof useEchoFlux>;
+export type EchoFluxLazyQueryHookResult = ReturnType<
+  typeof useEchoFluxLazyQuery
+>;
+export type EchoFluxQueryResult = Apollo.QueryResult<
+  EchoFlux,
+  EchoFluxVariables
+>;
 export const EchoMonoDocument = gql`
   query echoMono($message: String) {
     echoMono(message: $message)
@@ -2654,7 +3048,7 @@ export type GetOrderQueryResult = Apollo.QueryResult<
   GetOrderVariables
 >;
 export const GetProductDocument = gql`
-  query getProduct($productId: ID) {
+  query getProduct($productId: ID!) {
     getProduct(productId: $productId) {
       id
       name {
@@ -2666,6 +3060,41 @@ export const GetProductDocument = gql`
       description {
         ka
         en
+      }
+      packages {
+        id
+        productId
+        name {
+          ka
+          en
+        }
+        description {
+          ka
+          en
+        }
+        pricesForCarTypes {
+          order
+          carType
+          price
+        }
+        availableServices {
+          ka
+          en
+        }
+        notAvailableServices {
+          ka
+          en
+        }
+        currency
+        averageDurationMinutes
+      }
+      provider {
+        id
+        name
+        phone
+        email
+        logo
+        website
       }
       location {
         address {
@@ -2702,7 +3131,7 @@ export const GetProductDocument = gql`
  * });
  */
 export function useGetProduct(
-  baseOptions?: Apollo.QueryHookOptions<GetProduct, GetProductVariables>,
+  baseOptions: Apollo.QueryHookOptions<GetProduct, GetProductVariables>,
 ) {
   const options = {...defaultOptions, ...baseOptions};
   return Apollo.useQuery<GetProduct, GetProductVariables>(
@@ -3046,6 +3475,41 @@ export const ListProductByCategoryIdDocument = gql`
         ka
         en
       }
+      packages {
+        id
+        productId
+        name {
+          ka
+          en
+        }
+        description {
+          ka
+          en
+        }
+        pricesForCarTypes {
+          order
+          carType
+          price
+        }
+        availableServices {
+          ka
+          en
+        }
+        notAvailableServices {
+          ka
+          en
+        }
+        currency
+        averageDurationMinutes
+      }
+      provider {
+        id
+        name
+        phone
+        email
+        logo
+        website
+      }
       location {
         address {
           street
@@ -3127,6 +3591,41 @@ export const ListProductByProviderIdDocument = gql`
       description {
         ka
         en
+      }
+      packages {
+        id
+        productId
+        name {
+          ka
+          en
+        }
+        description {
+          ka
+          en
+        }
+        pricesForCarTypes {
+          order
+          carType
+          price
+        }
+        availableServices {
+          ka
+          en
+        }
+        notAvailableServices {
+          ka
+          en
+        }
+        currency
+        averageDurationMinutes
+      }
+      provider {
+        id
+        name
+        phone
+        email
+        logo
+        website
       }
       location {
         address {
@@ -3222,7 +3721,6 @@ export const ListProductDetailsByProductIdDocument = gql`
         ka
         en
       }
-      generalPrice
       currency
       averageDurationMinutes
     }
@@ -3292,6 +3790,41 @@ export const ListProductsDocument = gql`
       description {
         ka
         en
+      }
+      packages {
+        id
+        productId
+        name {
+          ka
+          en
+        }
+        description {
+          ka
+          en
+        }
+        pricesForCarTypes {
+          order
+          carType
+          price
+        }
+        availableServices {
+          ka
+          en
+        }
+        notAvailableServices {
+          ka
+          en
+        }
+        currency
+        averageDurationMinutes
+      }
+      provider {
+        id
+        name
+        phone
+        email
+        logo
+        website
       }
       location {
         address {
@@ -3477,6 +4010,41 @@ export const SearchProductsDocument = gql`
       description {
         ka
         en
+      }
+      packages {
+        id
+        productId
+        name {
+          ka
+          en
+        }
+        description {
+          ka
+          en
+        }
+        pricesForCarTypes {
+          order
+          carType
+          price
+        }
+        availableServices {
+          ka
+          en
+        }
+        notAvailableServices {
+          ka
+          en
+        }
+        currency
+        averageDurationMinutes
+      }
+      provider {
+        id
+        name
+        phone
+        email
+        logo
+        website
       }
       location {
         address {

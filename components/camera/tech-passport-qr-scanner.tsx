@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {Alert, Button, StyleSheet, Text, View} from 'react-native';
 import {
   BarCodeEvent,
   BarCodeScanner,
@@ -21,7 +21,9 @@ export default function TechPassportQrScanner() {
 
   const handleBarCodeScanned = ({type, data}: BarCodeEvent) => {
     setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    Alert.alert(
+      `Bar code with type ${type} and data ${data} has been scanned!`,
+    );
   };
 
   if (hasPermission === null) {

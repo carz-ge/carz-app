@@ -22,6 +22,10 @@ module.exports.echoMono = fs.readFileSync(
   path.join(__dirname, 'echoMono.gql'),
   'utf8',
 );
+module.exports.echoFlux = fs.readFileSync(
+  path.join(__dirname, 'echoFlux.gql'),
+  'utf8',
+);
 module.exports.listOrders = fs.readFileSync(
   path.join(__dirname, 'listOrders.gql'),
   'utf8',

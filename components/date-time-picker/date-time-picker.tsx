@@ -1,7 +1,6 @@
 import React, {useRef, useState} from 'react';
 import {
   Pressable,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -13,7 +12,6 @@ import {Ionicons} from '@expo/vector-icons';
 import CustomBackdrop from '../cutomBackdrop/customBackdrop';
 import {Calendar} from 'react-native-calendars';
 import colors from '../../lib/styles/colors';
-import {Car} from '../../graphql/operations';
 
 interface DateTimePickerProps {
   onNextHandler: (date: string, time: string) => void;
@@ -106,7 +104,7 @@ export default function DateTimePicker({onNextHandler}: DateTimePickerProps) {
           ref={bottomSheetModalRefTime}
           index={1}
           snapPoints={['100%', '100%']}
-          backdropComponent={props => <CustomBackdrop {...props} />}>
+          backdropComponent={CustomBackdrop}>
           <View style={styles.timePopup}>
             <View style={styles.calendarTextTimeCont}>
               <Text style={styles.calendarTextTime}>აირჩიე დრო</Text>

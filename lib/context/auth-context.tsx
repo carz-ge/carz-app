@@ -9,7 +9,6 @@ import React, {
 } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import {isValidToken} from '../auth/utils';
-import {usePathname} from 'expo-router';
 
 export const ACCESS_TOKEN_KEY = 'access_token';
 
@@ -28,7 +27,6 @@ const AuthContext = createContext<AuthContextType>({
 const AuthContextProvider = ({children}: PropsWithChildren) => {
   const [authToken, setAuthToken] = useState<string | null>(null);
   const segments = useSegments();
-  const pathname = usePathname();
   const {replace} = useRouter();
   useEffect(() => {
     const isAuthGroup = segments[0] === '(auth)';
@@ -39,11 +37,20 @@ const AuthContextProvider = ({children}: PropsWithChildren) => {
         replace('/home');
       }
     } else {
+      if (!authToken) {
+        console.log('no token');
+        replace('/sign-in');
+        return;
+      }
+
       if (authToken && !isValidToken(authToken)) {
-        SecureStore.deleteItemAsync(ACCESS_TOKEN_KEY);
+        console.log('invalid');
+        SecureStore.deleteItemAsync(ACCESS_TOKEN_KEY).then(() =>
+          console.log('deleted item 1'),
+        );
+        setAuthToken(null);
         replace('/sign-in');
-      } else if (!authToken) {
-        replace('/sign-in');
+        return;
       }
     }
   }, [segments, authToken, replace]);
@@ -51,6 +58,7 @@ const AuthContextProvider = ({children}: PropsWithChildren) => {
   useEffect(() => {
     const loadAuthToken = async () => {
       const res = await SecureStore.getItemAsync(ACCESS_TOKEN_KEY);
+      console.log('token res', res);
       if (res) {
         setAuthToken(res);
       }

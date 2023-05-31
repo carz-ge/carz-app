@@ -2,7 +2,7 @@ import {CodegenConfig} from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
   schema: 'graphql/schema.graphql',
-  documents: 'graphql/generated-operations/**/*.gql',
+  documents: 'graphql/operations-gqls/**/*.gql',
   overwrite: true,
   generates: {
     'graphql/operations.tsx': {

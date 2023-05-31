@@ -23,7 +23,6 @@ mutation updateProductDetails($productDetailsId: ID!, $input: ProductDetailsInpu
             ka
             en
         }
-        generalPrice
         currency
         averageDurationMinutes
     }

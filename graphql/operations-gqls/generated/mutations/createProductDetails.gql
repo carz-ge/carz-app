@@ -1,5 +1,5 @@
-query listProductDetailsByProductId($productId: ID!){
-    listProductDetailsByProductId(productId: $productId){
+mutation createProductDetails($input: ProductDetailsInput!){
+    createProductDetails(input: $input){
         id
         productId
         name{
@@ -23,7 +23,6 @@ query listProductDetailsByProductId($productId: ID!){
             ka
             en
         }
-        generalPrice
         currency
         averageDurationMinutes
     }

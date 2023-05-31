@@ -13,7 +13,7 @@ export default function CategoryList() {
     fetchPolicy: 'network-only',
   });
 
-  // console.log('useListCategories', data, loading, error);
+  console.log('useListCategories', data, loading, error);
 
   return (
     <View style={styles.categoriesWrapper}>
