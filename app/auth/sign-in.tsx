@@ -44,7 +44,7 @@ const SignIn = () => {
       }
 
       router.push({
-        pathname: '/authenticate',
+        pathname: '/auth/authenticate',
         params: {
           phone: encodeURIComponent(phone), // need to encode in order to send plus (+) as an parameter
           // phone,

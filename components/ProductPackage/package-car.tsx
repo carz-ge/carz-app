@@ -1,3 +1,4 @@
+import React from 'react';
 import {ProductDetails} from '../../graphql/operations';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 
@@ -25,9 +26,7 @@ export function PackageCard({
 
       <View>
         {/*  Price */}
-        <Text>
-          {/*TODO*/}
-        </Text>
+        {/*TODO*/}
         <Pressable onPress={() => onPressed(productPackage.id)}>
           <Text>არჩევა</Text>
         </Pressable>

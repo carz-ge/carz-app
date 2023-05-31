@@ -1,12 +1,8 @@
 import React from 'react';
-import {Link, Tabs, useNavigation} from 'expo-router';
+import {Tabs, useNavigation} from 'expo-router';
 import {Pressable, useColorScheme} from 'react-native';
 import Colors from '../../../lib/styles/colors';
-import {
-  FontAwesome,
-  MaterialCommunityIcons,
-  Octicons,
-} from '@expo/vector-icons';
+import {MaterialCommunityIcons, Octicons} from '@expo/vector-icons';
 import {DrawerActions} from '@react-navigation/native';
 
 function AvatarHeader() {
@@ -45,7 +41,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="home"
         options={{
-          title: 'Home',
+          tabBarLabel: 'Home',
           headerShown: false,
           tabBarIcon: ({color}) => <TabBarIcon name="home" color={color} />,
           // headerRight: () => (
@@ -68,7 +64,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="bookings"
         options={{
-          title: 'Bookings',
+          tabBarLabel: 'Bookings',
           headerShown: false,
           tabBarIcon: ({color}) => (
             <TabBarIcon name="clock-time-four" color={color} />

@@ -1,21 +1,12 @@
 import React from 'react';
-import {withLayoutContext} from 'expo-router';
+import {usePathname} from 'expo-router';
+import {Text} from 'react-native';
+import {Drawer} from 'expo-router/drawer';
 import {
+  DrawerContentComponentProps,
   DrawerContentScrollView,
   DrawerItemList,
-  createDrawerNavigator,
-  DrawerContentComponentProps,
-  DrawerNavigationOptions,
 } from '@react-navigation/drawer';
-import {Text} from 'react-native';
-import {usePathname} from 'expo-router/src/LocationProvider';
-
-const DrawerNavigator = createDrawerNavigator().Navigator;
-
-const Drawer = withLayoutContext<
-  DrawerNavigationOptions,
-  typeof DrawerNavigator
->(DrawerNavigator);
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.

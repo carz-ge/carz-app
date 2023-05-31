@@ -2,7 +2,6 @@ import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import FilterCarWashes from '../../components/date-time-picker/date-time-picker';
 import {useRouter, useSearchParams} from 'expo-router';
-import {CarType, useSearchProducts} from '../../graphql/operations';
 
 export default function PickDateTime() {
   const router = useRouter();

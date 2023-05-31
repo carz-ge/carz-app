@@ -11,14 +11,6 @@ interface FormData {
   code: string;
 }
 
-type SearchParams = Record<string, string | string[]>;
-
-interface CustomSearchParams extends SearchParams {
-  phone: string;
-  isRegistered: string;
-  expiresAt: string;
-}
-
 const Authenticate = () => {
   const router = useRouter();
 
@@ -26,7 +18,7 @@ const Authenticate = () => {
     defaultValues: {code: ''},
   });
 
-  const {phone, isRegistered} = useSearchParams<CustomSearchParams>();
+  const {phone, isRegistered} = useSearchParams();
 
   console.log('phone -> ', phone, isRegistered);
 

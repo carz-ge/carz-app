@@ -1,9 +1,14 @@
 import React from 'react';
-import {Link, Stack, useSearchParams, useSegments} from 'expo-router';
+import {
+  Link,
+  Stack,
+  useSearchParams,
+  useSegments,
+  usePathname,
+} from 'expo-router';
 import {StyleSheet} from 'react-native';
 
 import {Text, View} from '../components/Themed';
-import {usePathname} from 'expo-router/src/LocationProvider';
 
 export default function NotFoundScreen() {
   const pathname = usePathname();

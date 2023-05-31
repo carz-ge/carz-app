@@ -52,7 +52,7 @@ function Layouts() {
   return (
     <Stack>
       <Stack.Screen name="(drawer)" options={{headerShown: false}} />
-      <Stack.Screen name="(auth)" options={{headerShown: false}} />
+      <Stack.Screen name="auth" options={{headerShown: false}} />
       <Stack.Screen name="modal" options={{presentation: 'modal'}} />
       <Stack.Screen name="customer-info" options={{headerShown: false}} />
       <Stack.Screen name="search" options={{headerShown: false}} />

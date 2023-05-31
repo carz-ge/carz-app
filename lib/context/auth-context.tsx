@@ -1,4 +1,4 @@
-import {useRouter, useSegments} from 'expo-router';
+import {useNavigation, useRouter, useSegments} from 'expo-router';
 import React, {
   PropsWithChildren,
   createContext,
@@ -27,19 +27,21 @@ const AuthContext = createContext<AuthContextType>({
 const AuthContextProvider = ({children}: PropsWithChildren) => {
   const [authToken, setAuthToken] = useState<string | null>(null);
   const segments = useSegments();
-  const {replace} = useRouter();
+  const {push} = useRouter();
+  const navigation = useNavigation();
+  navigation;
   useEffect(() => {
-    const isAuthGroup = segments[0] === '(auth)';
+    const isAuthGroup = segments[0] === 'auth';
 
     // console.log("auth Token is valid", authToken ? isValidToken(authToken) : null);
     if (isAuthGroup) {
       if (authToken && isValidToken(authToken)) {
-        replace('/home');
+        push('/home');
       }
     } else {
       if (!authToken) {
         console.log('no token');
-        replace('/sign-in');
+        push('/auth/sign-in');
         return;
       }
 
@@ -49,11 +51,11 @@ const AuthContextProvider = ({children}: PropsWithChildren) => {
           console.log('deleted item 1'),
         );
         setAuthToken(null);
-        replace('/sign-in');
+        push('/auth/sign-in');
         return;
       }
     }
-  }, [segments, authToken, replace]);
+  }, [segments, authToken, push]);
 
   useEffect(() => {
     const loadAuthToken = async () => {

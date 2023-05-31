@@ -2,7 +2,8 @@ import React from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import CategoryList from '../../../../components/category/category-list';
 
-export default () => {
+export default function Home() {
+  console.log('HOME');
   return (
     <View style={styles.container}>
       <ScrollView
@@ -19,7 +20,7 @@ export default () => {
       </ScrollView>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

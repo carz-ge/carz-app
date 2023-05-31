@@ -1,4 +1,4 @@
-import {useAuthorize, useGetMe, User} from '../../graphql/operations';
+import {useGetMe, User} from '../../graphql/operations';
 
 let user;
 
