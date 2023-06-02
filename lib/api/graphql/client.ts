@@ -8,9 +8,9 @@ import {DefaultOptions} from '@apollo/client/core/ApolloClient';
 import {setContext} from '@apollo/client/link/context';
 import {onError} from '@apollo/client/link/error';
 import * as SecureStore from 'expo-secure-store';
-import {ACCESS_TOKEN_KEY} from '../context/auth-context';
-import {API_URL} from './config';
-import {isValidToken} from '../auth/utils';
+import {ACCESS_TOKEN_KEY} from '../../context/auth-context';
+import {API_URL} from '../config';
+import {isValidToken} from '../../auth/utils';
 
 const defaultOptions: DefaultOptions = {
   watchQuery: {
@@ -67,4 +67,6 @@ const setupApollo = (uri: string) => {
   });
 };
 
-export const client: ApolloClient<NormalizedCacheObject> = setupApollo(API_URL);
+export const client: ApolloClient<NormalizedCacheObject> = setupApollo(
+  API_URL + '/graphql',
+);

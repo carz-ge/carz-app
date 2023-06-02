@@ -102,6 +102,22 @@ export type CategoryInput = {
   priority: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type ChatMessage = {
+  __typename?: 'ChatMessage';
+  createdAt: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  isAnswer: Scalars['Boolean']['output'];
+  status: Maybe<ChatMessageStatus>;
+  text: Scalars['String']['output'];
+};
+
+export enum ChatMessageStatus {
+  Fail = 'FAIL',
+  InProgress = 'IN_PROGRESS',
+  Sent = 'SENT',
+  Success = 'SUCCESS',
+}
+
 export type Coordinates = {
   __typename?: 'Coordinates';
   lat: Scalars['Float']['output'];
@@ -405,6 +421,7 @@ export type Query = {
   getUserById: User;
   listCars: Array<Car>;
   listCategories: Array<Category>;
+  listChatMessages: Array<ChatMessage>;
   listOrders: Array<Order>;
   listOrdersByUserId: Array<Order>;
   listProductByCategoryId: Array<Product>;
@@ -1163,6 +1180,20 @@ export type ListCategories = {
     priority: number;
     active: boolean;
     name: {__typename?: 'LingualString'; ka: string; en: string};
+  }>;
+};
+
+export type ListChatMessagesVariables = Exact<{[key: string]: never}>;
+
+export type ListChatMessages = {
+  __typename?: 'Query';
+  listChatMessages: Array<{
+    __typename?: 'ChatMessage';
+    id: string;
+    createdAt: string;
+    text: string;
+    isAnswer: boolean;
+    status: ChatMessageStatus | null;
   }>;
 };
 
@@ -3333,6 +3364,65 @@ export type ListCategoriesLazyQueryHookResult = ReturnType<
 export type ListCategoriesQueryResult = Apollo.QueryResult<
   ListCategories,
   ListCategoriesVariables
+>;
+export const ListChatMessagesDocument = gql`
+  query listChatMessages {
+    listChatMessages {
+      id
+      createdAt
+      text
+      isAnswer
+      status
+    }
+  }
+`;
+
+/**
+ * __useListChatMessages__
+ *
+ * To run a query within a React component, call `useListChatMessages` and pass it any options that fit your needs.
+ * When your component renders, `useListChatMessages` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListChatMessages({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useListChatMessages(
+  baseOptions?: Apollo.QueryHookOptions<
+    ListChatMessages,
+    ListChatMessagesVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<ListChatMessages, ListChatMessagesVariables>(
+    ListChatMessagesDocument,
+    options,
+  );
+}
+export function useListChatMessagesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ListChatMessages,
+    ListChatMessagesVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<ListChatMessages, ListChatMessagesVariables>(
+    ListChatMessagesDocument,
+    options,
+  );
+}
+export type ListChatMessagesHookResult = ReturnType<typeof useListChatMessages>;
+export type ListChatMessagesLazyQueryHookResult = ReturnType<
+  typeof useListChatMessagesLazyQuery
+>;
+export type ListChatMessagesQueryResult = Apollo.QueryResult<
+  ListChatMessages,
+  ListChatMessagesVariables
 >;
 export const ListOrdersDocument = gql`
   query listOrders {

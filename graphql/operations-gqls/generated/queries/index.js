@@ -70,6 +70,10 @@ module.exports.listQueue = fs.readFileSync(
   path.join(__dirname, 'listQueue.gql'),
   'utf8',
 );
+module.exports.listChatMessages = fs.readFileSync(
+  path.join(__dirname, 'listChatMessages.gql'),
+  'utf8',
+);
 module.exports.getMe = fs.readFileSync(
   path.join(__dirname, 'getMe.gql'),
   'utf8',

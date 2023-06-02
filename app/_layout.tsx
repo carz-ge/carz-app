@@ -10,7 +10,7 @@ import {
 } from 'expo-router';
 import React, {useEffect} from 'react';
 import {useColorScheme} from 'react-native';
-import {client} from '../lib/graphql/client';
+import {client} from '../lib/api/graphql/client';
 import {ApolloProvider} from '@apollo/client';
 import {DarkTheme, LightTheme} from '../lib/styles/themes';
 import AuthContextProvider from '../lib/context/auth-context';

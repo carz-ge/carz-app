@@ -1,0 +1,9 @@
+query listChatMessages{
+    listChatMessages{
+        id
+        createdAt
+        text
+        isAnswer
+        status
+    }
+}
