@@ -16,8 +16,7 @@ export default function Result() {
         time: params.time as string,
       },
     },
-    fetchPolicy: 'cache-first',
-    initialFetchPolicy: 'network-only',
+    fetchPolicy: 'network-only',
   });
 
   console.log('search data: ', data, loading, error);

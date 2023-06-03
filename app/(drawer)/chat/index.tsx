@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   FlatList,
   RefreshControl,
@@ -12,53 +12,67 @@ import {FontAwesome} from '@expo/vector-icons';
 import {ulid} from 'ulid';
 import colors from '../../../lib/styles/colors';
 import {
+  AskSageDocument,
   ChatMessage,
   ChatMessageStatus,
+  useAskSage,
   useListChatMessages,
 } from '../../../graphql/operations';
-import {sse} from '../../../lib/api/rest/client';
+import {WS_API_URL} from '../../../lib/api/config';
 
-export default function Profile() {
-  const {data, loading, error} = useListChatMessages({
+export default function Chat() {
+  console.log('Chat');
+  const {data, loading, error, subscribeToMore} = useListChatMessages({
     fetchPolicy: 'cache-and-network',
   });
-
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: ulid(),
-      text: 'test',
-      isAnswer: false,
-      createdAt: '123',
-      status: null,
-    },
-    {
-      id: ulid(),
-      text: 'testasdasdasdasdasd',
-      isAnswer: true,
-      status: null,
-      createdAt: '123',
-    },
-    {
-      id: ulid(),
-      text: 'qweqweqqweqweqweqweqweqweqweqweqweqwe qweq weqw eqw weqweq',
-      isAnswer: false,
-      status: null,
-      createdAt: '123',
-    },
-    {
-      id: ulid(),
-      text: 'te stasd asdas das dasd',
-      isAnswer: true,
-      status: null,
-
-      createdAt: '123',
-    },
-  ]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [text, setText] = useState<string>('');
+  const wsRef = useRef<WebSocket | null>(null);
+  useEffect(() => {
+    const ws = new WebSocket(WS_API_URL + '/chat');
+    wsRef.current = ws;
+    ws.onopen = () => {
+      console.log('Connected to WebSocket');
+    };
+
+    ws.onmessage = event => {
+      console.log('data -> ', event);
+      const message = JSON.parse(event.data);
+      setMessages(prevMessages => [...prevMessages, message]);
+    };
+
+    ws.onerror = error => {
+      console.error(error);
+    };
+
+    ws.onclose = () => {
+      console.log('WebSocket connection closed');
+    };
+
+    // Clean up WebSocket connection when component unmounts
+    return () => {
+      ws.close();
+    };
+  }, []);
+
+  // const {
+  //   loading: loadingAns,
+  //   data: dataAns,
+  //   error: errorAns,
+  //   variables,
+  // } = useAskSage({
+  //   variables: {
+  //     question: 'test',
+  //   },
+  // });
+
+  // useEffect(() => {
+  //   console.log('sage -> ', dataAns, loadingAns, errorAns, variables);
+  // }, [dataAns, loadingAns, errorAns, variables]);
 
   useEffect(() => {
     if (!loading && data?.listChatMessages) {
-      setMessages(data.listChatMessages);
+      setMessages([]);
     }
   }, [data, loading]);
 
@@ -80,15 +94,31 @@ export default function Profile() {
       text: '',
       isAnswer: true,
     };
-
+    wsRef.current?.send(text);
     const oldMessages = [...messages, newText];
     setMessages([...oldMessages, answerText]);
+    // subscribeToMore(
+    //   {
+    //     document: AskSageDocument,
+    //     variables: {
+    //       question: text
+    //     },
+    //     updateQuery: (prev, { subscriptionData}) => {
+    //       console.log("subscription data", subscriptionData, prev);
+    //       if (!subscriptionData.data) return prev;
+    //       return prev;
+    //     }
+    //   }
+    //
+    // )
     setText('');
-    await sse(text, answer => {
-      answerText.text = answer;
-      setMessages([...oldMessages, answerText]);
-      return false;
-    });
+    console.log('clicked ');
+    // await sse2(text, answer => {
+    //   console.log('answer', answer);
+    //   answerText.text = answer;
+    //   setMessages([...oldMessages, answerText]);
+    //   return false;
+    // });
   };
 
   return (

@@ -331,6 +331,7 @@ input ScheduleCarForServiceInput {
 
 type Subscription {
   subscribeToQueue(providerId: ID): [String]
+  askSage(question: String!): String
 }
 
 enum ChatMessageStatus {
