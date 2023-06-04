@@ -48,11 +48,16 @@ export default function Chat() {
       () => {
         setIsConnectionClosed(true);
       },
-    ).then(websocket => {
-      setIsConnectionClosed(false);
-      ws = websocket;
-      wsRef.current = websocket;
-    });
+    )
+      .then(websocket => {
+        setIsConnectionClosed(false);
+        ws = websocket;
+        wsRef.current = websocket;
+      })
+      .catch(e => {
+        console.log(e);
+        setIsConnectionClosed(true);
+      });
     return () => {
       if (ws) {
         ws.close();
