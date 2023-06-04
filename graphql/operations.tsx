@@ -513,12 +513,7 @@ export type SendOptOutput = {
 
 export type Subscription = {
   __typename?: 'Subscription';
-  askSage: Maybe<Scalars['String']['output']>;
   subscribeToQueue: Maybe<Array<Maybe<Scalars['String']['output']>>>;
-};
-
-export type SubscriptionAskSageArgs = {
-  question: Scalars['String']['input'];
 };
 
 export type SubscriptionSubscribeToQueueArgs = {
@@ -1573,12 +1568,6 @@ export type SearchProducts = {
     } | null;
   }>;
 };
-
-export type AskSageVariables = Exact<{
-  question: Scalars['String']['input'];
-}>;
-
-export type AskSage = {__typename?: 'Subscription'; askSage: string | null};
 
 export type SubscribeToQueueVariables = Exact<{
   providerId: InputMaybe<Scalars['ID']['input']>;
@@ -4210,39 +4199,6 @@ export type SearchProductsQueryResult = Apollo.QueryResult<
   SearchProducts,
   SearchProductsVariables
 >;
-export const AskSageDocument = gql`
-  subscription askSage($question: String!) {
-    askSage(question: $question)
-  }
-`;
-
-/**
- * __useAskSage__
- *
- * To run a query within a React component, call `useAskSage` and pass it any options that fit your needs.
- * When your component renders, `useAskSage` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useAskSage({
- *   variables: {
- *      question: // value for 'question'
- *   },
- * });
- */
-export function useAskSage(
-  baseOptions: Apollo.SubscriptionHookOptions<AskSage, AskSageVariables>,
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useSubscription<AskSage, AskSageVariables>(
-    AskSageDocument,
-    options,
-  );
-}
-export type AskSageHookResult = ReturnType<typeof useAskSage>;
-export type AskSageSubscriptionResult = Apollo.SubscriptionResult<AskSage>;
 export const SubscribeToQueueDocument = gql`
   subscription subscribeToQueue($providerId: ID) {
     subscribeToQueue(providerId: $providerId)

@@ -12,67 +12,57 @@ import {FontAwesome} from '@expo/vector-icons';
 import {ulid} from 'ulid';
 import colors from '../../../lib/styles/colors';
 import {
-  AskSageDocument,
   ChatMessage,
   ChatMessageStatus,
-  useAskSage,
   useListChatMessages,
 } from '../../../graphql/operations';
-import {WS_API_URL} from '../../../lib/api/config';
+import {createWebsocket} from '../../../lib/api/websocket';
 
 export default function Chat() {
-  console.log('Chat');
   const {data, loading, error, subscribeToMore} = useListChatMessages({
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
   });
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [text, setText] = useState<string>('');
   const wsRef = useRef<WebSocket | null>(null);
+  const [isConnectionClosed, setIsConnectionClosed] = useState(true);
+
   useEffect(() => {
-    const ws = new WebSocket(WS_API_URL + '/chat');
-    wsRef.current = ws;
-    ws.onopen = () => {
-      console.log('Connected to WebSocket');
-    };
+    let ws: WebSocket | null = null;
+    if (!isConnectionClosed) {
+      return;
+    }
+    createWebsocket(
+      e => {
+        setMessages(prevMessages => {
+          const chatMessage = Object.assign(
+            {},
+            prevMessages[prevMessages.length - 1],
+          );
+          const chatMessages = prevMessages.slice(0, prevMessages.length - 1);
 
-    ws.onmessage = event => {
-      console.log('data -> ', event);
-      const message = JSON.parse(event.data);
-      setMessages(prevMessages => [...prevMessages, message]);
-    };
-
-    ws.onerror = error => {
-      console.error(error);
-    };
-
-    ws.onclose = () => {
-      console.log('WebSocket connection closed');
-    };
-
-    // Clean up WebSocket connection when component unmounts
+          chatMessage.text += e.data;
+          return [...chatMessages, chatMessage];
+        });
+      },
+      () => {
+        setIsConnectionClosed(true);
+      },
+    ).then(websocket => {
+      setIsConnectionClosed(false);
+      ws = websocket;
+      wsRef.current = websocket;
+    });
     return () => {
-      ws.close();
+      if (ws) {
+        ws.close();
+      }
     };
-  }, []);
-
-  // const {
-  //   loading: loadingAns,
-  //   data: dataAns,
-  //   error: errorAns,
-  //   variables,
-  // } = useAskSage({
-  //   variables: {
-  //     question: 'test',
-  //   },
-  // });
-
-  // useEffect(() => {
-  //   console.log('sage -> ', dataAns, loadingAns, errorAns, variables);
-  // }, [dataAns, loadingAns, errorAns, variables]);
+  }, [isConnectionClosed]);
 
   useEffect(() => {
     if (!loading && data?.listChatMessages) {
-      setMessages([]);
+      setMessages(data?.listChatMessages || []);
     }
   }, [data, loading]);
 
@@ -97,28 +87,9 @@ export default function Chat() {
     wsRef.current?.send(text);
     const oldMessages = [...messages, newText];
     setMessages([...oldMessages, answerText]);
-    // subscribeToMore(
-    //   {
-    //     document: AskSageDocument,
-    //     variables: {
-    //       question: text
-    //     },
-    //     updateQuery: (prev, { subscriptionData}) => {
-    //       console.log("subscription data", subscriptionData, prev);
-    //       if (!subscriptionData.data) return prev;
-    //       return prev;
-    //     }
-    //   }
-    //
-    // )
+
     setText('');
     console.log('clicked ');
-    // await sse2(text, answer => {
-    //   console.log('answer', answer);
-    //   answerText.text = answer;
-    //   setMessages([...oldMessages, answerText]);
-    //   return false;
-    // });
   };
 
   return (
@@ -140,7 +111,7 @@ export default function Chat() {
       <View style={styles.inputMessage}>
         <TextInput
           style={styles.input}
-          onChangeText={text => setText(text)}
+          onChangeText={txt => setText(txt)}
           value={text}
         />
         <TouchableOpacity style={styles.button} onPress={handleSendMessage}>
@@ -159,7 +130,7 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     width: '100%',
-    marginBottom: 35,
+    marginBottom: 55,
   },
   buttonText: {
     color: 'white',

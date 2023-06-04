@@ -3,7 +3,6 @@ import {
   createHttpLink,
   InMemoryCache,
   NormalizedCacheObject,
-  split,
 } from '@apollo/client';
 import {DefaultOptions} from '@apollo/client/core/ApolloClient';
 import {setContext} from '@apollo/client/link/context';
@@ -12,9 +11,6 @@ import * as SecureStore from 'expo-secure-store';
 import {ACCESS_TOKEN_KEY} from '../../context/auth-context';
 import {HTTP_API_URL, WS_API_URL} from '../config';
 import {isValidToken} from '../../auth/utils';
-import {SubscriptionClient} from 'subscriptions-transport-ws';
-import {WebSocketLink} from '@apollo/client/link/ws';
-import {getMainDefinition} from '@apollo/client/utilities';
 
 const defaultOptions: DefaultOptions = {
   watchQuery: {
@@ -65,26 +61,26 @@ const setupApollo = (httpUrl: string, wsUrl: string) => {
 
   let link = logoutLink.concat(authLink).concat(httpLink);
 
-  const wsLink = new WebSocketLink(
-    new SubscriptionClient(wsUrl, {
-      reconnect: true,
-      // connectionParams: {
-      // }
-    }),
-  );
-  const splitLink = split(
-    ({query}) => {
-      const mainDefinition = getMainDefinition(query);
-      return (
-        mainDefinition.kind === 'OperationDefinition' &&
-        mainDefinition.operation === 'subscription'
-      );
-    },
-    wsLink,
-    link,
-  );
+  // const wsLink = new WebSocketLink(
+  //   new SubscriptionClient(wsUrl, {
+  //     reconnect: true,
+  //     // connectionParams: {
+  //     // }
+  //   }),
+  // );
+  // const splitLink = split(
+  //   ({query}) => {
+  //     const mainDefinition = getMainDefinition(query);
+  //     return (
+  //       mainDefinition.kind === 'OperationDefinition' &&
+  //       mainDefinition.operation === 'subscription'
+  //     );
+  //   },
+  //   wsLink,
+  //   link,
+  // );
   return new ApolloClient({
-    link: splitLink,
+    link,
     cache,
     defaultOptions,
   });
