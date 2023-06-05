@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, Text, StyleSheet, Platform} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
+import {Marker} from 'react-native-maps';
 
 interface CustomMarkerProps {
   coordinate: {
@@ -17,11 +18,6 @@ export default function CustomMarker({
   onPress,
   isSelected,
 }: CustomMarkerProps) {
-  if (Platform.OS === 'web') {
-    return <></>;
-  }
-  const Marker = require('react-native-maps').Marker;
-
   console.log('CustomMarker', coordinate, isSelected);
   return (
     <Marker coordinate={coordinate} onPress={onPress}>
