@@ -76,7 +76,7 @@ export default function Chat() {
 
     const newText: ChatMessage = {
       id: ulid(),
-      createdAt: '123',
+      createdAt: Date.now().toString(),
       status: ChatMessageStatus.Success,
       text: text.trim(),
       isAnswer: false,
@@ -84,7 +84,7 @@ export default function Chat() {
 
     const answerText: ChatMessage = {
       id: ulid(),
-      createdAt: '1234',
+      createdAt: Date.now().toString(),
       status: ChatMessageStatus.Success,
       text: '',
       isAnswer: true,
