@@ -1,6 +1,5 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {View, FlatList, useWindowDimensions} from 'react-native';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import React, {useEffect, useRef, useState} from 'react';
+import {FlatList, Platform, useWindowDimensions, View} from 'react-native';
 import {Product} from '../../graphql/operations';
 import CustomMarker from './custom-marker';
 import ProductCarouselItem from './product-carousel-item';
@@ -10,10 +9,17 @@ interface SearchResultsMapsProps {
 }
 
 const SearchResultMap = ({products}: SearchResultsMapsProps) => {
+  if (Platform.OS === 'web') {
+    return <></>;
+  }
+  const MapView = require('react-native-maps').default;
+
+  const PROVIDER_GOOGLE = require('react-native-maps').PROVIDER_GOOGLE;
+
   const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null);
 
   const flatlist = useRef<FlatList<Product> | null>(null);
-  const map = useRef<MapView | null>(null);
+  const map = useRef<typeof MapView | null>(null);
 
   const viewConfig = useRef({itemVisiblePercentThreshold: 100});
   const onViewChanged = useRef(
