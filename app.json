@@ -17,6 +17,7 @@
     ],
     "ios": {
       "bundleIdentifier": "ge.carapp.carbook",
+      "buildNumber": "0.0.1",
       "supportsTablet": true,
       "config": {
         "googleMapsApiKey": "AIzaSyCqIwF1AEqWV3wEI1Iq-weNuFwhsF393aE"
@@ -28,6 +29,7 @@
     },
     "android": {
       "package": "ge.carapp.carbook",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -51,7 +53,7 @@
       [
         "expo-updates",
         {
-          "username": "vganj18"
+          "username": "vganj"
         }
       ]
     ],
