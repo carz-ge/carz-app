@@ -4,11 +4,11 @@
   "scripts": {
     "start": "expo start --dev-client",
     "tunnel": "expo start --tunnel",
-    "android": "expo run:android",
-    "ios": "expo run:ios",
-    "android:expo": "expo start --android -c",
-    "ios:expo": "expo start --ios -c",
+    "android": "expo start --android -c",
+    "ios": "expo start --ios -c",
     "web": "expo start --web -c",
+    "android:native": "expo run:android",
+    "ios:native": "expo run:ios",
     "android:device": "expo run:android --device",
     "ios:device": "expo run:ios --device",
     "prebuild": "expo prebuild --clean",
@@ -21,7 +21,7 @@
     "gqlg": "gqlg --schemaFilePath ./graphql/schema.graphql --destDirPath graphql/operations-gqls/generated --depthLimit 5",
     "doctor": "npx expo-doctor",
     "eas:update": "eas update --auto",
-    "eas:build": "cross-env ENTRY_FILE=index.ts eas build -p android"
+    "eas:build": "eas build -p android"
   },
   "jest": {
     "preset": "jest-expo"
