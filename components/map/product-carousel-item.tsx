@@ -1,22 +1,18 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Image,
-  useWindowDimensions,
-  Pressable,
-  StyleSheet,
-} from 'react-native';
+import {View, Text, Image, Pressable, StyleSheet} from 'react-native';
 import {Product} from '../../graphql/operations';
 import {useRouter} from 'expo-router';
+import Colors from '../../lib/styles/colors';
 
 interface ProductCarouselItemProps {
   product: Product;
+  cardWidth: number;
 }
 
-const ProductCarouselItem = ({product}: ProductCarouselItemProps) => {
-  const width = useWindowDimensions().width;
-
+const ProductCarouselItem = ({
+  product,
+  cardWidth,
+}: ProductCarouselItemProps) => {
   const router = useRouter();
 
   const goToPostPage = () => {
@@ -26,7 +22,7 @@ const ProductCarouselItem = ({product}: ProductCarouselItemProps) => {
   return (
     <Pressable
       onPress={goToPostPage}
-      style={[styles.container, {width: width - 60}]}>
+      style={[styles.container, {width: cardWidth}]}>
       <View style={styles.innerContainer}>
         <Image style={styles.image} source={{uri: product.mainImage}} />
 
@@ -70,7 +66,7 @@ const styles = StyleSheet.create({
 
   name: {
     margin: 10,
-    color: '#5df33b',
+    color: Colors.primary,
     flexDirection: 'row',
   },
 

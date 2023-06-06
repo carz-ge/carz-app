@@ -28,6 +28,8 @@ const SearchResultMap = ({products}: SearchResultsMapsProps) => {
   );
 
   const width = useWindowDimensions().width;
+  // Calculate the width of each item in the carousel
+  const itemWidth = width - 60;
 
   useEffect(() => {
     console.log('selected place id: ', selectedPlaceId);
@@ -98,10 +100,12 @@ const SearchResultMap = ({products}: SearchResultsMapsProps) => {
         <FlatList
           ref={flatlist}
           data={products}
-          renderItem={({item}) => <ProductCarouselItem product={item} />}
+          renderItem={({item}) => (
+            <ProductCarouselItem product={item} cardWidth={itemWidth} />
+          )}
           horizontal
           showsHorizontalScrollIndicator={false}
-          snapToInterval={width - 60}
+          snapToInterval={itemWidth}
           snapToAlignment={'center'}
           decelerationRate={'fast'}
           viewabilityConfig={viewConfig.current}

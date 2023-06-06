@@ -1,10 +1,19 @@
 import React, {useState} from 'react';
-import {Text, StyleSheet, View, Image, ScrollView} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import {useSearchParams} from 'expo-router';
 import {ProductDetails, useGetProduct} from '../../graphql/operations';
 import {PackageCard} from '../../components/ProductPackage/package-car';
+import Colors from '../../lib/styles/colors';
+// import {PackageCard} from '../../components/ProductPackage/package-car';
 
-export default function ProductId() {
+export default function ProductScreen() {
   const params = useSearchParams();
 
   const {data, loading, error} = useGetProduct({
@@ -22,79 +31,127 @@ export default function ProductId() {
   }
   const product = data.getProduct;
   console.log(JSON.stringify(product));
+  const selectedPackage = product.packages?.find(
+    productPackage => productPackage.id === selectedPackageId,
+  );
 
   function selectPackage(packageId: string) {
     setSelectedPackageId(packageId);
   }
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View>
-          {/* product images*/}
-          <Image style={styles.image} source={{uri: product?.mainImage}} />
-        </View>
+    <View style={styles.container}>
+      <ScrollView>
+        <View style={styles.scrollContainer}>
+          <View>
+            {/* product images*/}
+            <Image style={styles.image} source={{uri: product?.mainImage}} />
+          </View>
 
-        <View>
-          {/* Product title*/}
-          <Text style={styles.title}>{product?.name.ka}</Text>
-          {/* provider logo */}
-          <Text>{product?.provider.name}</Text>
-          {product?.provider.logo && (
-            <Image
-              style={styles.providerLogo}
-              source={{uri: product?.provider.logo}}
-            />
-          )}
-        </View>
+          <View>
+            {/* Product title*/}
+            <Text style={styles.title}>{product?.name.ka}</Text>
+            {/* provider logo */}
+            <Text>{product?.provider.name}</Text>
+            {product?.provider.logo && (
+              <Image
+                style={styles.providerLogo}
+                source={{uri: product?.provider.logo}}
+              />
+            )}
+          </View>
 
-        {/* location info */}
-        <View>
-          <Text>
-            {product?.location?.address.street},{' '}
-            {product?.location?.address.district}
+          {/* location info */}
+          <View>
+            <Text>
+              {product?.location?.address.street},{' '}
+              {product?.location?.address.district}
+            </Text>
+            {/* distance  */}
+          </View>
+
+          <View>
+            {/* available packages */}
+            {product.packages?.map((productPackage: ProductDetails) => (
+              <PackageCard
+                key={productPackage.id}
+                productPackage={productPackage}
+                onPressed={selectPackage}
+                isSelected={productPackage.id === selectedPackageId}
+              />
+            ))}
+          </View>
+
+          {/* ABOUT - descriotion */}
+          <View>
+            <Text>{product?.description?.ka}</Text>
+          </View>
+
+          {/* Product reviews */}
+        </View>
+        {/* Checkout Button */}
+      </ScrollView>
+      {selectedPackage && selectedPackage.pricesForCarTypes && (
+        <View style={styles.checkoutContainer}>
+          <Text style={styles.priceText}>
+            {selectedPackage.pricesForCarTypes[0]?.price} GEL
           </Text>
-          {/* distance  */}
+          <TouchableOpacity style={styles.checkoutButton}>
+            <Text style={styles.checkoutButtonText}>Checkout</Text>
+          </TouchableOpacity>
         </View>
-
-        <View>
-          {/* available packages */}
-          {product.packages?.map((productPackage: ProductDetails) => (
-            <PackageCard
-              key={productPackage.id}
-              productPackage={productPackage}
-              onPressed={selectPackage}
-              isSelected={productPackage.id === selectedPackageId}
-            />
-          ))}
-        </View>
-
-        {/* ABOUT - descriotion */}
-        <View>
-          <Text>{product?.description?.ka}</Text>
-        </View>
-
-        {/* Product reviews */}
-      </View>
-    </ScrollView>
+      )}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+    padding: 20,
+  },
   container: {
-    flex: 1,
-    alignItems: 'center',
+    flexGrow: 1,
+    padding: 20,
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
+    marginBottom: 10,
   },
   image: {
-    width: 90,
-    height: 100,
+    width: 150,
+    height: 150,
+    marginBottom: 10,
   },
   providerLogo: {
-    width: 90,
+    width: 100,
     height: 100,
+    marginBottom: 10,
+  },
+  checkoutContainer: {
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    right: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: 'lightgray',
+    padding: 10,
+    borderRadius: 5,
+  },
+  priceText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  checkoutButton: {
+    backgroundColor: Colors.primary,
+    padding: 10,
+    borderRadius: 5,
+  },
+  checkoutButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
