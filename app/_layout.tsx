@@ -60,6 +60,7 @@ function Layouts() {
       <Stack.Screen name="category" options={{headerShown: false}} />
       <Stack.Screen name="map" options={{headerShown: false}} />
       <Stack.Screen name="car" options={{headerShown: false}} />
+      <Stack.Screen name="checkout" options={{headerShown: false}} />
     </Stack>
   );
 }

@@ -11,13 +11,13 @@ import CategoryList from '../../../../components/category/category-list';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 
-// Notifications.setNotificationHandler({
-//   handleNotification: async () => ({
-//     shouldShowAlert: true,
-//     shouldPlaySound: false,
-//     shouldSetBadge: false,
-//   }),
-// });
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 // Can use this function below OR use Expo's Push Notification Tool from: https://expo.dev/notifications
 async function sendPushNotification(expoPushToken: string) {
@@ -80,27 +80,27 @@ export default function Home() {
     useState<Notifications.Notification | null>(null);
   const notificationListener = useRef<Notifications.Subscription>();
   const responseListener = useRef<Notifications.Subscription>();
-  //
-  // useEffect(() => {
-  //   registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
-  //
-  //   notificationListener.current =
-  //     Notifications.addNotificationReceivedListener(notification => {
-  //       setNotification(notification);
-  //     });
-  //
-  //   responseListener.current =
-  //     Notifications.addNotificationResponseReceivedListener(response => {
-  //       console.log(response);
-  //     });
-  //
-  //   return () => {
-  //     Notifications.removeNotificationSubscription(
-  //       notificationListener.current!,
-  //     );
-  //     Notifications.removeNotificationSubscription(responseListener.current!);
-  //   };
-  // }, []);
+
+  useEffect(() => {
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener(notification => {
+        setNotification(notification);
+      });
+
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener(response => {
+        console.log(response);
+      });
+
+    return () => {
+      Notifications.removeNotificationSubscription(
+        notificationListener.current!,
+      );
+      Notifications.removeNotificationSubscription(responseListener.current!);
+    };
+  }, []);
   return (
     <View style={styles.container}>
       <ScrollView
