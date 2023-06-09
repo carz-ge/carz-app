@@ -33,6 +33,10 @@ module.exports.removeCategory = fs.readFileSync(
   path.join(__dirname, 'removeCategory.gql'),
   'utf8',
 );
+module.exports.sendPushNotification = fs.readFileSync(
+  path.join(__dirname, 'sendPushNotification.gql'),
+  'utf8',
+);
 module.exports.createOrder = fs.readFileSync(
   path.join(__dirname, 'createOrder.gql'),
   'utf8',
@@ -79,5 +83,13 @@ module.exports.scheduleCarForService = fs.readFileSync(
 );
 module.exports.updateUser = fs.readFileSync(
   path.join(__dirname, 'updateUser.gql'),
+  'utf8',
+);
+module.exports.removeUser = fs.readFileSync(
+  path.join(__dirname, 'removeUser.gql'),
+  'utf8',
+);
+module.exports.addDeviceToken = fs.readFileSync(
+  path.join(__dirname, 'addDeviceToken.gql'),
   'utf8',
 );

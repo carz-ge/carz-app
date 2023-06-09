@@ -1,0 +1,3 @@
+mutation sendPushNotification($input: PushNotificationInput!){
+    sendPushNotification(input: $input)
+}

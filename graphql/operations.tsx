@@ -25,6 +25,10 @@ export type Scalars = {
   Float: {input: number; output: number};
 };
 
+export type AddDeviceTokenInput = {
+  deviceToken: Scalars['String']['input'];
+};
+
 export type Address = {
   __typename?: 'Address';
   city: Scalars['String']['output'];
@@ -175,6 +179,7 @@ export type LocationInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   addCar: Car;
+  addDeviceToken: Maybe<Scalars['Boolean']['output']>;
   authorize: AuthenticationOutput;
   createCategory: Category;
   createOrder: Order;
@@ -186,8 +191,10 @@ export type Mutation = {
   removeProduct: Scalars['Boolean']['output'];
   removeProductDetails: Scalars['Boolean']['output'];
   removeProvider: Scalars['Boolean']['output'];
+  removeUser: Maybe<Scalars['Boolean']['output']>;
   scheduleCarForService: Maybe<Array<Maybe<ScheduledTimeSlotSchema>>>;
   sendOtp: SendOptOutput;
+  sendPushNotification: Maybe<Scalars['Boolean']['output']>;
   updateCar: Car;
   updateCategory: Category;
   updateProduct: Product;
@@ -198,6 +205,10 @@ export type Mutation = {
 
 export type MutationAddCarArgs = {
   carInput: CarInput;
+};
+
+export type MutationAddDeviceTokenArgs = {
+  input: AddDeviceTokenInput;
 };
 
 export type MutationAuthorizeArgs = {
@@ -250,6 +261,10 @@ export type MutationScheduleCarForServiceArgs = {
 
 export type MutationSendOtpArgs = {
   phone: Scalars['String']['input'];
+};
+
+export type MutationSendPushNotificationArgs = {
+  input: PushNotificationInput;
 };
 
 export type MutationUpdateCarArgs = {
@@ -406,6 +421,12 @@ export type ProviderInput = {
   name: Scalars['String']['input'];
   phone: InputMaybe<Scalars['String']['input']>;
   website: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PushNotificationInput = {
+  deviceToken: Scalars['String']['input'];
+  text: Scalars['String']['input'];
+  title: Scalars['String']['input'];
 };
 
 export type Query = {
@@ -576,6 +597,15 @@ export type AddCar = {
     createdAt: string | null;
     updatedAt: string | null;
   };
+};
+
+export type AddDeviceTokenVariables = Exact<{
+  input: AddDeviceTokenInput;
+}>;
+
+export type AddDeviceToken = {
+  __typename?: 'Mutation';
+  addDeviceToken: boolean | null;
 };
 
 export type AuthorizeVariables = Exact<{
@@ -781,6 +811,10 @@ export type RemoveProviderVariables = Exact<{
 
 export type RemoveProvider = {__typename?: 'Mutation'; removeProvider: boolean};
 
+export type RemoveUserVariables = Exact<{[key: string]: never}>;
+
+export type RemoveUser = {__typename?: 'Mutation'; removeUser: boolean | null};
+
 export type ScheduleCarForServiceVariables = Exact<{
   input: InputMaybe<ScheduleCarForServiceInput>;
 }>;
@@ -807,6 +841,15 @@ export type SendOtp = {
     expiresAt: string | null;
     isRegistered: boolean | null;
   };
+};
+
+export type SendPushNotificationVariables = Exact<{
+  input: PushNotificationInput;
+}>;
+
+export type SendPushNotification = {
+  __typename?: 'Mutation';
+  sendPushNotification: boolean | null;
 };
 
 export type UpdateCarVariables = Exact<{
@@ -1625,6 +1668,52 @@ export type AddCarMutationOptions = Apollo.BaseMutationOptions<
   AddCar,
   AddCarVariables
 >;
+export const AddDeviceTokenDocument = gql`
+  mutation addDeviceToken($input: AddDeviceTokenInput!) {
+    addDeviceToken(input: $input)
+  }
+`;
+export type AddDeviceTokenMutationFn = Apollo.MutationFunction<
+  AddDeviceToken,
+  AddDeviceTokenVariables
+>;
+
+/**
+ * __useAddDeviceToken__
+ *
+ * To run a mutation, you first call `useAddDeviceToken` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddDeviceToken` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addDeviceToken, { data, loading, error }] = useAddDeviceToken({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAddDeviceToken(
+  baseOptions?: Apollo.MutationHookOptions<
+    AddDeviceToken,
+    AddDeviceTokenVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<AddDeviceToken, AddDeviceTokenVariables>(
+    AddDeviceTokenDocument,
+    options,
+  );
+}
+export type AddDeviceTokenHookResult = ReturnType<typeof useAddDeviceToken>;
+export type AddDeviceTokenMutationResult =
+  Apollo.MutationResult<AddDeviceToken>;
+export type AddDeviceTokenMutationOptions = Apollo.BaseMutationOptions<
+  AddDeviceToken,
+  AddDeviceTokenVariables
+>;
 export const AuthorizeDocument = gql`
   mutation authorize($input: AuthenticationInput!) {
     authorize(input: $input) {
@@ -2240,6 +2329,47 @@ export type RemoveProviderMutationOptions = Apollo.BaseMutationOptions<
   RemoveProvider,
   RemoveProviderVariables
 >;
+export const RemoveUserDocument = gql`
+  mutation removeUser {
+    removeUser
+  }
+`;
+export type RemoveUserMutationFn = Apollo.MutationFunction<
+  RemoveUser,
+  RemoveUserVariables
+>;
+
+/**
+ * __useRemoveUser__
+ *
+ * To run a mutation, you first call `useRemoveUser` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveUser` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeUser, { data, loading, error }] = useRemoveUser({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useRemoveUser(
+  baseOptions?: Apollo.MutationHookOptions<RemoveUser, RemoveUserVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<RemoveUser, RemoveUserVariables>(
+    RemoveUserDocument,
+    options,
+  );
+}
+export type RemoveUserHookResult = ReturnType<typeof useRemoveUser>;
+export type RemoveUserMutationResult = Apollo.MutationResult<RemoveUser>;
+export type RemoveUserMutationOptions = Apollo.BaseMutationOptions<
+  RemoveUser,
+  RemoveUserVariables
+>;
 export const ScheduleCarForServiceDocument = gql`
   mutation scheduleCarForService($input: ScheduleCarForServiceInput) {
     scheduleCarForService(input: $input) {
@@ -2337,6 +2467,54 @@ export type SendOtpMutationResult = Apollo.MutationResult<SendOtp>;
 export type SendOtpMutationOptions = Apollo.BaseMutationOptions<
   SendOtp,
   SendOtpVariables
+>;
+export const SendPushNotificationDocument = gql`
+  mutation sendPushNotification($input: PushNotificationInput!) {
+    sendPushNotification(input: $input)
+  }
+`;
+export type SendPushNotificationMutationFn = Apollo.MutationFunction<
+  SendPushNotification,
+  SendPushNotificationVariables
+>;
+
+/**
+ * __useSendPushNotification__
+ *
+ * To run a mutation, you first call `useSendPushNotification` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendPushNotification` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendPushNotification, { data, loading, error }] = useSendPushNotification({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSendPushNotification(
+  baseOptions?: Apollo.MutationHookOptions<
+    SendPushNotification,
+    SendPushNotificationVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<
+    SendPushNotification,
+    SendPushNotificationVariables
+  >(SendPushNotificationDocument, options);
+}
+export type SendPushNotificationHookResult = ReturnType<
+  typeof useSendPushNotification
+>;
+export type SendPushNotificationMutationResult =
+  Apollo.MutationResult<SendPushNotification>;
+export type SendPushNotificationMutationOptions = Apollo.BaseMutationOptions<
+  SendPushNotification,
+  SendPushNotificationVariables
 >;
 export const UpdateCarDocument = gql`
   mutation updateCar($carId: ID!, $carInput: CarInput!) {
