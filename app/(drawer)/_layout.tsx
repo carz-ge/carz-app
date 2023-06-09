@@ -44,6 +44,7 @@ export default function DrawerLayout() {
       <Drawer.Screen name="my-car" options={{title: 'ავტომობილები'}} />
       <Drawer.Screen name="chat" options={{title: 'ასისტენტი'}} />
       <Drawer.Screen name="expences" options={{title: 'ხარჯები'}} />
+      <Drawer.Screen name="notifications" options={{title: 'ნოტიფიკაციები'}} />
     </Drawer>
   );
 }
