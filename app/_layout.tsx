@@ -12,7 +12,7 @@ import React, {useEffect} from 'react';
 import {useColorScheme} from 'react-native';
 import {client} from '../lib/api/graphql/client';
 import {ApolloProvider} from '@apollo/client';
-import {DarkTheme, LightTheme} from '../lib/styles/themes';
+import {LightTheme} from '../lib/styles/themes';
 import AuthContextProvider from '../lib/context/auth-context';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 
@@ -74,7 +74,7 @@ function RootLayoutNav() {
   console.log('RootLayout path:', pathname, JSON.stringify(params), segments);
   return (
     <AuthContextProvider>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : LightTheme}>
+      <ThemeProvider value={LightTheme}>
         <ApolloProvider client={client}>
           <BottomSheetModalProvider>
             <Layouts />

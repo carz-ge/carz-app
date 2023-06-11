@@ -382,4 +382,5 @@ input UpdateUserInput {
 
 input AddDeviceTokenInput {
   deviceToken: String!
+  platform: String!
 }

@@ -3,6 +3,7 @@
     "name": "carbook",
     "slug": "carbook",
     "version": "1.0.0",
+    "owner": "carz",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "ge.carapp.carbook",
@@ -53,22 +54,20 @@
         }
       ],
       [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+        }
+      ],
+      [
         "expo-updates",
         {
           "username": "vganj"
         }
       ]
     ],
-    "extra": {
-      "eas": {
-        "projectId": "9b0a3a89-5177-4e85-80d7-cb01e99b1204"
-      }
-    },
     "runtimeVersion": {
       "policy": "sdkVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/9b0a3a89-5177-4e85-80d7-cb01e99b1204"
     }
   }
 }

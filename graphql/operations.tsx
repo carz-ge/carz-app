@@ -27,6 +27,7 @@ export type Scalars = {
 
 export type AddDeviceTokenInput = {
   deviceToken: Scalars['String']['input'];
+  platform: Scalars['String']['input'];
 };
 
 export type Address = {

@@ -2,6 +2,12 @@ import React, {useEffect, useRef, useState} from 'react';
 import {Text, StyleSheet, View, Platform, Button} from 'react-native';
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
+import {
+  Scalars,
+  useAddDeviceToken,
+  useSendPushNotification,
+} from '../../../graphql/operations';
+import {PermissionStatus} from 'expo-modules-core/src/PermissionsInterface';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -11,41 +17,20 @@ Notifications.setNotificationHandler({
   }),
 });
 
-// Can use this function below OR use Expo's Push Notification Tool from: https://expo.dev/notifications
-async function sendPushNotification(expoPushToken: string) {
-  const message = {
-    to: expoPushToken,
-    sound: 'default',
-    title: 'Original Title',
-    body: 'And here is the body!',
-    data: {someData: 'goes here'},
-  };
-
-  await fetch('https://exp.host/--/api/v2/push/send', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Accept-encoding': 'gzip, deflate',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(message),
-  });
-}
-
 async function registerForPushNotificationsAsync() {
   let token;
   if (Device.isDevice) {
     const {status: existingStatus} = await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
-    if (existingStatus !== 'granted') {
+    if (existingStatus !== PermissionStatus.GRANTED) {
       const {status} = await Notifications.requestPermissionsAsync();
       finalStatus = status;
     }
-    if (finalStatus !== 'granted') {
+    if (finalStatus !== PermissionStatus.GRANTED) {
       alert('Failed to get push token for push notification!');
       return;
     }
-    token = (await Notifications.getExpoPushTokenAsync()).data;
+    token = (await Notifications.getDevicePushTokenAsync()).data;
     console.log(token);
   } else {
     alert('Must use physical device for Push Notifications');
@@ -71,9 +56,44 @@ export default function NotificationScreen() {
     useState<Notifications.Notification | null>(null);
   const notificationListener = useRef<Notifications.Subscription>();
   const responseListener = useRef<Notifications.Subscription>();
+  const [sendNotification] = useSendPushNotification();
+  const [addDeviceToken] = useAddDeviceToken();
+
+  // Can use this function below OR use Expo's Push Notification Tool from: https://expo.dev/notifications
+  async function sendPushNotification() {
+    console.log('sendPushNotification clicked');
+    try {
+      const res = await sendNotification({
+        variables: {
+          input: {
+            deviceToken: expoPushToken!,
+            text: 'Test Text',
+            title: 'Test Title',
+          },
+        },
+      });
+      console.log('result:', JSON.stringify(res));
+    } catch (e) {
+      console.log(`error: ${e}`);
+    }
+  }
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+    registerForPushNotificationsAsync().then(async token => {
+      setExpoPushToken(token);
+      try {
+        await addDeviceToken({
+          variables: {
+            input: {
+              deviceToken: token,
+              platform: Platform.OS,
+            },
+          },
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    });
 
     notificationListener.current =
       Notifications.addNotificationReceivedListener(notification => {
@@ -91,7 +111,7 @@ export default function NotificationScreen() {
       );
       Notifications.removeNotificationSubscription(responseListener.current!);
     };
-  }, []);
+  }, [addDeviceToken]);
   return (
     <View style={styles.container}>
       <View
@@ -114,7 +134,7 @@ export default function NotificationScreen() {
         <Button
           title="Press to Send Notification"
           onPress={async () => {
-            await sendPushNotification(expoPushToken!);
+            await sendPushNotification();
           }}
         />
       </View>
