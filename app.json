@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "carbook",
-    "slug": "carbook",
+    "name": "Carz",
+    "slug": "carz",
     "version": "1.0.0",
     "owner": "carz",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "ge.carapp.carbook",
+    "scheme": "ge.carz.carz",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash-icon.png",
@@ -17,7 +17,7 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "ge.carapp.carbook",
+      "bundleIdentifier": "ge.carz.carz",
       "buildNumber": "1",
       "supportsTablet": true,
       "googleServicesFile": "./GoogleService-Info.plist",
@@ -30,7 +30,7 @@
       }
     },
     "android": {
-      "package": "ge.carapp.carbook",
+      "package": "ge.carz.carz",
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
@@ -43,8 +43,14 @@
         }
       },
       "permissions": [
-        "android.permission.CAMERA"
+        "android.permission.CAMERA",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.FOREGROUND_SERVICE"
       ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
     },
     "plugins": [
       [
@@ -58,16 +64,15 @@
         {
           "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
         }
-      ],
-      [
-        "expo-updates",
-        {
-          "username": "vganj"
-        }
       ]
     ],
     "runtimeVersion": {
       "policy": "sdkVersion"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ce5166ad-b371-4609-9f78-1d7543aee74a"
+      }
     }
   }
 }
