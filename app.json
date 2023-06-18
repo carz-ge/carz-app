@@ -21,9 +21,6 @@
       "buildNumber": "1",
       "supportsTablet": true,
       "googleServicesFile": "./GoogleService-Info.plist",
-      "config": {
-        "googleMapsApiKey": "AIzaSyCqIwF1AEqWV3wEI1Iq-weNuFwhsF393aE"
-      },
       "infoPlist": {
         "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access camera.",
         "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
@@ -37,11 +34,6 @@
         "backgroundColor": "#ffffff"
       },
       "googleServicesFile": "./google-services.json",
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyCqIwF1AEqWV3wEI1Iq-weNuFwhsF393aE"
-        }
-      },
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.ACCESS_COARSE_LOCATION",
@@ -53,6 +45,7 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
+      "@react-native-firebase/app",
       [
         "expo-barcode-scanner",
         {
@@ -73,6 +66,9 @@
       "eas": {
         "projectId": "ce5166ad-b371-4609-9f78-1d7543aee74a"
       }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/ce5166ad-b371-4609-9f78-1d7543aee74a"
     }
   }
 }

@@ -25,6 +25,7 @@ const MainRouter = () => {
     <>
       <StatusBar animated />
       <Stack.Navigator initialRouteName={loggedIn ? 'drawer' : 'auth'}>
+        {/*TODO */}
         <Stack.Screen
           name={'auth'}
           options={{headerShown: false}}

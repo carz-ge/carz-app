@@ -1,41 +1,34 @@
 {
   "project_info": {
-    "project_number": "27499452996",
-    "project_id": "car-app-fc2f4",
-    "storage_bucket": "car-app-fc2f4.appspot.com"
+    "project_number": "597235362284",
+    "project_id": "carz-6eccc",
+    "storage_bucket": "carz-6eccc.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:27499452996:android:420e9b36ef198765873a11",
+        "mobilesdk_app_id": "1:597235362284:android:d29565d58dba9a709778c9",
         "android_client_info": {
-          "package_name": "ge.carapp.carbook"
+          "package_name": "ge.carz.carz"
         }
       },
       "oauth_client": [
         {
-          "client_id": "27499452996-odcbfjp9u4cgh376tg3mr04fhb2f6tnf.apps.googleusercontent.com",
+          "client_id": "597235362284-5btcfvffvp07on1149urd5sgq2dsaenq.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDgdPVVZjA_yakJlOXdtRR3G06MnvNNytM"
+          "current_key": "AIzaSyBFSACKrhuk-R7kV93VrGzng5EyinyG1qM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "27499452996-odcbfjp9u4cgh376tg3mr04fhb2f6tnf.apps.googleusercontent.com",
+              "client_id": "597235362284-5btcfvffvp07on1149urd5sgq2dsaenq.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "27499452996-a1enupfuoiqopvolh23fhuc74nt2jm5p.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "ge.carapp.carbook"
-              }
             }
           ]
         }
