@@ -89,19 +89,22 @@ export default function NotificationScreen() {
       .getToken()
       .then(async token => {
         console.log('device token', token);
-        alert(token);
         setDeviceToken(token);
-
-        const res = await addDeviceToken({
-          variables: {
-            input: {
-              deviceToken: token,
-              platform: Platform.OS,
+        try {
+          const res = await addDeviceToken({
+            variables: {
+              input: {
+                deviceToken: token,
+                platform: Platform.OS,
+              },
             },
-          },
-        });
+          });
 
-        console.log('Added device toke res:', res);
+          console.log('Added device toke res:', JSON.stringify(res));
+          alert(`Token ${token}, res: ${JSON.stringify(res)}`);
+        } catch (e) {
+          alert(`send error: ${e}`);
+        }
       });
 
     Notifications.setNotificationHandler({
