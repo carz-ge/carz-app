@@ -1,0 +1,6 @@
+mutation authenticateManager($input: AuthenticationInput!){
+    authenticateManager(input: $input){
+        accessToken
+        refreshToken
+    }
+}

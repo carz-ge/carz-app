@@ -1,0 +1,3 @@
+mutation sendSmsNotification($input: SmsNotification!){
+    sendSmsNotification(input: $input)
+}

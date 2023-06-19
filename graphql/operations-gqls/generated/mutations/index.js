@@ -9,6 +9,14 @@ module.exports.authorize = fs.readFileSync(
   path.join(__dirname, 'authorize.gql'),
   'utf8',
 );
+module.exports.checkPhoneForManger = fs.readFileSync(
+  path.join(__dirname, 'checkPhoneForManger.gql'),
+  'utf8',
+);
+module.exports.authenticateManager = fs.readFileSync(
+  path.join(__dirname, 'authenticateManager.gql'),
+  'utf8',
+);
 module.exports.addCar = fs.readFileSync(
   path.join(__dirname, 'addCar.gql'),
   'utf8',
@@ -35,6 +43,10 @@ module.exports.removeCategory = fs.readFileSync(
 );
 module.exports.sendPushNotification = fs.readFileSync(
   path.join(__dirname, 'sendPushNotification.gql'),
+  'utf8',
+);
+module.exports.sendSmsNotification = fs.readFileSync(
+  path.join(__dirname, 'sendSmsNotification.gql'),
   'utf8',
 );
 module.exports.createOrder = fs.readFileSync(

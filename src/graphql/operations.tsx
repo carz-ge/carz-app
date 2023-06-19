@@ -181,7 +181,9 @@ export type Mutation = {
   __typename?: 'Mutation';
   addCar: Car;
   addDeviceToken: Maybe<Scalars['Boolean']['output']>;
+  authenticateManager: AuthenticationOutput;
   authorize: AuthenticationOutput;
+  checkPhoneForManger: SendOptOutput;
   createCategory: Category;
   createOrder: Order;
   createProduct: Product;
@@ -196,6 +198,7 @@ export type Mutation = {
   scheduleCarForService: Maybe<Array<Maybe<ScheduledTimeSlotSchema>>>;
   sendOtp: SendOptOutput;
   sendPushNotification: Maybe<Scalars['Boolean']['output']>;
+  sendSmsNotification: Maybe<Scalars['Boolean']['output']>;
   updateCar: Car;
   updateCategory: Category;
   updateProduct: Product;
@@ -212,8 +215,16 @@ export type MutationAddDeviceTokenArgs = {
   input: AddDeviceTokenInput;
 };
 
+export type MutationAuthenticateManagerArgs = {
+  input: AuthenticationInput;
+};
+
 export type MutationAuthorizeArgs = {
   input: AuthenticationInput;
+};
+
+export type MutationCheckPhoneForMangerArgs = {
+  phone: Scalars['String']['input'];
 };
 
 export type MutationCreateCategoryArgs = {
@@ -266,6 +277,10 @@ export type MutationSendOtpArgs = {
 
 export type MutationSendPushNotificationArgs = {
   input: PushNotificationInput;
+};
+
+export type MutationSendSmsNotificationArgs = {
+  input: SmsNotification;
 };
 
 export type MutationUpdateCarArgs = {
@@ -533,6 +548,11 @@ export type SendOptOutput = {
   sent: Scalars['Boolean']['output'];
 };
 
+export type SmsNotification = {
+  phone: Scalars['String']['input'];
+  text: Scalars['String']['input'];
+};
+
 export type Subscription = {
   __typename?: 'Subscription';
   subscribeToQueue: Maybe<Array<Maybe<Scalars['String']['output']>>>;
@@ -609,6 +629,19 @@ export type AddDeviceToken = {
   addDeviceToken: boolean | null;
 };
 
+export type AuthenticateManagerVariables = Exact<{
+  input: AuthenticationInput;
+}>;
+
+export type AuthenticateManager = {
+  __typename?: 'Mutation';
+  authenticateManager: {
+    __typename?: 'AuthenticationOutput';
+    accessToken: string;
+    refreshToken: string | null;
+  };
+};
+
 export type AuthorizeVariables = Exact<{
   input: AuthenticationInput;
 }>;
@@ -619,6 +652,20 @@ export type Authorize = {
     __typename?: 'AuthenticationOutput';
     accessToken: string;
     refreshToken: string | null;
+  };
+};
+
+export type CheckPhoneForMangerVariables = Exact<{
+  phone: Scalars['String']['input'];
+}>;
+
+export type CheckPhoneForManger = {
+  __typename?: 'Mutation';
+  checkPhoneForManger: {
+    __typename?: 'SendOptOutput';
+    sent: boolean;
+    expiresAt: string | null;
+    isRegistered: boolean | null;
   };
 };
 
@@ -851,6 +898,15 @@ export type SendPushNotificationVariables = Exact<{
 export type SendPushNotification = {
   __typename?: 'Mutation';
   sendPushNotification: boolean | null;
+};
+
+export type SendSmsNotificationVariables = Exact<{
+  input: SmsNotification;
+}>;
+
+export type SendSmsNotification = {
+  __typename?: 'Mutation';
+  sendSmsNotification: boolean | null;
 };
 
 export type UpdateCarVariables = Exact<{
@@ -1715,6 +1771,57 @@ export type AddDeviceTokenMutationOptions = Apollo.BaseMutationOptions<
   AddDeviceToken,
   AddDeviceTokenVariables
 >;
+export const AuthenticateManagerDocument = gql`
+  mutation authenticateManager($input: AuthenticationInput!) {
+    authenticateManager(input: $input) {
+      accessToken
+      refreshToken
+    }
+  }
+`;
+export type AuthenticateManagerMutationFn = Apollo.MutationFunction<
+  AuthenticateManager,
+  AuthenticateManagerVariables
+>;
+
+/**
+ * __useAuthenticateManager__
+ *
+ * To run a mutation, you first call `useAuthenticateManager` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAuthenticateManager` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [authenticateManager, { data, loading, error }] = useAuthenticateManager({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAuthenticateManager(
+  baseOptions?: Apollo.MutationHookOptions<
+    AuthenticateManager,
+    AuthenticateManagerVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<AuthenticateManager, AuthenticateManagerVariables>(
+    AuthenticateManagerDocument,
+    options,
+  );
+}
+export type AuthenticateManagerHookResult = ReturnType<
+  typeof useAuthenticateManager
+>;
+export type AuthenticateManagerMutationResult =
+  Apollo.MutationResult<AuthenticateManager>;
+export type AuthenticateManagerMutationOptions = Apollo.BaseMutationOptions<
+  AuthenticateManager,
+  AuthenticateManagerVariables
+>;
 export const AuthorizeDocument = gql`
   mutation authorize($input: AuthenticationInput!) {
     authorize(input: $input) {
@@ -1759,6 +1866,58 @@ export type AuthorizeMutationResult = Apollo.MutationResult<Authorize>;
 export type AuthorizeMutationOptions = Apollo.BaseMutationOptions<
   Authorize,
   AuthorizeVariables
+>;
+export const CheckPhoneForMangerDocument = gql`
+  mutation checkPhoneForManger($phone: String!) {
+    checkPhoneForManger(phone: $phone) {
+      sent
+      expiresAt
+      isRegistered
+    }
+  }
+`;
+export type CheckPhoneForMangerMutationFn = Apollo.MutationFunction<
+  CheckPhoneForManger,
+  CheckPhoneForMangerVariables
+>;
+
+/**
+ * __useCheckPhoneForManger__
+ *
+ * To run a mutation, you first call `useCheckPhoneForManger` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCheckPhoneForManger` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [checkPhoneForManger, { data, loading, error }] = useCheckPhoneForManger({
+ *   variables: {
+ *      phone: // value for 'phone'
+ *   },
+ * });
+ */
+export function useCheckPhoneForManger(
+  baseOptions?: Apollo.MutationHookOptions<
+    CheckPhoneForManger,
+    CheckPhoneForMangerVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<CheckPhoneForManger, CheckPhoneForMangerVariables>(
+    CheckPhoneForMangerDocument,
+    options,
+  );
+}
+export type CheckPhoneForMangerHookResult = ReturnType<
+  typeof useCheckPhoneForManger
+>;
+export type CheckPhoneForMangerMutationResult =
+  Apollo.MutationResult<CheckPhoneForManger>;
+export type CheckPhoneForMangerMutationOptions = Apollo.BaseMutationOptions<
+  CheckPhoneForManger,
+  CheckPhoneForMangerVariables
 >;
 export const CreateCategoryDocument = gql`
   mutation createCategory($input: CategoryInput!) {
@@ -2516,6 +2675,54 @@ export type SendPushNotificationMutationResult =
 export type SendPushNotificationMutationOptions = Apollo.BaseMutationOptions<
   SendPushNotification,
   SendPushNotificationVariables
+>;
+export const SendSmsNotificationDocument = gql`
+  mutation sendSmsNotification($input: SmsNotification!) {
+    sendSmsNotification(input: $input)
+  }
+`;
+export type SendSmsNotificationMutationFn = Apollo.MutationFunction<
+  SendSmsNotification,
+  SendSmsNotificationVariables
+>;
+
+/**
+ * __useSendSmsNotification__
+ *
+ * To run a mutation, you first call `useSendSmsNotification` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendSmsNotification` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendSmsNotification, { data, loading, error }] = useSendSmsNotification({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSendSmsNotification(
+  baseOptions?: Apollo.MutationHookOptions<
+    SendSmsNotification,
+    SendSmsNotificationVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<SendSmsNotification, SendSmsNotificationVariables>(
+    SendSmsNotificationDocument,
+    options,
+  );
+}
+export type SendSmsNotificationHookResult = ReturnType<
+  typeof useSendSmsNotification
+>;
+export type SendSmsNotificationMutationResult =
+  Apollo.MutationResult<SendSmsNotification>;
+export type SendSmsNotificationMutationOptions = Apollo.BaseMutationOptions<
+  SendSmsNotification,
+  SendSmsNotificationVariables
 >;
 export const UpdateCarDocument = gql`
   mutation updateCar($carId: ID!, $carInput: CarInput!) {

@@ -1,0 +1,7 @@
+mutation checkPhoneForManger($phone: String!){
+    checkPhoneForManger(phone: $phone){
+        sent
+        expiresAt
+        isRegistered
+    }
+}
