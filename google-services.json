@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "597235362284-peuvavf38b3qv6r1f7q00gqb204qle1h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ge.carz.carz",
+            "certificate_hash": "4d0d35fc5ace3d0e5dc4dba428325cc5047300b0"
+          }
+        },
+        {
+          "client_id": "597235362284-svn2k06tro1livntcj69l6pq9656j78i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ge.carz.carz",
+            "certificate_hash": "24113494382de09692dde4b454cbb93ee1c787bc"
+          }
+        },
+        {
           "client_id": "597235362284-5btcfvffvp07on1149urd5sgq2dsaenq.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +45,13 @@
             {
               "client_id": "597235362284-5btcfvffvp07on1149urd5sgq2dsaenq.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "597235362284-blul5bgcsqv4gnm0o47egofc70e3ohc6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "ge.carz.carz"
+              }
             }
           ]
         }

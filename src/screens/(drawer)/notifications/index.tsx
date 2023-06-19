@@ -79,9 +79,9 @@ export default function NotificationScreen() {
   const [sendNotification] = useSendPushNotification();
   const [addDeviceToken] = useAddDeviceToken();
   useEffect(() => {
-    requestUserPermission().then(enabled => {
+    requestUserPermission().then(async enabled => {
       if (enabled) {
-        return;
+        await messaging().registerDeviceForRemoteMessages();
       }
     });
 
@@ -116,6 +116,7 @@ export default function NotificationScreen() {
     const handleNotificationClick = async (
       response: Notifications.NotificationResponse,
     ) => {
+      console.log(`handleNotificationClick: ${JSON.stringify(response)}`);
       const screen = response?.notification?.request?.content?.data?.screen;
       if (screen !== null) {
         // navigation.navigate(screen);
@@ -130,6 +131,8 @@ export default function NotificationScreen() {
 
     // Handle user opening the app from a notification (when the app is in the background)
     messaging().onNotificationOpenedApp(remoteMessage => {
+      console.log(`onNotificationOpenedApp: ${JSON.stringify(remoteMessage)}`);
+
       console.log(
         'Notification caused app to open from background state:',
         remoteMessage.data?.screen,
@@ -143,6 +146,8 @@ export default function NotificationScreen() {
     messaging()
       .getInitialNotification()
       .then(remoteMessage => {
+        console.log(`getInitialNotification: ${JSON.stringify(remoteMessage)}`);
+
         if (remoteMessage) {
           console.log(
             'Notification caused app to open from quit state:',
@@ -174,6 +179,9 @@ export default function NotificationScreen() {
     const handlePushNotification = async (
       remoteMessage: FirebaseMessagingTypes.RemoteMessage,
     ) => {
+      console.log(`handlePushNotification: ${JSON.stringify(remoteMessage)}`);
+      alert(`handlePushNotification: ${JSON.stringify(remoteMessage)}`);
+
       const notification = {
         title: remoteMessage.notification?.title,
         body: remoteMessage.notification?.body,
@@ -196,36 +204,6 @@ export default function NotificationScreen() {
       notificationClickSubscription.remove();
     };
   }, [addDeviceToken]);
-
-  useEffect(() => {
-    const wrap = async () => {
-      // Assume a message-notification contains a "type" property in the data payload of the screen to open
-      await messaging().registerDeviceForRemoteMessages();
-      messaging().onNotificationOpenedApp(remoteMessage => {
-        console.log(
-          'Notification caused app to open from background state:',
-          remoteMessage.notification,
-        );
-        // navigation.navigate(remoteMessage.data.type);
-      });
-
-      // Check whether an initial notification is available
-      messaging()
-        .getInitialNotification()
-        .then(remoteMessage => {
-          if (remoteMessage) {
-            console.log(
-              'Notification caused app to open from quit state:',
-              remoteMessage.notification,
-            );
-            // setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
-          }
-          // setLoading(false);
-        });
-    };
-
-    wrap();
-  }, []);
 
   // Can use this function below OR use Expo's Push Notification Tool from: https://expo.dev/notifications
   async function sendPushNotification() {
