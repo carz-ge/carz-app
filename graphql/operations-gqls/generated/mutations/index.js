@@ -41,6 +41,10 @@ module.exports.removeCategory = fs.readFileSync(
   path.join(__dirname, 'removeCategory.gql'),
   'utf8',
 );
+module.exports.respondToOrder = fs.readFileSync(
+  path.join(__dirname, 'respondToOrder.gql'),
+  'utf8',
+);
 module.exports.sendPushNotification = fs.readFileSync(
   path.join(__dirname, 'sendPushNotification.gql'),
   'utf8',
@@ -99,6 +103,10 @@ module.exports.updateUser = fs.readFileSync(
 );
 module.exports.removeUser = fs.readFileSync(
   path.join(__dirname, 'removeUser.gql'),
+  'utf8',
+);
+module.exports.deactivateUser = fs.readFileSync(
+  path.join(__dirname, 'deactivateUser.gql'),
   'utf8',
 );
 module.exports.addDeviceToken = fs.readFileSync(

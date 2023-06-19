@@ -6,6 +6,8 @@ query getMe{
         firstname
         lastname
         language
+        deactivated
+        removed
         createdAt
         updatedAt
     }

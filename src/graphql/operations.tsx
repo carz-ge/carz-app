@@ -177,6 +177,13 @@ export type LocationInput = {
   coordinates: CoordinatesInput;
 };
 
+export type ManagersOrderResponseInput = {
+  accepted: Scalars['Boolean']['input'];
+  orderId: Scalars['ID']['input'];
+  productId: Scalars['ID']['input'];
+  providerId: Scalars['ID']['input'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addCar: Car;
@@ -189,12 +196,14 @@ export type Mutation = {
   createProduct: Product;
   createProductDetails: ProductDetails;
   createProvider: Provider;
+  deactivateUser: Maybe<Scalars['Boolean']['output']>;
   removeCar: Scalars['Boolean']['output'];
   removeCategory: Scalars['Boolean']['output'];
   removeProduct: Scalars['Boolean']['output'];
   removeProductDetails: Scalars['Boolean']['output'];
   removeProvider: Scalars['Boolean']['output'];
   removeUser: Maybe<Scalars['Boolean']['output']>;
+  respondToOrder: Maybe<Scalars['Boolean']['output']>;
   scheduleCarForService: Maybe<Array<Maybe<ScheduledTimeSlotSchema>>>;
   sendOtp: SendOptOutput;
   sendPushNotification: Maybe<Scalars['Boolean']['output']>;
@@ -267,6 +276,10 @@ export type MutationRemoveProviderArgs = {
   providerId: Scalars['ID']['input'];
 };
 
+export type MutationRespondToOrderArgs = {
+  managersOrderResponse: ManagersOrderResponseInput;
+};
+
 export type MutationScheduleCarForServiceArgs = {
   input: InputMaybe<ScheduleCarForServiceInput>;
 };
@@ -322,9 +335,14 @@ export type Order = {
 };
 
 export type OrderInput = {
-  id: InputMaybe<Scalars['ID']['input']>;
-  products: Array<OrderedProductInput>;
-  userId: Scalars['ID']['input'];
+  carId: InputMaybe<Scalars['ID']['input']>;
+  carPlateNumber: InputMaybe<Scalars['String']['input']>;
+  carType: InputMaybe<CarType>;
+  categoryId: Scalars['ID']['input'];
+  idempotencyKey: Scalars['String']['input'];
+  packages: Array<OrderedProductInput>;
+  schedulingDay: InputMaybe<Scalars['String']['input']>;
+  schedulingTime: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum OrderStatus {
@@ -571,11 +589,13 @@ export type UpdateUserInput = {
 export type User = {
   __typename?: 'User';
   createdAt: Maybe<Scalars['String']['output']>;
+  deactivated: Maybe<Scalars['Boolean']['output']>;
   firstname: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   language: Language;
   lastname: Maybe<Scalars['String']['output']>;
   phone: Scalars['String']['output'];
+  removed: Maybe<Scalars['Boolean']['output']>;
   role: UserRole;
   updatedAt: Maybe<Scalars['String']['output']>;
 };
@@ -826,6 +846,13 @@ export type CreateProvider = {
   };
 };
 
+export type DeactivateUserVariables = Exact<{[key: string]: never}>;
+
+export type DeactivateUser = {
+  __typename?: 'Mutation';
+  deactivateUser: boolean | null;
+};
+
 export type RemoveCarVariables = Exact<{
   carId: Scalars['ID']['input'];
 }>;
@@ -862,6 +889,15 @@ export type RemoveProvider = {__typename?: 'Mutation'; removeProvider: boolean};
 export type RemoveUserVariables = Exact<{[key: string]: never}>;
 
 export type RemoveUser = {__typename?: 'Mutation'; removeUser: boolean | null};
+
+export type RespondToOrderVariables = Exact<{
+  managersOrderResponse: ManagersOrderResponseInput;
+}>;
+
+export type RespondToOrder = {
+  __typename?: 'Mutation';
+  respondToOrder: boolean | null;
+};
 
 export type ScheduleCarForServiceVariables = Exact<{
   input: InputMaybe<ScheduleCarForServiceInput>;
@@ -1082,6 +1118,8 @@ export type UpdateUser = {
     firstname: string | null;
     lastname: string | null;
     language: Language;
+    deactivated: boolean | null;
+    removed: boolean | null;
     createdAt: string | null;
     updatedAt: string | null;
   };
@@ -1135,6 +1173,8 @@ export type GetMe = {
     firstname: string | null;
     lastname: string | null;
     language: Language;
+    deactivated: boolean | null;
+    removed: boolean | null;
     createdAt: string | null;
     updatedAt: string | null;
   };
@@ -1244,6 +1284,8 @@ export type GetUserById = {
     firstname: string | null;
     lastname: string | null;
     language: Language;
+    deactivated: boolean | null;
+    removed: boolean | null;
     createdAt: string | null;
     updatedAt: string | null;
   };
@@ -2262,6 +2304,51 @@ export type CreateProviderMutationOptions = Apollo.BaseMutationOptions<
   CreateProvider,
   CreateProviderVariables
 >;
+export const DeactivateUserDocument = gql`
+  mutation deactivateUser {
+    deactivateUser
+  }
+`;
+export type DeactivateUserMutationFn = Apollo.MutationFunction<
+  DeactivateUser,
+  DeactivateUserVariables
+>;
+
+/**
+ * __useDeactivateUser__
+ *
+ * To run a mutation, you first call `useDeactivateUser` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeactivateUser` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deactivateUser, { data, loading, error }] = useDeactivateUser({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useDeactivateUser(
+  baseOptions?: Apollo.MutationHookOptions<
+    DeactivateUser,
+    DeactivateUserVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<DeactivateUser, DeactivateUserVariables>(
+    DeactivateUserDocument,
+    options,
+  );
+}
+export type DeactivateUserHookResult = ReturnType<typeof useDeactivateUser>;
+export type DeactivateUserMutationResult =
+  Apollo.MutationResult<DeactivateUser>;
+export type DeactivateUserMutationOptions = Apollo.BaseMutationOptions<
+  DeactivateUser,
+  DeactivateUserVariables
+>;
 export const RemoveCarDocument = gql`
   mutation removeCar($carId: ID!) {
     removeCar(carId: $carId)
@@ -2529,6 +2616,52 @@ export type RemoveUserMutationResult = Apollo.MutationResult<RemoveUser>;
 export type RemoveUserMutationOptions = Apollo.BaseMutationOptions<
   RemoveUser,
   RemoveUserVariables
+>;
+export const RespondToOrderDocument = gql`
+  mutation respondToOrder($managersOrderResponse: ManagersOrderResponseInput!) {
+    respondToOrder(managersOrderResponse: $managersOrderResponse)
+  }
+`;
+export type RespondToOrderMutationFn = Apollo.MutationFunction<
+  RespondToOrder,
+  RespondToOrderVariables
+>;
+
+/**
+ * __useRespondToOrder__
+ *
+ * To run a mutation, you first call `useRespondToOrder` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRespondToOrder` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [respondToOrder, { data, loading, error }] = useRespondToOrder({
+ *   variables: {
+ *      managersOrderResponse: // value for 'managersOrderResponse'
+ *   },
+ * });
+ */
+export function useRespondToOrder(
+  baseOptions?: Apollo.MutationHookOptions<
+    RespondToOrder,
+    RespondToOrderVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<RespondToOrder, RespondToOrderVariables>(
+    RespondToOrderDocument,
+    options,
+  );
+}
+export type RespondToOrderHookResult = ReturnType<typeof useRespondToOrder>;
+export type RespondToOrderMutationResult =
+  Apollo.MutationResult<RespondToOrder>;
+export type RespondToOrderMutationOptions = Apollo.BaseMutationOptions<
+  RespondToOrder,
+  RespondToOrderVariables
 >;
 export const ScheduleCarForServiceDocument = gql`
   mutation scheduleCarForService($input: ScheduleCarForServiceInput) {
@@ -3082,6 +3215,8 @@ export const UpdateUserDocument = gql`
       firstname
       lastname
       language
+      deactivated
+      removed
       createdAt
       updatedAt
     }
@@ -3368,6 +3503,8 @@ export const GetMeDocument = gql`
       firstname
       lastname
       language
+      deactivated
+      removed
       createdAt
       updatedAt
     }
@@ -3582,6 +3719,8 @@ export const GetUserByIdDocument = gql`
       firstname
       lastname
       language
+      deactivated
+      removed
       createdAt
       updatedAt
     }

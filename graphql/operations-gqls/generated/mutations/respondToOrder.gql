@@ -1,0 +1,3 @@
+mutation respondToOrder($managersOrderResponse: ManagersOrderResponseInput!){
+    respondToOrder(managersOrderResponse: $managersOrderResponse)
+}

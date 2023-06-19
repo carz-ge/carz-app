@@ -6,6 +6,8 @@ mutation updateUser($input: UpdateUserInput!){
         firstname
         lastname
         language
+        deactivated
+        removed
         createdAt
         updatedAt
     }

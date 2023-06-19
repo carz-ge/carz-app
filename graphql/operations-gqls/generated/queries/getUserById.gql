@@ -6,6 +6,8 @@ query getUserById($userId: ID!){
         firstname
         lastname
         language
+        deactivated
+        removed
         createdAt
         updatedAt
     }
