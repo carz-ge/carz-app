@@ -150,6 +150,22 @@ export enum DayOfWeek {
   Wednesday = 'WEDNESDAY',
 }
 
+export type InitializePaymentInput = {
+  idempotencyKey: Scalars['String']['input'];
+  isAutomatic: Scalars['Boolean']['input'];
+  saveCard: Scalars['Boolean']['input'];
+  totalAmount: Scalars['Float']['input'];
+  unitPrice: Scalars['Float']['input'];
+};
+
+export type InitializePaymentWithSavedCardsInput = {
+  idempotencyKey: Scalars['String']['input'];
+  isAutomatic: Scalars['Boolean']['input'];
+  orderId: Scalars['ID']['input'];
+  totalAmount: Scalars['Float']['input'];
+  unitPrice: Scalars['Float']['input'];
+};
+
 export enum Language {
   En = 'EN',
   Ka = 'KA',
@@ -191,19 +207,26 @@ export type Mutation = {
   authenticateManager: AuthenticationOutput;
   authorize: AuthenticationOutput;
   checkPhoneForManger: SendOptOutput;
+  confirmPreAuthorization: Maybe<Scalars['Boolean']['output']>;
   createCategory: Category;
   createOrder: Order;
+  createOrderBySavedCard: OrderProcessingResponse;
   createProduct: Product;
   createProductDetails: ProductDetails;
   createProvider: Provider;
   deactivateUser: Maybe<Scalars['Boolean']['output']>;
+  initPayment: OrderProcessingResponse;
+  refund: Maybe<Scalars['Boolean']['output']>;
+  rejectPreAuthorization: Maybe<Scalars['Boolean']['output']>;
   removeCar: Scalars['Boolean']['output'];
+  removeCard: Maybe<Scalars['Boolean']['output']>;
   removeCategory: Scalars['Boolean']['output'];
   removeProduct: Scalars['Boolean']['output'];
   removeProductDetails: Scalars['Boolean']['output'];
   removeProvider: Scalars['Boolean']['output'];
   removeUser: Maybe<Scalars['Boolean']['output']>;
   respondToOrder: Maybe<Scalars['Boolean']['output']>;
+  saveCard: Maybe<Scalars['Boolean']['output']>;
   scheduleCarForService: Maybe<Array<Maybe<ScheduledTimeSlotSchema>>>;
   sendOtp: SendOptOutput;
   sendPushNotification: Maybe<Scalars['Boolean']['output']>;
@@ -236,12 +259,20 @@ export type MutationCheckPhoneForMangerArgs = {
   phone: Scalars['String']['input'];
 };
 
+export type MutationConfirmPreAuthorizationArgs = {
+  orderId: Scalars['ID']['input'];
+};
+
 export type MutationCreateCategoryArgs = {
   input: CategoryInput;
 };
 
 export type MutationCreateOrderArgs = {
   order: OrderInput;
+};
+
+export type MutationCreateOrderBySavedCardArgs = {
+  input: InitializePaymentWithSavedCardsInput;
 };
 
 export type MutationCreateProductArgs = {
@@ -256,8 +287,25 @@ export type MutationCreateProviderArgs = {
   input: ProviderInput;
 };
 
+export type MutationInitPaymentArgs = {
+  input: InitializePaymentInput;
+};
+
+export type MutationRefundArgs = {
+  orderId: Scalars['ID']['input'];
+  refundAmount: Scalars['String']['input'];
+};
+
+export type MutationRejectPreAuthorizationArgs = {
+  orderId: Scalars['ID']['input'];
+};
+
 export type MutationRemoveCarArgs = {
   carId: Scalars['ID']['input'];
+};
+
+export type MutationRemoveCardArgs = {
+  orderId: Scalars['ID']['input'];
 };
 
 export type MutationRemoveCategoryArgs = {
@@ -278,6 +326,10 @@ export type MutationRemoveProviderArgs = {
 
 export type MutationRespondToOrderArgs = {
   managersOrderResponse: ManagersOrderResponseInput;
+};
+
+export type MutationSaveCardArgs = {
+  orderId: Scalars['ID']['input'];
 };
 
 export type MutationScheduleCarForServiceArgs = {
@@ -343,6 +395,13 @@ export type OrderInput = {
   packages: Array<OrderedProductInput>;
   schedulingDay: InputMaybe<Scalars['String']['input']>;
   schedulingTime: InputMaybe<Scalars['String']['input']>;
+};
+
+export type OrderProcessingResponse = {
+  __typename?: 'OrderProcessingResponse';
+  idempotencyKey: Scalars['String']['output'];
+  orderId: Scalars['String']['output'];
+  redirectLink: Scalars['String']['output'];
 };
 
 export enum OrderStatus {
@@ -472,6 +531,7 @@ export type Query = {
   echoMono: Maybe<Scalars['String']['output']>;
   getMe: User;
   getOrder: Order;
+  getPaymentInfo: Maybe<Scalars['String']['output']>;
   getProduct: Product;
   getUserById: User;
   listCars: Array<Car>;
@@ -510,6 +570,10 @@ export type QueryEchoMonoArgs = {
 
 export type QueryGetOrderArgs = {
   id: Scalars['ID']['input'];
+};
+
+export type QueryGetPaymentInfoArgs = {
+  orderId: Scalars['ID']['input'];
 };
 
 export type QueryGetProductArgs = {
@@ -581,6 +645,7 @@ export type SubscriptionSubscribeToQueueArgs = {
 };
 
 export type UpdateUserInput = {
+  email: InputMaybe<Scalars['String']['input']>;
   firstname: Scalars['String']['input'];
   language: InputMaybe<Language>;
   lastname: Scalars['String']['input'];
@@ -590,6 +655,7 @@ export type User = {
   __typename?: 'User';
   createdAt: Maybe<Scalars['String']['output']>;
   deactivated: Maybe<Scalars['Boolean']['output']>;
+  email: Maybe<Scalars['String']['output']>;
   firstname: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   language: Language;
@@ -689,6 +755,15 @@ export type CheckPhoneForManger = {
   };
 };
 
+export type ConfirmPreAuthorizationVariables = Exact<{
+  orderId: Scalars['ID']['input'];
+}>;
+
+export type ConfirmPreAuthorization = {
+  __typename?: 'Mutation';
+  confirmPreAuthorization: boolean | null;
+};
+
 export type CreateCategoryVariables = Exact<{
   input: CategoryInput;
 }>;
@@ -726,6 +801,20 @@ export type CreateOrder = {
       schedulingDate: string | null;
       schedulingTime: string | null;
     } | null> | null;
+  };
+};
+
+export type CreateOrderBySavedCardVariables = Exact<{
+  input: InitializePaymentWithSavedCardsInput;
+}>;
+
+export type CreateOrderBySavedCard = {
+  __typename?: 'Mutation';
+  createOrderBySavedCard: {
+    __typename?: 'OrderProcessingResponse';
+    idempotencyKey: string;
+    orderId: string;
+    redirectLink: string;
   };
 };
 
@@ -853,11 +942,47 @@ export type DeactivateUser = {
   deactivateUser: boolean | null;
 };
 
+export type InitPaymentVariables = Exact<{
+  input: InitializePaymentInput;
+}>;
+
+export type InitPayment = {
+  __typename?: 'Mutation';
+  initPayment: {
+    __typename?: 'OrderProcessingResponse';
+    idempotencyKey: string;
+    orderId: string;
+    redirectLink: string;
+  };
+};
+
+export type RefundVariables = Exact<{
+  orderId: Scalars['ID']['input'];
+  refundAmount: Scalars['String']['input'];
+}>;
+
+export type Refund = {__typename?: 'Mutation'; refund: boolean | null};
+
+export type RejectPreAuthorizationVariables = Exact<{
+  orderId: Scalars['ID']['input'];
+}>;
+
+export type RejectPreAuthorization = {
+  __typename?: 'Mutation';
+  rejectPreAuthorization: boolean | null;
+};
+
 export type RemoveCarVariables = Exact<{
   carId: Scalars['ID']['input'];
 }>;
 
 export type RemoveCar = {__typename?: 'Mutation'; removeCar: boolean};
+
+export type RemoveCardVariables = Exact<{
+  orderId: Scalars['ID']['input'];
+}>;
+
+export type RemoveCard = {__typename?: 'Mutation'; removeCard: boolean | null};
 
 export type RemoveCategoryVariables = Exact<{
   categoryId: Scalars['ID']['input'];
@@ -898,6 +1023,12 @@ export type RespondToOrder = {
   __typename?: 'Mutation';
   respondToOrder: boolean | null;
 };
+
+export type SaveCardVariables = Exact<{
+  orderId: Scalars['ID']['input'];
+}>;
+
+export type SaveCard = {__typename?: 'Mutation'; saveCard: boolean | null};
 
 export type ScheduleCarForServiceVariables = Exact<{
   input: InputMaybe<ScheduleCarForServiceInput>;
@@ -1114,6 +1245,7 @@ export type UpdateUser = {
     __typename?: 'User';
     id: string;
     phone: string;
+    email: string | null;
     role: UserRole;
     firstname: string | null;
     lastname: string | null;
@@ -1169,6 +1301,7 @@ export type GetMe = {
     __typename?: 'User';
     id: string;
     phone: string;
+    email: string | null;
     role: UserRole;
     firstname: string | null;
     lastname: string | null;
@@ -1201,6 +1334,15 @@ export type GetOrder = {
       schedulingTime: string | null;
     } | null> | null;
   };
+};
+
+export type GetPaymentInfoVariables = Exact<{
+  orderId: Scalars['ID']['input'];
+}>;
+
+export type GetPaymentInfo = {
+  __typename?: 'Query';
+  getPaymentInfo: string | null;
 };
 
 export type GetProductVariables = Exact<{
@@ -1280,6 +1422,7 @@ export type GetUserById = {
     __typename?: 'User';
     id: string;
     phone: string;
+    email: string | null;
     role: UserRole;
     firstname: string | null;
     lastname: string | null;
@@ -1961,6 +2104,54 @@ export type CheckPhoneForMangerMutationOptions = Apollo.BaseMutationOptions<
   CheckPhoneForManger,
   CheckPhoneForMangerVariables
 >;
+export const ConfirmPreAuthorizationDocument = gql`
+  mutation confirmPreAuthorization($orderId: ID!) {
+    confirmPreAuthorization(orderId: $orderId)
+  }
+`;
+export type ConfirmPreAuthorizationMutationFn = Apollo.MutationFunction<
+  ConfirmPreAuthorization,
+  ConfirmPreAuthorizationVariables
+>;
+
+/**
+ * __useConfirmPreAuthorization__
+ *
+ * To run a mutation, you first call `useConfirmPreAuthorization` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useConfirmPreAuthorization` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [confirmPreAuthorization, { data, loading, error }] = useConfirmPreAuthorization({
+ *   variables: {
+ *      orderId: // value for 'orderId'
+ *   },
+ * });
+ */
+export function useConfirmPreAuthorization(
+  baseOptions?: Apollo.MutationHookOptions<
+    ConfirmPreAuthorization,
+    ConfirmPreAuthorizationVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<
+    ConfirmPreAuthorization,
+    ConfirmPreAuthorizationVariables
+  >(ConfirmPreAuthorizationDocument, options);
+}
+export type ConfirmPreAuthorizationHookResult = ReturnType<
+  typeof useConfirmPreAuthorization
+>;
+export type ConfirmPreAuthorizationMutationResult =
+  Apollo.MutationResult<ConfirmPreAuthorization>;
+export type ConfirmPreAuthorizationMutationOptions = Apollo.BaseMutationOptions<
+  ConfirmPreAuthorization,
+  ConfirmPreAuthorizationVariables
+>;
 export const CreateCategoryDocument = gql`
   mutation createCategory($input: CategoryInput!) {
     createCategory(input: $input) {
@@ -2070,6 +2261,60 @@ export type CreateOrderMutationResult = Apollo.MutationResult<CreateOrder>;
 export type CreateOrderMutationOptions = Apollo.BaseMutationOptions<
   CreateOrder,
   CreateOrderVariables
+>;
+export const CreateOrderBySavedCardDocument = gql`
+  mutation createOrderBySavedCard(
+    $input: InitializePaymentWithSavedCardsInput!
+  ) {
+    createOrderBySavedCard(input: $input) {
+      idempotencyKey
+      orderId
+      redirectLink
+    }
+  }
+`;
+export type CreateOrderBySavedCardMutationFn = Apollo.MutationFunction<
+  CreateOrderBySavedCard,
+  CreateOrderBySavedCardVariables
+>;
+
+/**
+ * __useCreateOrderBySavedCard__
+ *
+ * To run a mutation, you first call `useCreateOrderBySavedCard` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOrderBySavedCard` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOrderBySavedCard, { data, loading, error }] = useCreateOrderBySavedCard({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateOrderBySavedCard(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateOrderBySavedCard,
+    CreateOrderBySavedCardVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<
+    CreateOrderBySavedCard,
+    CreateOrderBySavedCardVariables
+  >(CreateOrderBySavedCardDocument, options);
+}
+export type CreateOrderBySavedCardHookResult = ReturnType<
+  typeof useCreateOrderBySavedCard
+>;
+export type CreateOrderBySavedCardMutationResult =
+  Apollo.MutationResult<CreateOrderBySavedCard>;
+export type CreateOrderBySavedCardMutationOptions = Apollo.BaseMutationOptions<
+  CreateOrderBySavedCard,
+  CreateOrderBySavedCardVariables
 >;
 export const CreateProductDocument = gql`
   mutation createProduct($input: ProductInput!) {
@@ -2349,6 +2594,137 @@ export type DeactivateUserMutationOptions = Apollo.BaseMutationOptions<
   DeactivateUser,
   DeactivateUserVariables
 >;
+export const InitPaymentDocument = gql`
+  mutation initPayment($input: InitializePaymentInput!) {
+    initPayment(input: $input) {
+      idempotencyKey
+      orderId
+      redirectLink
+    }
+  }
+`;
+export type InitPaymentMutationFn = Apollo.MutationFunction<
+  InitPayment,
+  InitPaymentVariables
+>;
+
+/**
+ * __useInitPayment__
+ *
+ * To run a mutation, you first call `useInitPayment` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInitPayment` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [initPayment, { data, loading, error }] = useInitPayment({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useInitPayment(
+  baseOptions?: Apollo.MutationHookOptions<InitPayment, InitPaymentVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<InitPayment, InitPaymentVariables>(
+    InitPaymentDocument,
+    options,
+  );
+}
+export type InitPaymentHookResult = ReturnType<typeof useInitPayment>;
+export type InitPaymentMutationResult = Apollo.MutationResult<InitPayment>;
+export type InitPaymentMutationOptions = Apollo.BaseMutationOptions<
+  InitPayment,
+  InitPaymentVariables
+>;
+export const RefundDocument = gql`
+  mutation refund($orderId: ID!, $refundAmount: String!) {
+    refund(orderId: $orderId, refundAmount: $refundAmount)
+  }
+`;
+export type RefundMutationFn = Apollo.MutationFunction<Refund, RefundVariables>;
+
+/**
+ * __useRefund__
+ *
+ * To run a mutation, you first call `useRefund` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRefund` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [refund, { data, loading, error }] = useRefund({
+ *   variables: {
+ *      orderId: // value for 'orderId'
+ *      refundAmount: // value for 'refundAmount'
+ *   },
+ * });
+ */
+export function useRefund(
+  baseOptions?: Apollo.MutationHookOptions<Refund, RefundVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<Refund, RefundVariables>(RefundDocument, options);
+}
+export type RefundHookResult = ReturnType<typeof useRefund>;
+export type RefundMutationResult = Apollo.MutationResult<Refund>;
+export type RefundMutationOptions = Apollo.BaseMutationOptions<
+  Refund,
+  RefundVariables
+>;
+export const RejectPreAuthorizationDocument = gql`
+  mutation rejectPreAuthorization($orderId: ID!) {
+    rejectPreAuthorization(orderId: $orderId)
+  }
+`;
+export type RejectPreAuthorizationMutationFn = Apollo.MutationFunction<
+  RejectPreAuthorization,
+  RejectPreAuthorizationVariables
+>;
+
+/**
+ * __useRejectPreAuthorization__
+ *
+ * To run a mutation, you first call `useRejectPreAuthorization` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRejectPreAuthorization` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [rejectPreAuthorization, { data, loading, error }] = useRejectPreAuthorization({
+ *   variables: {
+ *      orderId: // value for 'orderId'
+ *   },
+ * });
+ */
+export function useRejectPreAuthorization(
+  baseOptions?: Apollo.MutationHookOptions<
+    RejectPreAuthorization,
+    RejectPreAuthorizationVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<
+    RejectPreAuthorization,
+    RejectPreAuthorizationVariables
+  >(RejectPreAuthorizationDocument, options);
+}
+export type RejectPreAuthorizationHookResult = ReturnType<
+  typeof useRejectPreAuthorization
+>;
+export type RejectPreAuthorizationMutationResult =
+  Apollo.MutationResult<RejectPreAuthorization>;
+export type RejectPreAuthorizationMutationOptions = Apollo.BaseMutationOptions<
+  RejectPreAuthorization,
+  RejectPreAuthorizationVariables
+>;
 export const RemoveCarDocument = gql`
   mutation removeCar($carId: ID!) {
     removeCar(carId: $carId)
@@ -2390,6 +2766,48 @@ export type RemoveCarMutationResult = Apollo.MutationResult<RemoveCar>;
 export type RemoveCarMutationOptions = Apollo.BaseMutationOptions<
   RemoveCar,
   RemoveCarVariables
+>;
+export const RemoveCardDocument = gql`
+  mutation removeCard($orderId: ID!) {
+    removeCard(orderId: $orderId)
+  }
+`;
+export type RemoveCardMutationFn = Apollo.MutationFunction<
+  RemoveCard,
+  RemoveCardVariables
+>;
+
+/**
+ * __useRemoveCard__
+ *
+ * To run a mutation, you first call `useRemoveCard` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveCard` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeCard, { data, loading, error }] = useRemoveCard({
+ *   variables: {
+ *      orderId: // value for 'orderId'
+ *   },
+ * });
+ */
+export function useRemoveCard(
+  baseOptions?: Apollo.MutationHookOptions<RemoveCard, RemoveCardVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<RemoveCard, RemoveCardVariables>(
+    RemoveCardDocument,
+    options,
+  );
+}
+export type RemoveCardHookResult = ReturnType<typeof useRemoveCard>;
+export type RemoveCardMutationResult = Apollo.MutationResult<RemoveCard>;
+export type RemoveCardMutationOptions = Apollo.BaseMutationOptions<
+  RemoveCard,
+  RemoveCardVariables
 >;
 export const RemoveCategoryDocument = gql`
   mutation removeCategory($categoryId: ID!) {
@@ -2662,6 +3080,48 @@ export type RespondToOrderMutationResult =
 export type RespondToOrderMutationOptions = Apollo.BaseMutationOptions<
   RespondToOrder,
   RespondToOrderVariables
+>;
+export const SaveCardDocument = gql`
+  mutation saveCard($orderId: ID!) {
+    saveCard(orderId: $orderId)
+  }
+`;
+export type SaveCardMutationFn = Apollo.MutationFunction<
+  SaveCard,
+  SaveCardVariables
+>;
+
+/**
+ * __useSaveCard__
+ *
+ * To run a mutation, you first call `useSaveCard` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveCard` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveCard, { data, loading, error }] = useSaveCard({
+ *   variables: {
+ *      orderId: // value for 'orderId'
+ *   },
+ * });
+ */
+export function useSaveCard(
+  baseOptions?: Apollo.MutationHookOptions<SaveCard, SaveCardVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<SaveCard, SaveCardVariables>(
+    SaveCardDocument,
+    options,
+  );
+}
+export type SaveCardHookResult = ReturnType<typeof useSaveCard>;
+export type SaveCardMutationResult = Apollo.MutationResult<SaveCard>;
+export type SaveCardMutationOptions = Apollo.BaseMutationOptions<
+  SaveCard,
+  SaveCardVariables
 >;
 export const ScheduleCarForServiceDocument = gql`
   mutation scheduleCarForService($input: ScheduleCarForServiceInput) {
@@ -3211,6 +3671,7 @@ export const UpdateUserDocument = gql`
     updateUser(input: $input) {
       id
       phone
+      email
       role
       firstname
       lastname
@@ -3499,6 +3960,7 @@ export const GetMeDocument = gql`
     getMe {
       id
       phone
+      email
       role
       firstname
       lastname
@@ -3600,6 +4062,57 @@ export type GetOrderLazyQueryHookResult = ReturnType<
 export type GetOrderQueryResult = Apollo.QueryResult<
   GetOrder,
   GetOrderVariables
+>;
+export const GetPaymentInfoDocument = gql`
+  query getPaymentInfo($orderId: ID!) {
+    getPaymentInfo(orderId: $orderId)
+  }
+`;
+
+/**
+ * __useGetPaymentInfo__
+ *
+ * To run a query within a React component, call `useGetPaymentInfo` and pass it any options that fit your needs.
+ * When your component renders, `useGetPaymentInfo` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPaymentInfo({
+ *   variables: {
+ *      orderId: // value for 'orderId'
+ *   },
+ * });
+ */
+export function useGetPaymentInfo(
+  baseOptions: Apollo.QueryHookOptions<GetPaymentInfo, GetPaymentInfoVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<GetPaymentInfo, GetPaymentInfoVariables>(
+    GetPaymentInfoDocument,
+    options,
+  );
+}
+export function useGetPaymentInfoLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetPaymentInfo,
+    GetPaymentInfoVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<GetPaymentInfo, GetPaymentInfoVariables>(
+    GetPaymentInfoDocument,
+    options,
+  );
+}
+export type GetPaymentInfoHookResult = ReturnType<typeof useGetPaymentInfo>;
+export type GetPaymentInfoLazyQueryHookResult = ReturnType<
+  typeof useGetPaymentInfoLazyQuery
+>;
+export type GetPaymentInfoQueryResult = Apollo.QueryResult<
+  GetPaymentInfo,
+  GetPaymentInfoVariables
 >;
 export const GetProductDocument = gql`
   query getProduct($productId: ID!) {
@@ -3715,6 +4228,7 @@ export const GetUserByIdDocument = gql`
     getUserById(userId: $userId) {
       id
       phone
+      email
       role
       firstname
       lastname

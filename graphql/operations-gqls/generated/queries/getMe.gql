@@ -2,6 +2,7 @@ query getMe{
     getMe{
         id
         phone
+        email
         role
         firstname
         lastname

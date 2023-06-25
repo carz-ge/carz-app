@@ -57,6 +57,34 @@ module.exports.createOrder = fs.readFileSync(
   path.join(__dirname, 'createOrder.gql'),
   'utf8',
 );
+module.exports.initPayment = fs.readFileSync(
+  path.join(__dirname, 'initPayment.gql'),
+  'utf8',
+);
+module.exports.createOrderBySavedCard = fs.readFileSync(
+  path.join(__dirname, 'createOrderBySavedCard.gql'),
+  'utf8',
+);
+module.exports.saveCard = fs.readFileSync(
+  path.join(__dirname, 'saveCard.gql'),
+  'utf8',
+);
+module.exports.removeCard = fs.readFileSync(
+  path.join(__dirname, 'removeCard.gql'),
+  'utf8',
+);
+module.exports.confirmPreAuthorization = fs.readFileSync(
+  path.join(__dirname, 'confirmPreAuthorization.gql'),
+  'utf8',
+);
+module.exports.rejectPreAuthorization = fs.readFileSync(
+  path.join(__dirname, 'rejectPreAuthorization.gql'),
+  'utf8',
+);
+module.exports.refund = fs.readFileSync(
+  path.join(__dirname, 'refund.gql'),
+  'utf8',
+);
 module.exports.createProductDetails = fs.readFileSync(
   path.join(__dirname, 'createProductDetails.gql'),
   'utf8',
