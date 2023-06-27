@@ -2,6 +2,7 @@ query getUserById($userId: ID!){
     getUserById(userId: $userId){
         id
         phone
+        email
         role
         firstname
         lastname

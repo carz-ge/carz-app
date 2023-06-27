@@ -1,0 +1,7 @@
+mutation initPayment($input: InitializePaymentInput!){
+    initPayment(input: $input){
+        idempotencyKey
+        orderId
+        redirectLink
+    }
+}

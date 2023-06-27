@@ -1,12 +1,20 @@
-import React from 'react';
-import {StyleSheet, Text, View, TextInput, Pressable} from 'react-native';
-import {useForm, Controller} from 'react-hook-form';
+import React, {useState} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
 import {CarInput, CarType, useAddCar} from '../../graphql/operations';
 import {Ionicons} from '@expo/vector-icons';
-import colors from '../../styles/colors';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '@react-navigation/core/src/types';
 import {RootStackParamList} from '../../navigation/types';
+import {ComponentProps} from 'react';
+
+type Props = ComponentProps<typeof Ionicons>;
+export type IconName = Props['name'];
 
 interface ICarForm extends CarInput {
   plateNumber: string;
@@ -32,20 +40,43 @@ const defaultValues: ICarForm = {
   carType: CarType.Sedan,
 };
 
-export default function AddCar() {
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const {control, handleSubmit} = useForm<ICarForm>({
-    defaultValues: defaultValues,
-  });
+const carTypes: {type: CarType; icon: IconName}[] = [
+  {type: CarType.Hatchback, icon: 'ios-car-sport'},
+  {type: CarType.Motorcycle, icon: 'ios-bicycle'},
+  {type: CarType.Sedan, icon: 'ios-car'},
+  {type: CarType.Suv, icon: 'ios-car-sport'},
+  {type: CarType.Truck, icon: 'ios-car'},
+  {type: CarType.Van, icon: 'ios-bus-outline'},
+];
 
+const CarSelection = () => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const [selectedCarType, setSelectedCarType] = useState<CarType | null>(null);
   const [addCar] = useAddCar({
     fetchPolicy: 'network-only',
   });
-  const onSubmit = async (data: ICarForm) => {
-    console.log(data);
+
+  const [plateNumber, setPlateNumber] = useState('');
+
+  const handleSubmit = async () => {
+    // Add your logic here to handle the submitted data
+    console.log(selectedCarType, plateNumber);
+    if (!selectedCarType || !plateNumber) {
+      // TODO show error
+      return;
+    }
+
     await addCar({
       variables: {
-        carInput: data,
+        carInput: {
+          plateNumber,
+          carType: selectedCarType,
+          vin: null,
+          techPassportNumber: null,
+          make: null,
+          model: null,
+          year: null,
+        },
       },
     });
 
@@ -54,43 +85,41 @@ export default function AddCar() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.formContainer}>
-        <Controller
-          control={control}
-          render={({field: {onChange, onBlur, value}}) => (
-            <TextInput
-              style={styles.input}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              placeholder="Plate Number"
-            />
-          )}
-          name="plateNumber"
-          rules={{required: true}}
-          defaultValue=""
+      <View style={styles.row}>
+        <TextInput
+          style={styles.input}
+          placeholder="Plate Number"
+          value={plateNumber}
+          onChangeText={text => setPlateNumber(text)}
         />
-
-        <Pressable style={styles.button} onPress={handleSubmit(onSubmit)}>
-          <Text style={styles.buttonText}>დაამატე მანქანა</Text>
-        </Pressable>
-
-        <Text style={styles.orText}>ან</Text>
-
-        <Pressable
-          style={styles.qrButton}
-          onPress={() =>
-            navigation.navigate('carStack', {
-              screen: 'techCardQrScan',
-            })
-          }>
-          <Ionicons name={'qr-code-outline'} size={30} color={'#fff'} />
-          <Text style={styles.qrButtonText}>დაასკანერე ტექ. პასპორტი</Text>
-        </Pressable>
       </View>
+      <View>
+        {carTypes.map((car, index) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() => setSelectedCarType(car.type)}
+            style={
+              selectedCarType === car.type
+                ? styles.selectedButton
+                : styles.button
+            }>
+            <Ionicons name={car.icon} size={30} style={styles.icon} />
+            <Text style={styles.buttonText}>{car.type}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      {selectedCarType && (
+        <Text style={styles.selectedCarTypeText}>
+          Selected car type: {selectedCarType}
+        </Text>
+      )}
+      <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+        <Text style={styles.submitButtonText}>Submit</Text>
+      </TouchableOpacity>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -99,52 +128,65 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  header: {
-    color: colors.primary,
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  formContainer: {
-    width: '80%',
-    marginTop: 50,
+  row: {
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   input: {
-    width: '100%',
+    width: '80%',
     height: 40,
-    color: '#000',
-    borderWidth: 1,
     borderColor: '#ccc',
+    borderWidth: 1,
     borderRadius: 5,
-    padding: 10,
-    marginBottom: 20,
+    paddingHorizontal: 10,
+    marginBottom: 10,
   },
   button: {
-    backgroundColor: colors.primary,
-    borderRadius: 5,
-    padding: 10,
-    width: '100%',
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#eaeaea',
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    margin: 5,
+  },
+  selectedButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#007aff',
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    margin: 5,
+  },
+  icon: {
+    marginRight: 10,
+    color: '#000',
   },
   buttonText: {
+    fontSize: 16,
+    color: '#000',
+  },
+  submitButton: {
+    backgroundColor: '#007aff',
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginTop: 10,
+  },
+  submitButtonText: {
+    fontSize: 16,
     color: '#fff',
-    fontSize: 18,
+    textAlign: 'center',
+  },
+  selectedCarTypeText: {
+    marginTop: 10,
+    fontSize: 16,
     fontWeight: 'bold',
   },
-  qrButton: {
-    backgroundColor: colors.primary,
-    borderRadius: 5,
-    padding: 10,
-    width: '100%',
-    alignItems: 'center',
-    flexDirection: 'row',
-    margin: 20,
-  },
-  qrButtonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  orText: {marginTop: 20},
 });
+
+export default CarSelection;

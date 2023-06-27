@@ -1,0 +1,3 @@
+mutation rejectPreAuthorization($orderId: ID!){
+    rejectPreAuthorization(orderId: $orderId)
+}

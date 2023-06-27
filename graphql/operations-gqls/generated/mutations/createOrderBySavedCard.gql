@@ -1,0 +1,7 @@
+mutation createOrderBySavedCard($input: InitializePaymentWithSavedCardsInput!){
+    createOrderBySavedCard(input: $input){
+        idempotencyKey
+        orderId
+        redirectLink
+    }
+}

@@ -32,7 +32,10 @@ jobs:
 
       - name: Install dependencies
         run: yarn install
-
+      - name: Run linters
+        run: |
+          npm run lint
+          npm run prettier
       - name: Create preview
         uses: expo/expo-github-action/preview@v8
         with:

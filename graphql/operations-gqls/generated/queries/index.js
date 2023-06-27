@@ -38,6 +38,10 @@ module.exports.listOrdersByUserId = fs.readFileSync(
   path.join(__dirname, 'listOrdersByUserId.gql'),
   'utf8',
 );
+module.exports.getPaymentInfo = fs.readFileSync(
+  path.join(__dirname, 'getPaymentInfo.gql'),
+  'utf8',
+);
 module.exports.listProductDetailsByProductId = fs.readFileSync(
   path.join(__dirname, 'listProductDetailsByProductId.gql'),
   'utf8',

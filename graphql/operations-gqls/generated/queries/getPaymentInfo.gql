@@ -1,0 +1,3 @@
+query getPaymentInfo($orderId: ID!){
+    getPaymentInfo(orderId: $orderId)
+}
