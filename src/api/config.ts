@@ -4,5 +4,5 @@
 // export const HTTP_API_URL = 'https://api.liquidibrium.me';
 // export const WS_API_URL = 'wss://api.liquidibrium.me';
 
-export const HTTP_API_URL = 'https://api.carz.ge';
-export const WS_API_URL = 'wss://api.carz.ge';
+export const HTTP_API_URL = 'https://api2.carz.ge';
+export const WS_API_URL = 'wss://api2.carz.ge';

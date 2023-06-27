@@ -22,7 +22,7 @@ const FormButton = ({
     <Pressable
       onPress={onPress}
       disabled={disabled}
-      style={[styles.button, {backgroundColor: colors.buttonPrimary}]}>
+      style={[styles.button, {backgroundColor: colors.primary}]}>
       <Text style={styles.buttonText}>{loading ? loadingText : text}</Text>
     </Pressable>
   );
@@ -35,10 +35,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 10,
     marginVertical: 5,
+    marginTop: 25,
   },
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
+    fontFamily: 'helv-65',
   },
 });
 

@@ -35,7 +35,12 @@ function FormInput<T extends FieldValues>({
             />
           </View>
           {error && (
-            <Text style={{color: Colors.inputError, alignSelf: 'stretch'}}>
+            <Text
+              style={{
+                color: Colors.inputError,
+                alignSelf: 'stretch',
+                fontFamily: 'helv-55',
+              }}>
               {error.message || 'შეცდომა'}
             </Text>
           )}

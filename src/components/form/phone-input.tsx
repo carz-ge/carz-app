@@ -56,7 +56,12 @@ function PhoneInput<T extends FieldValues>({
             />
           </View>
           {error && (
-            <Text style={{color: Colors.inputError, alignSelf: 'stretch'}}>
+            <Text
+              style={{
+                color: Colors.inputError,
+                marginVertical: 5,
+                alignSelf: 'stretch',
+              }}>
               {error.message || 'შეცდომა'}
             </Text>
           )}
@@ -71,23 +76,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   countryCode: {
-    borderColor: 'gray',
-    borderWidth: StyleSheet.hairlineWidth,
     padding: 10,
-    fontSize: 20,
+    fontSize: 18,
     marginVertical: 5,
     borderBottomLeftRadius: 10,
     borderTopLeftRadius: 10,
+    backgroundColor: '#f8f8f8',
+    fontFamily: 'helv-55',
   },
   phoneInput: {
-    borderColor: 'gray',
-    borderWidth: StyleSheet.hairlineWidth,
+    backgroundColor: '#f8f8f8',
     flex: 1,
     padding: 10,
-    fontSize: 20,
+    fontSize: 18,
     marginVertical: 5,
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10,
+    height: 60,
   },
 });
 
