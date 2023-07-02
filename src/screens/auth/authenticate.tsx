@@ -1,15 +1,17 @@
-import React from 'react';
-import {View, Text, StyleSheet, Alert} from 'react-native';
+import React, {useState} from 'react';
+import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
 import {useAuth} from '../../context/auth-context';
 import {useForm} from 'react-hook-form';
-import FormInput from '../../components/form/form-input';
 import {useAuthorize, useSendOtp} from '../../graphql/operations';
 import FormButton from '../../components/form/form-button';
 import {AuthStackScreenProps} from '../../navigation/types';
+import {OtpInput} from '../../components/otp-input/OtpInput';
+import colors from '../../styles/colors';
 
 interface FormData {
   code: string;
 }
+const OTP_CODE_LENGTH = 6;
 
 const AuthenticateScreen = ({
   route,
@@ -20,6 +22,7 @@ const AuthenticateScreen = ({
   });
 
   const {phone, isRegistered} = route.params;
+  const [code, setCode] = useState('');
 
   console.log('phone -> ', phone, isRegistered);
 
@@ -37,9 +40,9 @@ const AuthenticateScreen = ({
     fetchPolicy: 'network-only',
   });
 
-  const onConfirm = async (formData: FormData) => {
-    console.log('confirm:', formData);
-    if (typeof phone !== 'string') {
+  // TODO: need to handle and show error
+  const onConfirm = async () => {
+    if (typeof phone !== 'string' || code.length !== OTP_CODE_LENGTH) {
       console.warn('phone is not string', phone);
       return;
     }
@@ -49,7 +52,7 @@ const AuthenticateScreen = ({
         variables: {
           input: {
             phone,
-            otp: formData.code,
+            otp: code,
           },
         },
       });
@@ -105,23 +108,25 @@ const AuthenticateScreen = ({
   return (
     <View style={styles.container}>
       <Text style={styles.label}>დაადასტურე მობილურის ნომერი</Text>
-
-      <FormInput
-        name="code"
-        control={control}
-        placeholder="SMS კოდი"
-        rules={{
-          required: 'კოდი აუცილებელია',
-        }}
+      <OtpInput
+        numberOfDigits={OTP_CODE_LENGTH}
+        focusColor="green"
+        onTextChange={text => setCode(text)}
+        // containerStyle={styles.container}
+        // inputsContainerStyle={styles.inputsContainer}
+        // pinCodeContainerStyle={styles.pinCodeContainer}
+        // pinCodeTextStyle={styles.pinCodeText}
+        // focusStickStyle={styles.focusStick}
+        focusStickBlinkingDuration={500}
       />
-      <FormButton
-        text={'დადასტურება'}
-        onPress={handleSubmit(onConfirm)}
-        loading={loading}
-        disabled={loading}
-        loadingText={'ვამოწმებთ...'}
-      />
-
+      <Pressable
+        onPress={onConfirm}
+        disabled={loading && code.length !== OTP_CODE_LENGTH}
+        style={[styles.button, {backgroundColor: colors.primary}]}>
+        <Text style={styles.buttonText}>
+          {loading ? 'ვამოწმებთ...' : 'დადასტურება'}
+        </Text>
+      </Pressable>
       <FormButton text="ახლიდან გაგზავნა" onPress={onResend} />
     </View>
   );
@@ -139,9 +144,18 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     color: 'gray',
   },
-  error: {
+  button: {
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
     marginVertical: 5,
-    color: 'red',
+    marginTop: 25,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontFamily: 'helv-65',
   },
 });
 
