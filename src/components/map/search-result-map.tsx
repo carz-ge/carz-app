@@ -1,9 +1,18 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {FlatList, useWindowDimensions, View} from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import {Product} from '../../graphql/operations';
 import CustomMarker from './custom-marker';
 import ProductCarouselItem from './product-carousel-item';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import {MaterialIcons} from '@expo/vector-icons';
+import * as Location from 'expo-location';
+import colors from '../../styles/colors';
 
 interface SearchResultsMapsProps {
   products: Product[];
@@ -30,6 +39,38 @@ const SearchResultMap = ({products}: SearchResultsMapsProps) => {
   const width = useWindowDimensions().width;
   // Calculate the width of each item in the carousel
   const itemWidth = width - 60;
+  const [location, setLocation] = useState<Location.LocationObject | null>(
+    null,
+  );
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      const {status} = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      const locationPosition = await Location.getCurrentPositionAsync({});
+      setLocation(locationPosition);
+    })();
+  }, []);
+
+  async function goToCurrentLocation() {
+    const {status} = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      return null;
+    }
+
+    const currLocation = await Location.getCurrentPositionAsync({});
+    map.current?.animateToRegion({
+      latitude: currLocation.coords.latitude,
+      longitude: currLocation.coords.longitude,
+      latitudeDelta: 0.1,
+      longitudeDelta: 0.1,
+    });
+  }
 
   useEffect(() => {
     console.log('selected place id: ', selectedPlaceId);
@@ -69,11 +110,19 @@ const SearchResultMap = ({products}: SearchResultsMapsProps) => {
   }, [selectedPlaceId, products]);
   console.log('search results maps: ');
   return (
-    <View style={{width: '100%', height: '100%'}}>
+    <View style={styles.container}>
       <MapView
         ref={map}
-        style={{width: '100%', height: '100%'}}
+        style={styles.mapView}
         provider={PROVIDER_GOOGLE}
+        showsTraffic={true}
+        showsUserLocation={true}
+        showsMyLocationButton={true}
+        showsIndoors={true}
+        showsBuildings={true}
+        showsScale={true}
+        showsCompass={true}
+        followsUserLocation={true}
         initialRegion={{
           latitude: 41.8,
           longitude: 44.8,
@@ -96,7 +145,12 @@ const SearchResultMap = ({products}: SearchResultsMapsProps) => {
           );
         })}
       </MapView>
-      <View style={{position: 'absolute', bottom: 10}}>
+      <TouchableOpacity
+        style={[styles.currentLocBtn, {backgroundColor: colors.primary}]}
+        onPress={goToCurrentLocation}>
+        <MaterialIcons name={'my-location'} color={'white'} size={25} />
+      </TouchableOpacity>
+      <View style={styles.carouselListContainer}>
         <FlatList
           ref={flatlist}
           data={products}
@@ -117,3 +171,22 @@ const SearchResultMap = ({products}: SearchResultsMapsProps) => {
 };
 
 export default SearchResultMap;
+
+const styles = StyleSheet.create({
+  container: {width: '100%', height: '100%'},
+  mapView: {width: '100%', height: '100%'},
+  carouselListContainer: {position: 'absolute', bottom: 10},
+  myLocationIcon: {width: '100%', height: '100%'},
+  currentLocBtn: {
+    backgroundColor: '#000',
+    padding: 5,
+    borderRadius: 5,
+    position: 'absolute',
+    bottom: 135,
+    right: 10,
+  },
+});
+
+function MyLocation() {
+  return <MaterialIcons style={styles.myLocationIcon} name="my-location" />;
+}

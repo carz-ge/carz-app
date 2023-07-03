@@ -28,8 +28,8 @@ jobs:
           npm run lint
           npm run prettier
 
-      - name: 🚀 Build app
-        run: eas build --non-interactive --platform android --profile preview
-
       - name: 🚀 eas update
         run: eas update --auto
+
+      - name: 🚀 Build app
+        run: eas build --non-interactive --platform android --profile preview
