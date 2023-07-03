@@ -52,12 +52,15 @@ function FormInput<T extends FieldValues>({
 
 const styles = StyleSheet.create({
   input: {
-    borderColor: 'gray',
-    borderWidth: StyleSheet.hairlineWidth,
     padding: 10,
-    fontSize: 20,
+    fontSize: 16,
     marginVertical: 5,
     borderRadius: 10,
+    backgroundColor: '#fff',
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    height: 60,
+    borderWidth: 0,
   },
 });
 

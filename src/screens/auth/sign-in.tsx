@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   label: {
-    fontSize: 18,
+    fontSize: 16,
     marginVertical: 5,
     color: LightTheme.colors.gray,
     width: '100%',

@@ -17,13 +17,21 @@ const FormButton = ({
   loadingText,
   loading,
   disabled,
+  type,
 }: CustomButtonProps) => {
   return (
     <Pressable
       onPress={onPress}
       disabled={disabled}
-      style={[styles.button, {backgroundColor: colors.primary}]}>
-      <Text style={styles.buttonText}>{loading ? loadingText : text}</Text>
+      style={[
+        styles.button,
+        {
+          backgroundColor: type ? '#ddd' : colors.primary,
+        },
+      ]}>
+      <Text style={[styles.buttonText, {color: type ? '#000' : '#fff'}]}>
+        {loading ? loadingText : text}
+      </Text>
     </Pressable>
   );
 };

@@ -1,10 +1,19 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {FieldValues, useForm} from 'react-hook-form';
 import FormInput from '../components/form/form-input';
 import {Language, useUpdateUser} from '../graphql/operations';
 import FormButton from '../components/form/form-button';
 import {RootStackScreenProps} from '../navigation/types';
+import {Logo} from '../assets/SVG';
+import {LightTheme} from '../styles/themes';
 
 interface FormData extends FieldValues {
   firstname: string;
@@ -53,48 +62,71 @@ const CustomerInfo = ({navigation}: RootStackScreenProps<'customerInfo'>) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>შეიყვანე მონაცემები</Text>
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset=""
+        behavior={Platform.OS === 'ios' ? 'padding' : null}
+        style={{flex: 1}}
+        automaticallyAdjustKeyboardInsets={true}>
+        <ScrollView
+          keyboardShouldPersistTaps={'handled'}
+          style={{paddingHorizontal: 25}}>
+          <View style={styles.logo}>
+            <Logo />
+          </View>
+          <Text style={styles.label}>შეიყვანე მონაცემები</Text>
 
-      <FormInput
-        control={control}
-        name={'firstname'}
-        placeholder={'სახელი'}
-        rules={{
-          required: 'შეავსე სახელი',
-        }}
-      />
-      <FormInput
-        control={control}
-        name={'lastname'}
-        placeholder={'გვარი'}
-        rules={{
-          required: 'შეავსე გვარი',
-        }}
-      />
+          <FormInput
+            control={control}
+            name={'firstname'}
+            placeholder={'სახელი'}
+            rules={{
+              required: 'შეავსე სახელი',
+            }}
+          />
+          <FormInput
+            control={control}
+            name={'lastname'}
+            placeholder={'გვარი'}
+            rules={{
+              required: 'შეავსე გვარი',
+            }}
+          />
 
-      <FormButton
-        text={'შემდეგი'}
-        onPress={handleSubmit(onUpdateUser)}
-        loading={loading}
-        disabled={loading}
-        loadingText={'ნახლდება...'}
-      />
-    </View>
+          <FormButton
+            text={'შემდეგი'}
+            onPress={handleSubmit(onUpdateUser)}
+            loading={loading}
+            disabled={loading}
+            loadingText={'ნახლდება...'}
+          />
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
     flex: 1,
-    justifyContent: 'center',
     padding: 24,
+    justifyContent: 'center',
   },
   label: {
-    fontSize: 24,
+    fontSize: 16,
     marginVertical: 5,
-    color: 'gray',
+    color: LightTheme.colors.gray,
+    width: '100%',
+    fontFamily: 'helv-65',
+    marginBottom: 15,
+  },
+  logo: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    marginTop: 80,
+    marginBottom: 50,
   },
 });
 

@@ -1,11 +1,22 @@
 import React from 'react';
-import {View, Text, StyleSheet, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+} from 'react-native';
 import {useAuth} from '../../context/auth-context';
 import {useForm} from 'react-hook-form';
 import FormInput from '../../components/form/form-input';
 import {useAuthorize, useSendOtp} from '../../graphql/operations';
 import FormButton from '../../components/form/form-button';
 import {AuthStackScreenProps} from '../../navigation/types';
+import {LightTheme} from '../../styles/themes';
+import {Logo} from '../../assets/SVG';
 
 interface FormData {
   code: string;
@@ -103,41 +114,63 @@ const AuthenticateScreen = ({
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>დაადასტურე მობილურის ნომერი</Text>
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset=""
+        behavior={Platform.OS === 'ios' ? 'padding' : null}
+        style={{flex: 1}}
+        automaticallyAdjustKeyboardInsets={true}>
+        <ScrollView
+          keyboardShouldPersistTaps={'handled'}
+          style={{paddingHorizontal: 25}}>
+          <View style={styles.logo}>
+            <Logo />
+          </View>
+          <Text style={styles.label}>დაადასტურე მობილურის ნომერი</Text>
 
-      <FormInput
-        name="code"
-        control={control}
-        placeholder="SMS კოდი"
-        rules={{
-          required: 'კოდი აუცილებელია',
-        }}
-      />
-      <FormButton
-        text={'დადასტურება'}
-        onPress={handleSubmit(onConfirm)}
-        loading={loading}
-        disabled={loading}
-        loadingText={'ვამოწმებთ...'}
-      />
+          <FormInput
+            name="code"
+            control={control}
+            placeholder="SMS კოდი"
+            rules={{
+              required: 'კოდი აუცილებელია',
+            }}
+          />
+          <FormButton
+            text={'დადასტურება'}
+            onPress={handleSubmit(onConfirm)}
+            loading={loading}
+            disabled={loading}
+            loadingText={'ვამოწმებთ...'}
+          />
 
-      <FormButton text="ახლიდან გაგზავნა" onPress={onResend} />
-    </View>
+          <FormButton text="ახლიდან გაგზავნა" onPress={onResend} type="gray" />
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
     flex: 1,
-    justifyContent: 'center',
     padding: 24,
+    justifyContent: 'center',
   },
   label: {
-    fontSize: 24,
+    fontSize: 16,
     marginVertical: 5,
-    color: 'gray',
+    color: LightTheme.colors.gray,
+    width: '100%',
+    fontFamily: 'helv-65',
+  },
+  logo: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    marginTop: 80,
+    marginBottom: 50,
   },
   error: {
     marginVertical: 5,

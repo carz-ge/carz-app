@@ -88,11 +88,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#f8f8f8',
     flex: 1,
     padding: 10,
-    fontSize: 18,
+    fontSize: 16,
     marginVertical: 5,
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10,
     height: 60,
+    borderWidth: 0,
   },
 });
 
