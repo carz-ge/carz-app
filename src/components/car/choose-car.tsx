@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
-import {Text, StyleSheet, View, Pressable} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 
-import {Car, useListCars} from '../../graphql/operations';
 import {Ionicons} from '@expo/vector-icons';
+import {Car, useListCars} from '../../graphql/operations';
 import colors from '../../styles/colors';
 
 interface ChooseCarProps {
   onNextHandler: (car: Car) => void;
 }
 
-const ChooseCar = ({onNextHandler}: ChooseCarProps) => {
+function ChooseCar({onNextHandler}: ChooseCarProps) {
   const [selectedCar, setSelectedCar] = useState<Car | null>(null);
   const {data, loading, error} = useListCars();
 
@@ -64,7 +64,7 @@ const ChooseCar = ({onNextHandler}: ChooseCarProps) => {
       </Pressable>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

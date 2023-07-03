@@ -1,8 +1,8 @@
 import React from 'react';
-import {View, Text, TextInput, StyleSheet} from 'react-native';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
 import {Controller, FieldValues} from 'react-hook-form';
-import Colors from '../../styles/colors';
 import {useTheme} from '@react-navigation/native';
+import Colors from '../../styles/colors';
 import {CustomInputProps} from './types';
 
 function FormInput<T extends FieldValues>({

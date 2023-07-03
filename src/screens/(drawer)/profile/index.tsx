@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {NavigationProp} from '@react-navigation/core/src/types';
 import colors from '../../../styles/colors';
 import {useAuth} from '../../../context/auth-context';
 import useUser from '../../../hooks/user';
-import {useNavigation} from '@react-navigation/native';
-import {NavigationProp} from '@react-navigation/core/src/types';
 import {RootStackParamList} from '../../../navigation/types';
 
 export default function Profile() {
@@ -14,11 +14,13 @@ export default function Profile() {
   const {removeAuthToken} = useAuth();
 
   const onLogOut = () => {
-    removeAuthToken().then(() => {
-      navigation.navigate('auth', {
-        screen: 'signIn',
-      });
-    });
+    removeAuthToken()
+      .then(() => {
+        navigation.navigate('auth', {
+          screen: 'signIn',
+        });
+      })
+      .catch(() => {});
   };
   return (
     <View style={styles.container}>
@@ -29,7 +31,7 @@ export default function Profile() {
         </>
       )}
 
-      {/* log out button */}
+      {/* Log out button */}
       <Pressable
         onPress={onLogOut}
         style={[styles.button, {backgroundColor: colors.buttonPrimary}]}>

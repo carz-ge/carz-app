@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
+import {Button, StyleSheet, Text, View} from 'react-native';
 
 interface CheckoutPageProps {
   carNumber: string;
@@ -11,7 +11,7 @@ interface CheckoutPageProps {
   packagePrice: number;
 }
 
-const Checkout = ({
+function Checkout({
   carNumber,
   scheduleTime,
   scheduleDate,
@@ -19,7 +19,7 @@ const Checkout = ({
   productName,
   packageName,
   packagePrice,
-}: CheckoutPageProps) => {
+}: CheckoutPageProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Car Number: {carNumber}</Text>
@@ -39,7 +39,7 @@ const Checkout = ({
       <Button title="Next" />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

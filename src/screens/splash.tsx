@@ -1,11 +1,16 @@
 import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View, ImageSourcePropType} from 'react-native';
 
-const SplashScreen = () => (
-  <View style={styles.container}>
-    <Image source={require('../../assets/splash.png')} style={styles.image} />
-  </View>
-);
+function SplashScreen() {
+  return (
+    <View style={styles.container}>
+      <Image
+        source={require('../../assets/splash.png') as ImageSourcePropType}
+        style={styles.image}
+      />
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {

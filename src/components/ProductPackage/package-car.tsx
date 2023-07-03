@@ -1,6 +1,6 @@
 import React from 'react';
-import {ProductDetails} from '../../graphql/operations';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {ProductDetails} from '../../graphql/operations';
 import Colors from '../../styles/colors';
 
 type PackageCardProps = {

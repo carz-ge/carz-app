@@ -1,8 +1,8 @@
 import React from 'react';
-import {View, Text, TextInput, StyleSheet} from 'react-native';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
 import {Controller, FieldValues} from 'react-hook-form';
-import Colors from '../../styles/colors';
 import {useTheme} from '@react-navigation/native';
+import Colors from '../../styles/colors';
 import {CustomInputProps} from './types';
 
 const rules = {
@@ -42,7 +42,7 @@ function PhoneInput<T extends FieldValues>({
               {borderColor: error ? Colors.inputError : Colors.buttonPrimary},
             ]}>
             <TextInput
-              value={'+995'}
+              value="+995"
               style={{...styles.countryCode, color: theme.colors.text}}
             />
             <TextInput

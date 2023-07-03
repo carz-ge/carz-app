@@ -8,7 +8,7 @@ export default function PickDateTimeScreen({
   navigation,
 }: SearchStackScreenProps<'pickDateTime'>) {
   function handleSearch(date: string, time: string) {
-    const params = route.params;
+    const {params} = route;
     console.log(date, time);
     const splittedTime = time.split(' - ')[0];
     navigation.navigate('map', {

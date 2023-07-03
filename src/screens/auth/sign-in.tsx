@@ -15,14 +15,13 @@ import PhoneInput from '../../components/form/phone-input';
 import FormButton from '../../components/form/form-button';
 import {AuthStackScreenProps} from '../../navigation/types';
 import {Logo} from '../../assets/SVG';
-import {LightTheme} from '../../styles/themes';
-import {StatusBar} from 'react-native';
+import colors from '../../styles/colors';
 
 interface FormData extends FieldValues {
   phone: string;
 }
 
-const SignIn = ({navigation}: AuthStackScreenProps<'signIn'>) => {
+function SignIn({navigation}: AuthStackScreenProps<'signIn'>) {
   const [sendOtp, {loading: isOtpLoading}] = useSendOtp({
     fetchPolicy: 'network-only',
   });
@@ -74,33 +73,29 @@ const SignIn = ({navigation}: AuthStackScreenProps<'signIn'>) => {
         keyboardVerticalOffset=""
         behavior={Platform.OS === 'ios' ? 'padding' : null}
         style={{flex: 1}}
-        automaticallyAdjustKeyboardInsets={true}>
+        automaticallyAdjustKeyboardInsets>
         <ScrollView
-          keyboardShouldPersistTaps={'handled'}
+          keyboardShouldPersistTaps="handled"
           style={{paddingHorizontal: 25}}>
           <View style={styles.logo}>
             <Logo />
           </View>
           <Text style={styles.label}>შეიყვანე მობილურის ნომერი</Text>
 
-          <PhoneInput
-            control={control}
-            name={'phone'}
-            placeholder={'512345678'}
-          />
+          <PhoneInput control={control} name="phone" placeholder="512345678" />
 
           <FormButton
-            text={'კოდის გაგზავნა'}
+            text="კოდის გაგზავნა"
             onPress={handleSubmit(onSignIn)}
             loading={isOtpLoading}
             disabled={isOtpLoading}
-            loadingText={'ვამოწმებთ...'}
+            loadingText="ვამოწმებთ..."
           />
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -111,7 +106,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     marginVertical: 5,
-    color: LightTheme.colors.gray,
+    color: colors.gray,
     width: '100%',
     fontFamily: 'helv-65',
   },

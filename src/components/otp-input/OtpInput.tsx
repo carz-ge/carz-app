@@ -2,7 +2,7 @@ import React, {forwardRef, useImperativeHandle, useRef, useState} from 'react';
 import {Pressable, Text, TextInput, View} from 'react-native';
 import {VerticalStick} from './VerticalStick';
 import {OtpInputProps, OtpInputRef} from './OtpInput.types';
-import {useOtpInput} from './useOtpInput';
+import useOtpInput from './useOtpInput';
 import {styles} from './OtpInput.styles';
 import colors from '../../styles/colors';
 

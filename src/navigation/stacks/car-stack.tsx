@@ -7,21 +7,21 @@ import TechPassportQrScannScreen from '../../screens/car/tech-card-qr-scan';
 
 const Stack = createNativeStackNavigator<CarStackParamList>();
 
-const CarStack = () => {
+function CarStack() {
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen
-        name={'addCar'}
+        name="addCar"
         options={{headerTitle: 'მანქანის დამატება', headerBackVisible: true}}
         component={AddCarScreen}
       />
       <Stack.Screen
-        name={'car'}
+        name="car"
         options={{headerTitle: 'ავტომობილი', headerBackVisible: true}}
         component={CarScreen}
       />
       <Stack.Screen
-        name={'techCardQrScan'}
+        name="techCardQrScan"
         options={{
           headerTitle: 'დაასკანერე ტექ. პასპორტი',
           headerBackVisible: true,
@@ -30,6 +30,6 @@ const CarStack = () => {
       />
     </Stack.Navigator>
   );
-};
+}
 
 export default CarStack;

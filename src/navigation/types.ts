@@ -55,7 +55,7 @@ export interface AuthStackParamList extends ParamListBase {
 export type AuthStackScreenProps<T extends keyof RootStackParamList> =
   NativeStackScreenProps<AuthStackParamList, T>;
 
-export interface TabParamList extends ParamListBase {}
+export type TabParamList = ParamListBase;
 
 export type AppTabStackScreenProps<T extends keyof RootStackParamList> =
   BottomTabScreenProps<TabParamList, T>;

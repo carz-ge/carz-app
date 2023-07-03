@@ -1,20 +1,17 @@
 import React from 'react';
-import {View, Text, Image, Pressable, StyleSheet} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {NavigationProp} from '@react-navigation/core/src/types';
 import {Product} from '../../graphql/operations';
 import Colors from '../../styles/colors';
-import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../navigation/types';
-import {NavigationProp} from '@react-navigation/core/src/types';
 
 interface ProductCarouselItemProps {
   product: Product;
   cardWidth: number;
 }
 
-const ProductCarouselItem = ({
-  product,
-  cardWidth,
-}: ProductCarouselItemProps) => {
+function ProductCarouselItem({product, cardWidth}: ProductCarouselItemProps) {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const goToPostPage = () => {
@@ -39,7 +36,7 @@ const ProductCarouselItem = ({
       </View>
     </Pressable>
   );
-};
+}
 
 export default ProductCarouselItem;
 

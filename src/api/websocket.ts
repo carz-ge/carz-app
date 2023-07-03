@@ -1,5 +1,5 @@
-import {WS_API_URL} from './config';
 import * as SecureStore from 'expo-secure-store';
+import {WS_API_URL} from './config';
 import {ACCESS_TOKEN_KEY, isValidToken} from '../auth/utils';
 
 export async function createWebsocket(

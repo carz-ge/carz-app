@@ -1,22 +1,22 @@
 import React, {useState} from 'react';
 import {
-  Text,
-  StyleSheet,
-  View,
   Image,
   ScrollView,
+  StyleSheet,
+  Text,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import {ProductDetails, useGetProduct} from '../../graphql/operations';
 import {PackageCard} from '../../components/ProductPackage/package-car';
 import Colors from '../../styles/colors';
 import {RootStackScreenProps} from '../../navigation/types';
-// import {PackageCard} from '../../components/ProductPackage/package-car';
+// Import {PackageCard} from '../../components/ProductPackage/package-car';
 
 export default function ProductScreen({
   route,
 }: RootStackScreenProps<'product'>) {
-  const params = route.params;
+  const {params} = route;
 
   const {data, loading, error} = useGetProduct({
     variables: {
@@ -29,7 +29,7 @@ export default function ProductScreen({
   );
 
   if (loading || !data) {
-    return <></>;
+    return null;
   }
   const product = data.getProduct;
   console.log(JSON.stringify(product));
@@ -46,14 +46,14 @@ export default function ProductScreen({
       <ScrollView>
         <View style={styles.scrollContainer}>
           <View>
-            {/* product images*/}
+            {/* Product images */}
             <Image style={styles.image} source={{uri: product?.mainImage}} />
           </View>
 
           <View>
-            {/* Product title*/}
+            {/* Product title */}
             <Text style={styles.title}>{product?.name.ka}</Text>
-            {/* provider logo */}
+            {/* Provider logo */}
             <Text>{product?.provider.name}</Text>
             {product?.provider.logo && (
               <Image
@@ -63,17 +63,17 @@ export default function ProductScreen({
             )}
           </View>
 
-          {/* location info */}
+          {/* Location info */}
           <View>
             <Text>
               {product?.location?.address.street},{' '}
               {product?.location?.address.district}
             </Text>
-            {/* distance  */}
+            {/* Distance  */}
           </View>
 
           <View>
-            {/* available packages */}
+            {/* Available packages */}
             {product.packages?.map((productPackage: ProductDetails) => (
               <PackageCard
                 key={productPackage.id}

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, StyleSheet, View, FlatList} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {useListCars} from '../../../graphql/operations';
 import {PressableCarItem} from '../../../components/car/car-item';
 import AddCarButton from '../../../components/car/add-car-button';

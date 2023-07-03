@@ -1,19 +1,19 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {CarType, useSearchProducts} from '../../graphql/operations';
+import {useSearchProducts} from '../../graphql/operations';
 import SearchResultMap from '../../components/map/search-result-map';
 import {RootStackScreenProps} from '../../navigation/types';
 
 export default function ResultMapScreen({route}: RootStackScreenProps<'map'>) {
-  const params = route.params;
+  const {params} = route;
   console.log('MapResult', JSON.stringify(params));
   const {data, loading, error} = useSearchProducts({
     variables: {
       filter: {
-        carType: params.carType as CarType,
-        categoryId: params.categoryId as string,
-        date: params.date as string,
-        time: params.time as string,
+        carType: params.carType,
+        categoryId: params.categoryId,
+        date: params.date,
+        time: params.time,
       },
     },
     fetchPolicy: 'network-only',

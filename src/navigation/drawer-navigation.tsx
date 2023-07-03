@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {
-  createDrawerNavigator,
   DrawerContentComponentProps,
   DrawerContentScrollView,
   DrawerItemList,
+  createDrawerNavigator,
 } from '@react-navigation/drawer';
 import {Text} from 'react-native';
 import Expenses from '../screens/(drawer)/expences';
@@ -34,39 +34,41 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
 //   return 'მთავარი';
 // }
 
-const DrawerNavigation = () => (
-  <Drawer.Navigator drawerContent={CustomDrawerContent}>
-    <Drawer.Screen
-      name={'tabs'}
-      options={{title: 'მთავარი'}}
-      component={Tabs}
-    />
-    <Drawer.Screen
-      name="profile"
-      options={{title: 'პროფილი'}}
-      component={Profile}
-    />
-    <Drawer.Screen
-      name="myCar"
-      options={{title: 'ავტომობილები'}}
-      component={MyCars}
-    />
-    <Drawer.Screen
-      name="chat"
-      options={{title: 'ასისტენტი'}}
-      component={Chat}
-    />
-    <Drawer.Screen
-      name="expences"
-      options={{title: 'ხარჯები'}}
-      component={Expenses}
-    />
-    <Drawer.Screen
-      name="notifications"
-      options={{title: 'ნოტიფიკაციები'}}
-      component={NotificationScreen}
-    />
-  </Drawer.Navigator>
-);
+function DrawerNavigation() {
+  return (
+    <Drawer.Navigator drawerContent={CustomDrawerContent}>
+      <Drawer.Screen
+        name="tabs"
+        options={{title: 'მთავარი'}}
+        component={Tabs}
+      />
+      <Drawer.Screen
+        name="profile"
+        options={{title: 'პროფილი'}}
+        component={Profile}
+      />
+      <Drawer.Screen
+        name="myCar"
+        options={{title: 'ავტომობილები'}}
+        component={MyCars}
+      />
+      <Drawer.Screen
+        name="chat"
+        options={{title: 'ასისტენტი'}}
+        component={Chat}
+      />
+      <Drawer.Screen
+        name="expences"
+        options={{title: 'ხარჯები'}}
+        component={Expenses}
+      />
+      <Drawer.Screen
+        name="notifications"
+        options={{title: 'ნოტიფიკაციები'}}
+        component={NotificationScreen}
+      />
+    </Drawer.Navigator>
+  );
+}
 
 export default DrawerNavigation;

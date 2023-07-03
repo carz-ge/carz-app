@@ -9,8 +9,8 @@ import {
 } from 'react-native';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {Ionicons} from '@expo/vector-icons';
-import CustomBackdrop from '../cutomBackdrop/customBackdrop';
 import {Calendar} from 'react-native-calendars';
+import CustomBackdrop from '../cutomBackdrop/customBackdrop';
 import colors from '../../styles/colors';
 
 interface DateTimePickerProps {
@@ -50,7 +50,7 @@ export default function DateTimePicker({onNextHandler}: DateTimePickerProps) {
                 {selectedDate || 'აირჩიე თარიღი'}
               </Text>
               <View style={styles.inputIcon}>
-                <Ionicons name={'calendar'} size={20} color={'#000'} />
+                <Ionicons name="calendar" size={20} color="#000" />
               </View>
             </View>
           </TouchableOpacity>
@@ -63,7 +63,7 @@ export default function DateTimePicker({onNextHandler}: DateTimePickerProps) {
                 {selectedTime || 'აირჩიე დრო'}
               </Text>
               <View style={styles.inputIcon}>
-                <Ionicons name={'time'} size={20} color={'#000'} />
+                <Ionicons name="time" size={20} color="#000" />
               </View>
             </View>
           </TouchableOpacity>
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   },
   headerCont: {
     display: 'flex',
-    // alignItems: 'center',
+    // AlignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
     marginBottom: 20,

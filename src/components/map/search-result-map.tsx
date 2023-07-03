@@ -3,22 +3,22 @@ import {
   FlatList,
   StyleSheet,
   TouchableOpacity,
-  useWindowDimensions,
   View,
+  useWindowDimensions,
 } from 'react-native';
-import {Product} from '../../graphql/operations';
-import CustomMarker from './custom-marker';
-import ProductCarouselItem from './product-carousel-item';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {MaterialIcons} from '@expo/vector-icons';
 import * as Location from 'expo-location';
+import {Product} from '../../graphql/operations';
+import CustomMarker from './custom-marker';
+import ProductCarouselItem from './product-carousel-item';
 import colors from '../../styles/colors';
 
 interface SearchResultsMapsProps {
   products: Product[];
 }
 
-const SearchResultMap = ({products}: SearchResultsMapsProps) => {
+function SearchResultMap({products}: SearchResultsMapsProps) {
   const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null);
 
   const flatlist = useRef<FlatList<Product> | null>(null);
@@ -36,7 +36,7 @@ const SearchResultMap = ({products}: SearchResultsMapsProps) => {
     },
   );
 
-  const width = useWindowDimensions().width;
+  const {width} = useWindowDimensions();
   // Calculate the width of each item in the carousel
   const itemWidth = width - 60;
   const [location, setLocation] = useState<Location.LocationObject | null>(
@@ -60,7 +60,7 @@ const SearchResultMap = ({products}: SearchResultsMapsProps) => {
   async function goToCurrentLocation() {
     const {status} = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
-      return null;
+      return;
     }
 
     const currLocation = await Location.getCurrentPositionAsync({});
@@ -101,7 +101,7 @@ const SearchResultMap = ({products}: SearchResultsMapsProps) => {
       latitudeDelta: 0.1,
       longitudeDelta: 0.1,
     };
-    // console.log('map.current:', map.current);
+    // Console.log('map.current:', map.current);
     if (!map.current) {
       console.log('map.current is null');
       return;
@@ -115,14 +115,14 @@ const SearchResultMap = ({products}: SearchResultsMapsProps) => {
         ref={map}
         style={styles.mapView}
         provider={PROVIDER_GOOGLE}
-        showsTraffic={true}
-        showsUserLocation={true}
-        showsMyLocationButton={true}
-        showsIndoors={true}
-        showsBuildings={true}
-        showsScale={true}
-        showsCompass={true}
-        followsUserLocation={true}
+        showsTraffic
+        showsUserLocation
+        showsMyLocationButton
+        showsIndoors
+        showsBuildings
+        showsScale
+        showsCompass
+        followsUserLocation
         initialRegion={{
           latitude: 41.8,
           longitude: 44.8,
@@ -148,7 +148,7 @@ const SearchResultMap = ({products}: SearchResultsMapsProps) => {
       <TouchableOpacity
         style={[styles.currentLocBtn, {backgroundColor: colors.primary}]}
         onPress={goToCurrentLocation}>
-        <MaterialIcons name={'my-location'} color={'white'} size={25} />
+        <MaterialIcons name="my-location" color="white" size={25} />
       </TouchableOpacity>
       <View style={styles.carouselListContainer}>
         <FlatList
@@ -160,15 +160,15 @@ const SearchResultMap = ({products}: SearchResultsMapsProps) => {
           horizontal
           showsHorizontalScrollIndicator={false}
           snapToInterval={itemWidth}
-          snapToAlignment={'center'}
-          decelerationRate={'fast'}
+          snapToAlignment="center"
+          decelerationRate="fast"
           viewabilityConfig={viewConfig.current}
           onViewableItemsChanged={onViewChanged.current}
         />
       </View>
     </View>
   );
-};
+}
 
 export default SearchResultMap;
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   KeyboardAvoidingView,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -14,6 +15,7 @@ import FormButton from '../components/form/form-button';
 import {RootStackScreenProps} from '../navigation/types';
 import {Logo} from '../assets/SVG';
 import {LightTheme} from '../styles/themes';
+import colors from '../styles/colors';
 
 interface FormData extends FieldValues {
   firstname: string;
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     marginVertical: 5,
-    color: LightTheme.colors.gray,
+    color: colors.gray,
     width: '100%',
     fontFamily: 'helv-65',
     marginBottom: 15,

@@ -1,44 +1,19 @@
-import React, {useState} from 'react';
+import React, {ComponentProps, useState} from 'react';
 import {
   StyleSheet,
   Text,
-  View,
-  TouchableOpacity,
   TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import {CarInput, CarType, useAddCar} from '../../graphql/operations';
 import {Ionicons} from '@expo/vector-icons';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '@react-navigation/core/src/types';
+import {CarType, useAddCar} from '../../graphql/operations';
 import {RootStackParamList} from '../../navigation/types';
-import {ComponentProps} from 'react';
 
 type Props = ComponentProps<typeof Ionicons>;
 export type IconName = Props['name'];
-
-interface ICarForm extends CarInput {
-  plateNumber: string;
-  name: string;
-  vin: string;
-  techPassportNumber: string;
-  mark: string;
-  make: string;
-  model: string;
-  year: number;
-  carType: CarType;
-}
-
-const defaultValues: ICarForm = {
-  plateNumber: '',
-  name: '',
-  vin: '',
-  techPassportNumber: '',
-  mark: '',
-  make: '',
-  model: '',
-  year: 0,
-  carType: CarType.Sedan,
-};
 
 const carTypes: {type: CarType; icon: IconName}[] = [
   {type: CarType.Hatchback, icon: 'ios-car-sport'},
@@ -49,7 +24,7 @@ const carTypes: {type: CarType; icon: IconName}[] = [
   {type: CarType.Van, icon: 'ios-bus-outline'},
 ];
 
-const CarSelection = () => {
+function CarSelection() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [selectedCarType, setSelectedCarType] = useState<CarType | null>(null);
   const [addCar] = useAddCar({
@@ -119,7 +94,7 @@ const CarSelection = () => {
       </TouchableOpacity>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

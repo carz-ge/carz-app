@@ -2,9 +2,9 @@ import React from 'react';
 import {
   StyleSheet,
   Text,
-  View,
-  TouchableOpacity,
   ToastAndroid,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
 import colors from '../../styles/colors';
@@ -14,7 +14,7 @@ type MessageProps = {
   message: ChatMessage;
 };
 
-const Message = ({message}: MessageProps) => {
+function Message({message}: MessageProps) {
   const copyToClipboard = async () => {
     await Clipboard.setStringAsync(message.text);
     ToastAndroid.show('Copied to clipboard', ToastAndroid.SHORT);
@@ -27,7 +27,7 @@ const Message = ({message}: MessageProps) => {
       </TouchableOpacity>
     </View>
   );
-};
+}
 
 export default Message;
 

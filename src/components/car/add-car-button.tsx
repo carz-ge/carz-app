@@ -1,9 +1,9 @@
 import {Ionicons} from '@expo/vector-icons';
 import {Pressable, StyleSheet} from 'react-native';
 import React from 'react';
-import colors from '../../styles/colors';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '@react-navigation/core/src/types';
+import colors from '../../styles/colors';
 import {RootStackParamList} from '../../navigation/types';
 
 export default function AddCarButton() {

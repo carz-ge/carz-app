@@ -7,12 +7,10 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {Category, useListCategories} from '../../graphql/operations';
-import colors from '../../styles/colors';
-import CategoryImage from './category-image';
-import {Feather} from '@expo/vector-icons';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '@react-navigation/core/src/types';
+import {Category, useListCategories} from '../../graphql/operations';
+import colors from '../../styles/colors';
 import {RootStackParamList} from '../../navigation/types';
 
 export default function CategoryList() {
@@ -54,7 +52,7 @@ function RenderCategoryItemWrapper({
   item,
   index,
 }: {
-  navigation: any;
+  navigation: NavigationProp<RootStackParamList>;
   item: Category;
   index: number;
 }) {
@@ -74,7 +72,7 @@ function RenderCategoryItemWrapper({
   );
 }
 
-const RenderCategoryItem = ({item, index}: {item: Category; index: number}) => {
+function RenderCategoryItem({item, index}: {item: Category; index: number}) {
   return (
     <ImageBackground
       source={{
@@ -104,7 +102,7 @@ const RenderCategoryItem = ({item, index}: {item: Category; index: number}) => {
       </View> */}
     </ImageBackground>
   );
-};
+}
 
 const styles = StyleSheet.create({
   categoriesWrapper: {

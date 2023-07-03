@@ -1,24 +1,24 @@
 import React from 'react';
-import {Text, StyleSheet, Pressable} from 'react-native';
+import {GestureResponderEvent, Pressable, StyleSheet, Text} from 'react-native';
 import colors from '../../styles/colors';
-import {GestureResponderEvent} from 'react-native/Libraries/Types/CoreEventTypes';
 
 interface CustomButtonProps {
   onPress: (event: GestureResponderEvent) => void;
   text: string;
-  loadingText?: string;
-  loading?: boolean;
-  disabled?: boolean | null;
+  loadingText: string | undefined;
+  loading: boolean | undefined;
+  disabled: boolean | null | undefined;
+  type?: boolean | undefined; // TODO rename
 }
 
-const FormButton = ({
+function FormButton({
   onPress,
   text,
   loadingText,
   loading,
   disabled,
   type,
-}: CustomButtonProps) => {
+}: CustomButtonProps) {
   return (
     <Pressable
       onPress={onPress}
@@ -34,7 +34,7 @@ const FormButton = ({
       </Text>
     </Pressable>
   );
-};
+}
 
 const styles = StyleSheet.create({
   button: {

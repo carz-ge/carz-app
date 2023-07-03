@@ -1,6 +1,6 @@
 import React, {
-  createContext,
   PropsWithChildren,
+  createContext,
   useCallback,
   useContext,
   useEffect,
@@ -24,7 +24,7 @@ const AuthContext = createContext<AuthContextType>({
   loggedIn: null,
 });
 
-const AuthContextProvider = ({children}: PropsWithChildren) => {
+function AuthContextProvider({children}: PropsWithChildren) {
   const [authToken, setAuthToken] = useState<string | null>(null);
   const [loggedIn, setLoggedIn] = useState<boolean | null>(null);
 
@@ -47,11 +47,9 @@ const AuthContextProvider = ({children}: PropsWithChildren) => {
 
         setAuthToken(token);
         setLoggedIn(isValid);
-        return;
       } catch (err) {
         setAuthToken(null);
         setLoggedIn(false);
-        return;
       }
     };
     isLoggedIn();
@@ -84,7 +82,7 @@ const AuthContextProvider = ({children}: PropsWithChildren) => {
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
 export default AuthContextProvider;
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 import colors from '../../../styles/colors';
 import {useAuth} from '../../../context/auth-context';
 import useUser from '../../../hooks/user';
@@ -20,7 +20,7 @@ export default function Expenses() {
         </>
       )}
 
-      {/* log out button */}
+      {/* Log out button */}
       <Pressable
         onPress={onLogOut}
         style={[styles.button, {backgroundColor: colors.buttonPrimary}]}>

@@ -1,9 +1,8 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import Checkout from '../../components/checkout';
 
 export default function CheckoutScreen() {
-  return <></>;
+  return null;
 }
 
 const styles = StyleSheet.create({

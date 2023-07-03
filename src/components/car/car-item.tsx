@@ -2,8 +2,9 @@ import React from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {Car} from '../../graphql/operations';
 import colors from '../../styles/colors';
+import {NavigationProp} from '@react-navigation/native';
 
-const CarItem = ({item}: {item: Car}) => {
+function CarItem({item}: {item: Car}) {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Plate Number:</Text>
@@ -28,14 +29,14 @@ const CarItem = ({item}: {item: Car}) => {
       <Text style={styles.text}>{item.year || 'Unknown'}</Text>
     </View>
   );
-};
+}
 
 export function PressableCarItem({
   item,
   navigation,
 }: {
   item: Car;
-  navigation: any;
+  navigation: NavigationProp<any>;
 }) {
   return (
     <Pressable

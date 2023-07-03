@@ -1,7 +1,7 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {RootStackParamList} from './types';
 import {StatusBar} from 'expo-status-bar';
+import {RootStackParamList} from './types';
 import {useAuth} from '../context/auth-context';
 import AuthStack from './stacks/auth-stack';
 import CustomerInfo from '../screens/customer-info';
@@ -14,7 +14,7 @@ import SplashScreen from '../screens/splash';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const MainRouter = () => {
+function MainRouter() {
   const {loggedIn} = useAuth();
 
   console.log('loggedIn', loggedIn);
@@ -25,47 +25,47 @@ const MainRouter = () => {
     <>
       <StatusBar animated />
       <Stack.Navigator initialRouteName={loggedIn ? 'drawer' : 'auth'}>
-        {/*TODO */}
+        {/* TODO */}
         <Stack.Screen
-          name={'auth'}
+          name="auth"
           options={{headerShown: false}}
           component={AuthStack}
         />
         <Stack.Screen
-          name={'drawer'}
+          name="drawer"
           options={{headerShown: false}}
           component={DrawerNavigation}
         />
         <Stack.Screen
-          name={'customerInfo'}
+          name="customerInfo"
           component={CustomerInfo}
           options={{
             title: 'შეიყვანე ინფორმაცია',
           }}
         />
         <Stack.Screen
-          name={'product'}
+          name="product"
           component={ProductScreen}
           options={{title: 'პროდუქტი'}}
         />
         <Stack.Screen
           options={{headerShown: false}}
-          name={'search'}
+          name="search"
           component={SearchStack}
         />
         <Stack.Screen
-          name={'map'}
+          name="map"
           component={ResultMapScreen}
           options={{headerTitle: 'რუკა', headerBackVisible: true}}
         />
         <Stack.Screen
-          name={'carStack'}
+          name="carStack"
           component={CarStack}
           options={{headerTitle: 'ავტომობილი', headerBackVisible: true}}
         />
       </Stack.Navigator>
     </>
   );
-};
+}
 
 export default MainRouter;

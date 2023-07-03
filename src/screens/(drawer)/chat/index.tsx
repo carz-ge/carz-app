@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Message from '../../../components/chat/message';
 import {FontAwesome} from '@expo/vector-icons';
 import {ulid} from 'ulid';
+import Message from '../../../components/chat/message';
 import colors from '../../../styles/colors';
 import {
   ChatMessage,
@@ -17,6 +17,10 @@ import {
   useListChatMessages,
 } from '../../../graphql/operations';
 import {createWebsocket} from '../../../api/websocket';
+
+interface ChatWebsocketData {
+  data: string;
+}
 
 export default function Chat() {
   const {data, loading, error, subscribeToMore} = useListChatMessages({
@@ -33,15 +37,14 @@ export default function Chat() {
       return;
     }
     createWebsocket(
-      e => {
+      (e: ChatWebsocketData) => {
         setMessages(prevMessages => {
-          const chatMessage = Object.assign(
-            {},
-            prevMessages[prevMessages.length - 1],
-          );
+          const chatMessage = {
+            ...prevMessages[prevMessages.length - 1],
+          };
           const chatMessages = prevMessages.slice(0, prevMessages.length - 1);
 
-          chatMessage.text += e.data;
+          chatMessage.text += e?.data || '';
           return [...chatMessages, chatMessage];
         });
       },
@@ -71,7 +74,7 @@ export default function Chat() {
     }
   }, [data, loading]);
 
-  const handleSendMessage = async () => {
+  const handleSendMessage = () => {
     if (!text.trim()) return;
 
     const newText: ChatMessage = {

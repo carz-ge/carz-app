@@ -22,7 +22,7 @@ export const ScreenOptions = (title: string): NativeStackNavigationOptions => {
     },
     headerLeft: () => (
       <TouchableOpacity onPress={goBack}>
-        <Entypo name="chevron-left" size={20} color={'#000'} />
+        <Entypo name="chevron-left" size={20} color="#000" />
       </TouchableOpacity>
     ),
   };

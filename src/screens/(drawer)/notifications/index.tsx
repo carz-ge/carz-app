@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Text, StyleSheet, View, Platform, Button} from 'react-native';
+import {Button, Platform, StyleSheet, Text, View} from 'react-native';
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
 import {
@@ -209,23 +209,23 @@ export default function NotificationScreen() {
   // }, [addDeviceToken]);
 
   // Can use this function below OR use Expo's Push Notification Tool from: https://expo.dev/notifications
-  // async function sendPushNotification() {
-  //   console.log('sendPushNotification clicked');
-  //   try {
-  //     const res = await sendNotification({
-  //       variables: {
-  //         input: {
-  //           deviceToken: devicetoken!,
-  //           text: 'Test Text',
-  //           title: 'Test Title',
-  //         },
-  //       },
-  //     });
-  //     console.log('result:', JSON.stringify(res));
-  //   } catch (e) {
-  //     console.log(`error: ${e}`);
-  //   }
-  // }
+  async function sendPushNotification() {
+    console.log('sendPushNotification clicked');
+    try {
+      const res = await sendNotification({
+        variables: {
+          input: {
+            deviceToken: devicetoken!,
+            text: 'Test Text',
+            title: 'Test Title',
+          },
+        },
+      });
+      console.log('result:', JSON.stringify(res));
+    } catch (e) {
+      console.log(`error: ${(e as Error).message}`);
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -239,9 +239,7 @@ export default function NotificationScreen() {
 
         <Button
           title="Press to Send Notification"
-          onPress={async () => {
-            await sendPushNotification();
-          }}
+          onPress={sendPushNotification}
         />
       </View>
     </View>

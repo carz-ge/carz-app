@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -11,34 +10,24 @@ import {
   ScrollView,
   Pressable,
 } from 'react-native';
-=======
-import React, {useState} from 'react';
-import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
->>>>>>> 2b1dc4efe7449ebac27dcbafb117bd3612e8886d
-import {useAuth} from '../../context/auth-context';
 import {useForm} from 'react-hook-form';
+import {useAuth} from '../../context/auth-context';
 import {useAuthorize, useSendOtp} from '../../graphql/operations';
 import FormButton from '../../components/form/form-button';
 import {AuthStackScreenProps} from '../../navigation/types';
-<<<<<<< HEAD
+import {OtpInput} from '../../components/otp-input/OtpInput';
 import {LightTheme} from '../../styles/themes';
 import {Logo} from '../../assets/SVG';
-import { OtpInput } from '../../components/otp-input/OtpInput';
 import colors from '../../styles/colors';
-=======
-import {OtpInput} from '../../components/otp-input/OtpInput';
-import colors from '../../styles/colors';
->>>>>>> 2b1dc4efe7449ebac27dcbafb117bd3612e8886d
-
 interface FormData {
   code: string;
 }
 const OTP_CODE_LENGTH = 6;
 
-const AuthenticateScreen = ({
+function AuthenticateScreen({
   route,
   navigation,
-}: AuthStackScreenProps<'authenticate'>) => {
+}: AuthStackScreenProps<'authenticate'>) {
   const {control, handleSubmit, setError} = useForm<FormData>({
     defaultValues: {code: ''},
   });
@@ -142,30 +131,30 @@ const AuthenticateScreen = ({
           </View>
           <Text style={styles.label}>დაადასტურე მობილურის ნომერი</Text>
           <OtpInput
-        numberOfDigits={OTP_CODE_LENGTH}
-        focusColor="green"
-        onTextChange={text => setCode(text)}
-        // containerStyle={styles.container}
-        // inputsContainerStyle={styles.inputsContainer}
-        // pinCodeContainerStyle={styles.pinCodeContainer}
-        // pinCodeTextStyle={styles.pinCodeText}
-        // focusStickStyle={styles.focusStick}
-        focusStickBlinkingDuration={500}
-      />
-      <Pressable
-        onPress={onConfirm}
-        disabled={loading && code.length !== OTP_CODE_LENGTH}
-        style={[styles.button, {backgroundColor: colors.primary}]}>
-        <Text style={styles.buttonText}>
-          {loading ? 'ვამოწმებთ...' : 'დადასტურება'}
-        </Text>
-      </Pressable>
-      <FormButton text="ახლიდან გაგზავნა" onPress={onResend} />
+            numberOfDigits={OTP_CODE_LENGTH}
+            focusColor="green"
+            onTextChange={text => setCode(text)}
+            // containerStyle={styles.container}
+            // inputsContainerStyle={styles.inputsContainer}
+            // pinCodeContainerStyle={styles.pinCodeContainer}
+            // pinCodeTextStyle={styles.pinCodeText}
+            // focusStickStyle={styles.focusStick}
+            focusStickBlinkingDuration={500}
+          />
+          <Pressable
+            onPress={onConfirm}
+            disabled={loading && code.length !== OTP_CODE_LENGTH}
+            style={[styles.button, {backgroundColor: colors.primary}]}>
+            <Text style={styles.buttonText}>
+              {loading ? 'ვამოწმებთ...' : 'დადასტურება'}
+            </Text>
+          </Pressable>
+          <FormButton text="ახლიდან გაგზავნა" onPress={onResend} />
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -176,7 +165,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     marginVertical: 5,
-    color: LightTheme.colors.gray,
+    color: colors.gray,
     width: '100%',
     fontFamily: 'helv-65',
   },
