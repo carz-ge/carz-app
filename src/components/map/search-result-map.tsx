@@ -115,14 +115,14 @@ function SearchResultMap({products}: SearchResultsMapsProps) {
         ref={map}
         style={styles.mapView}
         provider={PROVIDER_GOOGLE}
-        showsTraffic
+        // showsTraffic
         showsUserLocation
-        showsMyLocationButton
-        showsIndoors
+        // followsUserLocation
+        showsMyLocationButton={false}
+        // showsIndoors
         showsBuildings
         showsScale
         showsCompass
-        followsUserLocation
         initialRegion={{
           latitude: 41.8,
           longitude: 44.8,

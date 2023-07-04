@@ -7,6 +7,7 @@ import {MaterialCommunityIcons} from '@expo/vector-icons';
 export default function TabBarIcon(props: {
   name: React.ComponentProps<typeof MaterialCommunityIcons>['name'];
   color: string;
+  size?: number | undefined;
 }) {
   return (
     <MaterialCommunityIcons size={28} style={{marginBottom: -3}} {...props} />

@@ -58,6 +58,7 @@ export type AuthStackScreenProps<T extends keyof RootStackParamList> =
 export interface MainTabParamList extends ParamListBase {
   home: undefined;
   bookings: undefined;
+  map: undefined;
 }
 
 export type MainTabStackScreenProps<T extends keyof RootStackParamList> =
