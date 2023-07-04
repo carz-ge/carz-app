@@ -1,11 +1,4 @@
-import {
-  FlatList,
-  ImageBackground,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {ImageBackground, Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '@react-navigation/core/src/types';
@@ -26,20 +19,15 @@ export default function CategoryList() {
     <View style={styles.categoriesWrapper}>
       <Text style={styles.categoriesTitle}>კატეგორიები</Text>
       <View style={styles.categoriesListWrapper}>
-        {!loading && (
-          <FlatList
-            data={data?.listCategories}
-            renderItem={({item, index}) => (
-              <RenderCategoryItem
-                navigation={navigation}
-                item={item}
-                index={index}
-              />
-            )}
-            keyExtractor={item => item.id}
-            horizontal={false}
-          />
-        )}
+        {!loading &&
+          data?.listCategories.map((item, index) => (
+            <RenderCategoryItem
+              key={item.id}
+              navigation={navigation}
+              item={item}
+              index={index}
+            />
+          ))}
         {/* TODO Render skeletons */}
         {loading && <Text>loading</Text>}
       </View>
