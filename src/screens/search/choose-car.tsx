@@ -3,6 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import ChooseCar from '../../components/car/choose-car';
 import AddCarButton from '../../components/car/add-car-button';
 import {SearchStackScreenProps} from '../../navigation/types';
+import {CarType} from '../../graphql/operations';
 
 export default function ChooseCarScreen({
   route,
@@ -15,7 +16,7 @@ export default function ChooseCarScreen({
         onNextHandler={car => {
           navigation.navigate('pickDateTime', {
             carId: car.id,
-            carType: car.carType!,
+            carType: car.carType || CarType.All,
             categoryId,
           });
         }}

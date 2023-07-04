@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '@react-navigation/core/src/types';
 import colors from '../../styles/colors';
@@ -20,7 +20,9 @@ export default function Profile() {
           screen: 'signIn',
         });
       })
-      .catch(() => {});
+      .catch(() => {
+        Alert.alert('Error', 'Error occurred during log out');
+      });
   };
   return (
     <View style={styles.container}>

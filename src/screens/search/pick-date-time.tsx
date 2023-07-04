@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
+import {SafeAreaView} from 'react-native';
 import FilterCarWashes from '../../components/date-time-picker/date-time-picker';
 import {SearchStackScreenProps} from '../../navigation/types';
 
@@ -25,15 +25,3 @@ export default function PickDateTimeScreen({
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-});

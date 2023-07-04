@@ -1,9 +1,14 @@
 import React from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
-import {Controller, FieldValues} from 'react-hook-form';
+import {Controller} from 'react-hook-form';
 import {useTheme} from '@react-navigation/native';
 import Colors from '../../styles/colors';
 import {CustomInputProps} from './types';
+import {FormInputValueType} from './form-input';
+
+export interface PhoneFormData extends FormInputValueType {
+  phone: string;
+}
 
 const rules = {
   required: 'ნომერი აუცილებელია პლათფორმაზე შესასვლელად',
@@ -21,12 +26,12 @@ const rules = {
   },
 };
 
-function PhoneInput<T extends FieldValues>({
+function PhoneInput({
   control,
   name,
   placeholder,
   secureTextEntry,
-}: CustomInputProps<T>) {
+}: CustomInputProps<PhoneFormData>) {
   const theme = useTheme();
 
   return (
@@ -46,7 +51,7 @@ function PhoneInput<T extends FieldValues>({
               style={{...styles.countryCode, color: theme.colors.text}}
             />
             <TextInput
-              value={value}
+              value={value as string} // TODO: fix this
               onChangeText={onChange}
               onBlur={onBlur}
               placeholder={placeholder}

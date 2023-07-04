@@ -5,7 +5,11 @@ import {useTheme} from '@react-navigation/native';
 import Colors from '../../styles/colors';
 import {CustomInputProps} from './types';
 
-function FormInput<T extends FieldValues>({
+type TextChangeHandler = (string: string) => void;
+
+export type FormInputValueType = FieldValues;
+
+export default function FormInput<T extends FormInputValueType>({
   control,
   name,
   placeholder,
@@ -27,7 +31,7 @@ function FormInput<T extends FieldValues>({
             ]}>
             <TextInput
               value={value}
-              onChangeText={onChange}
+              onChangeText={onChange as TextChangeHandler} // TODO should be more proper way
               onBlur={onBlur}
               placeholder={placeholder}
               style={{...styles.input, color: theme.colors.text}}
@@ -63,5 +67,3 @@ const styles = StyleSheet.create({
     borderWidth: 0,
   },
 });
-
-export default FormInput;

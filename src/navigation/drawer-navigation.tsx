@@ -6,8 +6,6 @@ import {
   createDrawerNavigator,
 } from '@react-navigation/drawer';
 import {Text} from 'react-native';
-import Expenses from '../screens/(drawer)/expences';
-import NotificationScreen from '../screens/(drawer)/notifications';
 import Profile from '../screens/profile';
 import Chat from '../screens/(drawer)/chat';
 import Tabs from './tab-navigation';
@@ -56,16 +54,6 @@ function DrawerNavigation() {
         name="chat"
         options={{title: 'ასისტენტი'}}
         component={Chat}
-      />
-      <Drawer.Screen
-        name="expences"
-        options={{title: 'ხარჯები'}}
-        component={Expenses}
-      />
-      <Drawer.Screen
-        name="notifications"
-        options={{title: 'ნოტიფიკაციები'}}
-        component={NotificationScreen}
       />
     </Drawer.Navigator>
   );

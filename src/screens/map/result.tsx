@@ -1,5 +1,4 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
 import {useSearchProducts} from '../../graphql/operations';
 import SearchResultMap from '../../components/map/search-result-map';
 import {RootStackScreenProps} from '../../navigation/types';
@@ -22,15 +21,3 @@ export default function ResultMapScreen({route}: RootStackScreenProps<'map'>) {
   console.log('search data: ', data, loading, error);
   return <SearchResultMap products={data?.searchProducts || []} />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-});

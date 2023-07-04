@@ -9,30 +9,26 @@ import {
   Text,
   View,
 } from 'react-native';
-import {FieldValues, useForm} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import {useSendOtp} from '../../graphql/operations';
-import PhoneInput from '../../components/form/phone-input';
+import PhoneInput, {PhoneFormData} from '../../components/form/phone-input';
 import FormButton from '../../components/form/form-button';
 import {AuthStackScreenProps} from '../../navigation/types';
 import {Logo} from '../../assets/SVG';
 import colors from '../../styles/colors';
 
-interface FormData extends FieldValues {
-  phone: string;
-}
-
-function SignIn({navigation}: AuthStackScreenProps<'signIn'>) {
+export default function SignIn({navigation}: AuthStackScreenProps<'signIn'>) {
   const [sendOtp, {loading: isOtpLoading}] = useSendOtp({
     fetchPolicy: 'network-only',
   });
 
-  const {control, handleSubmit} = useForm<FormData>({
+  const {control, handleSubmit} = useForm<PhoneFormData>({
     defaultValues: {
       phone: '',
     },
   });
 
-  const onSignIn = async (formData: FormData) => {
+  const onSignIn = async (formData: PhoneFormData) => {
     console.log('Sign in: ', formData);
     try {
       const phone = `+995${formData.phone}`;
@@ -70,10 +66,8 @@ function SignIn({navigation}: AuthStackScreenProps<'signIn'>) {
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
-        keyboardVerticalOffset=""
-        behavior={Platform.OS === 'ios' ? 'padding' : null}
-        style={{flex: 1}}
-        automaticallyAdjustKeyboardInsets>
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={{flex: 1}}>
         <ScrollView
           keyboardShouldPersistTaps="handled"
           style={{paddingHorizontal: 25}}>
@@ -119,5 +113,3 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
 });
-
-export default SignIn;

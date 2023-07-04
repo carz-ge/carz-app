@@ -57,6 +57,7 @@ const setupApollo = (httpUrl: string, wsUrl: string) => {
     };
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   const logoutLink = onError(_ => {});
 
   const link = logoutLink.concat(authLink).concat(httpLink);

@@ -1,4 +1,4 @@
-import React, {forwardRef, useImperativeHandle, useRef, useState} from 'react';
+import React, {forwardRef, useImperativeHandle} from 'react';
 import {Pressable, Text, TextInput, View} from 'react-native';
 import {VerticalStick} from './VerticalStick';
 import {OtpInputProps, OtpInputRef} from './OtpInput.types';

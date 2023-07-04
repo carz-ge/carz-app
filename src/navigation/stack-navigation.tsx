@@ -5,7 +5,6 @@ import {RootStackParamList} from './types';
 import {useAuth} from '../context/auth-context';
 import AuthStack from './stacks/auth-stack';
 import CustomerInfo from '../screens/customer-info';
-import DrawerNavigation from './drawer-navigation';
 import SearchStack from './stacks/search-stack';
 import ProductScreen from '../screens/product/product';
 import ResultMapScreen from '../screens/map/result';
@@ -26,7 +25,7 @@ function MainRouter() {
   return (
     <>
       <StatusBar animated />
-      <Stack.Navigator initialRouteName={loggedIn ? 'tabs' : 'auth'}>
+      <Stack.Navigator initialRouteName={loggedIn ? 'mainTabs' : 'auth'}>
         {/* TODO */}
         <Stack.Screen
           name="auth"

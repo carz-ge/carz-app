@@ -187,6 +187,6 @@ const styles = StyleSheet.create({
   },
 });
 
-function MyLocation() {
-  return <MaterialIcons style={styles.myLocationIcon} name="my-location" />;
-}
+// function MyLocation() {
+//   return <MaterialIcons style={styles.myLocationIcon} name="my-location" />;
+// }

@@ -8,15 +8,15 @@ import {
   Text,
   View,
 } from 'react-native';
-import {FieldValues, useForm} from 'react-hook-form';
-import FormInput from '../components/form/form-input';
+import {useForm} from 'react-hook-form';
+import FormInput, {FormInputValueType} from '../components/form/form-input';
 import {Language, useUpdateUser} from '../graphql/operations';
 import FormButton from '../components/form/form-button';
 import {RootStackScreenProps} from '../navigation/types';
 import {Logo} from '../assets/SVG';
 import colors from '../styles/colors';
 
-interface FormData extends FieldValues {
+interface FormData extends FormInputValueType {
   firstname: string;
   lastname: string;
 }

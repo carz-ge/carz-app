@@ -18,7 +18,9 @@ interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType>({
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   updateAuthToken: async _token => {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   removeAuthToken: async () => {},
   authToken: null,
   loggedIn: null,
@@ -52,7 +54,7 @@ function AuthContextProvider({children}: PropsWithChildren) {
         setLoggedIn(false);
       }
     };
-    isLoggedIn();
+    isLoggedIn().catch(console.error);
   }, []);
 
   const updateAuthToken = useCallback(

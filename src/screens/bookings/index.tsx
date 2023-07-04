@@ -1,7 +1,10 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {MainTabStackScreenProps} from '../../navigation/types';
 
-export default function Bookings() {
+export default function BookingsScreen(
+  props: MainTabStackScreenProps<'bookings'>,
+) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Bookings</Text>
