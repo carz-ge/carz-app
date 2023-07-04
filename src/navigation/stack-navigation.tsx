@@ -11,6 +11,8 @@ import ProductScreen from '../screens/product/product';
 import ResultMapScreen from '../screens/map/result';
 import CarStack from './stacks/car-stack';
 import SplashScreen from '../screens/splash';
+import MainTabsNavigation from './tab-navigation';
+import Profile from '../screens/profile';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -24,7 +26,7 @@ function MainRouter() {
   return (
     <>
       <StatusBar animated />
-      <Stack.Navigator initialRouteName={loggedIn ? 'drawer' : 'auth'}>
+      <Stack.Navigator initialRouteName={loggedIn ? 'tabs' : 'auth'}>
         {/* TODO */}
         <Stack.Screen
           name="auth"
@@ -32,9 +34,14 @@ function MainRouter() {
           component={AuthStack}
         />
         <Stack.Screen
-          name="drawer"
+          name="mainTabs"
           options={{headerShown: false}}
-          component={DrawerNavigation}
+          component={MainTabsNavigation}
+        />
+        <Stack.Screen
+          name="profile"
+          options={{title: 'პროფილი'}}
+          component={Profile}
         />
         <Stack.Screen
           name="customerInfo"

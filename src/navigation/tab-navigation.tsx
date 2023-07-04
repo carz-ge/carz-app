@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Home from '../screens/(drawer)/(tabs)/home';
-import Bookings from '../screens/(drawer)/(tabs)/bookings';
+import HomeScreen from '../screens/home';
+import Bookings from '../screens/bookings';
 import TabBarIcon from '../components/tab-bar-icon';
-import {TabParamList} from './types';
+import {MainTabParamList} from './types';
 
-const Tab = createBottomTabNavigator<TabParamList>();
+const Tab = createBottomTabNavigator<MainTabParamList>();
 
-function Tabs() {
+export default function MainTabsNavigation() {
   return (
     <Tab.Navigator
       screenOptions={
@@ -17,7 +17,7 @@ function Tabs() {
       }>
       <Tab.Screen
         name="home"
-        component={Home}
+        component={HomeScreen}
         options={{
           tabBarLabel: 'Home',
           headerShown: false,
@@ -38,5 +38,3 @@ function Tabs() {
     </Tab.Navigator>
   );
 }
-
-export default Tabs;

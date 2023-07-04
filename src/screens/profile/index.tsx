@@ -2,10 +2,10 @@ import React from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '@react-navigation/core/src/types';
-import colors from '../../../styles/colors';
-import {useAuth} from '../../../context/auth-context';
-import useUser from '../../../hooks/user';
-import {RootStackParamList} from '../../../navigation/types';
+import colors from '../../styles/colors';
+import {useAuth} from '../../context/auth-context';
+import useUser from '../../hooks/user';
+import {RootStackParamList} from '../../navigation/types';
 
 export default function Profile() {
   const user = useUser();

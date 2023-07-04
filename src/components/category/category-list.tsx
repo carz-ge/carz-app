@@ -30,7 +30,7 @@ export default function CategoryList() {
           <FlatList
             data={data?.listCategories}
             renderItem={({item, index}) => (
-              <RenderCategoryItemWrapper
+              <RenderCategoryItem
                 navigation={navigation}
                 item={item}
                 index={index}
@@ -40,14 +40,14 @@ export default function CategoryList() {
             horizontal={false}
           />
         )}
-        {/* TODO Remder skeletons */}
+        {/* TODO Render skeletons */}
         {loading && <Text>loading</Text>}
       </View>
     </View>
   );
 }
 
-function RenderCategoryItemWrapper({
+function RenderCategoryItem({
   navigation,
   item,
   index,
@@ -66,47 +66,26 @@ function RenderCategoryItemWrapper({
           },
         });
       }}
-      style={styles.categoryItem}>
-      <RenderCategoryItem item={item} index={index} />
+      style={styles.categoryItemContainer}>
+      <ImageBackground
+        source={{
+          uri:
+            index === 0
+              ? 'https://images.unsplash.com/photo-1608506375591-b90e1f955e4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80'
+              : 'https://plus.unsplash.com/premium_photo-1661909961389-7d501737abde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2059&q=80',
+        }}
+        resizeMode="cover"
+        style={[styles.categoryItem]}>
+        <View style={styles.overlay} />
+        <Text style={styles.categoryItemTitle}>{item.name.ka}</Text>
+      </ImageBackground>
     </Pressable>
-  );
-}
-
-function RenderCategoryItem({item, index}: {item: Category; index: number}) {
-  return (
-    <ImageBackground
-      source={{
-        uri:
-          index === 0
-            ? 'https://images.unsplash.com/photo-1608506375591-b90e1f955e4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80'
-            : 'https://plus.unsplash.com/premium_photo-1661909961389-7d501737abde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2059&q=80',
-      }}
-      resizeMode="cover"
-      style={[styles.categoryItemWrapper]}>
-      <View style={styles.overlay} />
-      {/* <CategoryImage item={item} style={styles.categoryItemImage} /> */}
-      <Text style={styles.categoryItemTitle}>{item.name.ka}</Text>
-      {/* <View
-        style={[
-          styles.categorySelectWrapper,
-          {
-            backgroundColor: colors.primary,
-          },
-        ]}>
-        <Feather
-          name="chevron-right"
-          size={8}
-          style={styles.categorySelectIcon}
-          color={colors.white}
-        />
-      </View> */}
-    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   categoriesWrapper: {
-    marginTop: 30,
+    marginTop: 0,
   },
   categoriesTitle: {
     fontSize: 16,
@@ -120,7 +99,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     paddingHorizontal: 15,
   },
-  categoryItemWrapper: {
+  categoryItem: {
     width: '100%',
     borderRadius: 20,
     overflow: 'hidden',
@@ -151,7 +130,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
     opacity: 0.7,
   },
-  categoryItem: {
+  categoryItemContainer: {
     width: '100%',
   },
   categoryItemTitle: {

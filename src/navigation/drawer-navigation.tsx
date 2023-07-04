@@ -8,7 +8,7 @@ import {
 import {Text} from 'react-native';
 import Expenses from '../screens/(drawer)/expences';
 import NotificationScreen from '../screens/(drawer)/notifications';
-import Profile from '../screens/(drawer)/profile';
+import Profile from '../screens/profile';
 import Chat from '../screens/(drawer)/chat';
 import Tabs from './tab-navigation';
 import {DrawerParamList} from './types';

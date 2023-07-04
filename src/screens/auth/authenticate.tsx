@@ -13,10 +13,8 @@ import {
 import {useForm} from 'react-hook-form';
 import {useAuth} from '../../context/auth-context';
 import {useAuthorize, useSendOtp} from '../../graphql/operations';
-import FormButton from '../../components/form/form-button';
 import {AuthStackScreenProps} from '../../navigation/types';
 import {OtpInput} from '../../components/otp-input/OtpInput';
-import {LightTheme} from '../../styles/themes';
 import {Logo} from '../../assets/SVG';
 import colors from '../../styles/colors';
 interface FormData {
@@ -53,7 +51,7 @@ function AuthenticateScreen({
 
   // TODO: need to handle and show error
   const onConfirm = async () => {
-    if (typeof phone !== 'string' || code.length !== OTP_CODE_LENGTH) {
+    if (code.length !== OTP_CODE_LENGTH) {
       console.warn('phone is not string', phone);
       return;
     }
@@ -84,11 +82,8 @@ function AuthenticateScreen({
       // TODO save refresh token
       console.log('is registered', isRegistered);
       if (isRegistered) {
-        navigation.navigate('drawer', {
-          screen: 'tabs',
-          params: {
-            screen: 'home',
-          },
+        navigation.navigate('mainTabs', {
+          screen: 'mainTabs',
         });
       } else {
         navigation.navigate('customerInfo');
@@ -99,11 +94,6 @@ function AuthenticateScreen({
   };
 
   const onResend = async () => {
-    if (typeof phone !== 'string') {
-      console.warn('phone is not string', phone);
-      return;
-    }
-
     try {
       const {data, errors} = await sendOtp({variables: {phone: phone}});
       if (data?.sendOtp) {
@@ -119,10 +109,8 @@ function AuthenticateScreen({
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
-        keyboardVerticalOffset=""
-        behavior={Platform.OS === 'ios' ? 'padding' : null}
-        style={{flex: 1}}
-        automaticallyAdjustKeyboardInsets={true}>
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={{flex: 1}}>
         <ScrollView
           keyboardShouldPersistTaps={'handled'}
           style={{paddingHorizontal: 25}}>
@@ -149,7 +137,12 @@ function AuthenticateScreen({
               {loading ? 'ვამოწმებთ...' : 'დადასტურება'}
             </Text>
           </Pressable>
-          <FormButton text="ახლიდან გაგზავნა" onPress={onResend} />
+          <Pressable
+            onPress={onResend}
+            disabled={loading}
+            style={[styles.button, {backgroundColor: colors.gray}]}>
+            <Text style={styles.buttonText}>{'ახლიდან გაგზავნა'}</Text>
+          </Pressable>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>

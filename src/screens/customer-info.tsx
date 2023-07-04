@@ -14,7 +14,6 @@ import {Language, useUpdateUser} from '../graphql/operations';
 import FormButton from '../components/form/form-button';
 import {RootStackScreenProps} from '../navigation/types';
 import {Logo} from '../assets/SVG';
-import {LightTheme} from '../styles/themes';
 import colors from '../styles/colors';
 
 interface FormData extends FieldValues {
@@ -39,7 +38,7 @@ const CustomerInfo = ({navigation}: RootStackScreenProps<'customerInfo'>) => {
     try {
       const {data, errors} = await updateUser({
         variables: {
-          input: {...formData, language: Language.Ka},
+          input: {...formData, language: Language.Ka, email: null},
         },
       });
 
@@ -52,11 +51,8 @@ const CustomerInfo = ({navigation}: RootStackScreenProps<'customerInfo'>) => {
         console.warn('data is empty : ');
         return;
       }
-      navigation.navigate('drawer', {
-        screen: 'tabs',
-        params: {
-          screen: 'home',
-        },
+      navigation.navigate('mainTabs', {
+        screen: 'home',
       });
     } catch (e) {
       console.warn(e);
@@ -66,10 +62,8 @@ const CustomerInfo = ({navigation}: RootStackScreenProps<'customerInfo'>) => {
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
-        keyboardVerticalOffset=""
-        behavior={Platform.OS === 'ios' ? 'padding' : null}
-        style={{flex: 1}}
-        automaticallyAdjustKeyboardInsets={true}>
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={{flex: 1}}>
         <ScrollView
           keyboardShouldPersistTaps={'handled'}
           style={{paddingHorizontal: 25}}>

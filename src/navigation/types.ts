@@ -55,10 +55,13 @@ export interface AuthStackParamList extends ParamListBase {
 export type AuthStackScreenProps<T extends keyof RootStackParamList> =
   NativeStackScreenProps<AuthStackParamList, T>;
 
-export type TabParamList = ParamListBase;
+export interface MainTabParamList extends ParamListBase {
+  home: undefined;
+  bookings: undefined;
+}
 
-export type AppTabStackScreenProps<T extends keyof RootStackParamList> =
-  BottomTabScreenProps<TabParamList, T>;
+export type MainTabStackScreenProps<T extends keyof RootStackParamList> =
+  BottomTabScreenProps<MainTabParamList, T>;
 
 export interface CarStackParamList extends ParamListBase {
   add: undefined;
