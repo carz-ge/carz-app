@@ -7,7 +7,7 @@ import Colors from '../../styles/colors';
 import {RootStackParamList} from '../../navigation/types';
 import {getMinProductPriceInGel} from '../../utils/price';
 import {ImageSourcePropType} from 'react-native/Libraries/Image/Image';
-
+import {FontAwesome5} from '@expo/vector-icons';
 interface ProductCarouselItemProps {
   product: Product;
   cardWidth: number;
@@ -38,7 +38,25 @@ export default function ProductCarouselItem({
           <Text style={styles.name}>{product.name.ka}</Text>
 
           {/* rating */}
+          <View
+            style={{
+              flexDirection: 'row',
+              gap: 5,
+            }}>
+            {/* minimum price */}
+            <FontAwesome5 size={20} name={'money-bill'} />
+            <Text style={{color: Colors.gray}}>{priceInGel} ლარიდან</Text>
 
+            {/* book now button */}
+          </View>
+          {/* Type & Description */}
+          {/*<Text style={styles.description} numberOfLines={2}>*/}
+          {/*  {product.description?.ka}*/}
+          {/*</Text>*/}
+          <Text>
+            {product.location?.address.street},{' '}
+            {product.location?.address.district}
+          </Text>
           {distance && (
             <View
               style={{
@@ -46,7 +64,7 @@ export default function ProductCarouselItem({
                 gap: 5,
               }}>
               <Image
-                style={{width: 20, height: 20, gap: 5}}
+                style={{width: 20, height: 20}}
                 source={
                   require('../../../assets/images/distance.png') as ImageSourcePropType
                 }
@@ -55,30 +73,6 @@ export default function ProductCarouselItem({
               <Text>{distance}</Text>
             </View>
           )}
-          <Text style={{color: Colors.primary}}>
-            {product.location?.address.street},{' '}
-            {product.location?.address.district}
-          </Text>
-          <View
-            style={{
-              flexDirection: 'row',
-            }}>
-            {/* minimum price */}
-            <Image
-              style={{width: 20, height: 20}}
-              source={
-                require('../../../assets/images/gel.png') as ImageSourcePropType
-              }
-              resizeMode="contain"
-            />
-            <Text style={{color: Colors.primary}}>{priceInGel} ლარიდან</Text>
-
-            {/* book now button */}
-          </View>
-          {/* Type & Description */}
-          {/*<Text style={styles.description} numberOfLines={2}>*/}
-          {/*  {product.description?.ka}*/}
-          {/*</Text>*/}
         </View>
       </View>
     </Pressable>

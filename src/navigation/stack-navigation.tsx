@@ -27,48 +27,54 @@ function MainRouter() {
       <StatusBar animated />
       <Stack.Navigator initialRouteName={loggedIn ? 'mainTabs' : 'auth'}>
         {/* TODO */}
-        <Stack.Screen
-          name="auth"
-          options={{headerShown: false}}
-          component={AuthStack}
-        />
-        <Stack.Screen
-          name="mainTabs"
-          options={{headerShown: false}}
-          component={MainTabsNavigation}
-        />
-        <Stack.Screen
-          name="profile"
-          options={{title: 'პროფილი'}}
-          component={Profile}
-        />
-        <Stack.Screen
-          name="customerInfo"
-          component={CustomerInfo}
-          options={{
-            title: 'შეიყვანე ინფორმაცია',
-          }}
-        />
-        <Stack.Screen
-          name="product"
-          component={ProductScreen}
-          options={{title: 'პროდუქტი'}}
-        />
-        <Stack.Screen
-          options={{headerShown: false}}
-          name="search"
-          component={SearchStack}
-        />
-        <Stack.Screen
-          name="map"
-          component={ResultMapScreen}
-          options={{headerTitle: 'რუკა', headerBackVisible: true}}
-        />
-        <Stack.Screen
-          name="carStack"
-          component={CarStack}
-          options={{headerTitle: 'ავტომობილი', headerBackVisible: true}}
-        />
+        {!loggedIn && (
+          <Stack.Screen
+            name="auth"
+            options={{headerShown: false}}
+            component={AuthStack}
+          />
+        )}
+        {loggedIn && (
+          <>
+            <Stack.Screen
+              name="mainTabs"
+              options={{headerShown: false}}
+              component={MainTabsNavigation}
+            />
+            <Stack.Screen
+              name="profile"
+              options={{title: 'პროფილი'}}
+              component={Profile}
+            />
+            <Stack.Screen
+              name="customerInfo"
+              component={CustomerInfo}
+              options={{
+                title: 'შეიყვანე ინფორმაცია',
+              }}
+            />
+            <Stack.Screen
+              name="product"
+              component={ProductScreen}
+              options={{title: 'პროდუქტი'}}
+            />
+            <Stack.Screen
+              options={{headerShown: false}}
+              name="search"
+              component={SearchStack}
+            />
+            <Stack.Screen
+              name="map"
+              component={ResultMapScreen}
+              options={{headerTitle: 'რუკა', headerBackVisible: true}}
+            />
+            <Stack.Screen
+              name="carStack"
+              component={CarStack}
+              options={{headerTitle: 'ავტომობილი', headerBackVisible: true}}
+            />
+          </>
+        )}
       </Stack.Navigator>
     </>
   );

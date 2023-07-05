@@ -33,16 +33,16 @@ export default function FilterBottomSheet({
           setSelectedDate(date);
         }}
       />
-      <CarTypePicker
-        carType={selectedCarType}
-        setCarType={carType => {
-          setSelectedCarType(carType);
-        }}
-      />
       <TimePicker
         time={selectedTime}
         setTime={time => {
           setSelectedTime(time);
+        }}
+      />
+      <CarTypePicker
+        carType={selectedCarType}
+        setCarType={carType => {
+          setSelectedCarType(carType);
         }}
       />
       <Pressable style={styles.nextButton} onPress={onPress}>

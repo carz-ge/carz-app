@@ -1,16 +1,64 @@
 import * as React from 'react';
-import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import colors from '../../styles/colors';
-import {useRef} from 'react';
+import {useRef, useState} from 'react';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import CustomBackdrop from '../cutomBackdrop/customBackdrop';
 import FilterBottomSheet from './filter/filter-bottom-sheet';
-import {CarType} from '../../graphql/operations';
+import {CarType, useListCategories} from '../../graphql/operations';
+import {CategoryMapItem} from '../category/category-map-item';
+
+interface CategoryFilterProps {
+  categoryId: string | null;
+  setCategoryId: (categoryId: string | null) => void;
+}
+
+function CategoryFilter({categoryId, setCategoryId}: CategoryFilterProps) {
+  const {data, loading, error} = useListCategories({
+    fetchPolicy: 'network-only',
+  });
+  if (loading || error) {
+    return null;
+  }
+
+  return (
+    <View>
+      {!loading && (
+        <FlatList
+          data={data?.listCategories}
+          renderItem={({item, index}) => (
+            <CategoryMapItem
+              category={item}
+              index={index}
+              isSelected={item.id === categoryId}
+              onPress={() => {
+                if (item.id === categoryId) {
+                  setCategoryId(null);
+                  return;
+                }
+                setCategoryId(item.id);
+              }}
+            />
+          )}
+          keyExtractor={item => item.id}
+          horizontal={true}
+        />
+      )}
+    </View>
+  );
+}
 
 export default function MapSearchAndFilters() {
   const filterModalRef = useRef<BottomSheetModal>(null);
-
+  const [categoryId, setCategoryId] = useState<string | null>(null);
   function openFilterBottomSheet() {
     filterModalRef.current?.present();
   }
@@ -39,10 +87,11 @@ export default function MapSearchAndFilters() {
           color={colors.primary}
         />
       </TouchableOpacity>
+      <CategoryFilter categoryId={categoryId} setCategoryId={setCategoryId} />
       <BottomSheetModal
         ref={filterModalRef}
         index={0}
-        snapPoints={['95%']}
+        snapPoints={['70%']}
         backdropComponent={CustomBackdrop}>
         <View>
           <Text style={styles.filterText}>აირჩიე</Text>
