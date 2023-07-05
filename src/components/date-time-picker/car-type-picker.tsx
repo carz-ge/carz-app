@@ -47,11 +47,21 @@ export default function CarTypePicker({carType, setCarType}: DatePickerProps) {
         backdropComponent={CustomBackdrop}>
         <View>
           <Text style={styles.calendarText}>აირჩიე მანქანის ტიპი</Text>
-          <ScrollView style={{margin: 20, padding: 20}}>
+          <ScrollView
+            style={{
+              margin: 20,
+              padding: 20,
+              marginTop: 10,
+            }}>
             {carTypes.map((car, index) => (
               <TouchableOpacity
                 key={index}
                 onPress={() => {
+                  if (carType === car.type) {
+                    setCarType(null);
+                    setIconName('car');
+                    return;
+                  }
                   setCarType(car.type);
                   setIconName(car.icon);
                 }}

@@ -53,12 +53,12 @@ export default function ProductCarouselItem({
                 resizeMode="contain"
               />
               <Text>{distance}</Text>
-              {/* address */}
-              {/*<Text style={{color: Colors.primary}}>*/}
-              {/*  {product.location?.address.district}*/}
-              {/*</Text>*/}
             </View>
           )}
+          <Text style={{color: Colors.primary}}>
+            {product.location?.address.street},{' '}
+            {product.location?.address.district}
+          </Text>
           <View
             style={{
               flexDirection: 'row',
@@ -76,9 +76,9 @@ export default function ProductCarouselItem({
             {/* book now button */}
           </View>
           {/* Type & Description */}
-          <Text style={styles.description} numberOfLines={2}>
-            {product.description?.ka}
-          </Text>
+          {/*<Text style={styles.description} numberOfLines={2}>*/}
+          {/*  {product.description?.ka}*/}
+          {/*</Text>*/}
         </View>
       </View>
     </Pressable>

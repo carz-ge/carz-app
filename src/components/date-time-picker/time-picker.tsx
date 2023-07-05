@@ -58,7 +58,13 @@ export default function TimePicker({time, setTime}: DatePickerProps) {
                   }`;
                   return (
                     <TouchableOpacity
-                      onPress={() => setTime(item)}
+                      onPress={() => {
+                        if (time === item) {
+                          setTime(null);
+                          return;
+                        }
+                        setTime(item);
+                      }}
                       key={index}
                       style={[
                         styles.timeOption,
