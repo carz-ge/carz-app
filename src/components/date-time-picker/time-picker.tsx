@@ -25,7 +25,7 @@ export default function TimePicker({time, setTime}: DatePickerProps) {
 
   return (
     <>
-      <View style={styles.reservationTime}>
+      <View>
         <Text style={styles.inputHeader}>ჯავშნის დრო</Text>
         <TouchableOpacity onPress={openTimePicker}>
           <View style={styles.input}>
@@ -131,9 +131,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 20,
     top: 20,
-  },
-  reservationTime: {
-    marginTop: 40,
   },
   timeOptionsCont: {
     marginTop: 10,

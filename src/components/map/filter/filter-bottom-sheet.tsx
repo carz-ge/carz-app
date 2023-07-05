@@ -33,16 +33,16 @@ export default function FilterBottomSheet({
           setSelectedDate(date);
         }}
       />
-      <TimePicker
-        time={selectedTime}
-        setTime={time => {
-          setSelectedTime(time);
-        }}
-      />
       <CarTypePicker
         carType={selectedCarType}
         setCarType={carType => {
           setSelectedCarType(carType);
+        }}
+      />
+      <TimePicker
+        time={selectedTime}
+        setTime={time => {
+          setSelectedTime(time);
         }}
       />
       <Pressable style={styles.nextButton} onPress={onPress}>
@@ -55,6 +55,7 @@ export default function FilterBottomSheet({
 const styles = StyleSheet.create({
   bodyCont: {
     paddingHorizontal: 20,
+    gap: 10,
   },
   nextButton: {
     backgroundColor: colors.primary,

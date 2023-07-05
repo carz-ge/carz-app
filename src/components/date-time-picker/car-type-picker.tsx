@@ -28,7 +28,7 @@ export default function CarTypePicker({carType, setCarType}: DatePickerProps) {
   return (
     <>
       <View>
-        <Text style={styles.inputHeader}>ჯავშნის თარიღი</Text>
+        <Text style={styles.inputHeader}>ავტომობილის ტიპი</Text>
         <TouchableOpacity onPress={openDatePicker}>
           <View style={styles.input}>
             <Text style={styles.inputText}>
