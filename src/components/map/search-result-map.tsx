@@ -15,6 +15,7 @@ import ProductCarouselItem from './product-carousel-item';
 import colors from '../../styles/colors';
 import {getMinProductPriceInGel} from '../../utils/price';
 import {calculateDistance} from '../../utils/map-distance';
+import MapSearchAndFilters from './search-and-filter';
 
 interface SearchResultsMapsProps {
   products: Product[];
@@ -153,6 +154,7 @@ function SearchResultMap({products}: SearchResultsMapsProps) {
           );
         })}
       </MapView>
+      <MapSearchAndFilters />
       <TouchableOpacity
         style={styles.currentLocBtn}
         onPress={goToCurrentLocation}>
@@ -191,7 +193,7 @@ const styles = StyleSheet.create({
   myLocationIcon: {width: '100%', height: '100%'},
   currentLocBtn: {
     backgroundColor: colors.white,
-    padding: 5,
+    padding: 10,
     borderRadius: 20,
     position: 'absolute',
     bottom: 135,

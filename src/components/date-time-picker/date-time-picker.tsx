@@ -24,7 +24,7 @@ export default function DateTimePicker({onNextHandler}: DateTimePickerProps) {
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
 
-  function openBot() {
+  function openDatePicker() {
     bottomSheetModalRef.current?.present();
   }
 
@@ -44,7 +44,7 @@ export default function DateTimePicker({onNextHandler}: DateTimePickerProps) {
       <View style={styles.bodyCont}>
         <View>
           <Text style={styles.inputHeader}>ჯავშნის თარიღი</Text>
-          <TouchableOpacity onPress={openBot}>
+          <TouchableOpacity onPress={openDatePicker}>
             <View style={styles.input}>
               <Text style={styles.inputText}>
                 {selectedDate || 'აირჩიე თარიღი'}
@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   timeOptionTextActive: {
-    color: '#6d29b8',
+    color: colors.primary,
   },
   nextButton: {
     backgroundColor: colors.primary,

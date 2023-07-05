@@ -15,7 +15,7 @@ import {RootStackParamList} from '../../navigation/types';
 type Props = ComponentProps<typeof Ionicons>;
 export type IconName = Props['name'];
 
-const carTypes: {type: CarType; icon: IconName}[] = [
+export const carTypes: {type: CarType; icon: IconName}[] = [
   {type: CarType.Hatchback, icon: 'ios-car-sport'},
   {type: CarType.Motorcycle, icon: 'ios-bicycle'},
   {type: CarType.Sedan, icon: 'ios-car'},

@@ -39,23 +39,26 @@ export default function ProductCarouselItem({
 
           {/* rating */}
 
-          <View
-            style={{
-              flexDirection: 'row',
-            }}>
-            <Image
-              style={{width: 20, height: 20}}
-              source={
-                require('../../../assets/images/distance.png') as ImageSourcePropType
-              }
-              resizeMode="contain"
-            />
-            <Text>{distance}</Text>
-            {/* address */}
-            {/*<Text style={{color: Colors.primary}}>*/}
-            {/*  {product.location?.address.district}*/}
-            {/*</Text>*/}
-          </View>
+          {distance && (
+            <View
+              style={{
+                flexDirection: 'row',
+                gap: 5,
+              }}>
+              <Image
+                style={{width: 20, height: 20, gap: 5}}
+                source={
+                  require('../../../assets/images/distance.png') as ImageSourcePropType
+                }
+                resizeMode="contain"
+              />
+              <Text>{distance}</Text>
+              {/* address */}
+              {/*<Text style={{color: Colors.primary}}>*/}
+              {/*  {product.location?.address.district}*/}
+              {/*</Text>*/}
+            </View>
+          )}
           <View
             style={{
               flexDirection: 'row',
