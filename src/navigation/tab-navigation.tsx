@@ -5,7 +5,7 @@ import Bookings from '../screens/bookings';
 import {MainTabParamList} from './types';
 import MapScreen from '../screens/map/map-screen';
 import {View} from 'react-native';
-import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
+import {FontAwesome5, MaterialCommunityIcons} from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
@@ -40,7 +40,7 @@ export default function MainTabsNavigation() {
                 alignItems: 'center',
                 // backgroundColor: focused ? color : 'white',
               }}>
-              <Ionicons size={28} name="location" color={color} />
+              <FontAwesome5 size={20} name={'map'} color={color} />
             </View>
           ),
           tabBarIconStyle: {},

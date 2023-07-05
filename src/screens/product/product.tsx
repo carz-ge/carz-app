@@ -11,7 +11,7 @@ import {ProductDetails, useGetProduct} from '../../graphql/operations';
 import {PackageCard} from '../../components/ProductPackage/package-car';
 import Colors from '../../styles/colors';
 import {RootStackScreenProps} from '../../navigation/types';
-// Import {PackageCard} from '../../components/ProductPackage/package-car';
+import GoBack from '../../components/go-back';
 
 export default function ProductScreen({
   route,
@@ -45,6 +45,7 @@ export default function ProductScreen({
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.scrollContainer}>
+          <GoBack />
           <View>
             {/* Product images */}
             <Image style={styles.image} source={{uri: product?.mainImage}} />

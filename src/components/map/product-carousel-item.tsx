@@ -7,7 +7,7 @@ import Colors from '../../styles/colors';
 import {RootStackParamList} from '../../navigation/types';
 import {getMinProductPriceInGel} from '../../utils/price';
 import {ImageSourcePropType} from 'react-native/Libraries/Image/Image';
-import {FontAwesome5} from '@expo/vector-icons';
+import {FontAwesome5, Ionicons} from '@expo/vector-icons';
 interface ProductCarouselItemProps {
   product: Product;
   cardWidth: number;
@@ -44,7 +44,7 @@ export default function ProductCarouselItem({
               gap: 5,
             }}>
             {/* minimum price */}
-            <FontAwesome5 size={20} name={'money-bill'} />
+            <FontAwesome5 size={15} name={'money-bill'} />
             <Text style={{color: Colors.gray}}>{priceInGel} ლარიდან</Text>
 
             {/* book now button */}
@@ -53,10 +53,19 @@ export default function ProductCarouselItem({
           {/*<Text style={styles.description} numberOfLines={2}>*/}
           {/*  {product.description?.ka}*/}
           {/*</Text>*/}
-          <Text>
-            {product.location?.address.street},{' '}
-            {product.location?.address.district}
-          </Text>
+          {product.location && (
+            <View
+              style={{
+                flexDirection: 'row',
+                gap: 5,
+              }}>
+              <Ionicons size={20} name="location" />
+              <Text>
+                {product.location.address.street},{' '}
+                {product.location.address.district}
+              </Text>
+            </View>
+          )}
           {distance && (
             <View
               style={{

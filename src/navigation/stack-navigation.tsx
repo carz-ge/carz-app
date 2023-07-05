@@ -56,7 +56,7 @@ function MainRouter() {
             <Stack.Screen
               name="product"
               component={ProductScreen}
-              options={{title: 'პროდუქტი'}}
+              options={{title: 'პროდუქტი', headerShown: false}}
             />
             <Stack.Screen
               options={{headerShown: false}}

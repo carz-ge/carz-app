@@ -7,6 +7,7 @@ export function calculateDistance(
   coordinates: Coordinates | undefined,
 ) {
   if (!location || !coordinates) {
+    console.log('No Distance', location, coordinates);
     return null;
   }
   const distance = getDistance(
