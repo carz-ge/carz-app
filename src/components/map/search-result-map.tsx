@@ -13,6 +13,7 @@ import {Product} from '../../graphql/operations';
 import CustomMarker from './custom-marker';
 import ProductCarouselItem from './product-carousel-item';
 import colors from '../../styles/colors';
+import {getMinProductPriceInGel} from '../../utils/price';
 
 interface SearchResultsMapsProps {
   products: Product[];
@@ -115,6 +116,7 @@ function SearchResultMap({products}: SearchResultsMapsProps) {
         ref={map}
         style={styles.mapView}
         provider={PROVIDER_GOOGLE}
+        // cacheEnabled={true}
         // showsTraffic
         showsUserLocation
         // followsUserLocation
@@ -129,26 +131,26 @@ function SearchResultMap({products}: SearchResultsMapsProps) {
           latitudeDelta: 0.3,
           longitudeDelta: 0.3,
         }}>
-        {products.map(place => {
-          console.log('place: ', place);
+        {products.map(product => {
+          console.log('product: ', product);
           return (
             <CustomMarker
-              key={place.id}
+              key={product.id}
               coordinate={{
-                latitude: place.location?.coordinates.lat || 47.1,
-                longitude: place.location?.coordinates.lng || 48.1,
+                latitude: product.location?.coordinates.lat || 47.1,
+                longitude: product.location?.coordinates.lng || 48.1,
               }}
-              price={10} // TODO: get price
-              isSelected={place.id === selectedPlaceId}
-              onPress={() => setSelectedPlaceId(place.id)}
+              price={getMinProductPriceInGel(product) || '10.0'} // TODO: get price
+              isSelected={product.id === selectedPlaceId}
+              onPress={() => setSelectedPlaceId(product.id)}
             />
           );
         })}
       </MapView>
       <TouchableOpacity
-        style={[styles.currentLocBtn, {backgroundColor: colors.primary}]}
+        style={styles.currentLocBtn}
         onPress={goToCurrentLocation}>
-        <MaterialIcons name="my-location" color="white" size={25} />
+        <MaterialIcons name="my-location" color={colors.primary} size={25} />
       </TouchableOpacity>
       <View style={styles.carouselListContainer}>
         <FlatList
@@ -178,9 +180,9 @@ const styles = StyleSheet.create({
   carouselListContainer: {position: 'absolute', bottom: 10},
   myLocationIcon: {width: '100%', height: '100%'},
   currentLocBtn: {
-    backgroundColor: '#000',
+    backgroundColor: colors.white,
     padding: 5,
-    borderRadius: 5,
+    borderRadius: 20,
     position: 'absolute',
     bottom: 135,
     right: 10,

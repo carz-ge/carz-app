@@ -5,40 +5,67 @@ import {NavigationProp} from '@react-navigation/core/src/types';
 import {Product} from '../../graphql/operations';
 import Colors from '../../styles/colors';
 import {RootStackParamList} from '../../navigation/types';
+import {getMinProductPriceInGel} from '../../utils/price';
+import {ImageSourcePropType} from 'react-native/Libraries/Image/Image';
 
 interface ProductCarouselItemProps {
   product: Product;
   cardWidth: number;
 }
 
-function ProductCarouselItem({product, cardWidth}: ProductCarouselItemProps) {
+export default function ProductCarouselItem({
+  product,
+  cardWidth,
+}: ProductCarouselItemProps) {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  const goToPostPage = () => {
+  const goToProductPage = () => {
     navigation.navigate('product', {productId: product.id});
   };
 
+  const priceInGel = getMinProductPriceInGel(product);
+
   return (
     <Pressable
-      onPress={goToPostPage}
+      onPress={goToProductPage}
       style={[styles.container, {width: cardWidth}]}>
       <View style={styles.innerContainer}>
         <Image style={styles.image} source={{uri: product.mainImage}} />
 
         <View style={{flex: 1, marginHorizontal: 10}}>
+          <Text style={styles.name}>{product.name.ka}</Text>
+
+          {/* rating */}
+
+          {/* address */}
+
+          {/* distance */}
+
+          <View
+            style={{
+              flexDirection: 'row',
+            }}>
+            {/* minimum price */}
+            <Image
+              style={{width: 20, height: 20}}
+              source={
+                require('../../../assets/images/gel.png') as ImageSourcePropType
+              }
+              resizeMode="contain"
+            />
+            <Text style={{color: Colors.primary}}>{priceInGel} ლარიდან</Text>
+
+            {/* book now button */}
+          </View>
           {/* Type & Description */}
           <Text style={styles.description} numberOfLines={2}>
             {product.description?.ka}
           </Text>
-
-          <Text style={styles.name}>{product.name.ka}</Text>
         </View>
       </View>
     </Pressable>
   );
 }
-
-export default ProductCarouselItem;
 
 const styles = StyleSheet.create({
   container: {

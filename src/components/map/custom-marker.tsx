@@ -7,7 +7,7 @@ interface CustomMarkerProps {
     latitude: number;
     longitude: number;
   };
-  price: number;
+  price: string;
   onPress: () => void;
   isSelected: boolean;
 }
