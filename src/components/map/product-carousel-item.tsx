@@ -11,11 +11,13 @@ import {ImageSourcePropType} from 'react-native/Libraries/Image/Image';
 interface ProductCarouselItemProps {
   product: Product;
   cardWidth: number;
+  distance: string | null;
 }
 
 export default function ProductCarouselItem({
   product,
   cardWidth,
+  distance,
 }: ProductCarouselItemProps) {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
@@ -37,10 +39,23 @@ export default function ProductCarouselItem({
 
           {/* rating */}
 
-          {/* address */}
-
-          {/* distance */}
-
+          <View
+            style={{
+              flexDirection: 'row',
+            }}>
+            <Image
+              style={{width: 20, height: 20}}
+              source={
+                require('../../../assets/images/distance.png') as ImageSourcePropType
+              }
+              resizeMode="contain"
+            />
+            <Text>{distance}</Text>
+            {/* address */}
+            {/*<Text style={{color: Colors.primary}}>*/}
+            {/*  {product.location?.address.district}*/}
+            {/*</Text>*/}
+          </View>
           <View
             style={{
               flexDirection: 'row',

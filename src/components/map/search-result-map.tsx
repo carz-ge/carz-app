@@ -3,8 +3,8 @@ import {
   FlatList,
   StyleSheet,
   TouchableOpacity,
-  View,
   useWindowDimensions,
+  View,
 } from 'react-native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {MaterialIcons} from '@expo/vector-icons';
@@ -14,10 +14,16 @@ import CustomMarker from './custom-marker';
 import ProductCarouselItem from './product-carousel-item';
 import colors from '../../styles/colors';
 import {getMinProductPriceInGel} from '../../utils/price';
+import {calculateDistance} from '../../utils/map-distance';
 
 interface SearchResultsMapsProps {
   products: Product[];
 }
+
+// const screen = Dimensions.get('window');
+// const ASPECT_RATIO = screen.width / screen.height;
+// const LATITUDE_DELTA = 0.04;
+// const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 function SearchResultMap({products}: SearchResultsMapsProps) {
   const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null);
@@ -157,7 +163,11 @@ function SearchResultMap({products}: SearchResultsMapsProps) {
           ref={flatlist}
           data={products}
           renderItem={({item}) => (
-            <ProductCarouselItem product={item} cardWidth={itemWidth} />
+            <ProductCarouselItem
+              product={item}
+              cardWidth={itemWidth}
+              distance={calculateDistance(location, item.location?.coordinates)}
+            />
           )}
           horizontal
           showsHorizontalScrollIndicator={false}
