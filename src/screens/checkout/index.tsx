@@ -5,6 +5,9 @@ import {
   Text,
   ActivityIndicator,
   TouchableOpacity,
+  Platform,
+  KeyboardAvoidingView,
+  TextInput,
 } from 'react-native';
 import React, {useState} from 'react';
 import * as Crypto from 'expo-crypto';
@@ -46,6 +49,7 @@ export default function CheckoutScreen({
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [selectedCarType, setSelectedCarType] = useState<CarType | null>(null);
+  const [plateNumber, setPlateNumber] = useState<string>('');
 
   if (loading || !data) {
     return <ActivityIndicator />;
@@ -58,11 +62,7 @@ export default function CheckoutScreen({
 
   async function onCheckoutPressed() {
     console.log('onCheckoutPressed');
-    const orderResponse: FetchResult<
-      CreateOrder,
-      Record<string, any>,
-      Record<string, any>
-    > = await createOrder({
+    const orderResponse: FetchResult<CreateOrder> = await createOrder({
       variables: {
         order: {
           idempotencyKey: idempotencyKey,
@@ -71,7 +71,7 @@ export default function CheckoutScreen({
           schedulingDay: selectedDate,
           schedulingTime: selectedTime,
           carType: selectedCarType,
-          carPlateNumber: 'AA-123-BB',
+          carPlateNumber: plateNumber,
           carId: null,
           comment: '',
         },
@@ -85,11 +85,13 @@ export default function CheckoutScreen({
   return (
     <View style={{flex: 1, paddingHorizontal: 10}}>
       <GoBack />
-      <ScrollView>
-        <View style={styles.container}>
-          <Text style={styles.label}>Checkout</Text>
-        </View>
-        <View>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={{flex: 1}}>
+        <ScrollView>
+          <View style={styles.container}>
+            <Text style={styles.label}>Checkout</Text>
+          </View>
           <DatePicker
             date={selectedDate}
             setDate={date => {
@@ -108,12 +110,61 @@ export default function CheckoutScreen({
               setSelectedCarType(carType);
             }}
           />
-        </View>
-        <View style={styles.detailsContainer}>
-          <Text style={styles.label}>{product.name.ka}</Text>
-          <Text style={styles.label}>{selectedPackage?.name.ka || ''}</Text>
-        </View>
-      </ScrollView>
+          <View style={styles.plateNumberContainer}>
+            <Text style={styles.plateNumberLabel}>მანქანის ნომერი</Text>
+            <TextInput
+              style={styles.plateNumberStyle}
+              value={plateNumber}
+              autoCapitalize={'characters'}
+              onChangeText={setPlateNumber}
+              placeholder={'AA-123-AA'}
+            />
+          </View>
+          <View style={styles.detailsContainer}>
+            {/*<Text style={styles.detailHeader}>დეტალები</Text>*/}
+            <View style={styles.detailNameAndText}>
+              <Text style={styles.label}>სერვისი:</Text>
+              <Text style={styles.label}>{product.name.ka}</Text>
+            </View>
+            <View style={styles.detailNameAndText}>
+              <Text style={styles.label}>პაკეტი:</Text>
+              <Text style={styles.label}>{selectedPackage?.name.ka || ''}</Text>
+            </View>
+            {selectedCarType && (
+              <View style={styles.detailNameAndText}>
+                <Text style={styles.label}>მანქანა:</Text>
+                <Text style={styles.label}>{selectedCarType}</Text>
+              </View>
+            )}
+            {plateNumber && (
+              <View style={styles.detailNameAndText}>
+                <Text style={styles.label}>მანქანის ნომერი:</Text>
+                <Text style={styles.label}>{plateNumber}</Text>
+              </View>
+            )}
+            {selectedDate && (
+              <View style={styles.detailNameAndText}>
+                <Text style={styles.label}>დღე:</Text>
+                <Text style={styles.label}>{selectedDate}</Text>
+              </View>
+            )}
+            {selectedTime && (
+              <View style={styles.detailNameAndText}>
+                <Text style={styles.label}>დრო:</Text>
+                <Text style={styles.label}>{selectedTime}</Text>
+              </View>
+            )}
+            <View style={styles.detailNameAndText}>
+              <Text style={styles.label}>სერვისის ფასი ადგილზე:</Text>
+              <Text style={styles.label}>{100} ლარი</Text>
+            </View>
+            <View style={styles.detailNameAndText}>
+              <Text style={styles.label}>საკომისიო:</Text>
+              <Text style={styles.label}>{2} ლარი</Text>
+            </View>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
       {selectedPackage && selectedPackage.pricesForCarTypes && (
         <View style={styles.checkoutContainer}>
           <View>
@@ -140,14 +191,42 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     alignItems: 'center',
   },
+  detailHeader: {
+    fontSize: 18,
+    color: colors.black,
+    fontFamily: 'helv-65',
+  },
   label: {
     fontSize: 16,
     color: colors.gray,
     fontFamily: 'helv-65',
   },
+  plateNumberContainer: {
+    marginVertical: 10,
+    gap: 5,
+  },
+  plateNumberStyle: {
+    backgroundColor: colors.white,
+    padding: 10,
+    borderRadius: 10,
+    borderWidth: 0.5,
+    textAlign: 'center',
+  },
+  plateNumberLabel: {
+    fontSize: 18,
+    color: colors.black,
+    fontFamily: 'helv-65',
+  },
   detailsContainer: {
     padding: 20,
+    gap: 5,
+    backgroundColor: colors.white,
+    borderRadius: 10,
+    borderWidth: 0.5,
+    borderColor: colors.grayLight,
+    justifyContent: 'center',
   },
+  detailNameAndText: {flexDirection: 'row', justifyContent: 'space-between'},
   checkoutContainer: {
     position: 'absolute',
     bottom: 1,
