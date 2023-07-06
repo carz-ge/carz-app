@@ -48,7 +48,7 @@ const setupApollo = (httpUrl: string, wsUrl: string) => {
     // Get the authentication token from local storage if it exists
     const token = await SecureStore.getItemAsync(ACCESS_TOKEN_KEY);
     // Return the headers to the context so httpLink can read them
-    console.log('apollo token', token, token ? isValidToken(token) : null);
+    // console.log('apollo token', token, token ? isValidToken(token) : null);
 
     const authHeaders = getAuthHeaders(headers as Record<string, any>, token);
 

@@ -26,7 +26,8 @@ export default function GoBack({size}: GoBackProps) {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    top: 10,
+    marginTop: 20,
+    marginLeft: 10,
     zIndex: 1,
     padding: 5,
     borderRadius: 20,

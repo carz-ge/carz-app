@@ -5,7 +5,7 @@ import Colors from '../../styles/colors';
 
 type PackageCardProps = {
   productPackage: ProductDetails;
-  onPressed: (packageId: string) => void;
+  onPressed: (packageId: string | null) => void;
   isSelected: boolean;
 };
 
@@ -15,6 +15,10 @@ export function PackageCard({
   onPressed,
 }: PackageCardProps) {
   const handlePress = () => {
+    if (isSelected) {
+      onPressed(null);
+      return;
+    }
     onPressed(productPackage.id);
   };
 

@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
+  ActivityIndicator,
   Image,
   ScrollView,
   StyleSheet,
@@ -12,11 +13,20 @@ import {PackageCard} from '../../components/ProductPackage/package-car';
 import Colors from '../../styles/colors';
 import {RootStackScreenProps} from '../../navigation/types';
 import GoBack from '../../components/go-back';
+import ProductPhotos from '../../components/product/product-photos';
+import {Ionicons} from '@expo/vector-icons';
+import {ImageSourcePropType} from 'react-native/Libraries/Image/Image';
+import {calculateDistance} from '../../utils/map-distance';
+import * as Location from 'expo-location';
+import MapView, {Marker} from 'react-native-maps';
 
 export default function ProductScreen({
   route,
 }: RootStackScreenProps<'product'>) {
   const {params} = route;
+  const [location, setLocation] = useState<Location.LocationObject | null>(
+    null,
+  );
 
   const {data, loading, error} = useGetProduct({
     variables: {
@@ -27,9 +37,19 @@ export default function ProductScreen({
   const [selectedPackageId, setSelectedPackageId] = useState<string | null>(
     null,
   );
+  useEffect(() => {
+    (async () => {
+      const {status} = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        return;
+      }
 
+      const locationPosition = await Location.getCurrentPositionAsync({});
+      setLocation(locationPosition);
+    })();
+  }, []);
   if (loading || !data) {
-    return null;
+    return <ActivityIndicator />;
   }
   const product = data.getProduct;
   console.log(JSON.stringify(product));
@@ -37,59 +57,131 @@ export default function ProductScreen({
     productPackage => productPackage.id === selectedPackageId,
   );
 
-  function selectPackage(packageId: string) {
+  function selectPackage(packageId: string | null) {
     setSelectedPackageId(packageId);
   }
 
+  const distance = calculateDistance(location, product.location?.coordinates);
+
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <View style={styles.scrollContainer}>
-          <GoBack />
-          <View>
-            {/* Product images */}
-            <Image style={styles.image} source={{uri: product?.mainImage}} />
-          </View>
+      <GoBack />
+      <ScrollView style={styles.scrollContainer}>
+        {/* Product images */}
+        <ProductPhotos images={[product?.mainImage, product?.mainImage]} />
+        <View style={styles.infoContainer}>
+          <View style={styles.details}>
+            <View>
+              {/* Product title */}
+              <Text style={styles.title}>{product?.name.ka}</Text>
+              <View style={styles.shortDetails}>
+                {/* Provider logo */}
+                <Text>
+                  by{' '}
+                  <Text style={styles.providerName}>
+                    {product?.provider.name}
+                  </Text>
+                </Text>
+                {/* Reviews */}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                  }}>
+                  <Ionicons size={20} name="star" />
+                  <Text> 4.6 (100)</Text>
+                </View>
+                {/* Location info */}
+                {product.location && (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                    }}>
+                    <Ionicons size={20} name="location" />
+                    <Text>
+                      {product.location.address.street},{' '}
+                      {product.location.address.district},{' '}
+                      {product.location.address.city}
+                    </Text>
+                  </View>
+                )}
 
-          <View>
-            {/* Product title */}
-            <Text style={styles.title}>{product?.name.ka}</Text>
-            {/* Provider logo */}
-            <Text>{product?.provider.name}</Text>
-            {product?.provider.logo && (
+                {/* Distance  */}
+                {distance && (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      gap: 1,
+                    }}>
+                    <Image
+                      style={{width: 20, height: 20}}
+                      source={
+                        require('../../../assets/images/distance.png') as ImageSourcePropType
+                      }
+                      resizeMode="contain"
+                    />
+                    <Text>{distance} - შენი ადგილმდებარეობიდან</Text>
+                  </View>
+                )}
+              </View>
+            </View>
+            {product?.mainImage && (
               <Image
                 style={styles.providerLogo}
-                source={{uri: product?.provider.logo}}
+                source={{uri: product?.mainImage}}
               />
             )}
           </View>
-
-          {/* Location info */}
-          <View>
-            <Text>
-              {product?.location?.address.street},{' '}
-              {product?.location?.address.district}
-            </Text>
-            {/* Distance  */}
+          <View style={styles.sectionsContainer}>
+            <View>
+              {/* ABOUT - descriotion */}
+              <Text style={styles.sectionsTitle}>აღწერა</Text>
+              <Text>{product?.description?.ka}</Text>
+            </View>
+            <View>
+              <Text style={styles.sectionsTitle}>პაკეტები</Text>
+              {/* Available packages */}
+              {product.packages?.map((productPackage: ProductDetails) => (
+                <PackageCard
+                  key={productPackage.id}
+                  productPackage={productPackage}
+                  onPressed={selectPackage}
+                  isSelected={productPackage.id === selectedPackageId}
+                />
+              ))}
+            </View>
+            <View>
+              {/* ABOUT - descriotion */}
+              <Text style={styles.sectionsTitle}>ლოკაცია</Text>
+              <View style={{marginHorizontal: 20}}>
+                <MapView
+                  scrollEnabled={false}
+                  style={{
+                    flex: 1,
+                    height: 250,
+                  }}
+                  initialRegion={{
+                    latitude: product?.location?.coordinates.lat || 0,
+                    longitude: product?.location?.coordinates.lng || 0,
+                    latitudeDelta: 0.002,
+                    longitudeDelta: 0.002,
+                  }}>
+                  <Marker
+                    coordinate={{
+                      latitude: product?.location?.coordinates.lat || 0,
+                      longitude: product?.location?.coordinates.lng || 0,
+                    }}
+                    title={product?.name.ka}
+                    description={product?.name.ka}
+                  />
+                </MapView>
+              </View>
+            </View>
+            <View>
+              {/* ABOUT - descriotion */}
+              <Text style={styles.sectionsTitle}>შეფასებები</Text>
+              <Text>სამრეცხაოს ჯერ არ აქვს შეფასება</Text>
+            </View>
           </View>
-
-          <View>
-            {/* Available packages */}
-            {product.packages?.map((productPackage: ProductDetails) => (
-              <PackageCard
-                key={productPackage.id}
-                productPackage={productPackage}
-                onPressed={selectPackage}
-                isSelected={productPackage.id === selectedPackageId}
-              />
-            ))}
-          </View>
-
-          {/* ABOUT - descriotion */}
-          <View>
-            <Text>{product?.description?.ka}</Text>
-          </View>
-
           {/* Product reviews */}
         </View>
         {/* Checkout Button */}
@@ -109,34 +201,48 @@ export default function ProductScreen({
 }
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1,
-    padding: 20,
-  },
-  container: {
-    flexGrow: 1,
-    padding: 20,
-  },
+  container: {},
+  scrollContainer: {},
   title: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
   },
-  image: {
-    width: 150,
-    height: 150,
-    marginBottom: 10,
+  infoContainer: {
+    padding: 10,
+  },
+  details: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   providerLogo: {
-    width: 100,
-    height: 100,
-    marginBottom: 10,
+    width: 50,
+    height: 50,
+    marginLeft: 10,
+    borderRadius: 25,
   },
+  providerName: {
+    textDecorationLine: 'underline',
+  },
+  shortDetails: {
+    gap: 2,
+    paddingVertical: 10,
+  },
+  sectionsContainer: {
+    gap: 10,
+  },
+  sectionsTitle: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+
   checkoutContainer: {
     position: 'absolute',
-    bottom: 20,
-    left: 20,
-    right: 20,
+    bottom: 1,
+    left: 10,
+    right: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
