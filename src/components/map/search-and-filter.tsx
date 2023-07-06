@@ -12,7 +12,7 @@ import colors from '../../styles/colors';
 import {useRef, useState} from 'react';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import CustomBackdrop from '../cutomBackdrop/customBackdrop';
-import FilterBottomSheet from './filter/filter-bottom-sheet';
+import FilterBottomSheetContent from './filter/filter-bottom-sheet-content';
 import {CarType, useListCategories} from '../../graphql/operations';
 import {CategoryMapItem} from '../category/category-map-item';
 
@@ -95,7 +95,9 @@ export default function MapSearchAndFilters() {
         backdropComponent={CustomBackdrop}>
         <View>
           <Text style={styles.filterText}>აირჩიე</Text>
-          <FilterBottomSheet onFinishButtonPress={onFilterButtonClicked} />
+          <FilterBottomSheetContent
+            onFinishButtonPress={onFilterButtonClicked}
+          />
         </View>
       </BottomSheetModal>
     </View>

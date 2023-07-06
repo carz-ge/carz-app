@@ -18,7 +18,10 @@ export interface RootStackParamList extends ParamListBase {
   product: {
     productId: string;
   };
-  checkout: undefined;
+  checkout: {
+    productId: string;
+    packageId: string;
+  };
 }
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =

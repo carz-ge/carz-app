@@ -24,6 +24,7 @@ import ProductMapView from './product-map-view';
 
 export default function ProductScreen({
   route,
+  navigation,
 }: RootStackScreenProps<'product'>) {
   const {params} = route;
   const [location, setLocation] = useState<Location.LocationObject | null>(
@@ -63,6 +64,16 @@ export default function ProductScreen({
     setSelectedPackageId(packageId);
   }
 
+  function onCheckoutPressed() {
+    if (!selectedPackageId) {
+      return;
+    }
+    navigation.navigate('checkout', {
+      productId: params.productId,
+      packageId: selectedPackageId,
+    });
+  }
+
   const distance = calculateDistance(location, product.location?.coordinates);
 
   return (
@@ -70,12 +81,12 @@ export default function ProductScreen({
       <GoBack />
       <ScrollView style={styles.scrollContainer}>
         {/* Product images */}
-        <ProductPhotos images={[product?.mainImage, product?.mainImage]} />
+        <ProductPhotos images={[product.mainImage, product.mainImage]} />
         <View style={styles.infoContainer}>
           <View style={styles.details}>
             <View>
               {/* Product title */}
-              <Text style={styles.title}>{product?.name.ka}</Text>
+              <Text style={styles.title}>{product.name.ka}</Text>
               <View style={styles.shortDetails}>
                 {/* Provider logo */}
                 <Text>
@@ -125,17 +136,17 @@ export default function ProductScreen({
                 )}
               </View>
             </View>
-            {product?.mainImage && (
+            {product.mainImage && (
               <Image
                 style={styles.providerLogo}
-                source={{uri: product?.mainImage}}
+                source={{uri: product.mainImage}}
               />
             )}
           </View>
           <View style={styles.sectionsContainer}>
             <View>
               <Text style={styles.sectionsTitle}>აღწერა</Text>
-              <Text>{product?.description?.ka}</Text>
+              <Text>{product.description?.ka}</Text>
             </View>
             <View>
               <Text style={styles.sectionsTitle}>პაკეტები</Text>
@@ -152,9 +163,9 @@ export default function ProductScreen({
             <View>
               <Text style={styles.sectionsTitle}>ლოკაცია</Text>
               <ProductMapView
-                name={product?.name.ka}
-                lat={product?.location?.coordinates.lat || 0}
-                lng={product?.location?.coordinates.lng || 0}
+                name={product.name.ka}
+                lat={product.location?.coordinates.lat || 0}
+                lng={product.location?.coordinates.lng || 0}
               />
             </View>
             <View>
@@ -175,8 +186,10 @@ export default function ProductScreen({
             </Text>
             <Text>{selectedPackage.name.ka}</Text>
           </View>
-          <TouchableOpacity style={styles.checkoutButton}>
-            <Text style={styles.checkoutButtonText}>Checkout</Text>
+          <TouchableOpacity
+            style={styles.checkoutButton}
+            onPress={onCheckoutPressed}>
+            <Text style={styles.checkoutButtonText}>შემდეგი</Text>
           </TouchableOpacity>
         </View>
       )}

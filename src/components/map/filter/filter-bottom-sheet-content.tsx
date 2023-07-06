@@ -14,7 +14,7 @@ interface FilterBottomSheetProps {
   ) => void;
 }
 
-export default function FilterBottomSheet({
+export default function FilterBottomSheetContent({
   onFinishButtonPress,
 }: FilterBottomSheetProps) {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
