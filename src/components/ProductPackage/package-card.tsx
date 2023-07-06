@@ -1,32 +1,46 @@
-import React from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import React, {useRef} from 'react';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {ProductDetails} from '../../graphql/operations';
 import Colors from '../../styles/colors';
-import {FontAwesome5, Ionicons} from '@expo/vector-icons';
+import {Feather, FontAwesome5, Ionicons} from '@expo/vector-icons';
 import {getPriceRangeForPackage} from '../../utils/price';
+import {BottomSheetModal} from '@gorhom/bottom-sheet';
+import CustomBackdrop from '../cutomBackdrop/customBackdrop';
+import PackageInfo from './package-details';
 
 type PackageCardProps = {
   productPackage: ProductDetails;
-  onPressed: (packageId: string | null) => void;
+  onPackageSelected: (packageId: string | null) => void;
   isSelected: boolean;
 };
 
 export function PackageCard({
   productPackage,
   isSelected,
-  onPressed,
+  onPackageSelected,
 }: PackageCardProps) {
+  const infoModalRef = useRef<BottomSheetModal>(null);
+
   const handlePress = () => {
     if (isSelected) {
-      onPressed(null);
+      onPackageSelected(null);
       return;
     }
-    onPressed(productPackage.id);
+    onPackageSelected(productPackage.id);
   };
   const priceInGel = getPriceRangeForPackage(
     productPackage.pricesForCarTypes || [],
   );
 
+  function handleWhatsIncludedPress() {
+    infoModalRef.current?.present();
+  }
   return (
     <View
       style={[styles.packageCard, isSelected && styles.packageCardSelected]}>
@@ -43,7 +57,9 @@ export function PackageCard({
           <Text>{productPackage.averageDurationMinutes} წთ</Text>
         </View>
         {/* Additional Details */}
-        <Text style={styles.whatsIncluded}>რას მოიცავს სერვისი?</Text>
+        <Pressable onPress={handleWhatsIncludedPress}>
+          <Text style={styles.whatsIncluded}>რას მოიცავს სერვისი?</Text>
+        </Pressable>
       </View>
 
       <View style={{flexDirection: 'column', width: 150}}>
@@ -57,7 +73,7 @@ export function PackageCard({
               padding: 2,
               borderRadius: 5,
             }}>
-            <FontAwesome5 size={15} name={'check'} />
+            <Feather size={15} color={'green'} name={'check-circle'} />
             <Text>დამატებულია</Text>
           </View>
         ) : (
@@ -73,15 +89,19 @@ export function PackageCard({
         )}
 
         {/* book now button */}
-        <Pressable
-          style={styles.selectButton}
-          onPress={handlePress}
-          android_ripple={{color: 'lightgray'}}>
+        <TouchableOpacity style={styles.selectButton} onPress={handlePress}>
           <Text style={styles.selectButtonText}>
             {isSelected ? 'წაშლა' : 'არჩევა'}
           </Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
+      <BottomSheetModal
+        ref={infoModalRef}
+        index={0}
+        snapPoints={['40%', '70%']}
+        backdropComponent={CustomBackdrop}>
+        <PackageInfo productPackage={productPackage} />
+      </BottomSheetModal>
     </View>
   );
 }
@@ -121,5 +141,9 @@ const styles = StyleSheet.create({
   },
   whatsIncluded: {
     textDecorationLine: 'underline',
+  },
+  infoModalHeader: {
+    textAlign: 'center',
+    fontSize: 15,
   },
 });

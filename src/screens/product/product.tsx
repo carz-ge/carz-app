@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import {ProductDetails, useGetProduct} from '../../graphql/operations';
-import {PackageCard} from '../../components/ProductPackage/package-car';
+import {PackageCard} from '../../components/ProductPackage/package-card';
 import Colors from '../../styles/colors';
 import {RootStackScreenProps} from '../../navigation/types';
 import GoBack from '../../components/go-back';
@@ -146,7 +146,7 @@ export default function ProductScreen({
                 <PackageCard
                   key={productPackage.id}
                   productPackage={productPackage}
-                  onPressed={selectPackage}
+                  onPackageSelected={selectPackage}
                   isSelected={productPackage.id === selectedPackageId}
                 />
               ))}
