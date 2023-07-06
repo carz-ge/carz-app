@@ -12,6 +12,7 @@ import CarStack from './stacks/car-stack';
 import SplashScreen from '../screens/splash';
 import MainTabsNavigation from './tab-navigation';
 import Profile from '../screens/profile';
+import CheckoutScreen from '../screens/checkout';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -26,7 +27,6 @@ function MainRouter() {
     <>
       <StatusBar animated />
       <Stack.Navigator initialRouteName={loggedIn ? 'mainTabs' : 'auth'}>
-        {/* TODO */}
         {!loggedIn && (
           <Stack.Screen
             name="auth"
@@ -57,6 +57,11 @@ function MainRouter() {
               name="product"
               component={ProductScreen}
               options={{title: 'პროდუქტი', headerShown: false}}
+            />
+            <Stack.Screen
+              name="checkout"
+              component={CheckoutScreen}
+              options={{title: 'გადახდა', headerShown: false}}
             />
             <Stack.Screen
               options={{headerShown: false}}

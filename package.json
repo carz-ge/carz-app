@@ -118,7 +118,7 @@
   },
   "private": true,
   "lint-staged": {
-    "*.{ts,tsx}": "eslint --cache --fix"
+    "*.{ts,tsx}": "npm run lint"
   },
   "husky": {
     "hooks": {

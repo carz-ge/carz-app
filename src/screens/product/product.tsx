@@ -18,9 +18,9 @@ import {Ionicons} from '@expo/vector-icons';
 import {ImageSourcePropType} from 'react-native/Libraries/Image/Image';
 import {calculateDistance} from '../../utils/map-distance';
 import * as Location from 'expo-location';
-import MapView, {Marker} from 'react-native-maps';
 import {getPriceRangeForPackage} from '../../utils/price';
 import colors from '../../styles/colors';
+import ProductMapView from './product-map-view';
 
 export default function ProductScreen({
   route,
@@ -84,7 +84,6 @@ export default function ProductScreen({
                     {product?.provider.name}
                   </Text>
                 </Text>
-                {/* Reviews */}
                 <View
                   style={{
                     flexDirection: 'row',
@@ -135,7 +134,6 @@ export default function ProductScreen({
           </View>
           <View style={styles.sectionsContainer}>
             <View>
-              {/* ABOUT - descriotion */}
               <Text style={styles.sectionsTitle}>აღწერა</Text>
               <Text>{product?.description?.ka}</Text>
             </View>
@@ -152,34 +150,14 @@ export default function ProductScreen({
               ))}
             </View>
             <View>
-              {/* ABOUT - descriotion */}
               <Text style={styles.sectionsTitle}>ლოკაცია</Text>
-              <View style={{marginHorizontal: 20}}>
-                <MapView
-                  scrollEnabled={false}
-                  style={{
-                    flex: 1,
-                    height: 250,
-                  }}
-                  initialRegion={{
-                    latitude: product?.location?.coordinates.lat || 0,
-                    longitude: product?.location?.coordinates.lng || 0,
-                    latitudeDelta: 0.002,
-                    longitudeDelta: 0.002,
-                  }}>
-                  <Marker
-                    coordinate={{
-                      latitude: product?.location?.coordinates.lat || 0,
-                      longitude: product?.location?.coordinates.lng || 0,
-                    }}
-                    title={product?.name.ka}
-                    description={product?.name.ka}
-                  />
-                </MapView>
-              </View>
+              <ProductMapView
+                name={product?.name.ka}
+                lat={product?.location?.coordinates.lat || 0}
+                lng={product?.location?.coordinates.lng || 0}
+              />
             </View>
             <View>
-              {/* ABOUT - descriotion */}
               <Text style={styles.sectionsTitle}>შეფასებები</Text>
               <Text>სამრეცხაოს ჯერ არ აქვს შეფასება</Text>
             </View>

@@ -65,24 +65,12 @@ export function PackageCard({
       <View style={{flexDirection: 'column', width: 150}}>
         {/* minimum price */}
         {isSelected ? (
-          <View
-            style={{
-              flexDirection: 'row',
-              gap: 5,
-              backgroundColor: '#E0FEF2',
-              padding: 2,
-              borderRadius: 5,
-            }}>
+          <View style={styles.selectedTextComponent}>
             <Feather size={15} color={'green'} name={'check-circle'} />
             <Text>დამატებულია</Text>
           </View>
         ) : (
-          <View
-            style={{
-              flexDirection: 'row',
-              padding: 2,
-              gap: 5,
-            }}>
+          <View style={styles.priceTextComponent}>
             <FontAwesome5 size={15} name={'money-bill'} />
             <Text>{priceInGel} ლარი</Text>
           </View>
@@ -145,5 +133,21 @@ const styles = StyleSheet.create({
   infoModalHeader: {
     textAlign: 'center',
     fontSize: 15,
+  },
+  selectedTextComponent: {
+    flexDirection: 'row',
+    gap: 5,
+    backgroundColor: '#E0FEF2',
+    padding: 2,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  priceTextComponent: {
+    flexDirection: 'row',
+    padding: 2,
+    gap: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
