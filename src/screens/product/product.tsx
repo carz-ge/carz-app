@@ -19,6 +19,8 @@ import {ImageSourcePropType} from 'react-native/Libraries/Image/Image';
 import {calculateDistance} from '../../utils/map-distance';
 import * as Location from 'expo-location';
 import MapView, {Marker} from 'react-native-maps';
+import {getPriceRangeForPackage} from '../../utils/price';
+import colors from '../../styles/colors';
 
 export default function ProductScreen({
   route,
@@ -188,9 +190,13 @@ export default function ProductScreen({
       </ScrollView>
       {selectedPackage && selectedPackage.pricesForCarTypes && (
         <View style={styles.checkoutContainer}>
-          <Text style={styles.priceText}>
-            {selectedPackage.pricesForCarTypes[0]?.price} GEL
-          </Text>
+          <View>
+            <Text style={styles.priceText}>
+              {getPriceRangeForPackage(selectedPackage.pricesForCarTypes || [])}{' '}
+              GEL
+            </Text>
+            <Text>{selectedPackage.name.ka}</Text>
+          </View>
           <TouchableOpacity style={styles.checkoutButton}>
             <Text style={styles.checkoutButtonText}>Checkout</Text>
           </TouchableOpacity>
@@ -241,14 +247,14 @@ const styles = StyleSheet.create({
   checkoutContainer: {
     position: 'absolute',
     bottom: 1,
-    left: 10,
-    right: 10,
+    left: 0,
+    right: 0,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: 'lightgray',
+    backgroundColor: colors.white,
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
   },
   priceText: {
     fontSize: 18,
@@ -258,6 +264,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     padding: 10,
     borderRadius: 5,
+    alignItems: 'center',
+    width: 100,
   },
   checkoutButtonText: {
     color: 'white',

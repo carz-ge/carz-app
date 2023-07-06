@@ -1,4 +1,4 @@
-import {Product} from '../graphql/operations';
+import {Product, ProductDetailsCarPrice} from '../graphql/operations';
 
 export function calculateMinPrice(product: Product): number | null {
   return (
@@ -35,4 +35,40 @@ export function convertPriceIntoGel(price: number): string {
 export function getMinProductPriceInGel(product: Product) {
   const minPrice = calculateMinPrice(product);
   return minPrice ? convertPriceIntoGel(minPrice) : null;
+}
+
+export function getMinAndMaxPackagePriceInGel(
+  carsAndPrices: ProductDetailsCarPrice[],
+): {min: number | null; max: number | null} {
+  let min: number | null = null;
+  let max: number | null = null;
+
+  carsAndPrices.forEach(carAndPrice => {
+    if (carAndPrice.price) {
+      if (min === null || carAndPrice.price < min) {
+        min = carAndPrice.price;
+      }
+      if (max === null || carAndPrice.price > max) {
+        max = carAndPrice.price;
+      }
+    }
+  });
+  return {
+    min,
+    max,
+  };
+}
+
+export function getPriceRangeForPackage(
+  packages: ProductDetailsCarPrice[],
+): string | null {
+  const {min, max} = getMinAndMaxPackagePriceInGel(packages);
+  if (!min || !max) {
+    return null;
+  }
+  if (min === max) {
+    return convertPriceIntoGel(min);
+  }
+
+  return `${convertPriceIntoGel(min)} - ${convertPriceIntoGel(max)}`;
 }
