@@ -1,15 +1,15 @@
 mutation createOrder($order: OrderInput!){
     createOrder(order: $order){
         id
-        userId
+        idempotencyKey
+        redirectLink
+        totalPrice
+        productId
         categoryId
+        packageId
         providerId
-        products{
-            productId
-            quantity
-            schedulingDate
-            schedulingTime
-        }
+        schedulingDay
+        schedulingTime
         orderStatus
     }
 }

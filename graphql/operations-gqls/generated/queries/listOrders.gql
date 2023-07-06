@@ -4,12 +4,10 @@ query listOrders{
         userId
         categoryId
         providerId
-        products{
-            productId
-            quantity
-            schedulingDate
-            schedulingTime
-        }
+        productId
+        packageId
+        schedulingDay
+        schedulingTime
         orderStatus
     }
 }

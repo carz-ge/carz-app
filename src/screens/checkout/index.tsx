@@ -6,16 +6,23 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
-import colors from '../../styles/colors';
 import React, {useState} from 'react';
+import * as Crypto from 'expo-crypto';
+import colors from '../../styles/colors';
 import GoBack from '../../components/go-back';
 import {RootStackScreenProps} from '../../navigation/types';
-import {CarType, useGetProduct} from '../../graphql/operations';
+import {
+  CarType,
+  CreateOrder,
+  useCreateOrder,
+  useGetProduct,
+} from '../../graphql/operations';
 import DatePicker from '../../components/date-time-picker/date-picker';
 import TimePicker from '../../components/date-time-picker/time-picker';
 import CarTypePicker from '../../components/date-time-picker/car-type-picker';
 import {getPriceRangeForPackage} from '../../utils/price';
 import Colors from '../../styles/colors';
+import {FetchResult} from '@apollo/client';
 
 export default function CheckoutScreen({
   route,
@@ -29,6 +36,13 @@ export default function CheckoutScreen({
       productId,
     },
   });
+
+  const [createOrder, {loading: createOrderLoading, error: createOrderError}] =
+    useCreateOrder({
+      fetchPolicy: 'network-only',
+    });
+
+  const idempotencyKey = Crypto.randomUUID();
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [selectedCarType, setSelectedCarType] = useState<CarType | null>(null);
@@ -42,8 +56,31 @@ export default function CheckoutScreen({
     productPackage => productPackage.id === packageId,
   );
 
-  function onCheckoutPressed() {
+  async function onCheckoutPressed() {
     console.log('onCheckoutPressed');
+    const orderResponse: FetchResult<
+      CreateOrder,
+      Record<string, any>,
+      Record<string, any>
+    > = await createOrder({
+      variables: {
+        order: {
+          idempotencyKey: idempotencyKey,
+          productId,
+          packageId,
+          schedulingDay: selectedDate,
+          schedulingTime: selectedTime,
+          carType: selectedCarType,
+          carPlateNumber: 'AA-123-BB',
+          carId: null,
+          comment: '',
+        },
+      },
+    });
+    console.log('orderResponse', JSON.stringify(orderResponse));
+    navigation.navigate('payment', {
+      redirectUrl: orderResponse.data?.createOrder.redirectLink || '123',
+    });
   }
   return (
     <View style={{flex: 1, paddingHorizontal: 10}}>

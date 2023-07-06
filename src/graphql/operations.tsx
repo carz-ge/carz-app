@@ -1,6 +1,5 @@
 import {gql} from '@apollo/client';
 import * as Apollo from '@apollo/client';
-
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends {[key: string]: unknown}> = {[K in keyof T]: T[K]};
@@ -19,7 +18,7 @@ export type Incremental<T> =
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: {input: string | number; output: string};
+  ID: {input: string; output: string};
   String: {input: string; output: string};
   Boolean: {input: boolean; output: boolean};
   Int: {input: number; output: number};
@@ -210,7 +209,7 @@ export type Mutation = {
   checkPhoneForManger: SendOptOutput;
   confirmPreAuthorization: Maybe<Scalars['Boolean']['output']>;
   createCategory: Category;
-  createOrder: Order;
+  createOrder: OrderInitializationResponse;
   createOrderBySavedCard: OrderProcessingResponse;
   createProduct: Product;
   createProductDetails: ProductDetails;
@@ -382,18 +381,37 @@ export type Order = {
   categoryId: Scalars['ID']['output'];
   id: Scalars['ID']['output'];
   orderStatus: Maybe<OrderStatus>;
-  products: Maybe<Array<Maybe<OrderedProduct>>>;
+  packageId: Scalars['ID']['output'];
+  productId: Scalars['ID']['output'];
   providerId: Maybe<Scalars['ID']['output']>;
+  schedulingDay: Maybe<Scalars['String']['output']>;
+  schedulingTime: Maybe<Scalars['String']['output']>;
   userId: Scalars['ID']['output'];
+};
+
+export type OrderInitializationResponse = {
+  __typename?: 'OrderInitializationResponse';
+  categoryId: Scalars['ID']['output'];
+  id: Scalars['ID']['output'];
+  idempotencyKey: Scalars['String']['output'];
+  orderStatus: Maybe<OrderStatus>;
+  packageId: Scalars['ID']['output'];
+  productId: Scalars['ID']['output'];
+  providerId: Scalars['ID']['output'];
+  redirectLink: Scalars['String']['output'];
+  schedulingDay: Maybe<Scalars['String']['output']>;
+  schedulingTime: Maybe<Scalars['String']['output']>;
+  totalPrice: Scalars['Int']['output'];
 };
 
 export type OrderInput = {
   carId: InputMaybe<Scalars['ID']['input']>;
   carPlateNumber: InputMaybe<Scalars['String']['input']>;
   carType: InputMaybe<CarType>;
-  categoryId: Scalars['ID']['input'];
+  comment: InputMaybe<Scalars['String']['input']>;
   idempotencyKey: Scalars['String']['input'];
-  packages: Array<OrderedProductInput>;
+  packageId: Scalars['ID']['input'];
+  productId: Scalars['ID']['input'];
   schedulingDay: InputMaybe<Scalars['String']['input']>;
   schedulingTime: InputMaybe<Scalars['String']['input']>;
 };
@@ -408,6 +426,7 @@ export type OrderProcessingResponse = {
 export enum OrderStatus {
   Cancelled = 'CANCELLED',
   Delivered = 'DELIVERED',
+  Failed = 'FAILED',
   New = 'NEW',
   Processing = 'PROCESSING',
   Reimbursed = 'REIMBURSED',
@@ -417,14 +436,14 @@ export enum OrderStatus {
 
 export type OrderedProduct = {
   __typename?: 'OrderedProduct';
+  packageId: Scalars['ID']['output'];
   productId: Scalars['ID']['output'];
-  quantity: Maybe<Scalars['Int']['output']>;
-  schedulingDate: Maybe<Scalars['String']['output']>;
+  schedulingDay: Maybe<Scalars['String']['output']>;
   schedulingTime: Maybe<Scalars['String']['output']>;
 };
 
 export type OrderedProductInput = {
-  productDetailsId: Scalars['ID']['input'];
+  packageId: Scalars['ID']['input'];
   productId: Scalars['ID']['input'];
   schedulingDay: InputMaybe<Scalars['String']['input']>;
   schedulingTime: InputMaybe<Scalars['String']['input']>;
@@ -539,7 +558,6 @@ export type Query = {
   listCategories: Array<Category>;
   listChatMessages: Array<ChatMessage>;
   listOrders: Array<Order>;
-  listOrdersByUserId: Array<Order>;
   listProductByCategoryId: Array<Product>;
   listProductByProviderId: Array<Product>;
   listProductDetailsByProductId: Array<ProductDetails>;
@@ -582,10 +600,6 @@ export type QueryGetProductArgs = {
 };
 
 export type QueryGetUserByIdArgs = {
-  userId: Scalars['ID']['input'];
-};
-
-export type QueryListOrdersByUserIdArgs = {
   userId: Scalars['ID']['input'];
 };
 
@@ -789,19 +803,18 @@ export type CreateOrderVariables = Exact<{
 export type CreateOrder = {
   __typename?: 'Mutation';
   createOrder: {
-    __typename?: 'Order';
+    __typename?: 'OrderInitializationResponse';
     id: string;
-    userId: string;
+    idempotencyKey: string;
+    redirectLink: string;
+    totalPrice: number;
+    productId: string;
     categoryId: string;
-    providerId: string | null;
+    packageId: string;
+    providerId: string;
+    schedulingDay: string | null;
+    schedulingTime: string | null;
     orderStatus: OrderStatus | null;
-    products: Array<{
-      __typename?: 'OrderedProduct';
-      productId: string;
-      quantity: number | null;
-      schedulingDate: string | null;
-      schedulingTime: string | null;
-    } | null> | null;
   };
 };
 
@@ -1326,14 +1339,11 @@ export type GetOrder = {
     userId: string;
     categoryId: string;
     providerId: string | null;
+    productId: string;
+    packageId: string;
+    schedulingDay: string | null;
+    schedulingTime: string | null;
     orderStatus: OrderStatus | null;
-    products: Array<{
-      __typename?: 'OrderedProduct';
-      productId: string;
-      quantity: number | null;
-      schedulingDate: string | null;
-      schedulingTime: string | null;
-    } | null> | null;
   };
 };
 
@@ -1493,37 +1503,11 @@ export type ListOrders = {
     userId: string;
     categoryId: string;
     providerId: string | null;
+    productId: string;
+    packageId: string;
+    schedulingDay: string | null;
+    schedulingTime: string | null;
     orderStatus: OrderStatus | null;
-    products: Array<{
-      __typename?: 'OrderedProduct';
-      productId: string;
-      quantity: number | null;
-      schedulingDate: string | null;
-      schedulingTime: string | null;
-    } | null> | null;
-  }>;
-};
-
-export type ListOrdersByUserIdVariables = Exact<{
-  userId: Scalars['ID']['input'];
-}>;
-
-export type ListOrdersByUserId = {
-  __typename?: 'Query';
-  listOrdersByUserId: Array<{
-    __typename?: 'Order';
-    id: string;
-    userId: string;
-    categoryId: string;
-    providerId: string | null;
-    orderStatus: OrderStatus | null;
-    products: Array<{
-      __typename?: 'OrderedProduct';
-      productId: string;
-      quantity: number | null;
-      schedulingDate: string | null;
-      schedulingTime: string | null;
-    } | null> | null;
   }>;
 };
 
@@ -2213,15 +2197,15 @@ export const CreateOrderDocument = gql`
   mutation createOrder($order: OrderInput!) {
     createOrder(order: $order) {
       id
-      userId
+      idempotencyKey
+      redirectLink
+      totalPrice
+      productId
       categoryId
+      packageId
       providerId
-      products {
-        productId
-        quantity
-        schedulingDate
-        schedulingTime
-      }
+      schedulingDay
+      schedulingTime
       orderStatus
     }
   }
@@ -4011,12 +3995,10 @@ export const GetOrderDocument = gql`
       userId
       categoryId
       providerId
-      products {
-        productId
-        quantity
-        schedulingDate
-        schedulingTime
-      }
+      productId
+      packageId
+      schedulingDay
+      schedulingTime
       orderStatus
     }
   }
@@ -4471,12 +4453,10 @@ export const ListOrdersDocument = gql`
       userId
       categoryId
       providerId
-      products {
-        productId
-        quantity
-        schedulingDate
-        schedulingTime
-      }
+      productId
+      packageId
+      schedulingDay
+      schedulingTime
       orderStatus
     }
   }
@@ -4522,74 +4502,6 @@ export type ListOrdersLazyQueryHookResult = ReturnType<
 export type ListOrdersQueryResult = Apollo.QueryResult<
   ListOrders,
   ListOrdersVariables
->;
-export const ListOrdersByUserIdDocument = gql`
-  query listOrdersByUserId($userId: ID!) {
-    listOrdersByUserId(userId: $userId) {
-      id
-      userId
-      categoryId
-      providerId
-      products {
-        productId
-        quantity
-        schedulingDate
-        schedulingTime
-      }
-      orderStatus
-    }
-  }
-`;
-
-/**
- * __useListOrdersByUserId__
- *
- * To run a query within a React component, call `useListOrdersByUserId` and pass it any options that fit your needs.
- * When your component renders, `useListOrdersByUserId` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useListOrdersByUserId({
- *   variables: {
- *      userId: // value for 'userId'
- *   },
- * });
- */
-export function useListOrdersByUserId(
-  baseOptions: Apollo.QueryHookOptions<
-    ListOrdersByUserId,
-    ListOrdersByUserIdVariables
-  >,
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useQuery<ListOrdersByUserId, ListOrdersByUserIdVariables>(
-    ListOrdersByUserIdDocument,
-    options,
-  );
-}
-export function useListOrdersByUserIdLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    ListOrdersByUserId,
-    ListOrdersByUserIdVariables
-  >,
-) {
-  const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useLazyQuery<ListOrdersByUserId, ListOrdersByUserIdVariables>(
-    ListOrdersByUserIdDocument,
-    options,
-  );
-}
-export type ListOrdersByUserIdHookResult = ReturnType<
-  typeof useListOrdersByUserId
->;
-export type ListOrdersByUserIdLazyQueryHookResult = ReturnType<
-  typeof useListOrdersByUserIdLazyQuery
->;
-export type ListOrdersByUserIdQueryResult = Apollo.QueryResult<
-  ListOrdersByUserId,
-  ListOrdersByUserIdVariables
 >;
 export const ListProductByCategoryIdDocument = gql`
   query listProductByCategoryId($categoryId: ID!) {

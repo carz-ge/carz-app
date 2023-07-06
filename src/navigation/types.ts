@@ -22,6 +22,9 @@ export interface RootStackParamList extends ParamListBase {
     productId: string;
     packageId: string;
   };
+  payment: {
+    redirectUrl: string;
+  };
 }
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =

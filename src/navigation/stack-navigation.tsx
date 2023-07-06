@@ -13,6 +13,7 @@ import SplashScreen from '../screens/splash';
 import MainTabsNavigation from './tab-navigation';
 import Profile from '../screens/profile';
 import CheckoutScreen from '../screens/checkout';
+import PaymentScreen from '../screens/checkout/payment';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -61,6 +62,11 @@ function MainRouter() {
             <Stack.Screen
               name="checkout"
               component={CheckoutScreen}
+              options={{title: 'გადახდა', headerShown: false}}
+            />
+            <Stack.Screen
+              name="payment"
+              component={PaymentScreen}
               options={{title: 'გადახდა', headerShown: false}}
             />
             <Stack.Screen
