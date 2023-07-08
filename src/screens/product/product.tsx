@@ -79,7 +79,9 @@ export default function ProductScreen({
   return (
     <View style={styles.container}>
       <GoBack />
-      <ScrollView style={styles.scrollContainer}>
+      <ScrollView
+        style={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}>
         {/* Product images */}
         <ProductPhotos images={[product.mainImage, product.mainImage]} />
         <View style={styles.infoContainer}>

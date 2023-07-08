@@ -31,5 +31,5 @@ jobs:
       - name: 🚀 eas update
         run: eas update --auto
 
-      - name: 🚀 Build app
-        run: eas build --non-interactive --platform android --profile preview
+#      - name: 🚀 Build APK
+#        run: eas build --non-interactive --platform android --profile preview

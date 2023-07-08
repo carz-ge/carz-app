@@ -56,6 +56,7 @@ export default function CarTypePickerV2({
         }}
         keyExtractor={item => item.carType}
         horizontal={true}
+        showsHorizontalScrollIndicator={false}
       />
     </View>
   );
