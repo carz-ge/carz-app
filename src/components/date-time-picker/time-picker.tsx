@@ -68,6 +68,7 @@ export default function TimePicker({time, setTime}: DatePickerProps) {
                           return;
                         }
                         setTime(item);
+                        handleOnClose();
                       }}
                       key={index}
                       style={[
@@ -127,17 +128,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: colors.gray,
-    position: 'relative',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   inputText: {
     fontSize: 18,
     fontWeight: 'bold',
   },
-  inputIcon: {
-    position: 'absolute',
-    right: 20,
-    top: 20,
-  },
+  inputIcon: {},
   timeOptionsCont: {
     marginTop: 10,
     paddingHorizontal: 20,

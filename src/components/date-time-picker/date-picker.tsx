@@ -64,6 +64,7 @@ export default function DatePicker({date, setDate}: DatePickerProps) {
             }
             onDayPress={day => {
               setDate(day.dateString);
+              handleOnClose();
             }}
           />
           <View style={styles.buttonContainer}>
@@ -107,17 +108,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: colors.gray,
-    position: 'relative',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   inputText: {
     fontSize: 18,
     fontWeight: 'bold',
   },
-  inputIcon: {
-    position: 'absolute',
-    right: 20,
-    top: 20,
-  },
+  inputIcon: {},
   inputHeader: {
     fontSize: 18,
     fontWeight: '500',

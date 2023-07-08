@@ -104,95 +104,99 @@ export default function CheckoutScreen({
   }
 
   return (
-    <View style={{flex: 1, paddingHorizontal: 10}}>
+    <View style={{flex: 1}}>
       <GoBack />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={{flex: 1}}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.container}>
             <Text style={styles.label}>Checkout</Text>
           </View>
-          <DatePicker
-            date={selectedDate}
-            setDate={date => {
-              setSelectedDate(date);
-            }}
-          />
-          <TimePicker
-            time={selectedTime}
-            setTime={time => {
-              setSelectedTime(time);
-            }}
-          />
-          <CarTypePickerV2
-            pricesForCarTypes={selectedPackage?.pricesForCarTypes || []}
-            carType={selectedCarType}
-            setCarType={carType => {
-              setSelectedCarType(carType);
-            }}
-          />
-          <View style={styles.plateNumberContainer}>
-            <Text style={styles.plateNumberLabel}>მანქანის ნომერი</Text>
-            <TextInput
-              style={styles.plateNumberStyle}
-              value={plateNumber}
-              autoCapitalize={'characters'}
-              onChangeText={setPlateNumber}
-              placeholder={'AA-123-AA'}
+          <View style={{paddingHorizontal: 10}}>
+            <DatePicker
+              date={selectedDate}
+              setDate={date => {
+                setSelectedDate(date);
+              }}
             />
-          </View>
-          <View style={styles.detailsContainer}>
-            {/*<Text style={styles.detailHeader}>დეტალები</Text>*/}
-            <View style={styles.detailNameAndText}>
-              <Text style={styles.label}>სერვისი:</Text>
-              <Text style={styles.label}>{product.name.ka}</Text>
+            <TimePicker
+              time={selectedTime}
+              setTime={time => {
+                setSelectedTime(time);
+              }}
+            />
+            <CarTypePickerV2
+              pricesForCarTypes={selectedPackage?.pricesForCarTypes || []}
+              carType={selectedCarType}
+              setCarType={carType => {
+                setSelectedCarType(carType);
+              }}
+            />
+            <View style={styles.plateNumberContainer}>
+              <Text style={styles.plateNumberLabel}>მანქანის ნომერი</Text>
+              <TextInput
+                style={styles.plateNumberStyle}
+                value={plateNumber}
+                autoCapitalize={'characters'}
+                onChangeText={setPlateNumber}
+                placeholder={'AA-123-AA'}
+              />
             </View>
-            <View style={styles.detailNameAndText}>
-              <Text style={styles.label}>პაკეტი:</Text>
-              <Text style={styles.label}>{selectedPackage?.name.ka || ''}</Text>
-            </View>
-            {selectedCarType && (
+            <View style={styles.detailsContainer}>
+              {/*<Text style={styles.detailHeader}>დეტალები</Text>*/}
               <View style={styles.detailNameAndText}>
-                <Text style={styles.label}>მანქანა:</Text>
-                <Text style={styles.label}>{selectedCarType}</Text>
+                <Text style={styles.label}>სერვისი:</Text>
+                <Text style={styles.label}>{product.name.ka}</Text>
               </View>
-            )}
-            {plateNumber && (
               <View style={styles.detailNameAndText}>
-                <Text style={styles.label}>მანქანის ნომერი:</Text>
-                <Text style={styles.label}>{plateNumber}</Text>
-              </View>
-            )}
-            {selectedDate && (
-              <View style={styles.detailNameAndText}>
-                <Text style={styles.label}>დღე:</Text>
-                <Text style={styles.label}>{selectedDate}</Text>
-              </View>
-            )}
-            {selectedTime && (
-              <View style={styles.detailNameAndText}>
-                <Text style={styles.label}>დრო:</Text>
-                <Text style={styles.label}>{selectedTime}</Text>
-              </View>
-            )}
-            {selectedCarType && (
-              <View style={styles.detailNameAndText}>
-                <Text style={styles.label}>სერვისის ფასი ადგილზე:</Text>
+                <Text style={styles.label}>პაკეტი:</Text>
                 <Text style={styles.label}>
-                  {convertPriceIntoGel(
-                    extractPriceFromCarType(
-                      selectedPackage?.pricesForCarTypes || [],
-                      selectedCarType,
-                    ) || 0,
-                  )}{' '}
-                  ლარი
+                  {selectedPackage?.name.ka || ''}
                 </Text>
               </View>
-            )}
-            <View style={styles.detailNameAndText}>
-              <Text style={styles.label}>ჯავშნის საკომისიო:</Text>
-              <Text style={styles.label}>{2} ლარი</Text>
+              {selectedCarType && (
+                <View style={styles.detailNameAndText}>
+                  <Text style={styles.label}>მანქანა:</Text>
+                  <Text style={styles.label}>{selectedCarType}</Text>
+                </View>
+              )}
+              {plateNumber && (
+                <View style={styles.detailNameAndText}>
+                  <Text style={styles.label}>მანქანის ნომერი:</Text>
+                  <Text style={styles.label}>{plateNumber}</Text>
+                </View>
+              )}
+              {selectedDate && (
+                <View style={styles.detailNameAndText}>
+                  <Text style={styles.label}>დღე:</Text>
+                  <Text style={styles.label}>{selectedDate}</Text>
+                </View>
+              )}
+              {selectedTime && (
+                <View style={styles.detailNameAndText}>
+                  <Text style={styles.label}>დრო:</Text>
+                  <Text style={styles.label}>{selectedTime}</Text>
+                </View>
+              )}
+              {selectedCarType && (
+                <View style={styles.detailNameAndText}>
+                  <Text style={styles.label}>სერვისის ფასი ადგილზე:</Text>
+                  <Text style={styles.label}>
+                    {convertPriceIntoGel(
+                      extractPriceFromCarType(
+                        selectedPackage?.pricesForCarTypes || [],
+                        selectedCarType,
+                      ) || 0,
+                    )}{' '}
+                    ლარი
+                  </Text>
+                </View>
+              )}
+              <View style={styles.detailNameAndText}>
+                <Text style={styles.label}>ჯავშნის საკომისიო:</Text>
+                <Text style={styles.label}>{2} ლარი</Text>
+              </View>
             </View>
           </View>
         </ScrollView>
@@ -257,8 +261,12 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: colors.grayLight,
     justifyContent: 'center',
+    marginBottom: 70,
   },
-  detailNameAndText: {flexDirection: 'row', justifyContent: 'space-between'},
+  detailNameAndText: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   checkoutContainer: {
     position: 'absolute',
     bottom: 1,

@@ -76,6 +76,7 @@ export default function CarTypePicker({carType, setCarType}: DatePickerProps) {
                       return;
                     }
                     setCarType(car.type);
+                    handleOnClose();
                   }}
                   style={[
                     styles.carTypeOption,
@@ -116,16 +117,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: colors.gray,
-    position: 'relative',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   inputText: {
     fontSize: 18,
     fontWeight: 'bold',
   },
   inputIcon: {
-    position: 'absolute',
-    right: 20,
-    top: 20,
+    marginTop: -10, // TODO should be better way
   },
   carTypeOption: {
     flexDirection: 'row',
