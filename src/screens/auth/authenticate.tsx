@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -10,51 +10,42 @@ import {
   ScrollView,
   Pressable,
 } from 'react-native';
-import {useForm} from 'react-hook-form';
 import {useAuth} from '../../context/auth-context';
 import {useAuthorize, useSendOtp} from '../../graphql/operations';
 import {AuthStackScreenProps} from '../../navigation/types';
 import {OtpInput} from '../../components/otp-input/OtpInput';
 import {Logo} from '../../assets/SVG';
 import colors from '../../styles/colors';
-interface FormData {
-  code: string;
-}
+
 const OTP_CODE_LENGTH = 6;
 
 function AuthenticateScreen({
   route,
   navigation,
 }: AuthStackScreenProps<'authenticate'>) {
-  const {control, handleSubmit, setError} = useForm<FormData>({
-    defaultValues: {code: ''},
-  });
-
   const {phone, isRegistered} = route.params;
   const [code, setCode] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
   console.log('phone -> ', phone, isRegistered);
 
   const {updateAuthToken} = useAuth();
 
-  const [authenticate, {loading, error}] = useAuthorize({
+  const [authenticate, {loading, error: authenticationError}] = useAuthorize({
     fetchPolicy: 'no-cache',
   });
-
-  if (error) {
-    setError('code', error);
-  }
 
   const [sendOtp, {loading: isOtpLoading}] = useSendOtp({
     fetchPolicy: 'network-only',
   });
 
   // TODO: need to handle and show error
-  const onConfirm = async () => {
+  const onConfirm = useCallback(async () => {
     if (code.length !== OTP_CODE_LENGTH) {
       console.warn('phone is not string', phone);
       return;
     }
+    setError(null);
 
     try {
       const {data, errors} = await authenticate({
@@ -68,13 +59,13 @@ function AuthenticateScreen({
       console.log('Authenticate resp: ', JSON.stringify({data, errors}));
 
       if (errors) {
-        setError('code', new Error('დაფიქსირდა შეცდომა'));
+        setError('დაფიქსირდა შეცდომა');
         return;
       }
 
       if (!data?.authorize.accessToken) {
         console.warn('auth token is null');
-        setError('code', new Error('დაფიქსორდა შეცდომა'));
+        setError('დაფიქსორდა შეცდომა');
         return;
       }
       console.log('updateAuthToken');
@@ -89,11 +80,19 @@ function AuthenticateScreen({
         navigation.navigate('customerInfo');
       }
     } catch (e) {
-      setError('code', new Error('დაფიქსორდა შეცდომა'));
+      setError('დაფიქსორდა შეცდომა');
     }
-  };
+  }, [authenticate, code, isRegistered, navigation, phone, updateAuthToken]);
+
+  useEffect(() => {
+    if (code.length !== OTP_CODE_LENGTH) {
+      return;
+    }
+    onConfirm().catch(console.warn);
+  }, [code, onConfirm]);
 
   const onResend = async () => {
+    setError(null);
     try {
       const {data, errors} = await sendOtp({variables: {phone: phone}});
       if (data?.sendOtp) {
@@ -102,7 +101,7 @@ function AuthenticateScreen({
         console.warn('code has not been sent');
       }
     } catch (e) {
-      setError('code', e as Error);
+      setError((e as Error).message);
     }
   };
 
@@ -122,9 +121,13 @@ function AuthenticateScreen({
             numberOfDigits={OTP_CODE_LENGTH}
             focusColor="green"
             onTextChange={text => setCode(text)}
+            theme={{
+              pinCodeContainerStyle: error
+                ? {borderColor: colors.inputError}
+                : {},
+            }}
             // containerStyle={styles.container}
             // inputsContainerStyle={styles.inputsContainer}
-            // pinCodeContainerStyle={styles.pinCodeContainer}
             // pinCodeTextStyle={styles.pinCodeText}
             // focusStickStyle={styles.focusStick}
             focusStickBlinkingDuration={500}
