@@ -39,8 +39,8 @@ export default function TimePicker({time, setTime}: DatePickerProps) {
 
       <BottomSheetModal
         ref={bottomSheetModalRef}
-        index={1}
-        snapPoints={['100%', '100%']}
+        index={0}
+        snapPoints={['100%']}
         backdropComponent={CustomBackdrop}>
         <View style={styles.timePopup}>
           <View style={styles.calendarTextTimeCont}>

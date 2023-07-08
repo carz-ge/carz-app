@@ -8,19 +8,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {ProductDetails, useGetProduct} from '../../graphql/operations';
-import {PackageCard} from '../../components/ProductPackage/package-card';
+import * as Location from 'expo-location';
+import {Ionicons} from '@expo/vector-icons';
+import {useGetProduct} from '../../graphql/operations';
 import Colors from '../../styles/colors';
+import colors from '../../styles/colors';
 import {RootStackScreenProps} from '../../navigation/types';
 import GoBack from '../../components/go-back';
 import ProductPhotos from '../../components/product/product-photos';
-import {Ionicons} from '@expo/vector-icons';
 import {ImageSourcePropType} from 'react-native/Libraries/Image/Image';
 import {calculateDistance} from '../../utils/map-distance';
-import * as Location from 'expo-location';
 import {getPriceRangeForPackage} from '../../utils/price';
-import colors from '../../styles/colors';
-import ProductMapView from './product-map-view';
+import ProductMapView from '../../components/product/product-map-view';
+import AvailablePackages from '../../components/product/available-packages';
 
 export default function ProductScreen({
   route,
@@ -151,14 +151,11 @@ export default function ProductScreen({
             <View>
               <Text style={styles.sectionsTitle}>პაკეტები</Text>
               {/* Available packages */}
-              {product.packages?.map((productPackage: ProductDetails) => (
-                <PackageCard
-                  key={productPackage.id}
-                  productPackage={productPackage}
-                  onPackageSelected={selectPackage}
-                  isSelected={productPackage.id === selectedPackageId}
-                />
-              ))}
+              <AvailablePackages
+                packages={product.packages || []}
+                selectPackage={selectPackage}
+                selectedPackageId={selectedPackageId}
+              />
             </View>
             <View>
               <Text style={styles.sectionsTitle}>ლოკაცია</Text>
