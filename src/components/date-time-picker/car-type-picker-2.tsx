@@ -36,11 +36,17 @@ export default function CarTypePickerV2({
                 }
                 setCarType(item.carType);
               }}>
-              <View style={styles.input}>
+              <View
+                style={[
+                  styles.carTypeCardContainer,
+                  item.carType === carType
+                    ? {backgroundColor: colors.secondary}
+                    : {},
+                ]}>
                 <CarIconComponent size={80} />
-                <Text style={styles.inputText}>{item.carType}</Text>
+                <Text style={styles.nameText}>{item.carType}</Text>
                 {item.price && (
-                  <Text style={styles.inputText}>
+                  <Text style={styles.nameText}>
                     {convertPriceIntoGel(item.price)} ₾
                   </Text>
                 )}
@@ -60,22 +66,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
   },
-  input: {
+  carTypeCardContainer: {
     marginTop: 10,
     backgroundColor: colors.white,
     paddingHorizontal: 20,
     paddingVertical: 20,
     borderRadius: 10,
-    position: 'relative',
+    alignItems: 'center',
   },
-  inputText: {
+  nameText: {
     fontSize: 18,
     fontWeight: 'bold',
-  },
-  inputIcon: {
-    position: 'absolute',
-    right: 20,
-    top: 20,
   },
   carTypeOption: {
     flexDirection: 'row',
