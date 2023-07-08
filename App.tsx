@@ -9,6 +9,8 @@ import {client} from './src/api/graphql/client';
 import {LightTheme} from './src/styles/themes';
 import AuthContextProvider from './src/context/auth-context';
 import Navigation from './src/navigation/main-navigation';
+import {Provider} from 'react-redux';
+import store from './src/store/store';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -21,16 +23,18 @@ export default function App() {
   }
 
   return (
-    <ApolloProvider client={client}>
-      <GestureHandlerRootView style={{flex: 1}}>
-        <ThemeProvider value={LightTheme}>
-          <BottomSheetModalProvider>
-            <AuthContextProvider>
-              <Navigation />
-            </AuthContextProvider>
-          </BottomSheetModalProvider>
-        </ThemeProvider>
-      </GestureHandlerRootView>
-    </ApolloProvider>
+    <Provider store={store}>
+      <ApolloProvider client={client}>
+        <GestureHandlerRootView style={{flex: 1}}>
+          <ThemeProvider value={LightTheme}>
+            <BottomSheetModalProvider>
+              <AuthContextProvider>
+                <Navigation />
+              </AuthContextProvider>
+            </BottomSheetModalProvider>
+          </ThemeProvider>
+        </GestureHandlerRootView>
+      </ApolloProvider>
+    </Provider>
   );
 }

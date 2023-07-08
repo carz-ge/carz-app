@@ -1,10 +1,19 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {CarType} from '../../../graphql/operations';
 import colors from '../../../styles/colors';
 import DatePicker from '../../date-time-picker/date-picker';
 import TimePicker from '../../date-time-picker/time-picker';
 import CarTypePicker from '../../date-time-picker/car-type-picker';
+import {useAppDispatch, useAppSelector} from '../../../store/hooks';
+import {
+  selectCarType,
+  selectDate,
+  selectTime,
+  setSelectedCarType,
+  setSelectedDate,
+  setSelectedTime,
+} from '../../../store/slice/searchSlice';
 
 interface FilterBottomSheetProps {
   onFinishButtonPress: (
@@ -17,9 +26,10 @@ interface FilterBottomSheetProps {
 export default function FilterBottomSheetContent({
   onFinishButtonPress,
 }: FilterBottomSheetProps) {
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [selectedCarType, setSelectedCarType] = useState<CarType | null>(null);
+  const selectedDate = useAppSelector(selectDate);
+  const selectedTime = useAppSelector(selectTime);
+  const selectedCarType = useAppSelector(selectCarType);
+  const dispatch = useAppDispatch();
 
   function onPress() {
     onFinishButtonPress(selectedDate, selectedTime, selectedCarType);
@@ -30,19 +40,19 @@ export default function FilterBottomSheetContent({
       <DatePicker
         date={selectedDate}
         setDate={date => {
-          setSelectedDate(date);
+          dispatch(setSelectedDate(date));
         }}
       />
       <TimePicker
         time={selectedTime}
         setTime={time => {
-          setSelectedTime(time);
+          dispatch(setSelectedTime(time));
         }}
       />
       <CarTypePicker
         carType={selectedCarType}
         setCarType={carType => {
-          setSelectedCarType(carType);
+          dispatch(setSelectedCarType(carType));
         }}
       />
       <Pressable style={styles.nextButton} onPress={onPress}>

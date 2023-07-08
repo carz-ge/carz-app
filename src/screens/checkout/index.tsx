@@ -26,12 +26,18 @@ import {convertPriceIntoGel, getPriceRangeForPackage} from '../../utils/price';
 import Colors from '../../styles/colors';
 import {FetchResult} from '@apollo/client';
 import CarTypePickerV2 from '../../components/date-time-picker/car-type-picker-2';
+import {useAppSelector} from '../../store/hooks';
+import {
+  selectCarType,
+  selectDate,
+  selectTime,
+} from '../../store/slice/searchSlice';
 
 function extractPriceFromCarType(
   pricesForCarTypes: {carType: CarType; price: number | null}[],
   carType: CarType,
 ) {
-  const res = pricesForCarTypes.find(cp => cp.carType == carType);
+  const res = pricesForCarTypes.find(cp => cp.carType === carType);
   return res?.price || null;
 }
 
@@ -54,9 +60,15 @@ export default function CheckoutScreen({
     });
 
   const idempotencyKey = Crypto.randomUUID();
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [selectedCarType, setSelectedCarType] = useState<CarType | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string | null>(
+    useAppSelector(selectDate),
+  );
+  const [selectedTime, setSelectedTime] = useState<string | null>(
+    useAppSelector(selectTime),
+  );
+  const [selectedCarType, setSelectedCarType] = useState<CarType | null>(
+    useAppSelector(selectCarType),
+  );
   const [plateNumber, setPlateNumber] = useState<string>('');
 
   if (loading || !data) {
