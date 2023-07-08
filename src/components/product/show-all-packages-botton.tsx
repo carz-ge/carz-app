@@ -1,6 +1,6 @@
 import {ProductDetails} from '../../graphql/operations';
 import React, {useCallback, useRef} from 'react';
-import {BottomSheetModal} from '@gorhom/bottom-sheet';
+import {BottomSheetModal, BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from '../../styles/colors';
 import CustomBackdrop from '../bottom-sheet/customBackdrop';
@@ -42,7 +42,7 @@ export default function ShowAllPackagesButton({
         snapPoints={['95%']}
         backdropComponent={renderBackdrop}>
         <View style={styles.bottomSheetModalContainer}>
-          <View>
+          <BottomSheetScrollView>
             {packages.map((productPackage: ProductDetails) => (
               <PackageCard
                 key={productPackage.id}
@@ -51,7 +51,7 @@ export default function ShowAllPackagesButton({
                 isSelected={productPackage.id === selectedPackageId}
               />
             ))}
-          </View>
+          </BottomSheetScrollView>
 
           <TouchableOpacity
             onPress={() => bottomSheetModalRef.current?.close()}

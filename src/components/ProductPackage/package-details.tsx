@@ -2,6 +2,7 @@ import {ProductDetails} from '../../graphql/operations';
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {Entypo, Feather} from '@expo/vector-icons';
+import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 interface PackageInfoProps {
   productPackage: ProductDetails;
 }
@@ -28,7 +29,7 @@ function NotIncludedServiceInfo({service}: ServiceInfoProps) {
 }
 export default function PackageInfo({productPackage}: PackageInfoProps) {
   return (
-    <View>
+    <BottomSheetScrollView>
       <Text style={styles.infoModalHeader}>{productPackage.name.ka}</Text>
       <View style={{marginTop: 10, padding: 10}}>
         <Text style={styles.title}>რა შედის?</Text>
@@ -41,7 +42,7 @@ export default function PackageInfo({productPackage}: PackageInfoProps) {
           ))}
         </View>
       </View>
-    </View>
+    </BottomSheetScrollView>
   );
 }
 

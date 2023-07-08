@@ -178,6 +178,8 @@ function SearchResultMap({products}: SearchResultsMapsProps) {
           decelerationRate="fast"
           viewabilityConfig={viewConfig.current}
           onViewableItemsChanged={onViewChanged.current}
+          // pagingEnabled={true}
+          // bounces={false}
         />
       </View>
     </View>

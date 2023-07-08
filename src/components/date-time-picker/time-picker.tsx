@@ -1,12 +1,6 @@
 import React, {useCallback, useRef} from 'react';
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import {BottomSheetModal} from '@gorhom/bottom-sheet';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {BottomSheetModal, BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {Ionicons} from '@expo/vector-icons';
 import CustomBackdrop from '../bottom-sheet/customBackdrop';
 import colors from '../../styles/colors';
@@ -56,7 +50,7 @@ export default function TimePicker({time, setTime}: DatePickerProps) {
           <View style={styles.calendarTextTimeCont}>
             <Text style={styles.calendarTextTime}>აირჩიე დრო</Text>
           </View>
-          <ScrollView>
+          <BottomSheetScrollView>
             <View style={styles.timeOptionsCont}>
               {Array.from(Array(10).keys()).map((timeStamp, index) => {
                 return Array.from(Array(4).keys()).map((minute, index) => {
@@ -92,7 +86,7 @@ export default function TimePicker({time, setTime}: DatePickerProps) {
                 });
               })}
             </View>
-          </ScrollView>
+          </BottomSheetScrollView>
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.buttonSelect}>
               <Text
