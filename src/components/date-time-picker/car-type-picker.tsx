@@ -7,11 +7,11 @@ import {
   View,
 } from 'react-native';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
-import {Ionicons} from '@expo/vector-icons';
 import CustomBackdrop from '../cutomBackdrop/customBackdrop';
 import colors from '../../styles/colors';
 import {CarType} from '../../graphql/operations';
-import {carTypes, IconName} from '../car/add-car';
+import {carTypes} from '../car/add-car';
+import {CarTypeToIconMap} from '../car-type/car-types';
 
 interface DatePickerProps {
   carType: CarType | null;
@@ -19,12 +19,13 @@ interface DatePickerProps {
 }
 
 export default function CarTypePicker({carType, setCarType}: DatePickerProps) {
-  const [iconName, setIconName] = React.useState<IconName>('car');
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   function openDatePicker() {
     bottomSheetModalRef.current?.present();
   }
+  const CarIconComponent = CarTypeToIconMap[carType || CarType.Sedan];
+
   return (
     <>
       <View>
@@ -35,7 +36,7 @@ export default function CarTypePicker({carType, setCarType}: DatePickerProps) {
               {carType || 'აირჩიე მანქანის ტიპი'}
             </Text>
             <View style={styles.inputIcon}>
-              <Ionicons name={iconName} size={20} color="#000" />
+              <CarIconComponent size={40} />
             </View>
           </View>
         </TouchableOpacity>
@@ -53,26 +54,28 @@ export default function CarTypePicker({carType, setCarType}: DatePickerProps) {
               padding: 20,
               marginTop: 10,
             }}>
-            {carTypes.map((car, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => {
-                  if (carType === car.type) {
-                    setCarType(null);
-                    setIconName('car');
-                    return;
-                  }
-                  setCarType(car.type);
-                  setIconName(car.icon);
-                }}
-                style={[
-                  styles.carTypeOption,
-                  carType === car.type && styles.carTypeOptionActive,
-                ]}>
-                <Ionicons name={car.icon} size={30} style={styles.icon} />
-                <Text style={styles.buttonText}>{car.type}</Text>
-              </TouchableOpacity>
-            ))}
+            {carTypes.map((car, index) => {
+              const CarIconComponent = CarTypeToIconMap[car.type];
+
+              return (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => {
+                    if (carType === car.type) {
+                      setCarType(null);
+                      return;
+                    }
+                    setCarType(car.type);
+                  }}
+                  style={[
+                    styles.carTypeOption,
+                    carType === car.type && styles.carTypeOptionActive,
+                  ]}>
+                  <CarIconComponent size={40} />
+                  <Text style={styles.buttonText}>{car.type}</Text>
+                </TouchableOpacity>
+              );
+            })}
           </ScrollView>
 
           <View style={styles.buttonContainer}>
@@ -120,6 +123,7 @@ const styles = StyleSheet.create({
     borderColor: '#e0e0e0',
     paddingVertical: 20,
     borderRadius: 4,
+    gap: 10,
   },
   carTypeOptionActive: {
     borderColor: colors.primary,

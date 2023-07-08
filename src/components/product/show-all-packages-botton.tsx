@@ -23,9 +23,7 @@ export default function ShowAllPackagesButton({
       <TouchableOpacity
         onPress={() => bottomSheetModalRef.current?.present()}
         style={styles.showAllButton}>
-        <Text style={styles.showAllText}>
-          ნახე ყველა პაკეტი ({packages.length})
-        </Text>
+        <Text style={styles.showAllText}>ყველა პაკეტი ({packages.length})</Text>
       </TouchableOpacity>
       <BottomSheetModal
         ref={bottomSheetModalRef}

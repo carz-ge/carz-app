@@ -22,10 +22,10 @@ import {
 } from '../../graphql/operations';
 import DatePicker from '../../components/date-time-picker/date-picker';
 import TimePicker from '../../components/date-time-picker/time-picker';
-import CarTypePicker from '../../components/date-time-picker/car-type-picker';
 import {getPriceRangeForPackage} from '../../utils/price';
 import Colors from '../../styles/colors';
 import {FetchResult} from '@apollo/client';
+import CarTypePickerV2 from '../../components/date-time-picker/car-type-picker-2';
 
 export default function CheckoutScreen({
   route,
@@ -104,7 +104,8 @@ export default function CheckoutScreen({
               setSelectedTime(time);
             }}
           />
-          <CarTypePicker
+          <CarTypePickerV2
+            pricesForCarTypes={selectedPackage?.pricesForCarTypes || []}
             carType={selectedCarType}
             setCarType={carType => {
               setSelectedCarType(carType);
