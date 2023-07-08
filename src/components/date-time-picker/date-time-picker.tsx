@@ -10,7 +10,7 @@ import {
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {Ionicons} from '@expo/vector-icons';
 import {Calendar} from 'react-native-calendars';
-import CustomBackdrop from '../cutomBackdrop/customBackdrop';
+import CustomBackdrop from '../bottom-sheet/customBackdrop';
 import colors from '../../styles/colors';
 
 interface DateTimePickerProps {

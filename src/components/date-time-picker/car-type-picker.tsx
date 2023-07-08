@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useCallback, useRef} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -7,11 +7,12 @@ import {
   View,
 } from 'react-native';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
-import CustomBackdrop from '../cutomBackdrop/customBackdrop';
+import CustomBackdrop from '../bottom-sheet/customBackdrop';
 import colors from '../../styles/colors';
 import {CarType} from '../../graphql/operations';
 import {carTypes} from '../car/add-car';
 import {CarTypeToIconMap} from '../car-type/car-types';
+import {BottomSheetBackdropProps} from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop';
 
 interface DatePickerProps {
   carType: CarType | null;
@@ -25,7 +26,16 @@ export default function CarTypePicker({carType, setCarType}: DatePickerProps) {
     bottomSheetModalRef.current?.present();
   }
   const CarIconComponent = CarTypeToIconMap[carType || CarType.Sedan];
+  const handleOnClose = useCallback(() => {
+    bottomSheetModalRef.current?.close();
+  }, []);
 
+  const renderBackdrop = useCallback(
+    (props: BottomSheetBackdropProps) => (
+      <CustomBackdrop onPress={handleOnClose} {...props} />
+    ),
+    [handleOnClose],
+  );
   return (
     <>
       <View>
@@ -45,7 +55,7 @@ export default function CarTypePicker({carType, setCarType}: DatePickerProps) {
         ref={bottomSheetModalRef}
         index={0}
         snapPoints={['90%']}
-        backdropComponent={CustomBackdrop}>
+        backdropComponent={renderBackdrop}>
         <View>
           <Text style={styles.calendarText}>აირჩიე მანქანის ტიპი</Text>
           <ScrollView

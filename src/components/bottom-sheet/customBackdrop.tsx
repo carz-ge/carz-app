@@ -6,7 +6,11 @@ import Animated, {
   useAnimatedStyle,
 } from 'react-native-reanimated';
 
-function CustomBackdrop({animatedIndex, style}: BottomSheetBackdropProps) {
+interface CustomBackdropProps extends BottomSheetBackdropProps {
+  onPress?: () => void;
+}
+
+function CustomBackdrop({animatedIndex, style, onPress}: CustomBackdropProps) {
   // Animated variables
   const containerAnimatedStyle = useAnimatedStyle(() => ({
     opacity: interpolate(
@@ -29,7 +33,7 @@ function CustomBackdrop({animatedIndex, style}: BottomSheetBackdropProps) {
     [style, containerAnimatedStyle],
   );
 
-  return <Animated.View style={containerStyle} />;
+  return <Animated.View onTouchEnd={onPress} style={containerStyle} />;
 }
 
 export default CustomBackdrop;

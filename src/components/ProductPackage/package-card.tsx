@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useCallback, useRef} from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -11,8 +11,9 @@ import Colors from '../../styles/colors';
 import {Feather, FontAwesome5, Ionicons} from '@expo/vector-icons';
 import {getPriceRangeForPackage} from '../../utils/price';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
-import CustomBackdrop from '../cutomBackdrop/customBackdrop';
+import CustomBackdrop from '../bottom-sheet/customBackdrop';
 import PackageInfo from './package-details';
+import {BottomSheetBackdropProps} from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop';
 
 type PackageCardProps = {
   productPackage: ProductDetails;
@@ -41,6 +42,18 @@ export function PackageCard({
   function handleWhatsIncludedPress() {
     infoModalRef.current?.present();
   }
+
+  const handleOnClose = useCallback(() => {
+    infoModalRef.current?.close();
+  }, []);
+
+  const renderBackdrop = useCallback(
+    (props: BottomSheetBackdropProps) => (
+      <CustomBackdrop onPress={handleOnClose} {...props} />
+    ),
+    [handleOnClose],
+  );
+
   return (
     <View
       style={[styles.packageCard, isSelected && styles.packageCardSelected]}>
@@ -87,7 +100,7 @@ export function PackageCard({
         ref={infoModalRef}
         index={0}
         snapPoints={['40%', '70%']}
-        backdropComponent={CustomBackdrop}>
+        backdropComponent={renderBackdrop}>
         <PackageInfo productPackage={productPackage} />
       </BottomSheetModal>
     </View>

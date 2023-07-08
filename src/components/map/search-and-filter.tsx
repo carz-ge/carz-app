@@ -9,12 +9,13 @@ import {
 } from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import colors from '../../styles/colors';
-import {useRef, useState} from 'react';
+import {useCallback, useRef, useState} from 'react';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
-import CustomBackdrop from '../cutomBackdrop/customBackdrop';
+import CustomBackdrop from '../bottom-sheet/customBackdrop';
 import FilterBottomSheetContent from './filter/filter-bottom-sheet-content';
 import {CarType, useListCategories} from '../../graphql/operations';
 import {CategoryMapItem} from '../category/category-map-item';
+import {BottomSheetBackdropProps} from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop';
 
 interface CategoryFilterProps {
   categoryId: string | null;
@@ -76,6 +77,16 @@ export default function MapSearchAndFilters() {
     );
   }
 
+  const handleOnClose = useCallback(() => {
+    filterModalRef.current?.close();
+  }, []);
+
+  const renderBackdrop = useCallback(
+    (props: BottomSheetBackdropProps) => (
+      <CustomBackdrop onPress={handleOnClose} {...props} />
+    ),
+    [handleOnClose],
+  );
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -92,7 +103,7 @@ export default function MapSearchAndFilters() {
         ref={filterModalRef}
         index={0}
         snapPoints={['70%']}
-        backdropComponent={CustomBackdrop}>
+        backdropComponent={renderBackdrop}>
         <View>
           <Text style={styles.filterText}>აირჩიე</Text>
           <FilterBottomSheetContent

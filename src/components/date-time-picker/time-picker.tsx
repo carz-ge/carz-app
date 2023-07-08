@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useCallback, useRef} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -8,8 +8,9 @@ import {
 } from 'react-native';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {Ionicons} from '@expo/vector-icons';
-import CustomBackdrop from '../cutomBackdrop/customBackdrop';
+import CustomBackdrop from '../bottom-sheet/customBackdrop';
 import colors from '../../styles/colors';
+import {BottomSheetBackdropProps} from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop';
 
 interface DatePickerProps {
   time: string | null;
@@ -22,7 +23,16 @@ export default function TimePicker({time, setTime}: DatePickerProps) {
   function openTimePicker() {
     bottomSheetModalRef.current?.present();
   }
+  const handleOnClose = useCallback(() => {
+    bottomSheetModalRef.current?.close();
+  }, []);
 
+  const renderBackdrop = useCallback(
+    (props: BottomSheetBackdropProps) => (
+      <CustomBackdrop onPress={handleOnClose} {...props} />
+    ),
+    [handleOnClose],
+  );
   return (
     <>
       <View>
@@ -41,7 +51,7 @@ export default function TimePicker({time, setTime}: DatePickerProps) {
         ref={bottomSheetModalRef}
         index={0}
         snapPoints={['100%']}
-        backdropComponent={CustomBackdrop}>
+        backdropComponent={renderBackdrop}>
         <View style={styles.timePopup}>
           <View style={styles.calendarTextTimeCont}>
             <Text style={styles.calendarTextTime}>აირჩიე დრო</Text>

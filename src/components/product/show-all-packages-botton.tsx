@@ -1,10 +1,11 @@
 import {ProductDetails} from '../../graphql/operations';
-import React, {useRef} from 'react';
+import React, {useCallback, useRef} from 'react';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from '../../styles/colors';
-import CustomBackdrop from '../cutomBackdrop/customBackdrop';
+import CustomBackdrop from '../bottom-sheet/customBackdrop';
 import {PackageCard} from '../ProductPackage/package-card';
+import {BottomSheetBackdropProps} from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop';
 
 interface ShowAllPackagesButtonProps {
   packages: ProductDetails[];
@@ -18,6 +19,16 @@ export default function ShowAllPackagesButton({
 }: ShowAllPackagesButtonProps) {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
+  const handleOnClose = useCallback(() => {
+    bottomSheetModalRef.current?.close();
+  }, []);
+
+  const renderBackdrop = useCallback(
+    (props: BottomSheetBackdropProps) => (
+      <CustomBackdrop onPress={handleOnClose} {...props} />
+    ),
+    [handleOnClose],
+  );
   return (
     <>
       <TouchableOpacity
@@ -29,7 +40,7 @@ export default function ShowAllPackagesButton({
         ref={bottomSheetModalRef}
         index={0}
         snapPoints={['95%']}
-        backdropComponent={CustomBackdrop}>
+        backdropComponent={renderBackdrop}>
         <View style={styles.bottomSheetModalContainer}>
           <View>
             {packages.map((productPackage: ProductDetails) => (
