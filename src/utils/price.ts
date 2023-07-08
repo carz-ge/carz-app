@@ -29,7 +29,7 @@ export function calculateMinPrice(product: Product): number | null {
 }
 
 export function convertPriceIntoGel(price: number): string {
-  return `${price / 100}.${price % 100}`;
+  return `${price / 100}`;
 }
 
 export function getMinProductPriceInGel(product: Product) {

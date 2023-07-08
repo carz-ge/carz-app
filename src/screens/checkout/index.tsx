@@ -22,10 +22,18 @@ import {
 } from '../../graphql/operations';
 import DatePicker from '../../components/date-time-picker/date-picker';
 import TimePicker from '../../components/date-time-picker/time-picker';
-import {getPriceRangeForPackage} from '../../utils/price';
+import {convertPriceIntoGel, getPriceRangeForPackage} from '../../utils/price';
 import Colors from '../../styles/colors';
 import {FetchResult} from '@apollo/client';
 import CarTypePickerV2 from '../../components/date-time-picker/car-type-picker-2';
+
+function extractPriceFromCarType(
+  pricesForCarTypes: {carType: CarType; price: number | null}[],
+  carType: CarType,
+) {
+  const res = pricesForCarTypes.find(cp => cp.carType == carType);
+  return res?.price || null;
+}
 
 export default function CheckoutScreen({
   route,
@@ -82,6 +90,7 @@ export default function CheckoutScreen({
       redirectUrl: orderResponse.data?.createOrder.redirectLink || '123',
     });
   }
+
   return (
     <View style={{flex: 1, paddingHorizontal: 10}}>
       <GoBack />
@@ -155,12 +164,22 @@ export default function CheckoutScreen({
                 <Text style={styles.label}>{selectedTime}</Text>
               </View>
             )}
+            {selectedCarType && (
+              <View style={styles.detailNameAndText}>
+                <Text style={styles.label}>სერვისის ფასი ადგილზე:</Text>
+                <Text style={styles.label}>
+                  {convertPriceIntoGel(
+                    extractPriceFromCarType(
+                      selectedPackage?.pricesForCarTypes || [],
+                      selectedCarType,
+                    ) || 0,
+                  )}{' '}
+                  ლარი
+                </Text>
+              </View>
+            )}
             <View style={styles.detailNameAndText}>
-              <Text style={styles.label}>სერვისის ფასი ადგილზე:</Text>
-              <Text style={styles.label}>{100} ლარი</Text>
-            </View>
-            <View style={styles.detailNameAndText}>
-              <Text style={styles.label}>საკომისიო:</Text>
+              <Text style={styles.label}>ჯავშნის საკომისიო:</Text>
               <Text style={styles.label}>{2} ლარი</Text>
             </View>
           </View>
