@@ -1,13 +1,13 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {MainTabStackScreenProps} from '../../navigation/types';
+import {BookingsTopTabsStackScreenProps} from '../../navigation/bookings-top-tab-navigation';
 
-export default function BookingsScreen(
-  props: MainTabStackScreenProps<'bookings'>,
+export default function ActiveBookingsScreen(
+  props: BookingsTopTabsStackScreenProps<'activeBookings'>,
 ) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Bookings</Text>
+      <Text style={styles.title}>Active Bookings</Text>
     </View>
   );
 }

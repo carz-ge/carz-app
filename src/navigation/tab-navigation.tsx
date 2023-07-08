@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/home';
-import Bookings from '../screens/bookings';
 import {MainTabParamList} from './types';
 import MapScreen from '../screens/map/map-screen';
 import {View} from 'react-native';
 import {FontAwesome5, MaterialCommunityIcons} from '@expo/vector-icons';
+import BookingsTopTabs from './bookings-top-tab-navigation';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
@@ -59,7 +59,7 @@ export default function MainTabsNavigation() {
             />
           ),
         }}
-        component={Bookings}
+        component={BookingsTopTabs}
       />
     </Tab.Navigator>
   );
