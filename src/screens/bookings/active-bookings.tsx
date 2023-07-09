@@ -1,8 +1,9 @@
 import React from 'react';
-import {ActivityIndicator, FlatList, StyleSheet, View} from 'react-native';
+import {FlatList, SafeAreaView, StyleSheet} from 'react-native';
 import {BookingsTopTabsStackScreenProps} from '../../navigation/bookings-top-tab-navigation';
 import {useListOrders} from '../../graphql/operations';
 import OrderCard from '../../components/bookings/order-card';
+import CustomActivityIndicator from '../../components/activity-indicator/custom-activity-indicator';
 
 export default function ActiveBookingsScreen(
   props: BookingsTopTabsStackScreenProps<'activeBookings'>,
@@ -13,11 +14,11 @@ export default function ActiveBookingsScreen(
 
   console.log('useListOrders->', data, loading, error);
   if (loading || error) {
-    return <ActivityIndicator />;
+    return <CustomActivityIndicator />;
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {!loading && (
         <FlatList
           data={data?.listOrders}
@@ -26,7 +27,7 @@ export default function ActiveBookingsScreen(
           horizontal={false}
         />
       )}
-    </View>
+    </SafeAreaView>
   );
 }
 

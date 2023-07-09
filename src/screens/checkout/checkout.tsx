@@ -3,11 +3,11 @@ import {
   StyleSheet,
   View,
   Text,
-  ActivityIndicator,
   TouchableOpacity,
   Platform,
   KeyboardAvoidingView,
   TextInput,
+  SafeAreaView,
 } from 'react-native';
 import React, {useState} from 'react';
 import * as Crypto from 'expo-crypto';
@@ -35,6 +35,7 @@ import {
   selectTime,
 } from '../../store/slice/searchSlice';
 import CardPicker from '../../components/card/card-picker';
+import CustomActivityIndicator from '../../components/activity-indicator/custom-activity-indicator';
 
 function extractPriceFromCarType(
   pricesForCarTypes: {carType: CarType; price: number | null}[],
@@ -93,8 +94,8 @@ export default function CheckoutScreen({
   const [plateNumber, setPlateNumber] = useState<string>('');
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
 
-  if (loading || !data) {
-    return <ActivityIndicator />;
+  if (loading || !data || createOrderLoading) {
+    return <CustomActivityIndicator />;
   }
   const product = data.getProduct;
 
@@ -126,7 +127,7 @@ export default function CheckoutScreen({
   }
 
   return (
-    <View style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1}}>
       <GoBack />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -245,7 +246,7 @@ export default function CheckoutScreen({
           </TouchableOpacity>
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 }
 

@@ -6,7 +6,7 @@ import {
   createDrawerNavigator,
 } from '@react-navigation/drawer';
 import {Text} from 'react-native';
-import Profile from '../screens/profile';
+import Profile from '../screens/profile/profile';
 import Chat from '../screens/(drawer)/chat';
 import Tabs from './tab-navigation';
 import {DrawerParamList} from './types';

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
-  ActivityIndicator,
   Image,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -21,6 +21,7 @@ import {calculateDistance} from '../../utils/map-distance';
 import {getPriceRangeForPackage} from '../../utils/price';
 import ProductMapView from '../../components/product/product-map-view';
 import AvailablePackages from '../../components/product/available-packages';
+import CustomActivityIndicator from '../../components/activity-indicator/custom-activity-indicator';
 
 export default function ProductScreen({
   route,
@@ -52,7 +53,7 @@ export default function ProductScreen({
     })();
   }, []);
   if (loading || !data) {
-    return <ActivityIndicator />;
+    return <CustomActivityIndicator />;
   }
   const product = data.getProduct;
   console.log(JSON.stringify(product));
@@ -77,7 +78,7 @@ export default function ProductScreen({
   const distance = calculateDistance(location, product.location?.coordinates);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <GoBack />
       <ScrollView
         style={styles.scrollContainer}
@@ -192,7 +193,7 @@ export default function ProductScreen({
           </TouchableOpacity>
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 }
 

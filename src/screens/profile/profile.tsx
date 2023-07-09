@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Alert, Pressable, SafeAreaView, StyleSheet, Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '@react-navigation/core/src/types';
 import colors from '../../styles/colors';
@@ -25,11 +25,12 @@ export default function Profile() {
       });
   };
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {user && (
         <>
           <Text style={styles.title}>{user.firstname}</Text>
           <Text style={styles.title}>{user.lastname}</Text>
+          <Text style={styles.title}>{user.phone}</Text>
         </>
       )}
 
@@ -39,7 +40,7 @@ export default function Profile() {
         style={[styles.button, {backgroundColor: colors.buttonPrimary}]}>
         <Text style={styles.buttonText}>აპლიკაციიდან გასვლა</Text>
       </Pressable>
-    </View>
+    </SafeAreaView>
   );
 }
 

@@ -1,14 +1,14 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView, StyleSheet, Text} from 'react-native';
 import {BookingsTopTabsStackScreenProps} from '../../navigation/bookings-top-tab-navigation';
 
 export default function PastBookingsScreen(
   props: BookingsTopTabsStackScreenProps<'pastBookings'>,
 ) {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Past Bookings</Text>
-    </View>
+    </SafeAreaView>
   );
 }
 

@@ -11,9 +11,9 @@ import ResultMapScreen from '../screens/map/result';
 import CarStack from './stacks/car-stack';
 import SplashScreen from '../screens/splash';
 import MainTabsNavigation from './tab-navigation';
-import Profile from '../screens/profile';
-import CheckoutScreen from '../screens/checkout';
-import PaymentScreen from '../screens/checkout/payment';
+import Profile from '../screens/profile/profile';
+import CheckoutScreen from '../screens/checkout/checkout';
+import PaymentScreen from '../screens/payment/payment';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 

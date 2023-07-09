@@ -1,5 +1,12 @@
 import React from 'react';
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import CategoryList from '../../components/category/category-list';
 import {MainTabStackScreenProps} from '../../navigation/types';
 import ProfileIcon from '../../components/profile/profile-icon';
@@ -25,6 +32,15 @@ export default function HomeScreen({
         <View style={styles.popularWrapper}>
           <Text style={styles.popularTitle}>პოპულარული</Text>
         </View>
+        <Pressable
+          style={{margin: 10}}
+          onPress={() =>
+            navigation.navigate('payment', {
+              redirectUrl: 'https://carz.ge',
+            })
+          }>
+          <Text style={styles.popularTitle}>Test WebView</Text>
+        </Pressable>
         {/* TODO */}
       </ScrollView>
     </SafeAreaView>
