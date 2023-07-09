@@ -32,6 +32,7 @@ module.exports.createProvider = fs.readFileSync(path.join(__dirname, 'createProv
 module.exports.updateProvider = fs.readFileSync(path.join(__dirname, 'updateProvider.gql'), 'utf8');
 module.exports.removeProvider = fs.readFileSync(path.join(__dirname, 'removeProvider.gql'), 'utf8');
 module.exports.scheduleCarForService = fs.readFileSync(path.join(__dirname, 'scheduleCarForService.gql'), 'utf8');
+module.exports.addProductReview = fs.readFileSync(path.join(__dirname, 'addProductReview.gql'), 'utf8');
 module.exports.updateUser = fs.readFileSync(path.join(__dirname, 'updateUser.gql'), 'utf8');
 module.exports.removeUser = fs.readFileSync(path.join(__dirname, 'removeUser.gql'), 'utf8');
 module.exports.deactivateUser = fs.readFileSync(path.join(__dirname, 'deactivateUser.gql'), 'utf8');

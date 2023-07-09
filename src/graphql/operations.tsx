@@ -30,6 +30,12 @@ export type AddDeviceTokenInput = {
   platform: Scalars['String']['input'];
 };
 
+export type AddReviewInput = {
+  comment: InputMaybe<Scalars['String']['input']>;
+  productId: Scalars['ID']['input'];
+  stars: Scalars['Int']['input'];
+};
+
 export type Address = {
   __typename?: 'Address';
   city: Scalars['String']['output'];
@@ -218,6 +224,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   addCar: Car;
   addDeviceToken: Maybe<Scalars['Boolean']['output']>;
+  addProductReview: Maybe<Review>;
   authenticateManager: AuthenticationOutput;
   authorize: AuthenticationOutput;
   checkPhoneForManger: SendOptOutput;
@@ -259,6 +266,10 @@ export type MutationAddCarArgs = {
 
 export type MutationAddDeviceTokenArgs = {
   input: AddDeviceTokenInput;
+};
+
+export type MutationAddProductReviewArgs = {
+  input: InputMaybe<AddReviewInput>;
 };
 
 export type MutationAuthenticateManagerArgs = {
@@ -590,6 +601,7 @@ export type Query = {
   listProductByCategoryId: Array<Product>;
   listProductByProviderId: Array<Product>;
   listProductDetailsByProductId: Array<ProductDetails>;
+  listProductReviews: Array<Review>;
   listProducts: Array<Product>;
   listProviders: Array<Provider>;
   listQueue: Maybe<Array<Maybe<ScheduledTimeSlotSchema>>>;
@@ -649,12 +661,25 @@ export type QueryListProductDetailsByProductIdArgs = {
   productId: Scalars['ID']['input'];
 };
 
+export type QueryListProductReviewsArgs = {
+  productId: Scalars['ID']['input'];
+};
+
 export type QueryListQueueArgs = {
   providerId: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type QuerySearchProductsArgs = {
   filter: ProductFilterInput;
+};
+
+export type Review = {
+  __typename?: 'Review';
+  comment: Maybe<Scalars['String']['output']>;
+  createdAt: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  productId: Scalars['ID']['output'];
+  stars: Scalars['Int']['output'];
 };
 
 export type ScheduleCarForServiceInput = {
@@ -762,6 +787,22 @@ export type AddDeviceTokenVariables = Exact<{
 export type AddDeviceToken = {
   __typename?: 'Mutation';
   addDeviceToken: boolean | null;
+};
+
+export type AddProductReviewVariables = Exact<{
+  input: InputMaybe<AddReviewInput>;
+}>;
+
+export type AddProductReview = {
+  __typename?: 'Mutation';
+  addProductReview: {
+    __typename?: 'Review';
+    id: string;
+    productId: string;
+    comment: string | null;
+    stars: number;
+    createdAt: string | null;
+  } | null;
 };
 
 export type AuthenticateManagerVariables = Exact<{
@@ -1780,6 +1821,22 @@ export type ListProductDetailsByProductId = {
   }>;
 };
 
+export type ListProductReviewsVariables = Exact<{
+  productId: Scalars['ID']['input'];
+}>;
+
+export type ListProductReviews = {
+  __typename?: 'Query';
+  listProductReviews: Array<{
+    __typename?: 'Review';
+    id: string;
+    productId: string;
+    comment: string | null;
+    stars: number;
+    createdAt: string | null;
+  }>;
+};
+
 export type ListProductsVariables = Exact<{[key: string]: never}>;
 
 export type ListProducts = {
@@ -2042,6 +2099,58 @@ export type AddDeviceTokenMutationResult =
 export type AddDeviceTokenMutationOptions = Apollo.BaseMutationOptions<
   AddDeviceToken,
   AddDeviceTokenVariables
+>;
+export const AddProductReviewDocument = gql`
+  mutation addProductReview($input: AddReviewInput) {
+    addProductReview(input: $input) {
+      id
+      productId
+      comment
+      stars
+      createdAt
+    }
+  }
+`;
+export type AddProductReviewMutationFn = Apollo.MutationFunction<
+  AddProductReview,
+  AddProductReviewVariables
+>;
+
+/**
+ * __useAddProductReview__
+ *
+ * To run a mutation, you first call `useAddProductReview` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddProductReview` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addProductReview, { data, loading, error }] = useAddProductReview({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAddProductReview(
+  baseOptions?: Apollo.MutationHookOptions<
+    AddProductReview,
+    AddProductReviewVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<AddProductReview, AddProductReviewVariables>(
+    AddProductReviewDocument,
+    options,
+  );
+}
+export type AddProductReviewHookResult = ReturnType<typeof useAddProductReview>;
+export type AddProductReviewMutationResult =
+  Apollo.MutationResult<AddProductReview>;
+export type AddProductReviewMutationOptions = Apollo.BaseMutationOptions<
+  AddProductReview,
+  AddProductReviewVariables
 >;
 export const AuthenticateManagerDocument = gql`
   mutation authenticateManager($input: AuthenticationInput!) {
@@ -5115,6 +5224,68 @@ export type ListProductDetailsByProductIdLazyQueryHookResult = ReturnType<
 export type ListProductDetailsByProductIdQueryResult = Apollo.QueryResult<
   ListProductDetailsByProductId,
   ListProductDetailsByProductIdVariables
+>;
+export const ListProductReviewsDocument = gql`
+  query listProductReviews($productId: ID!) {
+    listProductReviews(productId: $productId) {
+      id
+      productId
+      comment
+      stars
+      createdAt
+    }
+  }
+`;
+
+/**
+ * __useListProductReviews__
+ *
+ * To run a query within a React component, call `useListProductReviews` and pass it any options that fit your needs.
+ * When your component renders, `useListProductReviews` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListProductReviews({
+ *   variables: {
+ *      productId: // value for 'productId'
+ *   },
+ * });
+ */
+export function useListProductReviews(
+  baseOptions: Apollo.QueryHookOptions<
+    ListProductReviews,
+    ListProductReviewsVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<ListProductReviews, ListProductReviewsVariables>(
+    ListProductReviewsDocument,
+    options,
+  );
+}
+export function useListProductReviewsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ListProductReviews,
+    ListProductReviewsVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<ListProductReviews, ListProductReviewsVariables>(
+    ListProductReviewsDocument,
+    options,
+  );
+}
+export type ListProductReviewsHookResult = ReturnType<
+  typeof useListProductReviews
+>;
+export type ListProductReviewsLazyQueryHookResult = ReturnType<
+  typeof useListProductReviewsLazyQuery
+>;
+export type ListProductReviewsQueryResult = Apollo.QueryResult<
+  ListProductReviews,
+  ListProductReviewsVariables
 >;
 export const ListProductsDocument = gql`
   query listProducts {

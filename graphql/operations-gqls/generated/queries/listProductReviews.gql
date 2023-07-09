@@ -1,0 +1,9 @@
+query listProductReviews($productId: ID!){
+    listProductReviews(productId: $productId){
+        id
+        productId
+        comment
+        stars
+        createdAt
+    }
+}

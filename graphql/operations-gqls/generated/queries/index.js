@@ -22,6 +22,7 @@ module.exports.listProductByProviderId = fs.readFileSync(path.join(__dirname, 'l
 module.exports.searchProducts = fs.readFileSync(path.join(__dirname, 'searchProducts.gql'), 'utf8');
 module.exports.listProviders = fs.readFileSync(path.join(__dirname, 'listProviders.gql'), 'utf8');
 module.exports.listQueue = fs.readFileSync(path.join(__dirname, 'listQueue.gql'), 'utf8');
+module.exports.listProductReviews = fs.readFileSync(path.join(__dirname, 'listProductReviews.gql'), 'utf8');
 module.exports.listChatMessages = fs.readFileSync(path.join(__dirname, 'listChatMessages.gql'), 'utf8');
 module.exports.getMe = fs.readFileSync(path.join(__dirname, 'getMe.gql'), 'utf8');
 module.exports.getUserById = fs.readFileSync(path.join(__dirname, 'getUserById.gql'), 'utf8');

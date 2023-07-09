@@ -1,0 +1,9 @@
+mutation addProductReview($input: AddReviewInput){
+    addProductReview(input: $input){
+        id
+        productId
+        comment
+        stars
+        createdAt
+    }
+}
