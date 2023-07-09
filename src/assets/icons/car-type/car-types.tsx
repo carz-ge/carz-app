@@ -1,7 +1,7 @@
 import {Image} from 'react-native';
 import {ImageSourcePropType} from 'react-native/Libraries/Image/Image';
 import React from 'react';
-import {CarType} from '../../graphql/operations';
+import {CarType} from '../../../graphql/operations';
 
 // interface CarTypeIconGeneralProps {
 //   size: string | number;
@@ -35,7 +35,7 @@ export const SedanIcon: React.FC<CarTypeIconProps> = ({
     <Image
       style={{width: size, height: size}}
       source={
-        require('../../../assets/images/car-type/sedan.png') as ImageSourcePropType
+        require('../../../../assets/images/car-type/sedan.png') as ImageSourcePropType
       }
       resizeMode="contain"
     />
@@ -48,7 +48,7 @@ export const HatchbackIcon: React.FC<CarTypeIconProps> = ({
     <Image
       style={{width: size, height: size}}
       source={
-        require('../../../assets/images/car-type/hatchback.png') as ImageSourcePropType
+        require('../../../../assets/images/car-type/hatchback.png') as ImageSourcePropType
       }
       resizeMode="contain"
     />
@@ -61,7 +61,7 @@ export const SuvIcon: React.FC<CarTypeIconProps> = ({
     <Image
       style={{width: size, height: size}}
       source={
-        require('../../../assets/images/car-type/suv.png') as ImageSourcePropType
+        require('../../../../assets/images/car-type/suv.png') as ImageSourcePropType
       }
       resizeMode="contain"
     />
@@ -74,7 +74,7 @@ export const VanIcon: React.FC<CarTypeIconProps> = ({
     <Image
       style={{width: size, height: size}}
       source={
-        require('../../../assets/images/car-type/van.png') as ImageSourcePropType
+        require('../../../../assets/images/car-type/van.png') as ImageSourcePropType
       }
       resizeMode="contain"
     />
@@ -87,7 +87,7 @@ export const TruckIcon: React.FC<CarTypeIconProps> = ({
     <Image
       style={{width: size, height: size}}
       source={
-        require('../../../assets/images/car-type/truck.png') as ImageSourcePropType
+        require('../../../../assets/images/car-type/truck.png') as ImageSourcePropType
       }
       resizeMode="contain"
     />
@@ -101,7 +101,7 @@ export const MotorcycleIcon: React.FC<CarTypeIconProps> = ({
     <Image
       style={{width: size, height: size}}
       source={
-        require('../../../assets/images/car-type/motorcycle.png') as ImageSourcePropType
+        require('../../../../assets/images/car-type/motorcycle.png') as ImageSourcePropType
       }
       resizeMode="contain"
     />

@@ -11,7 +11,7 @@ import CustomBackdrop from '../bottom-sheet/customBackdrop';
 import colors from '../../styles/colors';
 import {CarType} from '../../graphql/operations';
 import {carTypes} from '../car/add-car';
-import {CarTypeToIconMap} from '../car-type/car-types';
+import {CarTypeToIconMap} from '../../assets/icons/car-type/car-types';
 import {BottomSheetBackdropProps} from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop';
 
 interface DatePickerProps {

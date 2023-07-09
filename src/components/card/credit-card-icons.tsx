@@ -1,29 +1,12 @@
-import {Image, ImageBackground, StyleSheet} from 'react-native';
+import {ImageBackground, StyleSheet} from 'react-native';
 import {ImageSourcePropType} from 'react-native/Libraries/Image/Image';
 import React from 'react';
 import colors from '../../styles/colors';
 
-interface CardIconProps {
-  size: string | number;
-}
-
-export const MasterCardIcon: React.FC<CardIconProps> = ({
-  size,
-}: CardIconProps) => {
-  return (
-    <Image
-      style={{width: size, height: size}}
-      source={
-        require('../../../assets/images/card/mastercard.png') as ImageSourcePropType
-      }
-      resizeMode="contain"
-    />
-  );
-};
-
 interface CardBackgroundProps {
   children: React.ReactNode;
 }
+
 export function CardBackground({children}: CardBackgroundProps) {
   return (
     <ImageBackground
@@ -36,10 +19,6 @@ export function CardBackground({children}: CardBackgroundProps) {
     </ImageBackground>
   );
 }
-
-export const CardIssuerToIconMap: Record<string, React.FC<CardIconProps>> = {
-  mc: MasterCardIcon,
-};
 
 const styles = StyleSheet.create({
   cardItem: {

@@ -3,6 +3,10 @@ import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from '../../styles/colors';
 import React from 'react';
 import {CardBackground} from './credit-card-icons';
+import {
+  CardIssuerToIconMap,
+  MasterCardIcon,
+} from '../../assets/icons/card/mastercard-icon';
 
 interface CardPickeProps {
   cardId: string | null;
@@ -20,6 +24,8 @@ export default function CardPicker({cardId, setCardId, cards}: CardPickeProps) {
       <FlatList
         data={cards}
         renderItem={({item, index}) => {
+          const CardIssuerToIconMapElement =
+            CardIssuerToIconMap[item.cardType] || MasterCardIcon;
           return (
             <TouchableOpacity
               onPress={() => {
@@ -31,7 +37,7 @@ export default function CardPicker({cardId, setCardId, cards}: CardPickeProps) {
               }}>
               <CardBackground>
                 <View style={{padding: 10}}>
-                  <Text style={styles.nameText}>{item.cardType}</Text>
+                  <CardIssuerToIconMapElement size={30} />
                   <Text style={styles.nameText}>{item.pan}</Text>
                   <Text style={styles.nameText}>{item.expirationDate}</Text>
                 </View>
@@ -78,6 +84,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   inputHeader: {
+    marginTop: 10,
+    marginBottom: 5,
     fontSize: 18,
     fontWeight: '500',
   },

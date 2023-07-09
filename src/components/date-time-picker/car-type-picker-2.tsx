@@ -2,7 +2,7 @@ import React from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from '../../styles/colors';
 import {CarType} from '../../graphql/operations';
-import {CarTypeToIconMap} from '../car-type/car-types';
+import {CarTypeToIconMap} from '../../assets/icons/car-type/car-types';
 import {convertPriceIntoGel} from '../../utils/price';
 
 interface CarTypePickerV2Props {
