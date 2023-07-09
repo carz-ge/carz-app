@@ -392,15 +392,21 @@ export type MutationUpdateUserArgs = {
 
 export type Order = {
   __typename?: 'Order';
+  carPlateNumber: Maybe<Scalars['String']['output']>;
+  carType: Maybe<CarType>;
   categoryId: Scalars['ID']['output'];
+  commission: Scalars['Int']['output'];
+  createdAt: Maybe<Scalars['String']['output']>;
+  errorMessage: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
-  orderStatus: Maybe<OrderStatus>;
   packageId: Scalars['ID']['output'];
   productId: Scalars['ID']['output'];
   providerId: Maybe<Scalars['ID']['output']>;
   schedulingDay: Maybe<Scalars['String']['output']>;
   schedulingTime: Maybe<Scalars['String']['output']>;
-  userId: Scalars['ID']['output'];
+  status: Maybe<OrderStatus>;
+  totalPrice: Scalars['Int']['output'];
+  updatedAt: Maybe<Scalars['String']['output']>;
 };
 
 export type OrderInitializationResponse = {
@@ -410,15 +416,16 @@ export type OrderInitializationResponse = {
   categoryId: Scalars['ID']['output'];
   commission: Scalars['Int']['output'];
   createdAt: Maybe<Scalars['String']['output']>;
+  errorMessage: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   idempotencyKey: Scalars['String']['output'];
-  orderStatus: Maybe<OrderStatus>;
   packageId: Scalars['ID']['output'];
   productId: Scalars['ID']['output'];
   providerId: Scalars['ID']['output'];
   redirectLink: Scalars['String']['output'];
   schedulingDay: Maybe<Scalars['String']['output']>;
   schedulingTime: Maybe<Scalars['String']['output']>;
+  status: Maybe<OrderStatus>;
   totalPrice: Scalars['Int']['output'];
 };
 
@@ -837,14 +844,15 @@ export type CreateOrder = {
     totalPrice: number;
     commission: number;
     productId: string;
-    categoryId: string;
     packageId: string;
+    categoryId: string;
     providerId: string;
     schedulingDay: string | null;
     schedulingTime: string | null;
-    orderStatus: OrderStatus | null;
+    status: OrderStatus | null;
     carType: CarType | null;
     carPlateNumber: string | null;
+    errorMessage: string | null;
     createdAt: string | null;
   };
 };
@@ -1381,14 +1389,20 @@ export type GetOrder = {
   getOrder: {
     __typename?: 'Order';
     id: string;
-    userId: string;
-    categoryId: string;
-    providerId: string | null;
+    totalPrice: number;
+    commission: number;
+    status: OrderStatus | null;
     productId: string;
     packageId: string;
+    categoryId: string;
+    providerId: string | null;
     schedulingDay: string | null;
     schedulingTime: string | null;
-    orderStatus: OrderStatus | null;
+    carType: CarType | null;
+    carPlateNumber: string | null;
+    errorMessage: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
   };
 };
 
@@ -1558,14 +1572,20 @@ export type ListOrders = {
   listOrders: Array<{
     __typename?: 'Order';
     id: string;
-    userId: string;
-    categoryId: string;
-    providerId: string | null;
+    totalPrice: number;
+    commission: number;
+    status: OrderStatus | null;
     productId: string;
     packageId: string;
+    categoryId: string;
+    providerId: string | null;
     schedulingDay: string | null;
     schedulingTime: string | null;
-    orderStatus: OrderStatus | null;
+    carType: CarType | null;
+    carPlateNumber: string | null;
+    errorMessage: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
   }>;
 };
 
@@ -1576,14 +1596,20 @@ export type ListOrdersByManager = {
   listOrdersByManager: Array<{
     __typename?: 'Order';
     id: string;
-    userId: string;
-    categoryId: string;
-    providerId: string | null;
+    totalPrice: number;
+    commission: number;
+    status: OrderStatus | null;
     productId: string;
     packageId: string;
+    categoryId: string;
+    providerId: string | null;
     schedulingDay: string | null;
     schedulingTime: string | null;
-    orderStatus: OrderStatus | null;
+    carType: CarType | null;
+    carPlateNumber: string | null;
+    errorMessage: string | null;
+    createdAt: string | null;
+    updatedAt: string | null;
   }>;
 };
 
@@ -2278,14 +2304,15 @@ export const CreateOrderDocument = gql`
       totalPrice
       commission
       productId
-      categoryId
       packageId
+      categoryId
       providerId
       schedulingDay
       schedulingTime
-      orderStatus
+      status
       carType
       carPlateNumber
+      errorMessage
       createdAt
     }
   }
@@ -4127,14 +4154,20 @@ export const GetOrderDocument = gql`
   query getOrder($id: ID!) {
     getOrder(id: $id) {
       id
-      userId
-      categoryId
-      providerId
+      totalPrice
+      commission
+      status
       productId
       packageId
+      categoryId
+      providerId
       schedulingDay
       schedulingTime
-      orderStatus
+      carType
+      carPlateNumber
+      errorMessage
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -4637,14 +4670,20 @@ export const ListOrdersDocument = gql`
   query listOrders {
     listOrders {
       id
-      userId
-      categoryId
-      providerId
+      totalPrice
+      commission
+      status
       productId
       packageId
+      categoryId
+      providerId
       schedulingDay
       schedulingTime
-      orderStatus
+      carType
+      carPlateNumber
+      errorMessage
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -4694,14 +4733,20 @@ export const ListOrdersByManagerDocument = gql`
   query listOrdersByManager {
     listOrdersByManager {
       id
-      userId
-      categoryId
-      providerId
+      totalPrice
+      commission
+      status
       productId
       packageId
+      categoryId
+      providerId
       schedulingDay
       schedulingTime
-      orderStatus
+      carType
+      carPlateNumber
+      errorMessage
+      createdAt
+      updatedAt
     }
   }
 `;

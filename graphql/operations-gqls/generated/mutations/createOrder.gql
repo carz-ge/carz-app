@@ -6,14 +6,15 @@ mutation createOrder($order: OrderInput!){
         totalPrice
         commission
         productId
-        categoryId
         packageId
+        categoryId
         providerId
         schedulingDay
         schedulingTime
-        orderStatus
+        status
         carType
         carPlateNumber
+        errorMessage
         createdAt
     }
 }

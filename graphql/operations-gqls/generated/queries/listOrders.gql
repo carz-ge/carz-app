@@ -1,13 +1,19 @@
 query listOrders{
     listOrders{
         id
-        userId
-        categoryId
-        providerId
+        totalPrice
+        commission
+        status
         productId
         packageId
+        categoryId
+        providerId
         schedulingDay
         schedulingTime
-        orderStatus
+        carType
+        carPlateNumber
+        errorMessage
+        createdAt
+        updatedAt
     }
 }

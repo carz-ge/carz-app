@@ -18,11 +18,13 @@ import {
   CarType,
   CreateOrder,
   useCreateOrder,
+  useGetCommission,
   useGetProduct,
+  useListCards,
 } from '../../graphql/operations';
 import DatePicker from '../../components/date-time-picker/date-picker';
 import TimePicker from '../../components/date-time-picker/time-picker';
-import {convertPriceIntoGel, getPriceRangeForPackage} from '../../utils/price';
+import {convertPriceIntoGel} from '../../utils/price';
 import Colors from '../../styles/colors';
 import {FetchResult} from '@apollo/client';
 import CarTypePickerV2 from '../../components/date-time-picker/car-type-picker-2';
@@ -53,6 +55,25 @@ export default function CheckoutScreen({
       productId,
     },
   });
+  const {
+    data: commissionData,
+    loading: commissionLoading,
+    error: commissionError,
+  } = useGetCommission({
+    variables: {
+      productId,
+      packageId,
+    },
+  });
+
+  const {
+    data: cardsData,
+    loading: cardsLoading,
+    error: cardsError,
+  } = useListCards();
+  console.log('cardsData', cardsData, cardsLoading, cardsError);
+
+  const commission = commissionData?.getCommission.commissionToShow || null;
 
   const [createOrder, {loading: createOrderLoading, error: createOrderError}] =
     useCreateOrder({
@@ -193,10 +214,12 @@ export default function CheckoutScreen({
                   </Text>
                 </View>
               )}
-              <View style={styles.detailNameAndText}>
-                <Text style={styles.label}>ჯავშნის საკომისიო:</Text>
-                <Text style={styles.label}>{2} ლარი</Text>
-              </View>
+              {commission && (
+                <View style={styles.detailNameAndText}>
+                  <Text style={styles.label}>ჯავშნის საკომისიო:</Text>
+                  <Text style={styles.label}>{commission} ლარი</Text>
+                </View>
+              )}
             </View>
           </View>
         </ScrollView>
@@ -204,10 +227,7 @@ export default function CheckoutScreen({
       {selectedPackage && selectedPackage.pricesForCarTypes && (
         <View style={styles.checkoutContainer}>
           <View>
-            <Text style={styles.priceText}>
-              {getPriceRangeForPackage(selectedPackage.pricesForCarTypes || [])}{' '}
-              GEL
-            </Text>
+            <Text style={styles.priceText}>{commission} GEL</Text>
             <Text>{selectedPackage.name.ka}</Text>
           </View>
           <TouchableOpacity

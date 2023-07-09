@@ -1,13 +1,19 @@
 query getOrder($id: ID!){
     getOrder(id: $id){
         id
-        userId
-        categoryId
-        providerId
+        totalPrice
+        commission
+        status
         productId
         packageId
+        categoryId
+        providerId
         schedulingDay
         schedulingTime
-        orderStatus
+        carType
+        carPlateNumber
+        errorMessage
+        createdAt
+        updatedAt
     }
 }
