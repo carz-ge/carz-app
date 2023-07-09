@@ -47,8 +47,8 @@ function RenderCategoryItem({
   return (
     <Pressable
       onPress={() => {
-        navigation.navigate('search', {
-          screen: 'chooseCar',
+        navigation.navigate('mainTabs', {
+          screen: 'map',
           params: {
             categoryId: item.id,
           },
