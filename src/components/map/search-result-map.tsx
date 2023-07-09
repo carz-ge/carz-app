@@ -15,7 +15,7 @@ import ProductCarouselItem from './product-carousel-item';
 import colors from '../../styles/colors';
 import {getMinProductPriceInGel} from '../../utils/price';
 import {calculateDistance} from '../../utils/map-distance';
-import MapSearchAndFilters from './search-and-filter';
+import MapSearchAndFilters from './filter-and-sort/filter-and-sort';
 
 interface SearchResultsMapsProps {
   products: Product[];

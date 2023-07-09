@@ -3,10 +3,11 @@ import type {PayloadAction} from '@reduxjs/toolkit';
 import type {RootState} from '../store';
 import {CarType} from '../../graphql/operations';
 
-enum SortByEnum {
+export enum SortByEnum {
   LOCATION = 'LOCATION',
   RATE = 'RATE',
   PRICE = 'PRICE',
+  POPULARITY = 'POPULARITY',
 }
 
 // Define a type for the slice state

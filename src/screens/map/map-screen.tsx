@@ -14,7 +14,7 @@ export default function MapScreen({route}: MainTabStackScreenProps<'map'>) {
   const selectedDate = useAppSelector(selectDate);
   const selectedTime = useAppSelector(selectTime);
   const selectedCarType = useAppSelector(selectCarType);
-  const categoryId = params.categoryId || null;
+  const categoryId = params?.categoryId || null;
   console.log(
     'MapScreen',
     JSON.stringify(params),
