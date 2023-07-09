@@ -34,6 +34,7 @@ import {
   selectDate,
   selectTime,
 } from '../../store/slice/searchSlice';
+import CardPicker from '../../components/card/card-picker';
 
 function extractPriceFromCarType(
   pricesForCarTypes: {carType: CarType; price: number | null}[],
@@ -71,7 +72,6 @@ export default function CheckoutScreen({
     loading: cardsLoading,
     error: cardsError,
   } = useListCards();
-  console.log('cardsData', cardsData, cardsLoading, cardsError);
 
   const commission = commissionData?.getCommission.commissionToShow || null;
 
@@ -91,6 +91,7 @@ export default function CheckoutScreen({
     useAppSelector(selectCarType),
   );
   const [plateNumber, setPlateNumber] = useState<string>('');
+  const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
 
   if (loading || !data) {
     return <ActivityIndicator />;
@@ -152,6 +153,13 @@ export default function CheckoutScreen({
               carType={selectedCarType}
               setCarType={carType => {
                 setSelectedCarType(carType);
+              }}
+            />
+            <CardPicker
+              cards={cardsData?.listCards || []}
+              cardId={selectedCardId}
+              setCardId={cardId => {
+                setSelectedCardId(cardId);
               }}
             />
             <View style={styles.plateNumberContainer}>
