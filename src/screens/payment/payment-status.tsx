@@ -11,7 +11,7 @@ export default function PaymentStatusScreen({
   const success = route.params?.success || false;
   return (
     <>
-      <Text>{success}</Text>;
+      <Text>{success}</Text>
       {success ? <SuccessAnimation /> : <FailAnimation />}
     </>
   );
