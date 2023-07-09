@@ -1,0 +1,13 @@
+query listOrdersByManager{
+    listOrdersByManager{
+        id
+        userId
+        categoryId
+        providerId
+        productId
+        packageId
+        schedulingDay
+        schedulingTime
+        orderStatus
+    }
+}

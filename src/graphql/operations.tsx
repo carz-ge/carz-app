@@ -89,6 +89,14 @@ export enum CarType {
   Van = 'VAN',
 }
 
+export type Card = {
+  __typename?: 'Card';
+  cardType: Scalars['String']['output'];
+  expirationDate: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  pan: Scalars['String']['output'];
+};
+
 export type Category = {
   __typename?: 'Category';
   active: Scalars['Boolean']['output'];
@@ -122,6 +130,12 @@ export enum ChatMessageStatus {
   Sent = 'SENT',
   Success = 'SUCCESS',
 }
+
+export type Commission = {
+  __typename?: 'Commission';
+  commission: Scalars['Int']['output'];
+  commissionToShow: Scalars['String']['output'];
+};
 
 export type Coordinates = {
   __typename?: 'Coordinates';
@@ -391,7 +405,11 @@ export type Order = {
 
 export type OrderInitializationResponse = {
   __typename?: 'OrderInitializationResponse';
+  carPlateNumber: Maybe<Scalars['String']['output']>;
+  carType: Maybe<CarType>;
   categoryId: Scalars['ID']['output'];
+  commission: Scalars['Int']['output'];
+  createdAt: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   idempotencyKey: Scalars['String']['output'];
   orderStatus: Maybe<OrderStatus>;
@@ -424,14 +442,15 @@ export type OrderProcessingResponse = {
 };
 
 export enum OrderStatus {
+  Active = 'ACTIVE',
   Cancelled = 'CANCELLED',
-  Delivered = 'DELIVERED',
   Failed = 'FAILED',
   New = 'NEW',
+  Payed = 'PAYED',
   Processing = 'PROCESSING',
   Reimbursed = 'REIMBURSED',
   Rejected = 'REJECTED',
-  Shipped = 'SHIPPED',
+  WaitingManager = 'WAITING_MANAGER',
 }
 
 export type OrderedProduct = {
@@ -549,15 +568,18 @@ export type Query = {
   echoAuthorized: Maybe<Scalars['String']['output']>;
   echoFlux: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   echoMono: Maybe<Scalars['String']['output']>;
+  getCommission: Commission;
   getMe: User;
   getOrder: Order;
   getPaymentInfo: Maybe<Scalars['String']['output']>;
   getProduct: Product;
   getUserById: User;
+  listCards: Array<Card>;
   listCars: Array<Car>;
   listCategories: Array<Category>;
   listChatMessages: Array<ChatMessage>;
   listOrders: Array<Order>;
+  listOrdersByManager: Array<Order>;
   listProductByCategoryId: Array<Product>;
   listProductByProviderId: Array<Product>;
   listProductDetailsByProductId: Array<ProductDetails>;
@@ -585,6 +607,11 @@ export type QueryEchoFluxArgs = {
 
 export type QueryEchoMonoArgs = {
   message: InputMaybe<Scalars['String']['input']>;
+};
+
+export type QueryGetCommissionArgs = {
+  packageId: InputMaybe<Scalars['ID']['input']>;
+  productId: Scalars['ID']['input'];
 };
 
 export type QueryGetOrderArgs = {
@@ -808,6 +835,7 @@ export type CreateOrder = {
     idempotencyKey: string;
     redirectLink: string;
     totalPrice: number;
+    commission: number;
     productId: string;
     categoryId: string;
     packageId: string;
@@ -815,6 +843,9 @@ export type CreateOrder = {
     schedulingDay: string | null;
     schedulingTime: string | null;
     orderStatus: OrderStatus | null;
+    carType: CarType | null;
+    carPlateNumber: string | null;
+    createdAt: string | null;
   };
 };
 
@@ -1307,6 +1338,20 @@ export type EchoMonoVariables = Exact<{
 
 export type EchoMono = {__typename?: 'Query'; echoMono: string | null};
 
+export type GetCommissionVariables = Exact<{
+  productId: Scalars['ID']['input'];
+  packageId: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+export type GetCommission = {
+  __typename?: 'Query';
+  getCommission: {
+    __typename?: 'Commission';
+    commission: number;
+    commissionToShow: string;
+  };
+};
+
 export type GetMeVariables = Exact<{[key: string]: never}>;
 
 export type GetMe = {
@@ -1445,6 +1490,19 @@ export type GetUserById = {
   };
 };
 
+export type ListCardsVariables = Exact<{[key: string]: never}>;
+
+export type ListCards = {
+  __typename?: 'Query';
+  listCards: Array<{
+    __typename?: 'Card';
+    id: string;
+    pan: string;
+    cardType: string;
+    expirationDate: string;
+  }>;
+};
+
 export type ListCarsVariables = Exact<{[key: string]: never}>;
 
 export type ListCars = {
@@ -1498,6 +1556,24 @@ export type ListOrdersVariables = Exact<{[key: string]: never}>;
 export type ListOrders = {
   __typename?: 'Query';
   listOrders: Array<{
+    __typename?: 'Order';
+    id: string;
+    userId: string;
+    categoryId: string;
+    providerId: string | null;
+    productId: string;
+    packageId: string;
+    schedulingDay: string | null;
+    schedulingTime: string | null;
+    orderStatus: OrderStatus | null;
+  }>;
+};
+
+export type ListOrdersByManagerVariables = Exact<{[key: string]: never}>;
+
+export type ListOrdersByManager = {
+  __typename?: 'Query';
+  listOrdersByManager: Array<{
     __typename?: 'Order';
     id: string;
     userId: string;
@@ -2200,6 +2276,7 @@ export const CreateOrderDocument = gql`
       idempotencyKey
       redirectLink
       totalPrice
+      commission
       productId
       categoryId
       packageId
@@ -2207,6 +2284,9 @@ export const CreateOrderDocument = gql`
       schedulingDay
       schedulingTime
       orderStatus
+      carType
+      carPlateNumber
+      createdAt
     }
   }
 `;
@@ -3940,6 +4020,61 @@ export type EchoMonoQueryResult = Apollo.QueryResult<
   EchoMono,
   EchoMonoVariables
 >;
+export const GetCommissionDocument = gql`
+  query getCommission($productId: ID!, $packageId: ID) {
+    getCommission(productId: $productId, packageId: $packageId) {
+      commission
+      commissionToShow
+    }
+  }
+`;
+
+/**
+ * __useGetCommission__
+ *
+ * To run a query within a React component, call `useGetCommission` and pass it any options that fit your needs.
+ * When your component renders, `useGetCommission` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCommission({
+ *   variables: {
+ *      productId: // value for 'productId'
+ *      packageId: // value for 'packageId'
+ *   },
+ * });
+ */
+export function useGetCommission(
+  baseOptions: Apollo.QueryHookOptions<GetCommission, GetCommissionVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<GetCommission, GetCommissionVariables>(
+    GetCommissionDocument,
+    options,
+  );
+}
+export function useGetCommissionLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetCommission,
+    GetCommissionVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<GetCommission, GetCommissionVariables>(
+    GetCommissionDocument,
+    options,
+  );
+}
+export type GetCommissionHookResult = ReturnType<typeof useGetCommission>;
+export type GetCommissionLazyQueryHookResult = ReturnType<
+  typeof useGetCommissionLazyQuery
+>;
+export type GetCommissionQueryResult = Apollo.QueryResult<
+  GetCommission,
+  GetCommissionVariables
+>;
 export const GetMeDocument = gql`
   query getMe {
     getMe {
@@ -4266,6 +4401,58 @@ export type GetUserByIdQueryResult = Apollo.QueryResult<
   GetUserById,
   GetUserByIdVariables
 >;
+export const ListCardsDocument = gql`
+  query listCards {
+    listCards {
+      id
+      pan
+      cardType
+      expirationDate
+    }
+  }
+`;
+
+/**
+ * __useListCards__
+ *
+ * To run a query within a React component, call `useListCards` and pass it any options that fit your needs.
+ * When your component renders, `useListCards` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListCards({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useListCards(
+  baseOptions?: Apollo.QueryHookOptions<ListCards, ListCardsVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<ListCards, ListCardsVariables>(
+    ListCardsDocument,
+    options,
+  );
+}
+export function useListCardsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ListCards, ListCardsVariables>,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<ListCards, ListCardsVariables>(
+    ListCardsDocument,
+    options,
+  );
+}
+export type ListCardsHookResult = ReturnType<typeof useListCards>;
+export type ListCardsLazyQueryHookResult = ReturnType<
+  typeof useListCardsLazyQuery
+>;
+export type ListCardsQueryResult = Apollo.QueryResult<
+  ListCards,
+  ListCardsVariables
+>;
 export const ListCarsDocument = gql`
   query listCars {
     listCars {
@@ -4502,6 +4689,71 @@ export type ListOrdersLazyQueryHookResult = ReturnType<
 export type ListOrdersQueryResult = Apollo.QueryResult<
   ListOrders,
   ListOrdersVariables
+>;
+export const ListOrdersByManagerDocument = gql`
+  query listOrdersByManager {
+    listOrdersByManager {
+      id
+      userId
+      categoryId
+      providerId
+      productId
+      packageId
+      schedulingDay
+      schedulingTime
+      orderStatus
+    }
+  }
+`;
+
+/**
+ * __useListOrdersByManager__
+ *
+ * To run a query within a React component, call `useListOrdersByManager` and pass it any options that fit your needs.
+ * When your component renders, `useListOrdersByManager` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListOrdersByManager({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useListOrdersByManager(
+  baseOptions?: Apollo.QueryHookOptions<
+    ListOrdersByManager,
+    ListOrdersByManagerVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<ListOrdersByManager, ListOrdersByManagerVariables>(
+    ListOrdersByManagerDocument,
+    options,
+  );
+}
+export function useListOrdersByManagerLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ListOrdersByManager,
+    ListOrdersByManagerVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<ListOrdersByManager, ListOrdersByManagerVariables>(
+    ListOrdersByManagerDocument,
+    options,
+  );
+}
+export type ListOrdersByManagerHookResult = ReturnType<
+  typeof useListOrdersByManager
+>;
+export type ListOrdersByManagerLazyQueryHookResult = ReturnType<
+  typeof useListOrdersByManagerLazyQuery
+>;
+export type ListOrdersByManagerQueryResult = Apollo.QueryResult<
+  ListOrdersByManager,
+  ListOrdersByManagerVariables
 >;
 export const ListProductByCategoryIdDocument = gql`
   query listProductByCategoryId($categoryId: ID!) {

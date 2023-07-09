@@ -1,0 +1,8 @@
+query listCards{
+    listCards{
+        id
+        pan
+        cardType
+        expirationDate
+    }
+}

@@ -1,0 +1,6 @@
+query getCommission($productId: ID!, $packageId: ID){
+    getCommission(productId: $productId, packageId: $packageId){
+        commission
+        commissionToShow
+    }
+}

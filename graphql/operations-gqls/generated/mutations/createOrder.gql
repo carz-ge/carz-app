@@ -4,6 +4,7 @@ mutation createOrder($order: OrderInput!){
         idempotencyKey
         redirectLink
         totalPrice
+        commission
         productId
         categoryId
         packageId
@@ -11,5 +12,8 @@ mutation createOrder($order: OrderInput!){
         schedulingDay
         schedulingTime
         orderStatus
+        carType
+        carPlateNumber
+        createdAt
     }
 }

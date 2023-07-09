@@ -3,13 +3,16 @@ const path = require('path');
 
 module.exports.checkPhone = fs.readFileSync(path.join(__dirname, 'checkPhone.gql'), 'utf8');
 module.exports.listCars = fs.readFileSync(path.join(__dirname, 'listCars.gql'), 'utf8');
+module.exports.listCards = fs.readFileSync(path.join(__dirname, 'listCards.gql'), 'utf8');
 module.exports.listCategories = fs.readFileSync(path.join(__dirname, 'listCategories.gql'), 'utf8');
 module.exports.echo = fs.readFileSync(path.join(__dirname, 'echo.gql'), 'utf8');
 module.exports.echoAuthorized = fs.readFileSync(path.join(__dirname, 'echoAuthorized.gql'), 'utf8');
 module.exports.echoMono = fs.readFileSync(path.join(__dirname, 'echoMono.gql'), 'utf8');
 module.exports.echoFlux = fs.readFileSync(path.join(__dirname, 'echoFlux.gql'), 'utf8');
 module.exports.listOrders = fs.readFileSync(path.join(__dirname, 'listOrders.gql'), 'utf8');
+module.exports.listOrdersByManager = fs.readFileSync(path.join(__dirname, 'listOrdersByManager.gql'), 'utf8');
 module.exports.getOrder = fs.readFileSync(path.join(__dirname, 'getOrder.gql'), 'utf8');
+module.exports.getCommission = fs.readFileSync(path.join(__dirname, 'getCommission.gql'), 'utf8');
 module.exports.getPaymentInfo = fs.readFileSync(path.join(__dirname, 'getPaymentInfo.gql'), 'utf8');
 module.exports.listProductDetailsByProductId = fs.readFileSync(path.join(__dirname, 'listProductDetailsByProductId.gql'), 'utf8');
 module.exports.getProduct = fs.readFileSync(path.join(__dirname, 'getProduct.gql'), 'utf8');
