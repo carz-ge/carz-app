@@ -57,8 +57,6 @@ export default function TimePicker({time, setTime}: DatePickerProps) {
                   const initialTime = timeStamp + 9;
                   const item = `${initialTime}:${
                     minute === 0 ? '00' : minute * 15
-                  } - ${minute === 3 ? initialTime + 1 : initialTime}:${
-                    minute === 3 ? '00' : (minute + 1) * 15
                   }`;
                   return (
                     <TouchableOpacity

@@ -64,19 +64,6 @@ export default function MapSearchAndFilters() {
     filterModalRef.current?.present();
   }
 
-  function onFilterButtonClicked(
-    date: string | null,
-    time: string | null,
-    carType: CarType | null,
-  ) {
-    Alert.alert(
-      'ფილტრი',
-      `თქვენი ფილტრი: ${date || 'no date'}, ${time || 'no time'}, ${
-        carType || 'no car Type'
-      }`,
-    );
-  }
-
   const handleOnClose = useCallback(() => {
     filterModalRef.current?.close();
   }, []);
@@ -87,6 +74,14 @@ export default function MapSearchAndFilters() {
     ),
     [handleOnClose],
   );
+
+  function onFilterButtonClicked(
+    date: string | null,
+    time: string | null,
+    carType: CarType | null,
+  ) {
+    handleOnClose();
+  }
   return (
     <View style={styles.container}>
       <TouchableOpacity
