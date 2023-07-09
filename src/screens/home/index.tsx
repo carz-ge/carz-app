@@ -37,6 +37,7 @@ export default function HomeScreen({
           onPress={() =>
             navigation.navigate('payment', {
               redirectUrl: 'https://carz.ge',
+              orderId: '123',
             })
           }>
           <Text style={styles.popularTitle}>Test WebView</Text>

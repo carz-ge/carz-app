@@ -120,9 +120,11 @@ export default function CheckoutScreen({
         },
       },
     });
+    // TODO if there is no data show error
     console.log('orderResponse', JSON.stringify(orderResponse));
     navigation.navigate('payment', {
-      redirectUrl: orderResponse.data?.createOrder.redirectLink || '123',
+      redirectUrl: orderResponse.data?.createOrder.redirectLink || '',
+      orderId: orderResponse.data?.createOrder.id || '',
     });
   }
 

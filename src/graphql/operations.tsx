@@ -462,6 +462,7 @@ export type OrderProcessingResponse = {
 export enum OrderStatus {
   Active = 'ACTIVE',
   Cancelled = 'CANCELLED',
+  CancelledByManager = 'CANCELLED_BY_MANAGER',
   Failed = 'FAILED',
   New = 'NEW',
   Payed = 'PAYED',

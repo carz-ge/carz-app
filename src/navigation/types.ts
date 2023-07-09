@@ -24,6 +24,11 @@ export interface RootStackParamList extends ParamListBase {
   };
   payment: {
     redirectUrl: string;
+    orderId: string;
+  };
+  paymentStatus: {
+    success: boolean;
+    orderId: string;
   };
 }
 

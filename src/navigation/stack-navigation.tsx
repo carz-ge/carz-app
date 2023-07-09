@@ -14,6 +14,7 @@ import MainTabsNavigation from './tab-navigation';
 import Profile from '../screens/profile/profile';
 import CheckoutScreen from '../screens/checkout/checkout';
 import PaymentScreen from '../screens/payment/payment';
+import PaymentStatusScreen from '../screens/payment/payment-status';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -69,6 +70,12 @@ function MainRouter() {
               component={PaymentScreen}
               options={{title: 'გადახდა', headerShown: false}}
             />
+            <Stack.Screen
+              name="paymentStatus"
+              component={PaymentStatusScreen}
+              options={{title: 'გადახდისშედეგი', headerShown: false}}
+            />
+
             <Stack.Screen
               options={{headerShown: false}}
               name="search"

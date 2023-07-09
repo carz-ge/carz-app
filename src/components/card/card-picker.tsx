@@ -28,6 +28,7 @@ export default function CardPicker({cardId, setCardId, cards}: CardPickeProps) {
             CardIssuerToIconMap[item.cardType] || MasterCardIcon;
           return (
             <TouchableOpacity
+              style={styles.cardContainer}
               onPress={() => {
                 if (item.id === cardId) {
                   setCardId(null);
@@ -56,12 +57,6 @@ export default function CardPicker({cardId, setCardId, cards}: CardPickeProps) {
 const styles = StyleSheet.create({
   cardContainer: {
     marginTop: 10,
-    backgroundColor: colors.white,
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: colors.gray,
     alignItems: 'center',
     marginRight: 8,
   },
