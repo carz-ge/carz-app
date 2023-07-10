@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
   },
   text: {color: 'white'},
-  lottie: {width: 400, height: 400},
+  lottie: {width: 200, height: 200},
 });
 
 const colorFilter = [

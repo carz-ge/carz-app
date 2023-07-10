@@ -18,10 +18,6 @@ import {
 } from '../../../graphql/operations';
 import {createWebsocket} from '../../../api/websocket';
 
-interface ChatWebsocketData {
-  data: string;
-}
-
 export default function Chat() {
   const {data, loading, error, subscribeToMore} = useListChatMessages({
     fetchPolicy: 'network-only',
@@ -37,7 +33,8 @@ export default function Chat() {
       return;
     }
     createWebsocket(
-      (e: ChatWebsocketData) => {
+      'chat',
+      (e: WebSocketMessageEvent) => {
         setMessages(prevMessages => {
           const chatMessage = {
             ...prevMessages[prevMessages.length - 1],

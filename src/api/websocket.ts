@@ -3,7 +3,8 @@ import {WS_API_URL} from './config';
 import {ACCESS_TOKEN_KEY, isValidToken} from '../auth/utils';
 
 export async function createWebsocket(
-  onMessage: (event: any) => void,
+  endpoint: string,
+  onMessage: (event: WebSocketMessageEvent) => void,
   onClose: () => void,
 ) {
   const token = await SecureStore.getItemAsync(ACCESS_TOKEN_KEY);
@@ -14,7 +15,7 @@ export async function createWebsocket(
   }
 
   const ws = new WebSocket(
-    `${WS_API_URL}/chat?token=${'test'}`,
+    `${WS_API_URL}/${endpoint}?token=${'test'}`,
     undefined,
     // @ts-ignore  TODO
     {
