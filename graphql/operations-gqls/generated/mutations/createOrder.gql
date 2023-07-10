@@ -9,7 +9,7 @@ mutation createOrder($order: OrderInput!){
         packageId
         categoryId
         providerId
-        schedulingDay
+        schedulingDate
         schedulingTime
         status
         carType

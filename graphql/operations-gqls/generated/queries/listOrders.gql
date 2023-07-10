@@ -8,7 +8,7 @@ query listOrders{
         packageId
         categoryId
         providerId
-        schedulingDay
+        schedulingDate
         schedulingTime
         carType
         carPlateNumber

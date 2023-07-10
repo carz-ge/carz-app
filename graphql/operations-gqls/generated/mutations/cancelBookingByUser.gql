@@ -1,0 +1,3 @@
+mutation cancelBookingByUser($orderId: ID!){
+    cancelBookingByUser(orderId: $orderId)
+}

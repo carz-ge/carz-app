@@ -216,8 +216,6 @@ export type LocationInput = {
 export type ManagersOrderResponseInput = {
   accepted: Scalars['Boolean']['input'];
   orderId: Scalars['ID']['input'];
-  productId: Scalars['ID']['input'];
-  providerId: Scalars['ID']['input'];
 };
 
 export type Mutation = {
@@ -227,6 +225,7 @@ export type Mutation = {
   addProductReview: Maybe<Review>;
   authenticateManager: AuthenticationOutput;
   authorize: AuthenticationOutput;
+  cancelBookingByUser: Maybe<Scalars['Boolean']['output']>;
   checkPhoneForManger: SendOptOutput;
   confirmPreAuthorization: Maybe<Scalars['Boolean']['output']>;
   createCategory: Category;
@@ -246,7 +245,7 @@ export type Mutation = {
   removeProductDetails: Scalars['Boolean']['output'];
   removeProvider: Scalars['Boolean']['output'];
   removeUser: Maybe<Scalars['Boolean']['output']>;
-  respondToOrder: Maybe<Scalars['Boolean']['output']>;
+  respondToBookingRequest: Maybe<Scalars['Boolean']['output']>;
   saveCard: Maybe<Scalars['Boolean']['output']>;
   scheduleCarForService: Maybe<Array<Maybe<ScheduledTimeSlotSchema>>>;
   sendOtp: SendOptOutput;
@@ -278,6 +277,10 @@ export type MutationAuthenticateManagerArgs = {
 
 export type MutationAuthorizeArgs = {
   input: AuthenticationInput;
+};
+
+export type MutationCancelBookingByUserArgs = {
+  orderId: Scalars['ID']['input'];
 };
 
 export type MutationCheckPhoneForMangerArgs = {
@@ -349,8 +352,8 @@ export type MutationRemoveProviderArgs = {
   providerId: Scalars['ID']['input'];
 };
 
-export type MutationRespondToOrderArgs = {
-  managersOrderResponse: ManagersOrderResponseInput;
+export type MutationRespondToBookingRequestArgs = {
+  input: ManagersOrderResponseInput;
 };
 
 export type MutationSaveCardArgs = {
@@ -413,7 +416,7 @@ export type Order = {
   packageId: Scalars['ID']['output'];
   productId: Scalars['ID']['output'];
   providerId: Maybe<Scalars['ID']['output']>;
-  schedulingDay: Maybe<Scalars['String']['output']>;
+  schedulingDate: Maybe<Scalars['String']['output']>;
   schedulingTime: Maybe<Scalars['String']['output']>;
   status: Maybe<OrderStatus>;
   totalPrice: Scalars['Int']['output'];
@@ -434,7 +437,7 @@ export type OrderInitializationResponse = {
   productId: Scalars['ID']['output'];
   providerId: Scalars['ID']['output'];
   redirectLink: Scalars['String']['output'];
-  schedulingDay: Maybe<Scalars['String']['output']>;
+  schedulingDate: Maybe<Scalars['String']['output']>;
   schedulingTime: Maybe<Scalars['String']['output']>;
   status: Maybe<OrderStatus>;
   totalPrice: Scalars['Int']['output'];
@@ -448,7 +451,7 @@ export type OrderInput = {
   idempotencyKey: Scalars['String']['input'];
   packageId: Scalars['ID']['input'];
   productId: Scalars['ID']['input'];
-  schedulingDay: InputMaybe<Scalars['String']['input']>;
+  schedulingDate: InputMaybe<Scalars['String']['input']>;
   schedulingTime: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -476,14 +479,14 @@ export type OrderedProduct = {
   __typename?: 'OrderedProduct';
   packageId: Scalars['ID']['output'];
   productId: Scalars['ID']['output'];
-  schedulingDay: Maybe<Scalars['String']['output']>;
+  schedulingDate: Maybe<Scalars['String']['output']>;
   schedulingTime: Maybe<Scalars['String']['output']>;
 };
 
 export type OrderedProductInput = {
   packageId: Scalars['ID']['input'];
   productId: Scalars['ID']['input'];
-  schedulingDay: InputMaybe<Scalars['String']['input']>;
+  schedulingDate: InputMaybe<Scalars['String']['input']>;
   schedulingTime: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -687,7 +690,7 @@ export type ScheduleCarForServiceInput = {
   carPlateNumber: InputMaybe<Scalars['String']['input']>;
   customerPhoneNumber: InputMaybe<Scalars['String']['input']>;
   productId: Scalars['ID']['input'];
-  schedulingDay: InputMaybe<Scalars['String']['input']>;
+  schedulingDate: InputMaybe<Scalars['String']['input']>;
   schedulingTime: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -832,6 +835,15 @@ export type Authorize = {
   };
 };
 
+export type CancelBookingByUserVariables = Exact<{
+  orderId: Scalars['ID']['input'];
+}>;
+
+export type CancelBookingByUser = {
+  __typename?: 'Mutation';
+  cancelBookingByUser: boolean | null;
+};
+
 export type CheckPhoneForMangerVariables = Exact<{
   phone: Scalars['String']['input'];
 }>;
@@ -889,7 +901,7 @@ export type CreateOrder = {
     packageId: string;
     categoryId: string;
     providerId: string;
-    schedulingDay: string | null;
+    schedulingDate: string | null;
     schedulingTime: string | null;
     status: OrderStatus | null;
     carType: CarType | null;
@@ -1110,13 +1122,13 @@ export type RemoveUserVariables = Exact<{[key: string]: never}>;
 
 export type RemoveUser = {__typename?: 'Mutation'; removeUser: boolean | null};
 
-export type RespondToOrderVariables = Exact<{
-  managersOrderResponse: ManagersOrderResponseInput;
+export type RespondToBookingRequestVariables = Exact<{
+  input: ManagersOrderResponseInput;
 }>;
 
-export type RespondToOrder = {
+export type RespondToBookingRequest = {
   __typename?: 'Mutation';
-  respondToOrder: boolean | null;
+  respondToBookingRequest: boolean | null;
 };
 
 export type SaveCardVariables = Exact<{
@@ -1438,7 +1450,7 @@ export type GetOrder = {
     packageId: string;
     categoryId: string;
     providerId: string | null;
-    schedulingDay: string | null;
+    schedulingDate: string | null;
     schedulingTime: string | null;
     carType: CarType | null;
     carPlateNumber: string | null;
@@ -1621,7 +1633,7 @@ export type ListOrders = {
     packageId: string;
     categoryId: string;
     providerId: string | null;
-    schedulingDay: string | null;
+    schedulingDate: string | null;
     schedulingTime: string | null;
     carType: CarType | null;
     carPlateNumber: string | null;
@@ -1645,7 +1657,7 @@ export type ListOrdersByManager = {
     packageId: string;
     categoryId: string;
     providerId: string | null;
-    schedulingDay: string | null;
+    schedulingDate: string | null;
     schedulingTime: string | null;
     carType: CarType | null;
     carPlateNumber: string | null;
@@ -2249,6 +2261,54 @@ export type AuthorizeMutationOptions = Apollo.BaseMutationOptions<
   Authorize,
   AuthorizeVariables
 >;
+export const CancelBookingByUserDocument = gql`
+  mutation cancelBookingByUser($orderId: ID!) {
+    cancelBookingByUser(orderId: $orderId)
+  }
+`;
+export type CancelBookingByUserMutationFn = Apollo.MutationFunction<
+  CancelBookingByUser,
+  CancelBookingByUserVariables
+>;
+
+/**
+ * __useCancelBookingByUser__
+ *
+ * To run a mutation, you first call `useCancelBookingByUser` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCancelBookingByUser` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [cancelBookingByUser, { data, loading, error }] = useCancelBookingByUser({
+ *   variables: {
+ *      orderId: // value for 'orderId'
+ *   },
+ * });
+ */
+export function useCancelBookingByUser(
+  baseOptions?: Apollo.MutationHookOptions<
+    CancelBookingByUser,
+    CancelBookingByUserVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<CancelBookingByUser, CancelBookingByUserVariables>(
+    CancelBookingByUserDocument,
+    options,
+  );
+}
+export type CancelBookingByUserHookResult = ReturnType<
+  typeof useCancelBookingByUser
+>;
+export type CancelBookingByUserMutationResult =
+  Apollo.MutationResult<CancelBookingByUser>;
+export type CancelBookingByUserMutationOptions = Apollo.BaseMutationOptions<
+  CancelBookingByUser,
+  CancelBookingByUserVariables
+>;
 export const CheckPhoneForMangerDocument = gql`
   mutation checkPhoneForManger($phone: String!) {
     checkPhoneForManger(phone: $phone) {
@@ -2417,7 +2477,7 @@ export const CreateOrderDocument = gql`
       packageId
       categoryId
       providerId
-      schedulingDay
+      schedulingDate
       schedulingTime
       status
       carType
@@ -3237,51 +3297,53 @@ export type RemoveUserMutationOptions = Apollo.BaseMutationOptions<
   RemoveUser,
   RemoveUserVariables
 >;
-export const RespondToOrderDocument = gql`
-  mutation respondToOrder($managersOrderResponse: ManagersOrderResponseInput!) {
-    respondToOrder(managersOrderResponse: $managersOrderResponse)
+export const RespondToBookingRequestDocument = gql`
+  mutation respondToBookingRequest($input: ManagersOrderResponseInput!) {
+    respondToBookingRequest(input: $input)
   }
 `;
-export type RespondToOrderMutationFn = Apollo.MutationFunction<
-  RespondToOrder,
-  RespondToOrderVariables
+export type RespondToBookingRequestMutationFn = Apollo.MutationFunction<
+  RespondToBookingRequest,
+  RespondToBookingRequestVariables
 >;
 
 /**
- * __useRespondToOrder__
+ * __useRespondToBookingRequest__
  *
- * To run a mutation, you first call `useRespondToOrder` within a React component and pass it any options that fit your needs.
- * When your component renders, `useRespondToOrder` returns a tuple that includes:
+ * To run a mutation, you first call `useRespondToBookingRequest` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRespondToBookingRequest` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [respondToOrder, { data, loading, error }] = useRespondToOrder({
+ * const [respondToBookingRequest, { data, loading, error }] = useRespondToBookingRequest({
  *   variables: {
- *      managersOrderResponse: // value for 'managersOrderResponse'
+ *      input: // value for 'input'
  *   },
  * });
  */
-export function useRespondToOrder(
+export function useRespondToBookingRequest(
   baseOptions?: Apollo.MutationHookOptions<
-    RespondToOrder,
-    RespondToOrderVariables
+    RespondToBookingRequest,
+    RespondToBookingRequestVariables
   >,
 ) {
   const options = {...defaultOptions, ...baseOptions};
-  return Apollo.useMutation<RespondToOrder, RespondToOrderVariables>(
-    RespondToOrderDocument,
-    options,
-  );
+  return Apollo.useMutation<
+    RespondToBookingRequest,
+    RespondToBookingRequestVariables
+  >(RespondToBookingRequestDocument, options);
 }
-export type RespondToOrderHookResult = ReturnType<typeof useRespondToOrder>;
-export type RespondToOrderMutationResult =
-  Apollo.MutationResult<RespondToOrder>;
-export type RespondToOrderMutationOptions = Apollo.BaseMutationOptions<
-  RespondToOrder,
-  RespondToOrderVariables
+export type RespondToBookingRequestHookResult = ReturnType<
+  typeof useRespondToBookingRequest
+>;
+export type RespondToBookingRequestMutationResult =
+  Apollo.MutationResult<RespondToBookingRequest>;
+export type RespondToBookingRequestMutationOptions = Apollo.BaseMutationOptions<
+  RespondToBookingRequest,
+  RespondToBookingRequestVariables
 >;
 export const SaveCardDocument = gql`
   mutation saveCard($orderId: ID!) {
@@ -4271,7 +4333,7 @@ export const GetOrderDocument = gql`
       packageId
       categoryId
       providerId
-      schedulingDay
+      schedulingDate
       schedulingTime
       carType
       carPlateNumber
@@ -4787,7 +4849,7 @@ export const ListOrdersDocument = gql`
       packageId
       categoryId
       providerId
-      schedulingDay
+      schedulingDate
       schedulingTime
       carType
       carPlateNumber
@@ -4850,7 +4912,7 @@ export const ListOrdersByManagerDocument = gql`
       packageId
       categoryId
       providerId
-      schedulingDay
+      schedulingDate
       schedulingTime
       carType
       carPlateNumber

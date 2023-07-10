@@ -111,7 +111,7 @@ export default function CheckoutScreen({
           idempotencyKey: idempotencyKey,
           productId,
           packageId,
-          schedulingDay: selectedDate,
+          schedulingDate: selectedDate,
           schedulingTime: selectedTime,
           carType: selectedCarType,
           carPlateNumber: plateNumber,
