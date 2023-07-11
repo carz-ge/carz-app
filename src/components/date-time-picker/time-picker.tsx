@@ -54,7 +54,7 @@ export default function TimePicker({time, setTime}: DatePickerProps) {
             <View style={styles.timeOptionsCont}>
               {Array.from(Array(10).keys()).map((timeStamp, index) => {
                 return Array.from(Array(4).keys()).map((minute, index) => {
-                  const initialTime = timeStamp + 9;
+                  const initialTime = timeStamp + 10;
                   const item = `${initialTime}:${
                     minute === 0 ? '00' : minute * 15
                   }`;

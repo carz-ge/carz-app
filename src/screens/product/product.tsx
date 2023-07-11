@@ -84,67 +84,77 @@ export default function ProductScreen({
         style={styles.scrollContainer}
         showsVerticalScrollIndicator={false}>
         {/* Product images */}
-        <ProductPhotos images={[product.mainImage, product.mainImage]} />
+        <ProductPhotos
+          images={[product.mainImage, ...(product.images || [])]}
+        />
         <View style={styles.infoContainer}>
           <View style={styles.details}>
-            <View>
+            <View
+              style={{
+                flex: 1,
+              }}>
               {/* Product title */}
-              <Text style={styles.title}>{product.name.ka}</Text>
-              <View style={styles.shortDetails}>
-                {/* Provider logo */}
-                <Text>
-                  by{' '}
-                  <Text style={styles.providerName}>
-                    {product?.provider.name}
-                  </Text>
-                </Text>
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <View>
+                  <Text style={styles.title}>{product.name.ka}</Text>
+                  <View style={styles.shortDetails}>
+                    {/* Provider logo */}
+                    <Text>
+                      by{' '}
+                      <Text style={styles.providerName}>
+                        {product?.provider.name}
+                      </Text>
+                    </Text>
+                  </View>
+                </View>
+                {product.mainImage && (
+                  <Image
+                    style={styles.providerLogo}
+                    source={{uri: product.mainImage}}
+                  />
+                )}
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                }}>
+                <Ionicons size={20} name="star" />
+                <Text> 4.6 (100)</Text>
+              </View>
+              {/* Location info */}
+              {product.location && (
                 <View
                   style={{
                     flexDirection: 'row',
                   }}>
-                  <Ionicons size={20} name="star" />
-                  <Text> 4.6 (100)</Text>
+                  <Ionicons size={20} name="location" />
+                  <Text>
+                    {product.location.address.street},{' '}
+                    {product.location.address.district},{' '}
+                    {product.location.address.city}
+                  </Text>
                 </View>
-                {/* Location info */}
-                {product.location && (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                    }}>
-                    <Ionicons size={20} name="location" />
-                    <Text>
-                      {product.location.address.street},{' '}
-                      {product.location.address.district},{' '}
-                      {product.location.address.city}
-                    </Text>
-                  </View>
-                )}
+              )}
 
-                {/* Distance  */}
-                {distance && (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      gap: 1,
-                    }}>
-                    <Image
-                      style={{width: 20, height: 20}}
-                      source={
-                        require('../../../assets/images/distance.png') as ImageSourcePropType
-                      }
-                      resizeMode="contain"
-                    />
-                    <Text>{distance} - შენი ადგილმდებარეობიდან</Text>
-                  </View>
-                )}
-              </View>
+              {/* Distance  */}
+              {distance && (
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    gap: 1,
+                  }}>
+                  <Image
+                    style={{width: 20, height: 20}}
+                    source={
+                      require('../../../assets/images/distance.png') as ImageSourcePropType
+                    }
+                    resizeMode="contain"
+                  />
+                  <Text>{distance} - შენი ადგილმდებარეობიდან</Text>
+                </View>
+              )}
             </View>
-            {product.mainImage && (
-              <Image
-                style={styles.providerLogo}
-                source={{uri: product.mainImage}}
-              />
-            )}
           </View>
           <View style={styles.sectionsContainer}>
             <View>
@@ -216,7 +226,7 @@ const styles = StyleSheet.create({
   providerLogo: {
     width: 50,
     height: 50,
-    marginLeft: 10,
+    // marginRight: 100,
     borderRadius: 25,
   },
   providerName: {

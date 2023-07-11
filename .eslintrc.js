@@ -35,6 +35,7 @@ module.exports = {
     "prefer-const": "error",
     // Prefer template strings over concatenating with plus.
     "prefer-template": "error",
+    "sonarjs/no-duplicate-string": "warn"
   },
   plugins: ['react', 'security', 'prettier', 'sonarjs', '@typescript-eslint'],
 };

@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
+  Animated,
   FlatList,
   StyleSheet,
   TouchableOpacity,
@@ -16,6 +17,7 @@ import colors from '../../styles/colors';
 import {getMinProductPriceInGel} from '../../utils/price';
 import {calculateDistance} from '../../utils/map-distance';
 import MapSearchAndFilters from './filter-and-sort/filter-and-sort';
+import {ViewToken} from '@react-native/virtualized-lists';
 
 interface SearchResultsMapsProps {
   products: Product[];
@@ -26,19 +28,85 @@ interface SearchResultsMapsProps {
 // const LATITUDE_DELTA = 0.04;
 // const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-function SearchResultMap({products}: SearchResultsMapsProps) {
-  const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null);
+function animateItemChange(
+  selectedPlaceId: string | null,
+  flatListRef: React.MutableRefObject<FlatList<Product> | null>,
+  products: Product[],
+  mapRef: React.MutableRefObject<MapView | null>,
+) {
+  console.log('selected place id: ', selectedPlaceId);
+  if (!selectedPlaceId || !flatListRef) {
+    console.log('selectedPlaceId is null');
+    return;
+  }
 
-  const flatlist = useRef<FlatList<Product> | null>(null);
-  const map = useRef<MapView | null>(null);
+  const index = products.findIndex(place => place.id === selectedPlaceId);
+  console.log(index);
+  if (!flatListRef.current) {
+    console.log('flatListRef.current is null');
+    return;
+  }
+  if (index === -1) {
+    console.log('index is -1');
+    return;
+  }
+  flatListRef.current.scrollToIndex({index});
+
+  const selectedPlace = products[index];
+  if (!selectedPlace.location) {
+    return;
+  }
+  const region = {
+    latitude: selectedPlace.location.coordinates.lat,
+    longitude: selectedPlace.location.coordinates.lng,
+    latitudeDelta: 0.1,
+    longitudeDelta: 0.1,
+  };
+  // Console.log('mapRef.current:', mapRef.current);
+  if (!mapRef.current) {
+    console.log('mapRef.current is null');
+    return;
+  }
+  mapRef.current.animateToRegion(region);
+}
+
+function SearchResultMap({products}: SearchResultsMapsProps) {
+  const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(
+    products.length > 0 ? products[0].id : null,
+  );
+
+  const flatListRef = useRef<FlatList<Product> | null>(null);
+  const mapRef = useRef<MapView | null>(null);
 
   const viewConfig = useRef({itemVisiblePercentThreshold: 100});
   const onViewChanged = useRef(
-    ({viewableItems}: {viewableItems: {item: Product}[]}) => {
-      console.log('viewable items: ', typeof viewableItems, viewableItems);
+    ({
+      viewableItems,
+      changed,
+    }: {
+      viewableItems: Array<ViewToken>;
+      changed: Array<ViewToken>;
+    }) => {
+      const viewAbleItemsForLog = viewableItems.map(i => ({
+        index: i.index,
+        key: i.key,
+        isView: i.isViewable,
+      }));
+      const changedItemsForLog = viewableItems.map(i => ({
+        index: i.index,
+        key: i.key,
+        isView: i.isViewable,
+      }));
+      console.log('viewable items: ', viewAbleItemsForLog);
+      console.log('changed: ', changedItemsForLog);
+
       if (viewableItems.length > 0) {
-        const selectedPlace = viewableItems[0].item;
-        console.log('selected place: ', selectedPlace);
+        const selectedPlace = viewableItems[0].item as Product;
+        console.log(
+          'selected product: ',
+          selectedPlace.id,
+          selectedPlace.name.ka,
+        );
         setSelectedPlaceId(selectedPlace.id);
       }
     },
@@ -72,7 +140,7 @@ function SearchResultMap({products}: SearchResultsMapsProps) {
     }
 
     const currLocation = await Location.getCurrentPositionAsync({});
-    map.current?.animateToRegion({
+    mapRef.current?.animateToRegion({
       latitude: currLocation.coords.latitude,
       longitude: currLocation.coords.longitude,
       latitudeDelta: 0.1,
@@ -81,46 +149,12 @@ function SearchResultMap({products}: SearchResultsMapsProps) {
   }
 
   useEffect(() => {
-    console.log('selected place id: ', selectedPlaceId);
-    if (!selectedPlaceId || !flatlist) {
-      console.log('selectedPlaceId is null');
-      return;
-    }
-
-    const index = products.findIndex(place => place.id === selectedPlaceId);
-    console.log(index);
-    if (!flatlist.current) {
-      console.log('flatlist.current is null');
-      return;
-    }
-    if (index === -1) {
-      console.log('index is -1');
-      return;
-    }
-    flatlist.current.scrollToIndex({index});
-
-    const selectedPlace = products[index];
-    if (!selectedPlace.location) {
-      return;
-    }
-    const region = {
-      latitude: selectedPlace.location.coordinates.lat,
-      longitude: selectedPlace.location.coordinates.lng,
-      latitudeDelta: 0.1,
-      longitudeDelta: 0.1,
-    };
-    // Console.log('map.current:', map.current);
-    if (!map.current) {
-      console.log('map.current is null');
-      return;
-    }
-    map.current.animateToRegion(region);
+    animateItemChange(selectedPlaceId, flatListRef, products, mapRef);
   }, [selectedPlaceId, products]);
-  console.log('search results maps: ');
   return (
     <View style={styles.container}>
       <MapView
-        ref={map}
+        ref={mapRef}
         style={styles.mapView}
         provider={PROVIDER_GOOGLE}
         // cacheEnabled={true}
@@ -139,7 +173,7 @@ function SearchResultMap({products}: SearchResultsMapsProps) {
           longitudeDelta: 0.3,
         }}>
         {products.map(product => {
-          console.log('product: ', product);
+          console.log('product: ', product.id);
           return (
             <CustomMarker
               key={product.id}
@@ -162,7 +196,7 @@ function SearchResultMap({products}: SearchResultsMapsProps) {
       </TouchableOpacity>
       <View style={styles.carouselListContainer}>
         <FlatList
-          ref={flatlist}
+          ref={flatListRef}
           data={products}
           renderItem={({item}) => (
             <ProductCarouselItem
@@ -178,7 +212,6 @@ function SearchResultMap({products}: SearchResultsMapsProps) {
           decelerationRate="fast"
           viewabilityConfig={viewConfig.current}
           onViewableItemsChanged={onViewChanged.current}
-          // pagingEnabled={true}
           // bounces={false}
         />
       </View>

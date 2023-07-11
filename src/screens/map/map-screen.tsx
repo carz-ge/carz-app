@@ -36,6 +36,6 @@ export default function MapScreen({route}: MainTabStackScreenProps<'map'>) {
     fetchPolicy: 'network-only',
   });
 
-  console.log('search data: ', data, loading, error);
+  console.log('search data: ', data?.searchProducts.length, loading, error);
   return <SearchResultMap products={data?.searchProducts || []} />;
 }

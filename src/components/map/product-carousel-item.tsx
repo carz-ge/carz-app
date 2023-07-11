@@ -91,7 +91,7 @@ export default function ProductCarouselItem({
 const styles = StyleSheet.create({
   container: {
     height: 120,
-    padding: 5,
+    paddingHorizontal: 5,
 
     shadowColor: '#000',
     shadowOffset: {
