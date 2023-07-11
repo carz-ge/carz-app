@@ -3,6 +3,7 @@ mutation createOrder($order: OrderInput!){
         id
         idempotencyKey
         redirectLink
+        isAutomatic
         totalPrice
         commission
         productId

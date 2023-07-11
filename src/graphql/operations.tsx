@@ -433,10 +433,11 @@ export type OrderInitializationResponse = {
   errorMessage: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   idempotencyKey: Scalars['String']['output'];
+  isAutomatic: Maybe<Scalars['Boolean']['output']>;
   packageId: Scalars['ID']['output'];
   productId: Scalars['ID']['output'];
   providerId: Scalars['ID']['output'];
-  redirectLink: Scalars['String']['output'];
+  redirectLink: Maybe<Scalars['String']['output']>;
   schedulingDate: Maybe<Scalars['String']['output']>;
   schedulingTime: Maybe<Scalars['String']['output']>;
   status: Maybe<OrderStatus>;
@@ -447,6 +448,7 @@ export type OrderInput = {
   carId: InputMaybe<Scalars['ID']['input']>;
   carPlateNumber: InputMaybe<Scalars['String']['input']>;
   carType: InputMaybe<CarType>;
+  cardId: InputMaybe<Scalars['ID']['input']>;
   comment: InputMaybe<Scalars['String']['input']>;
   idempotencyKey: Scalars['String']['input'];
   packageId: Scalars['ID']['input'];
@@ -894,7 +896,8 @@ export type CreateOrder = {
     __typename?: 'OrderInitializationResponse';
     id: string;
     idempotencyKey: string;
-    redirectLink: string;
+    redirectLink: string | null;
+    isAutomatic: boolean | null;
     totalPrice: number;
     commission: number;
     productId: string;
@@ -2471,6 +2474,7 @@ export const CreateOrderDocument = gql`
       id
       idempotencyKey
       redirectLink
+      isAutomatic
       totalPrice
       commission
       productId

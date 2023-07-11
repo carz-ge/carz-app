@@ -117,11 +117,23 @@ export default function CheckoutScreen({
           carPlateNumber: plateNumber,
           carId: null,
           comment: '',
+          cardId: selectedCardId,
         },
       },
     });
     // TODO if there is no data show error
     console.log('orderResponse', JSON.stringify(orderResponse));
+
+    if (orderResponse.data?.createOrder.isAutomatic) {
+      // TODO we dont now if payment was successful or not
+      navigation.navigate('paymentStatus', {
+        success: true,
+        orderId: orderResponse.data?.createOrder.id || '',
+      });
+
+      return;
+    }
+
     navigation.navigate('payment', {
       redirectUrl: orderResponse.data?.createOrder.redirectLink || '',
       orderId: orderResponse.data?.createOrder.id || '',
