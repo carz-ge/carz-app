@@ -29,18 +29,17 @@ interface SearchResultsMapsProps {
 // const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 function animateItemChange(
-  selectedPlaceId: string | null,
+  selectedPlace: Product,
+  index: number,
   flatListRef: React.MutableRefObject<FlatList<Product> | null>,
-  products: Product[],
   mapRef: React.MutableRefObject<MapView | null>,
 ) {
-  console.log('selected place id: ', selectedPlaceId);
-  if (!selectedPlaceId || !flatListRef) {
+  console.log('selected place id: ', selectedPlace.id);
+  if (!selectedPlace.id || !flatListRef) {
     console.log('selectedPlaceId is null');
     return;
   }
 
-  const index = products.findIndex(place => place.id === selectedPlaceId);
   console.log(index);
   if (!flatListRef.current) {
     console.log('flatListRef.current is null');
@@ -50,9 +49,8 @@ function animateItemChange(
     console.log('index is -1');
     return;
   }
-  flatListRef.current.scrollToIndex({index});
+  flatListRef.current.scrollToIndex({index, animated: true});
 
-  const selectedPlace = products[index];
   if (!selectedPlace.location) {
     return;
   }
@@ -71,8 +69,11 @@ function animateItemChange(
 }
 
 function SearchResultMap({products}: SearchResultsMapsProps) {
-  const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(
+  const [selectedProductId, setSelectedProductId] = useState<string | null>(
     products.length > 0 ? products[0].id : null,
+  );
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(
+    products.length > 0 ? 0 : null,
   );
 
   const flatListRef = useRef<FlatList<Product> | null>(null);
@@ -92,7 +93,7 @@ function SearchResultMap({products}: SearchResultsMapsProps) {
         key: i.key,
         isView: i.isViewable,
       }));
-      const changedItemsForLog = viewableItems.map(i => ({
+      const changedItemsForLog = changed.map(i => ({
         index: i.index,
         key: i.key,
         isView: i.isViewable,
@@ -104,17 +105,34 @@ function SearchResultMap({products}: SearchResultsMapsProps) {
         const selectedPlace = viewableItems[0].item as Product;
         console.log(
           'selected product: ',
+          viewableItems[0].index,
           selectedPlace.id,
           selectedPlace.name.ka,
         );
-        setSelectedPlaceId(selectedPlace.id);
+        // const viewableItem = viewableItems.find(
+        //   item => (item.item as Product).id === selectedProductId,
+        // );
+        // const changedItem = changed.find(
+        //   item => (item.item as Product).id === selectedProductId,
+        // );
+        // const changedProduct =
+        //   changed.length > 0 ? (changed[0].item as Product) : null;
+        // if (
+        //   !viewableItem &&
+        //   !changedItem &&
+        //   !(changedProduct && changedProduct.id === selectedPlace.id)
+        // ) {
+        //   return;
+        // }
+        setSelectedProductId(selectedPlace.id);
+        setSelectedIndex(viewableItems[0].index);
       }
     },
   );
 
   const {width} = useWindowDimensions();
   // Calculate the width of each item in the carousel
-  const itemWidth = width - 60;
+  const itemWidth = width - 20;
   const [location, setLocation] = useState<Location.LocationObject | null>(
     null,
   );
@@ -149,8 +167,19 @@ function SearchResultMap({products}: SearchResultsMapsProps) {
   }
 
   useEffect(() => {
-    animateItemChange(selectedPlaceId, flatListRef, products, mapRef);
-  }, [selectedPlaceId, products]);
+    const product = products.find(place => place.id === selectedProductId);
+    if (product) {
+      animateItemChange(product, selectedIndex || 0, flatListRef, mapRef);
+    } else {
+      console.log('product not found', selectedProductId, products.length);
+    }
+  }, [selectedProductId, products, selectedIndex]);
+
+  function customMarkerClicked(product: Product, index: number) {
+    setSelectedProductId(product.id);
+    setSelectedIndex(index);
+  }
+
   return (
     <View style={styles.container}>
       <MapView
@@ -172,18 +201,18 @@ function SearchResultMap({products}: SearchResultsMapsProps) {
           latitudeDelta: 0.3,
           longitudeDelta: 0.3,
         }}>
-        {products.map(product => {
+        {products.map((product, i) => {
           console.log('product: ', product.id);
           return (
             <CustomMarker
               key={product.id}
               coordinate={{
-                latitude: product.location?.coordinates.lat || 47.1,
-                longitude: product.location?.coordinates.lng || 48.1,
+                latitude: product.location?.coordinates.lat || 41.690985,
+                longitude: product.location?.coordinates.lng || 44.812271,
               }}
               price={getMinProductPriceInGel(product) || '10.0'} // TODO: get price
-              isSelected={product.id === selectedPlaceId}
-              onPress={() => setSelectedPlaceId(product.id)}
+              isSelected={product.id === selectedProductId}
+              onPress={() => customMarkerClicked(product, i)}
             />
           );
         })}

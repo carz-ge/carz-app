@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   },
 
   name: {
-    margin: 10,
+    margin: 5,
     color: Colors.primary,
     flexDirection: 'row',
   },
