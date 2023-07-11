@@ -42,6 +42,16 @@ export default function HomeScreen({
           }>
           <Text style={styles.popularTitle}>Test WebView</Text>
         </Pressable>
+        <Pressable
+          style={{margin: 10}}
+          onPress={() =>
+            navigation.navigate('paymentStatus', {
+              success: true,
+              orderId: '123',
+            })
+          }>
+          <Text style={styles.popularTitle}>Test Payment Status</Text>
+        </Pressable>
         {/* TODO */}
       </ScrollView>
     </SafeAreaView>

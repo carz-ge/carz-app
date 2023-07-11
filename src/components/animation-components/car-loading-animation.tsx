@@ -1,15 +1,20 @@
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import React from 'react';
 import LottieView, {AnimationObject} from 'lottie-react-native';
 import colors from '../../styles/colors';
 
-interface FailAnimationProps {
+interface CarLoadingAnimationProps {
   onFinish?: () => void;
+  style?: StyleProp<ViewStyle>;
+  loop?: boolean;
 }
 
-export default function FailAnimation({onFinish}: FailAnimationProps) {
+export default function CarLoadingAnimation({
+  onFinish,
+  style,
+}: CarLoadingAnimationProps) {
   const localSource =
-    require('../../animations/failed.json') as AnimationObject;
+    require('../../animations/car-revolving-animation.json') as AnimationObject;
 
   return (
     <View style={styles.container}>
@@ -17,8 +22,8 @@ export default function FailAnimation({onFinish}: FailAnimationProps) {
         key={`fail`}
         source={localSource}
         autoPlay={true}
-        loop={false}
-        style={styles.lottie}
+        loop={true}
+        style={style ?? styles.lottie}
         resizeMode={'contain'}
         colorFilters={colorFilter}
         enableMergePathsAndroidForKitKatAndAbove
@@ -30,19 +35,10 @@ export default function FailAnimation({onFinish}: FailAnimationProps) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 32,
   },
-  controlsContainer: {flexDirection: 'row', marginTop: 24, columnGap: 12},
-  button: {
-    backgroundColor: colors.primary,
-    paddingHorizontal: 24,
-    paddingVertical: 16,
-  },
-  text: {color: 'white'},
-  lottie: {width: 200, height: 200},
+  lottie: {width: 20, height: 200},
 });
 
 const colorFilter = [

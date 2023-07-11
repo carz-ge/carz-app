@@ -2,7 +2,12 @@ import {View, StyleSheet} from 'react-native';
 import React from 'react';
 import LottieView, {AnimationObject} from 'lottie-react-native';
 import colors from '../../styles/colors';
-export default function SuccessAnimation() {
+
+interface SuccessAnimationProps {
+  onFinish?: () => void;
+}
+
+export default function SuccessAnimation({onFinish}: SuccessAnimationProps) {
   const localSource =
     require('../../animations/success.json') as AnimationObject;
 
@@ -17,9 +22,7 @@ export default function SuccessAnimation() {
         resizeMode={'contain'}
         colorFilters={colorFilter}
         enableMergePathsAndroidForKitKatAndAbove
-        onAnimationFinish={() => {
-          console.log('finished');
-        }}
+        onAnimationFinish={onFinish}
       />
     </View>
   );
