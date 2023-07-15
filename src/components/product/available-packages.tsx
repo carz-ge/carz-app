@@ -1,4 +1,4 @@
-import {ProductDetails} from '../../graphql/operations';
+import {ProductPackage} from '../../graphql/operations';
 import {PackageCard} from '../ProductPackage/package-card';
 import React from 'react';
 import ShowAllPackagesButton from './show-all-packages-botton';
@@ -6,7 +6,7 @@ import ShowAllPackagesButton from './show-all-packages-botton';
 const MAX_PACKAGES_TO_SHOW = 2;
 
 interface AvailablePackagesProps {
-  packages: ProductDetails[];
+  packages: ProductPackage[];
   selectPackage: (packageId: string | null) => void;
   selectedPackageId: string | null;
 }
@@ -23,7 +23,7 @@ export default function AvailablePackages({
 
   return (
     <>
-      {packagesToShow.map((productPackage: ProductDetails) => (
+      {packagesToShow.map((productPackage: ProductPackage) => (
         <PackageCard
           key={productPackage.id}
           productPackage={productPackage}

@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {ProductDetails} from '../../graphql/operations';
+import {ProductPackage} from '../../graphql/operations';
 import Colors from '../../styles/colors';
 import {Feather, FontAwesome5, Ionicons} from '@expo/vector-icons';
 import {getPriceRangeForPackage} from '../../utils/price';
@@ -16,7 +16,7 @@ import PackageInfo from './package-details';
 import {BottomSheetBackdropProps} from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop';
 
 type PackageCardProps = {
-  productPackage: ProductDetails;
+  productPackage: ProductPackage;
   onPackageSelected: (packageId: string | null) => void;
   isSelected: boolean;
 };

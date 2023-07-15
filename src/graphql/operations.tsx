@@ -232,7 +232,7 @@ export type Mutation = {
   createOrder: OrderInitializationResponse;
   createOrderBySavedCard: OrderProcessingResponse;
   createProduct: Product;
-  createProductDetails: ProductDetails;
+  createProductDetails: ProductPackage;
   createProvider: Provider;
   deactivateUser: Maybe<Scalars['Boolean']['output']>;
   initPayment: OrderProcessingResponse;
@@ -254,7 +254,7 @@ export type Mutation = {
   updateCar: Car;
   updateCategory: Category;
   updateProduct: Product;
-  updateProductDetails: ProductDetails;
+  updateProductDetails: ProductPackage;
   updateProvider: Provider;
   updateUser: User;
 };
@@ -414,8 +414,10 @@ export type Order = {
   errorMessage: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   packageId: Scalars['ID']['output'];
+  product: Product;
   productId: Scalars['ID']['output'];
-  providerId: Maybe<Scalars['ID']['output']>;
+  productPackage: ProductPackage;
+  providerId: Scalars['ID']['output'];
   schedulingDate: Maybe<Scalars['String']['output']>;
   schedulingTime: Maybe<Scalars['String']['output']>;
   status: Maybe<OrderStatus>;
@@ -494,6 +496,7 @@ export type OrderedProductInput = {
 
 export type Product = {
   __typename?: 'Product';
+  category: Category;
   categoryId: Scalars['ID']['output'];
   description: Maybe<LingualString>;
   id: Scalars['ID']['output'];
@@ -501,23 +504,10 @@ export type Product = {
   location: Maybe<Location>;
   mainImage: Scalars['String']['output'];
   name: LingualString;
-  packages: Maybe<Array<ProductDetails>>;
+  packages: Maybe<Array<ProductPackage>>;
   provider: Provider;
   providerId: Scalars['ID']['output'];
   tags: Maybe<Array<Scalars['String']['output']>>;
-};
-
-export type ProductDetails = {
-  __typename?: 'ProductDetails';
-  availableServices: Maybe<Array<LingualString>>;
-  averageDurationMinutes: Maybe<Scalars['Int']['output']>;
-  currency: Maybe<Currency>;
-  description: Maybe<LingualString>;
-  id: Scalars['ID']['output'];
-  name: LingualString;
-  notAvailableServices: Maybe<Array<Maybe<LingualString>>>;
-  pricesForCarTypes: Maybe<Array<ProductDetailsCarPrice>>;
-  productId: Scalars['ID']['output'];
 };
 
 export type ProductDetailsCarPrice = {
@@ -559,6 +549,19 @@ export type ProductInput = {
   name: LingualStringInput;
   providerId: Scalars['ID']['input'];
   tags: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+export type ProductPackage = {
+  __typename?: 'ProductPackage';
+  availableServices: Maybe<Array<LingualString>>;
+  averageDurationMinutes: Maybe<Scalars['Int']['output']>;
+  currency: Maybe<Currency>;
+  description: Maybe<LingualString>;
+  id: Scalars['ID']['output'];
+  name: LingualString;
+  notAvailableServices: Maybe<Array<Maybe<LingualString>>>;
+  pricesForCarTypes: Maybe<Array<ProductDetailsCarPrice>>;
+  productId: Scalars['ID']['output'];
 };
 
 export type Provider = {
@@ -606,7 +609,7 @@ export type Query = {
   listOrdersByManager: Array<Order>;
   listProductByCategoryId: Array<Product>;
   listProductByProviderId: Array<Product>;
-  listProductDetailsByProductId: Array<ProductDetails>;
+  listProductDetailsByProductId: Array<ProductPackage>;
   listProductReviews: Array<Review>;
   listProducts: Array<Product>;
   listProviders: Array<Provider>;
@@ -943,9 +946,27 @@ export type CreateProduct = {
     images: Array<string> | null;
     tags: Array<string> | null;
     name: {__typename?: 'LingualString'; ka: string; en: string};
+    provider: {
+      __typename?: 'Provider';
+      id: string;
+      name: string;
+      phone: string | null;
+      email: string | null;
+      logo: string | null;
+      website: string | null;
+    };
+    category: {
+      __typename?: 'Category';
+      id: string;
+      internalName: string;
+      image: string | null;
+      priority: number;
+      active: boolean;
+      name: {__typename?: 'LingualString'; ka: string; en: string};
+    };
     description: {__typename?: 'LingualString'; ka: string; en: string} | null;
     packages: Array<{
-      __typename?: 'ProductDetails';
+      __typename?: 'ProductPackage';
       id: string;
       productId: string;
       currency: Currency | null;
@@ -973,15 +994,6 @@ export type CreateProduct = {
         en: string;
       } | null> | null;
     }> | null;
-    provider: {
-      __typename?: 'Provider';
-      id: string;
-      name: string;
-      phone: string | null;
-      email: string | null;
-      logo: string | null;
-      website: string | null;
-    };
     location: {
       __typename?: 'Location';
       address: {
@@ -1002,7 +1014,7 @@ export type CreateProductDetailsVariables = Exact<{
 export type CreateProductDetails = {
   __typename?: 'Mutation';
   createProductDetails: {
-    __typename?: 'ProductDetails';
+    __typename?: 'ProductPackage';
     id: string;
     productId: string;
     currency: Currency | null;
@@ -1242,9 +1254,27 @@ export type UpdateProduct = {
     images: Array<string> | null;
     tags: Array<string> | null;
     name: {__typename?: 'LingualString'; ka: string; en: string};
+    provider: {
+      __typename?: 'Provider';
+      id: string;
+      name: string;
+      phone: string | null;
+      email: string | null;
+      logo: string | null;
+      website: string | null;
+    };
+    category: {
+      __typename?: 'Category';
+      id: string;
+      internalName: string;
+      image: string | null;
+      priority: number;
+      active: boolean;
+      name: {__typename?: 'LingualString'; ka: string; en: string};
+    };
     description: {__typename?: 'LingualString'; ka: string; en: string} | null;
     packages: Array<{
-      __typename?: 'ProductDetails';
+      __typename?: 'ProductPackage';
       id: string;
       productId: string;
       currency: Currency | null;
@@ -1272,15 +1302,6 @@ export type UpdateProduct = {
         en: string;
       } | null> | null;
     }> | null;
-    provider: {
-      __typename?: 'Provider';
-      id: string;
-      name: string;
-      phone: string | null;
-      email: string | null;
-      logo: string | null;
-      website: string | null;
-    };
     location: {
       __typename?: 'Location';
       address: {
@@ -1302,7 +1323,7 @@ export type UpdateProductDetailsVariables = Exact<{
 export type UpdateProductDetails = {
   __typename?: 'Mutation';
   updateProductDetails: {
-    __typename?: 'ProductDetails';
+    __typename?: 'ProductPackage';
     id: string;
     productId: string;
     currency: Currency | null;
@@ -1452,7 +1473,7 @@ export type GetOrder = {
     productId: string;
     packageId: string;
     categoryId: string;
-    providerId: string | null;
+    providerId: string;
     schedulingDate: string | null;
     schedulingTime: string | null;
     carType: CarType | null;
@@ -1460,6 +1481,107 @@ export type GetOrder = {
     errorMessage: string | null;
     createdAt: string | null;
     updatedAt: string | null;
+    product: {
+      __typename?: 'Product';
+      id: string;
+      providerId: string;
+      categoryId: string;
+      mainImage: string;
+      images: Array<string> | null;
+      tags: Array<string> | null;
+      name: {__typename?: 'LingualString'; ka: string; en: string};
+      provider: {
+        __typename?: 'Provider';
+        id: string;
+        name: string;
+        phone: string | null;
+        email: string | null;
+        logo: string | null;
+        website: string | null;
+      };
+      category: {
+        __typename?: 'Category';
+        id: string;
+        internalName: string;
+        image: string | null;
+        priority: number;
+        active: boolean;
+        name: {__typename?: 'LingualString'; ka: string; en: string};
+      };
+      description: {
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      } | null;
+      packages: Array<{
+        __typename?: 'ProductPackage';
+        id: string;
+        productId: string;
+        currency: Currency | null;
+        averageDurationMinutes: number | null;
+        name: {__typename?: 'LingualString'; ka: string; en: string};
+        description: {
+          __typename?: 'LingualString';
+          ka: string;
+          en: string;
+        } | null;
+        pricesForCarTypes: Array<{
+          __typename?: 'ProductDetailsCarPrice';
+          order: string | null;
+          carType: CarType;
+          price: number | null;
+        }> | null;
+        availableServices: Array<{
+          __typename?: 'LingualString';
+          ka: string;
+          en: string;
+        }> | null;
+        notAvailableServices: Array<{
+          __typename?: 'LingualString';
+          ka: string;
+          en: string;
+        } | null> | null;
+      }> | null;
+      location: {
+        __typename?: 'Location';
+        address: {
+          __typename?: 'Address';
+          street: string;
+          district: string;
+          city: string;
+        };
+        coordinates: {__typename?: 'Coordinates'; lat: number; lng: number};
+      } | null;
+    };
+    productPackage: {
+      __typename?: 'ProductPackage';
+      id: string;
+      productId: string;
+      currency: Currency | null;
+      averageDurationMinutes: number | null;
+      name: {__typename?: 'LingualString'; ka: string; en: string};
+      description: {
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      } | null;
+      pricesForCarTypes: Array<{
+        __typename?: 'ProductDetailsCarPrice';
+        order: string | null;
+        carType: CarType;
+        price: number | null;
+      }> | null;
+      availableServices: Array<{
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      }> | null;
+      notAvailableServices: Array<{
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      } | null> | null;
+    };
   };
 };
 
@@ -1487,9 +1609,27 @@ export type GetProduct = {
     images: Array<string> | null;
     tags: Array<string> | null;
     name: {__typename?: 'LingualString'; ka: string; en: string};
+    provider: {
+      __typename?: 'Provider';
+      id: string;
+      name: string;
+      phone: string | null;
+      email: string | null;
+      logo: string | null;
+      website: string | null;
+    };
+    category: {
+      __typename?: 'Category';
+      id: string;
+      internalName: string;
+      image: string | null;
+      priority: number;
+      active: boolean;
+      name: {__typename?: 'LingualString'; ka: string; en: string};
+    };
     description: {__typename?: 'LingualString'; ka: string; en: string} | null;
     packages: Array<{
-      __typename?: 'ProductDetails';
+      __typename?: 'ProductPackage';
       id: string;
       productId: string;
       currency: Currency | null;
@@ -1517,15 +1657,6 @@ export type GetProduct = {
         en: string;
       } | null> | null;
     }> | null;
-    provider: {
-      __typename?: 'Provider';
-      id: string;
-      name: string;
-      phone: string | null;
-      email: string | null;
-      logo: string | null;
-      website: string | null;
-    };
     location: {
       __typename?: 'Location';
       address: {
@@ -1635,7 +1766,7 @@ export type ListOrders = {
     productId: string;
     packageId: string;
     categoryId: string;
-    providerId: string | null;
+    providerId: string;
     schedulingDate: string | null;
     schedulingTime: string | null;
     carType: CarType | null;
@@ -1643,6 +1774,107 @@ export type ListOrders = {
     errorMessage: string | null;
     createdAt: string | null;
     updatedAt: string | null;
+    product: {
+      __typename?: 'Product';
+      id: string;
+      providerId: string;
+      categoryId: string;
+      mainImage: string;
+      images: Array<string> | null;
+      tags: Array<string> | null;
+      name: {__typename?: 'LingualString'; ka: string; en: string};
+      provider: {
+        __typename?: 'Provider';
+        id: string;
+        name: string;
+        phone: string | null;
+        email: string | null;
+        logo: string | null;
+        website: string | null;
+      };
+      category: {
+        __typename?: 'Category';
+        id: string;
+        internalName: string;
+        image: string | null;
+        priority: number;
+        active: boolean;
+        name: {__typename?: 'LingualString'; ka: string; en: string};
+      };
+      description: {
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      } | null;
+      packages: Array<{
+        __typename?: 'ProductPackage';
+        id: string;
+        productId: string;
+        currency: Currency | null;
+        averageDurationMinutes: number | null;
+        name: {__typename?: 'LingualString'; ka: string; en: string};
+        description: {
+          __typename?: 'LingualString';
+          ka: string;
+          en: string;
+        } | null;
+        pricesForCarTypes: Array<{
+          __typename?: 'ProductDetailsCarPrice';
+          order: string | null;
+          carType: CarType;
+          price: number | null;
+        }> | null;
+        availableServices: Array<{
+          __typename?: 'LingualString';
+          ka: string;
+          en: string;
+        }> | null;
+        notAvailableServices: Array<{
+          __typename?: 'LingualString';
+          ka: string;
+          en: string;
+        } | null> | null;
+      }> | null;
+      location: {
+        __typename?: 'Location';
+        address: {
+          __typename?: 'Address';
+          street: string;
+          district: string;
+          city: string;
+        };
+        coordinates: {__typename?: 'Coordinates'; lat: number; lng: number};
+      } | null;
+    };
+    productPackage: {
+      __typename?: 'ProductPackage';
+      id: string;
+      productId: string;
+      currency: Currency | null;
+      averageDurationMinutes: number | null;
+      name: {__typename?: 'LingualString'; ka: string; en: string};
+      description: {
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      } | null;
+      pricesForCarTypes: Array<{
+        __typename?: 'ProductDetailsCarPrice';
+        order: string | null;
+        carType: CarType;
+        price: number | null;
+      }> | null;
+      availableServices: Array<{
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      }> | null;
+      notAvailableServices: Array<{
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      } | null> | null;
+    };
   }>;
 };
 
@@ -1659,7 +1891,7 @@ export type ListOrdersByManager = {
     productId: string;
     packageId: string;
     categoryId: string;
-    providerId: string | null;
+    providerId: string;
     schedulingDate: string | null;
     schedulingTime: string | null;
     carType: CarType | null;
@@ -1667,6 +1899,107 @@ export type ListOrdersByManager = {
     errorMessage: string | null;
     createdAt: string | null;
     updatedAt: string | null;
+    product: {
+      __typename?: 'Product';
+      id: string;
+      providerId: string;
+      categoryId: string;
+      mainImage: string;
+      images: Array<string> | null;
+      tags: Array<string> | null;
+      name: {__typename?: 'LingualString'; ka: string; en: string};
+      provider: {
+        __typename?: 'Provider';
+        id: string;
+        name: string;
+        phone: string | null;
+        email: string | null;
+        logo: string | null;
+        website: string | null;
+      };
+      category: {
+        __typename?: 'Category';
+        id: string;
+        internalName: string;
+        image: string | null;
+        priority: number;
+        active: boolean;
+        name: {__typename?: 'LingualString'; ka: string; en: string};
+      };
+      description: {
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      } | null;
+      packages: Array<{
+        __typename?: 'ProductPackage';
+        id: string;
+        productId: string;
+        currency: Currency | null;
+        averageDurationMinutes: number | null;
+        name: {__typename?: 'LingualString'; ka: string; en: string};
+        description: {
+          __typename?: 'LingualString';
+          ka: string;
+          en: string;
+        } | null;
+        pricesForCarTypes: Array<{
+          __typename?: 'ProductDetailsCarPrice';
+          order: string | null;
+          carType: CarType;
+          price: number | null;
+        }> | null;
+        availableServices: Array<{
+          __typename?: 'LingualString';
+          ka: string;
+          en: string;
+        }> | null;
+        notAvailableServices: Array<{
+          __typename?: 'LingualString';
+          ka: string;
+          en: string;
+        } | null> | null;
+      }> | null;
+      location: {
+        __typename?: 'Location';
+        address: {
+          __typename?: 'Address';
+          street: string;
+          district: string;
+          city: string;
+        };
+        coordinates: {__typename?: 'Coordinates'; lat: number; lng: number};
+      } | null;
+    };
+    productPackage: {
+      __typename?: 'ProductPackage';
+      id: string;
+      productId: string;
+      currency: Currency | null;
+      averageDurationMinutes: number | null;
+      name: {__typename?: 'LingualString'; ka: string; en: string};
+      description: {
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      } | null;
+      pricesForCarTypes: Array<{
+        __typename?: 'ProductDetailsCarPrice';
+        order: string | null;
+        carType: CarType;
+        price: number | null;
+      }> | null;
+      availableServices: Array<{
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      }> | null;
+      notAvailableServices: Array<{
+        __typename?: 'LingualString';
+        ka: string;
+        en: string;
+      } | null> | null;
+    };
   }>;
 };
 
@@ -1685,9 +2018,27 @@ export type ListProductByCategoryId = {
     images: Array<string> | null;
     tags: Array<string> | null;
     name: {__typename?: 'LingualString'; ka: string; en: string};
+    provider: {
+      __typename?: 'Provider';
+      id: string;
+      name: string;
+      phone: string | null;
+      email: string | null;
+      logo: string | null;
+      website: string | null;
+    };
+    category: {
+      __typename?: 'Category';
+      id: string;
+      internalName: string;
+      image: string | null;
+      priority: number;
+      active: boolean;
+      name: {__typename?: 'LingualString'; ka: string; en: string};
+    };
     description: {__typename?: 'LingualString'; ka: string; en: string} | null;
     packages: Array<{
-      __typename?: 'ProductDetails';
+      __typename?: 'ProductPackage';
       id: string;
       productId: string;
       currency: Currency | null;
@@ -1715,15 +2066,6 @@ export type ListProductByCategoryId = {
         en: string;
       } | null> | null;
     }> | null;
-    provider: {
-      __typename?: 'Provider';
-      id: string;
-      name: string;
-      phone: string | null;
-      email: string | null;
-      logo: string | null;
-      website: string | null;
-    };
     location: {
       __typename?: 'Location';
       address: {
@@ -1752,9 +2094,27 @@ export type ListProductByProviderId = {
     images: Array<string> | null;
     tags: Array<string> | null;
     name: {__typename?: 'LingualString'; ka: string; en: string};
+    provider: {
+      __typename?: 'Provider';
+      id: string;
+      name: string;
+      phone: string | null;
+      email: string | null;
+      logo: string | null;
+      website: string | null;
+    };
+    category: {
+      __typename?: 'Category';
+      id: string;
+      internalName: string;
+      image: string | null;
+      priority: number;
+      active: boolean;
+      name: {__typename?: 'LingualString'; ka: string; en: string};
+    };
     description: {__typename?: 'LingualString'; ka: string; en: string} | null;
     packages: Array<{
-      __typename?: 'ProductDetails';
+      __typename?: 'ProductPackage';
       id: string;
       productId: string;
       currency: Currency | null;
@@ -1782,15 +2142,6 @@ export type ListProductByProviderId = {
         en: string;
       } | null> | null;
     }> | null;
-    provider: {
-      __typename?: 'Provider';
-      id: string;
-      name: string;
-      phone: string | null;
-      email: string | null;
-      logo: string | null;
-      website: string | null;
-    };
     location: {
       __typename?: 'Location';
       address: {
@@ -1811,7 +2162,7 @@ export type ListProductDetailsByProductIdVariables = Exact<{
 export type ListProductDetailsByProductId = {
   __typename?: 'Query';
   listProductDetailsByProductId: Array<{
-    __typename?: 'ProductDetails';
+    __typename?: 'ProductPackage';
     id: string;
     productId: string;
     currency: Currency | null;
@@ -1866,9 +2217,27 @@ export type ListProducts = {
     images: Array<string> | null;
     tags: Array<string> | null;
     name: {__typename?: 'LingualString'; ka: string; en: string};
+    provider: {
+      __typename?: 'Provider';
+      id: string;
+      name: string;
+      phone: string | null;
+      email: string | null;
+      logo: string | null;
+      website: string | null;
+    };
+    category: {
+      __typename?: 'Category';
+      id: string;
+      internalName: string;
+      image: string | null;
+      priority: number;
+      active: boolean;
+      name: {__typename?: 'LingualString'; ka: string; en: string};
+    };
     description: {__typename?: 'LingualString'; ka: string; en: string} | null;
     packages: Array<{
-      __typename?: 'ProductDetails';
+      __typename?: 'ProductPackage';
       id: string;
       productId: string;
       currency: Currency | null;
@@ -1896,15 +2265,6 @@ export type ListProducts = {
         en: string;
       } | null> | null;
     }> | null;
-    provider: {
-      __typename?: 'Provider';
-      id: string;
-      name: string;
-      phone: string | null;
-      email: string | null;
-      logo: string | null;
-      website: string | null;
-    };
     location: {
       __typename?: 'Location';
       address: {
@@ -1962,9 +2322,27 @@ export type SearchProducts = {
     images: Array<string> | null;
     tags: Array<string> | null;
     name: {__typename?: 'LingualString'; ka: string; en: string};
+    provider: {
+      __typename?: 'Provider';
+      id: string;
+      name: string;
+      phone: string | null;
+      email: string | null;
+      logo: string | null;
+      website: string | null;
+    };
+    category: {
+      __typename?: 'Category';
+      id: string;
+      internalName: string;
+      image: string | null;
+      priority: number;
+      active: boolean;
+      name: {__typename?: 'LingualString'; ka: string; en: string};
+    };
     description: {__typename?: 'LingualString'; ka: string; en: string} | null;
     packages: Array<{
-      __typename?: 'ProductDetails';
+      __typename?: 'ProductPackage';
       id: string;
       productId: string;
       currency: Currency | null;
@@ -1992,15 +2370,6 @@ export type SearchProducts = {
         en: string;
       } | null> | null;
     }> | null;
-    provider: {
-      __typename?: 'Provider';
-      id: string;
-      name: string;
-      phone: string | null;
-      email: string | null;
-      logo: string | null;
-      website: string | null;
-    };
     location: {
       __typename?: 'Location';
       address: {
@@ -2591,7 +2960,26 @@ export const CreateProductDocument = gql`
         en
       }
       providerId
+      provider {
+        id
+        name
+        phone
+        email
+        logo
+        website
+      }
       categoryId
+      category {
+        id
+        name {
+          ka
+          en
+        }
+        internalName
+        image
+        priority
+        active
+      }
       description {
         ka
         en
@@ -2622,14 +3010,6 @@ export const CreateProductDocument = gql`
         }
         currency
         averageDurationMinutes
-      }
-      provider {
-        id
-        name
-        phone
-        email
-        logo
-        website
       }
       location {
         address {
@@ -3705,7 +4085,26 @@ export const UpdateProductDocument = gql`
         en
       }
       providerId
+      provider {
+        id
+        name
+        phone
+        email
+        logo
+        website
+      }
       categoryId
+      category {
+        id
+        name {
+          ka
+          en
+        }
+        internalName
+        image
+        priority
+        active
+      }
       description {
         ka
         en
@@ -3736,14 +4135,6 @@ export const UpdateProductDocument = gql`
         }
         currency
         averageDurationMinutes
-      }
-      provider {
-        id
-        name
-        phone
-        email
-        logo
-        website
       }
       location {
         address {
@@ -4334,7 +4725,107 @@ export const GetOrderDocument = gql`
       commission
       status
       productId
+      product {
+        id
+        name {
+          ka
+          en
+        }
+        providerId
+        provider {
+          id
+          name
+          phone
+          email
+          logo
+          website
+        }
+        categoryId
+        category {
+          id
+          name {
+            ka
+            en
+          }
+          internalName
+          image
+          priority
+          active
+        }
+        description {
+          ka
+          en
+        }
+        packages {
+          id
+          productId
+          name {
+            ka
+            en
+          }
+          description {
+            ka
+            en
+          }
+          pricesForCarTypes {
+            order
+            carType
+            price
+          }
+          availableServices {
+            ka
+            en
+          }
+          notAvailableServices {
+            ka
+            en
+          }
+          currency
+          averageDurationMinutes
+        }
+        location {
+          address {
+            street
+            district
+            city
+          }
+          coordinates {
+            lat
+            lng
+          }
+        }
+        mainImage
+        images
+        tags
+      }
       packageId
+      productPackage {
+        id
+        productId
+        name {
+          ka
+          en
+        }
+        description {
+          ka
+          en
+        }
+        pricesForCarTypes {
+          order
+          carType
+          price
+        }
+        availableServices {
+          ka
+          en
+        }
+        notAvailableServices {
+          ka
+          en
+        }
+        currency
+        averageDurationMinutes
+      }
       categoryId
       providerId
       schedulingDate
@@ -4450,7 +4941,26 @@ export const GetProductDocument = gql`
         en
       }
       providerId
+      provider {
+        id
+        name
+        phone
+        email
+        logo
+        website
+      }
       categoryId
+      category {
+        id
+        name {
+          ka
+          en
+        }
+        internalName
+        image
+        priority
+        active
+      }
       description {
         ka
         en
@@ -4481,14 +4991,6 @@ export const GetProductDocument = gql`
         }
         currency
         averageDurationMinutes
-      }
-      provider {
-        id
-        name
-        phone
-        email
-        logo
-        website
       }
       location {
         address {
@@ -4850,7 +5352,107 @@ export const ListOrdersDocument = gql`
       commission
       status
       productId
+      product {
+        id
+        name {
+          ka
+          en
+        }
+        providerId
+        provider {
+          id
+          name
+          phone
+          email
+          logo
+          website
+        }
+        categoryId
+        category {
+          id
+          name {
+            ka
+            en
+          }
+          internalName
+          image
+          priority
+          active
+        }
+        description {
+          ka
+          en
+        }
+        packages {
+          id
+          productId
+          name {
+            ka
+            en
+          }
+          description {
+            ka
+            en
+          }
+          pricesForCarTypes {
+            order
+            carType
+            price
+          }
+          availableServices {
+            ka
+            en
+          }
+          notAvailableServices {
+            ka
+            en
+          }
+          currency
+          averageDurationMinutes
+        }
+        location {
+          address {
+            street
+            district
+            city
+          }
+          coordinates {
+            lat
+            lng
+          }
+        }
+        mainImage
+        images
+        tags
+      }
       packageId
+      productPackage {
+        id
+        productId
+        name {
+          ka
+          en
+        }
+        description {
+          ka
+          en
+        }
+        pricesForCarTypes {
+          order
+          carType
+          price
+        }
+        availableServices {
+          ka
+          en
+        }
+        notAvailableServices {
+          ka
+          en
+        }
+        currency
+        averageDurationMinutes
+      }
       categoryId
       providerId
       schedulingDate
@@ -4913,7 +5515,107 @@ export const ListOrdersByManagerDocument = gql`
       commission
       status
       productId
+      product {
+        id
+        name {
+          ka
+          en
+        }
+        providerId
+        provider {
+          id
+          name
+          phone
+          email
+          logo
+          website
+        }
+        categoryId
+        category {
+          id
+          name {
+            ka
+            en
+          }
+          internalName
+          image
+          priority
+          active
+        }
+        description {
+          ka
+          en
+        }
+        packages {
+          id
+          productId
+          name {
+            ka
+            en
+          }
+          description {
+            ka
+            en
+          }
+          pricesForCarTypes {
+            order
+            carType
+            price
+          }
+          availableServices {
+            ka
+            en
+          }
+          notAvailableServices {
+            ka
+            en
+          }
+          currency
+          averageDurationMinutes
+        }
+        location {
+          address {
+            street
+            district
+            city
+          }
+          coordinates {
+            lat
+            lng
+          }
+        }
+        mainImage
+        images
+        tags
+      }
       packageId
+      productPackage {
+        id
+        productId
+        name {
+          ka
+          en
+        }
+        description {
+          ka
+          en
+        }
+        pricesForCarTypes {
+          order
+          carType
+          price
+        }
+        availableServices {
+          ka
+          en
+        }
+        notAvailableServices {
+          ka
+          en
+        }
+        currency
+        averageDurationMinutes
+      }
       categoryId
       providerId
       schedulingDate
@@ -4985,7 +5687,26 @@ export const ListProductByCategoryIdDocument = gql`
         en
       }
       providerId
+      provider {
+        id
+        name
+        phone
+        email
+        logo
+        website
+      }
       categoryId
+      category {
+        id
+        name {
+          ka
+          en
+        }
+        internalName
+        image
+        priority
+        active
+      }
       description {
         ka
         en
@@ -5016,14 +5737,6 @@ export const ListProductByCategoryIdDocument = gql`
         }
         currency
         averageDurationMinutes
-      }
-      provider {
-        id
-        name
-        phone
-        email
-        logo
-        website
       }
       location {
         address {
@@ -5102,7 +5815,26 @@ export const ListProductByProviderIdDocument = gql`
         en
       }
       providerId
+      provider {
+        id
+        name
+        phone
+        email
+        logo
+        website
+      }
       categoryId
+      category {
+        id
+        name {
+          ka
+          en
+        }
+        internalName
+        image
+        priority
+        active
+      }
       description {
         ka
         en
@@ -5133,14 +5865,6 @@ export const ListProductByProviderIdDocument = gql`
         }
         currency
         averageDurationMinutes
-      }
-      provider {
-        id
-        name
-        phone
-        email
-        logo
-        website
       }
       location {
         address {
@@ -5363,7 +6087,26 @@ export const ListProductsDocument = gql`
         en
       }
       providerId
+      provider {
+        id
+        name
+        phone
+        email
+        logo
+        website
+      }
       categoryId
+      category {
+        id
+        name {
+          ka
+          en
+        }
+        internalName
+        image
+        priority
+        active
+      }
       description {
         ka
         en
@@ -5394,14 +6137,6 @@ export const ListProductsDocument = gql`
         }
         currency
         averageDurationMinutes
-      }
-      provider {
-        id
-        name
-        phone
-        email
-        logo
-        website
       }
       location {
         address {
@@ -5583,7 +6318,26 @@ export const SearchProductsDocument = gql`
         en
       }
       providerId
+      provider {
+        id
+        name
+        phone
+        email
+        logo
+        website
+      }
       categoryId
+      category {
+        id
+        name {
+          ka
+          en
+        }
+        internalName
+        image
+        priority
+        active
+      }
       description {
         ka
         en
@@ -5614,14 +6368,6 @@ export const SearchProductsDocument = gql`
         }
         currency
         averageDurationMinutes
-      }
-      provider {
-        id
-        name
-        phone
-        email
-        logo
-        website
       }
       location {
         address {

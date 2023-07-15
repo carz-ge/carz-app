@@ -1,10 +1,10 @@
-import {ProductDetails} from '../../graphql/operations';
+import {ProductPackage} from '../../graphql/operations';
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {Entypo, Feather} from '@expo/vector-icons';
 import {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 interface PackageInfoProps {
-  productPackage: ProductDetails;
+  productPackage: ProductPackage;
 }
 
 interface ServiceInfoProps {

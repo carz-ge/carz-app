@@ -6,7 +6,26 @@ query listProductByCategoryId($categoryId: ID!){
             en
         }
         providerId
+        provider{
+            id
+            name
+            phone
+            email
+            logo
+            website
+        }
         categoryId
+        category{
+            id
+            name{
+                ka
+                en
+            }
+            internalName
+            image
+            priority
+            active
+        }
         description{
             ka
             en
@@ -37,14 +56,6 @@ query listProductByCategoryId($categoryId: ID!){
             }
             currency
             averageDurationMinutes
-        }
-        provider{
-            id
-            name
-            phone
-            email
-            logo
-            website
         }
         location{
             address{

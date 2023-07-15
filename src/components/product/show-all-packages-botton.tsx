@@ -1,4 +1,4 @@
-import {ProductDetails} from '../../graphql/operations';
+import {ProductPackage} from '../../graphql/operations';
 import React, {useCallback, useRef} from 'react';
 import {BottomSheetModal, BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
@@ -8,7 +8,7 @@ import {PackageCard} from '../ProductPackage/package-card';
 import {BottomSheetBackdropProps} from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop';
 
 interface ShowAllPackagesButtonProps {
-  packages: ProductDetails[];
+  packages: ProductPackage[];
   selectPackage: (packageId: string | null) => void;
   selectedPackageId: string | null;
 }
@@ -43,7 +43,7 @@ export default function ShowAllPackagesButton({
         backdropComponent={renderBackdrop}>
         <View style={styles.bottomSheetModalContainer}>
           <BottomSheetScrollView>
-            {packages.map((productPackage: ProductDetails) => (
+            {packages.map((productPackage: ProductPackage) => (
               <PackageCard
                 key={productPackage.id}
                 productPackage={productPackage}

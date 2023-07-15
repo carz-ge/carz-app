@@ -12,7 +12,7 @@ export default function ActiveBookingsScreen(
     fetchPolicy: 'network-only',
   });
 
-  console.log('useListOrders->', data, loading, error);
+  console.log('List Orders', data, loading, error);
   if (loading || error) {
     return <CustomActivityIndicator />;
   }
