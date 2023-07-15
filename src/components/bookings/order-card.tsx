@@ -4,9 +4,27 @@ import colors from '../../styles/colors';
 import React from 'react';
 import {Ionicons} from '@expo/vector-icons';
 import {convertPriceIntoGel} from '../../utils/price';
+
+import dayjs from 'dayjs';
+import {getLocales, getCalendars} from 'expo-localization';
+import 'dayjs/locale/ka';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+import localeData from 'dayjs/plugin/localeData';
+import updateLocale from 'dayjs/plugin/updateLocale';
+import Moment from 'moment';
+
+const locale = getLocales();
+const cal = getCalendars();
+console.log(locale, cal);
+dayjs.extend(updateLocale);
+dayjs.locale('ka');
+dayjs.apply(localeData);
+dayjs.apply(localizedFormat);
+Moment.locale('ka');
 interface OrderCardProps {
   order: Order;
 }
+
 export default function OrderCard({order}: OrderCardProps) {
   return (
     <View>
@@ -20,8 +38,8 @@ export default function OrderCard({order}: OrderCardProps) {
         <Text>{order.schedulingTime}</Text>
         <Text>{order.carType}</Text>
         <Text>{order.carPlateNumber}</Text>
-        <Text>{order.createdAt}</Text>
-        <Text>{order.updatedAt}</Text>
+        <Text>{dayjs(order.createdAt).toString()}</Text>
+        <Text>{Moment(order.updatedAt).format('LLLL').toLocaleString()}</Text>
         <Text>{order.errorMessage}</Text>
         {order.product.location && (
           <View
