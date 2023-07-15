@@ -1,4 +1,5 @@
 import React from 'react';
+import 'expo-dev-client';
 import {ThemeProvider} from '@react-navigation/native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';

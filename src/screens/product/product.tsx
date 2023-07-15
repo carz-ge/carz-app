@@ -211,6 +211,7 @@ const styles = StyleSheet.create({
   container: {},
   scrollContainer: {},
   title: {
+    maxWidth: '90%',
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,

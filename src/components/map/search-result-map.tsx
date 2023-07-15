@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
-  Animated,
   FlatList,
   StyleSheet,
   TouchableOpacity,
@@ -132,7 +131,7 @@ function SearchResultMap({products}: SearchResultsMapsProps) {
 
   const {width} = useWindowDimensions();
   // Calculate the width of each item in the carousel
-  const itemWidth = width - 20;
+  const itemWidth = width;
   const [location, setLocation] = useState<Location.LocationObject | null>(
     null,
   );
