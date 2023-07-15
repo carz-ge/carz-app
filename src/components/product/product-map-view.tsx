@@ -1,5 +1,5 @@
 import {View} from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import React from 'react';
 
 interface ProductMapViewProps {
@@ -12,6 +12,7 @@ export default function ProductMapView({name, lat, lng}: ProductMapViewProps) {
   return (
     <View style={{marginHorizontal: 20}}>
       <MapView
+        provider={PROVIDER_GOOGLE}
         scrollEnabled={false}
         style={{
           flex: 1,
