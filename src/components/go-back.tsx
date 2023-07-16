@@ -3,6 +3,7 @@ import {useNavigation} from '@react-navigation/native';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import colors from '../styles/colors';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 interface GoBackProps {
   size?: number | undefined;
@@ -10,10 +11,14 @@ interface GoBackProps {
 
 export default function GoBack({size}: GoBackProps) {
   const navigation = useNavigation();
+  const safeAreaInsets = useSafeAreaInsets();
   return (
     <TouchableOpacity
       onPress={() => navigation.goBack()}
-      style={styles.container}>
+      style={[
+        styles.container,
+        {marginLeft: safeAreaInsets.left + 10, marginTop: safeAreaInsets.top},
+      ]}>
       <MaterialCommunityIcons
         name={'arrow-left'}
         color={'#000'}

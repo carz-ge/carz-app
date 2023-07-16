@@ -8,10 +8,13 @@ import CustomBackdrop from '../../bottom-sheet/customBackdrop';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import SortBottomSheetContent from './sort-bottom-sheet-content';
 import {SortByEnum} from '../../../store/slice/searchSlice';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 export default function MapSortBy() {
   const filterModalRef = useRef<BottomSheetModal>(null);
   const [sortBy, setSortBy] = useState<SortByEnum>(SortByEnum.POPULARITY);
+  const edgeInsets = useSafeAreaInsets();
+
   function openFilterBottomSheet() {
     filterModalRef.current?.present();
   }
@@ -34,7 +37,7 @@ export default function MapSortBy() {
     <>
       <TouchableOpacity
         onPress={openFilterBottomSheet}
-        style={styles.container}>
+        style={[styles.container, {marginTop: edgeInsets.top}]}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <MaterialCommunityIcons
             size={20}

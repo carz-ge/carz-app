@@ -8,6 +8,7 @@ import {CarType} from '../../../graphql/operations';
 import CustomBackdrop from '../../bottom-sheet/customBackdrop';
 import colors from '../../../styles/colors';
 import FilterBottomSheetContent from './filter-bottom-sheet-content';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 export default function MapFilter() {
   const filterModalRef = useRef<BottomSheetModal>(null);
@@ -34,11 +35,17 @@ export default function MapFilter() {
   ) {
     handleOnClose();
   }
+
+  const edgeInsets = useSafeAreaInsets();
+
   return (
     <>
       <TouchableOpacity
         onPress={openFilterBottomSheet}
-        style={styles.filterContainer}>
+        style={[
+          styles.filterContainer,
+          {marginLeft: edgeInsets.left + 5, marginTop: edgeInsets.top},
+        ]}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <MaterialCommunityIcons
             size={20}
