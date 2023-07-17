@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   profileStyle: {
-    marginTop: 30,
+    marginTop: 0,
     flex: 1,
     alignItems: 'flex-end',
   },

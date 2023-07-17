@@ -116,10 +116,12 @@ function AuthenticateScreen({
           <View style={styles.logo}>
             <Logo />
           </View>
-          <Text style={styles.label}>დაადასტურე მობილურის ნომერი</Text>
+          <Text style={[styles.label, {marginBottom: 20}]}>
+            დაადასტურე მობილურის ნომერი
+          </Text>
           <OtpInput
             numberOfDigits={OTP_CODE_LENGTH}
-            focusColor="green"
+            focusColor={colors.primary}
             onTextChange={text => setCode(text)}
             theme={{
               pinCodeContainerStyle: error

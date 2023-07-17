@@ -1,25 +1,32 @@
 import React from 'react';
 import {Text, View, Image, Dimensions, StyleSheet} from 'react-native';
 import Swiper from 'react-native-swiper';
+import colors from '../../styles/colors';
 const {width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   wrapper: {
-    height: 200,
+    height: 250,
   },
   slide: {},
   image: {
     width,
-    height: 200,
+    height: 250,
   },
   paginationStyle: {
     position: 'absolute',
-    top: 150,
+    bottom: 15,
     right: 10,
+    backgroundColor: '#fff',
+    paddingHorizontal: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 8,
+    paddingVertical: 8,
   },
   paginationText: {
-    color: 'white',
-    fontSize: 20,
+    color: colors.primary,
   },
 });
 

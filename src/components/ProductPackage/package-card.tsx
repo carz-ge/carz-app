@@ -14,6 +14,7 @@ import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import CustomBackdrop from '../bottom-sheet/customBackdrop';
 import PackageInfo from './package-details';
 import {BottomSheetBackdropProps} from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop';
+import colors from '../../styles/colors';
 
 type PackageCardProps = {
   productPackage: ProductPackage;
@@ -64,10 +65,14 @@ export function PackageCard({
         <View
           style={{
             flexDirection: 'row',
-            gap: 1,
+            display: 'flex',
+            alignItems: 'center',
+            marginVertical: 10,
           }}>
           <Ionicons size={20} name="time" />
-          <Text>{productPackage.averageDurationMinutes} წთ</Text>
+          <Text style={{marginLeft: 8}}>
+            {productPackage.averageDurationMinutes} წთ
+          </Text>
         </View>
         {/* Additional Details */}
         <Pressable onPress={handleWhatsIncludedPress}>
@@ -111,9 +116,9 @@ const styles = StyleSheet.create({
   packageCard: {
     borderWidth: 2,
     borderRadius: 10,
-    padding: 10,
+    padding: 25,
     marginBottom: 10,
-    borderColor: Colors.grayLight,
+    borderColor: '#dfdfdf',
     backgroundColor: Colors.white,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -131,14 +136,16 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   selectButton: {
-    backgroundColor: 'lightblue',
-    padding: 10,
+    backgroundColor: colors.primary,
+    paddingVertical: 10,
     alignItems: 'center',
     marginTop: 10,
     borderRadius: 5,
+    width: '100%',
   },
   selectButtonText: {
     fontWeight: 'bold',
+    color: '#fff',
   },
   whatsIncluded: {
     textDecorationLine: 'underline',
@@ -162,5 +169,7 @@ const styles = StyleSheet.create({
     gap: 5,
     justifyContent: 'center',
     alignItems: 'center',
+    width: 100,
+    paddingLeft: 15,
   },
 });

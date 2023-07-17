@@ -57,8 +57,9 @@ export default function MapSearchAndFilters() {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    marginTop: 30,
+    marginTop: 0,
     flex: 1,
     flexDirection: 'row',
+    padding: 15,
   },
 });

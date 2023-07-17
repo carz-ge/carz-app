@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Marker} from 'react-native-maps';
+import colors from '../../styles/colors';
 
 interface CustomMarkerProps {
   coordinate: {
@@ -33,14 +34,14 @@ export default function CustomMarker({
 const styles = StyleSheet.create({
   view_white: {
     backgroundColor: 'white',
-    padding: 5,
+    padding: 15,
     borderRadius: 20,
     borderColor: 'grey',
     borderWidth: 1,
   },
   view_black: {
-    backgroundColor: 'black',
-    padding: 5,
+    backgroundColor: colors.primary,
+    padding: 15,
     borderRadius: 20,
     borderColor: 'grey',
     borderWidth: 1,

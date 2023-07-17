@@ -78,9 +78,12 @@ const styles = StyleSheet.create({
     padding: 10,
     marginLeft: 5,
     marginRight: 5,
+    display: 'flex',
   },
   filterText: {
     textAlign: 'center',
-    fontSize: 10,
+    fontSize: 14,
+    marginLeft: 5,
+    fontFamily: 'helv-65',
   },
 });

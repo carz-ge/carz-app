@@ -10,7 +10,7 @@ interface ProductMapViewProps {
 
 export default function ProductMapView({name, lat, lng}: ProductMapViewProps) {
   return (
-    <View style={{marginHorizontal: 20}}>
+    <View>
       <MapView
         provider={PROVIDER_GOOGLE}
         scrollEnabled={false}

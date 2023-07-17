@@ -75,6 +75,8 @@ const styles = StyleSheet.create({
   },
   filterText: {
     textAlign: 'center',
-    fontSize: 10,
+    fontSize: 14,
+    fontFamily: 'helv-65',
+    marginLeft: 5,
   },
 });

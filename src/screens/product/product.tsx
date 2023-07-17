@@ -78,7 +78,7 @@ export default function ProductScreen({
   const distance = calculateDistance(location, product.location?.coordinates);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <>
       <GoBack />
       <ScrollView
         style={styles.scrollContainer}
@@ -95,8 +95,14 @@ export default function ProductScreen({
               }}>
               {/* Product title */}
               <View
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <View>
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  width: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                }}>
+                <View style={{width: '70%'}}>
                   <Text style={styles.title}>{product.name.ka}</Text>
                   <View style={styles.shortDetails}>
                     {/* Provider logo */}
@@ -118,20 +124,26 @@ export default function ProductScreen({
               <View
                 style={{
                   flexDirection: 'row',
+                  alignItems: 'center',
+                  display: 'flex',
+                  marginTop: 25,
                 }}>
                 <Ionicons size={20} name="star" />
-                <Text> 4.6 (100)</Text>
+                <Text style={styles.value}> 4.6 (100)</Text>
               </View>
               {/* Location info */}
               {product.location && (
                 <View
                   style={{
                     flexDirection: 'row',
+                    alignItems: 'center',
+                    display: 'flex',
+                    marginTop: 10,
                   }}>
                   <Ionicons size={20} name="location" />
-                  <Text>
-                    {product.location.address.street},{' '}
-                    {product.location.address.district},{' '}
+                  <Text style={[styles.value, {marginLeft: 12}]}>
+                    {product.location.address.street}{' '}
+                    {product.location.address.district}{' '}
                     {product.location.address.city}
                   </Text>
                 </View>
@@ -142,7 +154,9 @@ export default function ProductScreen({
                 <View
                   style={{
                     flexDirection: 'row',
-                    gap: 1,
+                    alignItems: 'center',
+                    display: 'flex',
+                    marginTop: 10,
                   }}>
                   <Image
                     style={{width: 20, height: 20}}
@@ -151,7 +165,9 @@ export default function ProductScreen({
                     }
                     resizeMode="contain"
                   />
-                  <Text>{distance} - შენი ადგილმდებარეობიდან</Text>
+                  <Text style={[styles.value, {marginLeft: 12}]}>
+                    {distance} - შენი ადგილმდებარეობიდან
+                  </Text>
                 </View>
               )}
             </View>
@@ -161,7 +177,7 @@ export default function ProductScreen({
               <Text style={styles.sectionsTitle}>აღწერა</Text>
               <Text>{product.description?.ka}</Text>
             </View>
-            <View>
+            <View style={{marginTop: 25}}>
               <Text style={styles.sectionsTitle}>პაკეტები</Text>
               {/* Available packages */}
               <AvailablePackages
@@ -170,7 +186,7 @@ export default function ProductScreen({
                 selectedPackageId={selectedPackageId}
               />
             </View>
-            <View>
+            <View style={{marginTop: 25}}>
               <Text style={styles.sectionsTitle}>ლოკაცია</Text>
               <ProductMapView
                 name={product.name.ka}
@@ -178,9 +194,9 @@ export default function ProductScreen({
                 lng={product.location?.coordinates.lng || 0}
               />
             </View>
-            <View>
+            <View style={{marginTop: 25, marginBottom: 50}}>
               <Text style={styles.sectionsTitle}>შეფასებები</Text>
-              <Text>სამრეცხაოს ჯერ არ აქვს შეფასება</Text>
+              <Text style={styles.txt}>სამრეცხაოს ჯერ არ აქვს შეფასება</Text>
             </View>
           </View>
           {/* Product reviews */}
@@ -203,7 +219,7 @@ export default function ProductScreen({
           </TouchableOpacity>
         </View>
       )}
-    </SafeAreaView>
+    </>
   );
 }
 
@@ -215,9 +231,21 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
+    flex: 1,
+    fontFamily: 'helv-65',
+  },
+  value: {
+    fontFamily: 'helv-65',
+    fontSize: 14,
+    marginLeft: 8,
+    display: 'flex',
+    alignItems: 'center',
   },
   infoContainer: {
-    padding: 10,
+    padding: 15,
+  },
+  txt: {
+    fontFamily: 'helv-65',
   },
   details: {
     flex: 1,
@@ -233,17 +261,15 @@ const styles = StyleSheet.create({
   providerName: {
     textDecorationLine: 'underline',
   },
-  shortDetails: {
-    gap: 2,
-    paddingVertical: 10,
-  },
+  shortDetails: {},
   sectionsContainer: {
-    gap: 10,
+    marginTop: 25,
   },
   sectionsTitle: {
-    fontSize: 15,
+    fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginBottom: 15,
+    fontFamily: 'helv-65',
   },
 
   checkoutContainer: {

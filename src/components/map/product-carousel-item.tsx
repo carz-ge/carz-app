@@ -45,7 +45,9 @@ export default function ProductCarouselItem({
             }}>
             {/* minimum price */}
             <FontAwesome5 size={15} name={'money-bill'} />
-            <Text style={{color: Colors.gray}}>{priceInGel} ლარიდან</Text>
+            <Text style={{color: Colors.gray, marginLeft: 5}}>
+              {priceInGel} ლარიდან
+            </Text>
 
             {/* book now button */}
           </View>
@@ -57,10 +59,12 @@ export default function ProductCarouselItem({
             <View
               style={{
                 flexDirection: 'row',
-                gap: 5,
+                display: 'flex',
+                alignItems: 'center',
+                marginTop: 8,
               }}>
               <Ionicons size={20} name="location" />
-              <Text>
+              <Text style={{marginLeft: 10}}>
                 {product.location.address.street},{' '}
                 {product.location.address.district}
               </Text>
@@ -70,10 +74,12 @@ export default function ProductCarouselItem({
             <View
               style={{
                 flexDirection: 'row',
-                gap: 5,
+                display: 'flex',
+                alignItems: 'center',
+                marginTop: 8,
               }}>
               <Image
-                style={{width: 20, height: 20}}
+                style={{width: 20, height: 20, marginRight: 10}}
                 source={
                   require('../../../assets/images/distance.png') as ImageSourcePropType
                 }
@@ -90,9 +96,8 @@ export default function ProductCarouselItem({
 
 const styles = StyleSheet.create({
   container: {
-    height: 120,
+    height: 140,
     paddingHorizontal: 5,
-
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -100,21 +105,23 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.34,
     shadowRadius: 6.27,
-
     elevation: 10,
   },
-
   innerContainer: {
     flexDirection: 'row',
     backgroundColor: 'white',
     borderRadius: 10,
     overflow: 'hidden',
   },
-
   name: {
-    margin: 5,
+    padding: 0,
+    paddingRight: 8,
     color: Colors.primary,
     flexDirection: 'row',
+    fontFamily: 'helv-65',
+    fontSize: 18,
+    marginTop: 10,
+    marginBottom: 15,
   },
 
   image: {
