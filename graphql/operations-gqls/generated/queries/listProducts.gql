@@ -63,6 +63,11 @@ query listProducts{
                 district
                 city
             }
+            addressEn{
+                street
+                district
+                city
+            }
             coordinates{
                 lat
                 lng

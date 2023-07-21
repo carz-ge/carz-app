@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports.checkPhone = fs.readFileSync(path.join(__dirname, 'checkPhone.gql'), 'utf8');
+module.exports.listAutoStations = fs.readFileSync(path.join(__dirname, 'listAutoStations.gql'), 'utf8');
 module.exports.listCars = fs.readFileSync(path.join(__dirname, 'listCars.gql'), 'utf8');
 module.exports.listCards = fs.readFileSync(path.join(__dirname, 'listCards.gql'), 'utf8');
 module.exports.listCategories = fs.readFileSync(path.join(__dirname, 'listCategories.gql'), 'utf8');

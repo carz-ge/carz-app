@@ -69,6 +69,11 @@ query getOrder($id: ID!){
                     district
                     city
                 }
+                addressEn{
+                    street
+                    district
+                    city
+                }
                 coordinates{
                     lat
                     lng

@@ -60,6 +60,25 @@ export type AuthenticationOutput = {
   refreshToken: Maybe<Scalars['String']['output']>;
 };
 
+export type AutoStation = {
+  __typename?: 'AutoStation';
+  active: Scalars['Boolean']['output'];
+  description: Maybe<LingualString>;
+  id: Scalars['ID']['output'];
+  image: Maybe<Scalars['String']['output']>;
+  location: Maybe<Location>;
+  name: LingualString;
+  objectTypes: Maybe<Scalars['String']['output']>;
+  paymentTypes: Maybe<Scalars['String']['output']>;
+  productTypes: Maybe<Scalars['String']['output']>;
+  providerCode: Scalars['String']['output'];
+  region: Maybe<LingualString>;
+  serviceTypes: Maybe<Scalars['String']['output']>;
+  stationType: Scalars['String']['output'];
+  textHtml: Maybe<Scalars['String']['output']>;
+  textHtmlEn: Maybe<Scalars['String']['output']>;
+};
+
 export type Car = {
   __typename?: 'Car';
   carType: Maybe<CarType>;
@@ -205,11 +224,13 @@ export type LingualStringInput = {
 export type Location = {
   __typename?: 'Location';
   address: Address;
+  addressEn: Maybe<Address>;
   coordinates: Coordinates;
 };
 
 export type LocationInput = {
   address: AddressInput;
+  addressEn: AddressInput;
   coordinates: CoordinatesInput;
 };
 
@@ -601,6 +622,7 @@ export type Query = {
   getPaymentInfo: Maybe<Scalars['String']['output']>;
   getProduct: Product;
   getUserById: User;
+  listAutoStations: Array<AutoStation>;
   listCards: Array<Card>;
   listCars: Array<Car>;
   listCategories: Array<Category>;
@@ -1002,6 +1024,12 @@ export type CreateProduct = {
         district: string;
         city: string;
       };
+      addressEn: {
+        __typename?: 'Address';
+        street: string;
+        district: string;
+        city: string;
+      } | null;
       coordinates: {__typename?: 'Coordinates'; lat: number; lng: number};
     } | null;
   };
@@ -1310,6 +1338,12 @@ export type UpdateProduct = {
         district: string;
         city: string;
       };
+      addressEn: {
+        __typename?: 'Address';
+        street: string;
+        district: string;
+        city: string;
+      } | null;
       coordinates: {__typename?: 'Coordinates'; lat: number; lng: number};
     } | null;
   };
@@ -1550,6 +1584,12 @@ export type GetOrder = {
           district: string;
           city: string;
         };
+        addressEn: {
+          __typename?: 'Address';
+          street: string;
+          district: string;
+          city: string;
+        } | null;
         coordinates: {__typename?: 'Coordinates'; lat: number; lng: number};
       } | null;
     };
@@ -1665,6 +1705,12 @@ export type GetProduct = {
         district: string;
         city: string;
       };
+      addressEn: {
+        __typename?: 'Address';
+        street: string;
+        district: string;
+        city: string;
+      } | null;
       coordinates: {__typename?: 'Coordinates'; lat: number; lng: number};
     } | null;
   };
@@ -1690,6 +1736,45 @@ export type GetUserById = {
     createdAt: string | null;
     updatedAt: string | null;
   };
+};
+
+export type ListAutoStationsVariables = Exact<{[key: string]: never}>;
+
+export type ListAutoStations = {
+  __typename?: 'Query';
+  listAutoStations: Array<{
+    __typename?: 'AutoStation';
+    id: string;
+    stationType: string;
+    providerCode: string;
+    active: boolean;
+    image: string | null;
+    productTypes: string | null;
+    objectTypes: string | null;
+    paymentTypes: string | null;
+    serviceTypes: string | null;
+    textHtml: string | null;
+    textHtmlEn: string | null;
+    name: {__typename?: 'LingualString'; ka: string; en: string};
+    description: {__typename?: 'LingualString'; ka: string; en: string} | null;
+    location: {
+      __typename?: 'Location';
+      address: {
+        __typename?: 'Address';
+        street: string;
+        district: string;
+        city: string;
+      };
+      addressEn: {
+        __typename?: 'Address';
+        street: string;
+        district: string;
+        city: string;
+      } | null;
+      coordinates: {__typename?: 'Coordinates'; lat: number; lng: number};
+    } | null;
+    region: {__typename?: 'LingualString'; ka: string; en: string} | null;
+  }>;
 };
 
 export type ListCardsVariables = Exact<{[key: string]: never}>;
@@ -1843,6 +1928,12 @@ export type ListOrders = {
           district: string;
           city: string;
         };
+        addressEn: {
+          __typename?: 'Address';
+          street: string;
+          district: string;
+          city: string;
+        } | null;
         coordinates: {__typename?: 'Coordinates'; lat: number; lng: number};
       } | null;
     };
@@ -1968,6 +2059,12 @@ export type ListOrdersByManager = {
           district: string;
           city: string;
         };
+        addressEn: {
+          __typename?: 'Address';
+          street: string;
+          district: string;
+          city: string;
+        } | null;
         coordinates: {__typename?: 'Coordinates'; lat: number; lng: number};
       } | null;
     };
@@ -2074,6 +2171,12 @@ export type ListProductByCategoryId = {
         district: string;
         city: string;
       };
+      addressEn: {
+        __typename?: 'Address';
+        street: string;
+        district: string;
+        city: string;
+      } | null;
       coordinates: {__typename?: 'Coordinates'; lat: number; lng: number};
     } | null;
   }>;
@@ -2150,6 +2253,12 @@ export type ListProductByProviderId = {
         district: string;
         city: string;
       };
+      addressEn: {
+        __typename?: 'Address';
+        street: string;
+        district: string;
+        city: string;
+      } | null;
       coordinates: {__typename?: 'Coordinates'; lat: number; lng: number};
     } | null;
   }>;
@@ -2273,6 +2382,12 @@ export type ListProducts = {
         district: string;
         city: string;
       };
+      addressEn: {
+        __typename?: 'Address';
+        street: string;
+        district: string;
+        city: string;
+      } | null;
       coordinates: {__typename?: 'Coordinates'; lat: number; lng: number};
     } | null;
   }>;
@@ -2378,6 +2493,12 @@ export type SearchProducts = {
         district: string;
         city: string;
       };
+      addressEn: {
+        __typename?: 'Address';
+        street: string;
+        district: string;
+        city: string;
+      } | null;
       coordinates: {__typename?: 'Coordinates'; lat: number; lng: number};
     } | null;
   }>;
@@ -3013,6 +3134,11 @@ export const CreateProductDocument = gql`
       }
       location {
         address {
+          street
+          district
+          city
+        }
+        addressEn {
           street
           district
           city
@@ -4142,6 +4268,11 @@ export const UpdateProductDocument = gql`
           district
           city
         }
+        addressEn {
+          street
+          district
+          city
+        }
         coordinates {
           lat
           lng
@@ -4789,6 +4920,11 @@ export const GetOrderDocument = gql`
             district
             city
           }
+          addressEn {
+            street
+            district
+            city
+          }
           coordinates {
             lat
             lng
@@ -4998,6 +5134,11 @@ export const GetProductDocument = gql`
           district
           city
         }
+        addressEn {
+          street
+          district
+          city
+        }
         coordinates {
           lat
           lng
@@ -5111,6 +5252,99 @@ export type GetUserByIdLazyQueryHookResult = ReturnType<
 export type GetUserByIdQueryResult = Apollo.QueryResult<
   GetUserById,
   GetUserByIdVariables
+>;
+export const ListAutoStationsDocument = gql`
+  query listAutoStations {
+    listAutoStations {
+      id
+      name {
+        ka
+        en
+      }
+      stationType
+      providerCode
+      description {
+        ka
+        en
+      }
+      active
+      location {
+        address {
+          street
+          district
+          city
+        }
+        addressEn {
+          street
+          district
+          city
+        }
+        coordinates {
+          lat
+          lng
+        }
+      }
+      region {
+        ka
+        en
+      }
+      image
+      productTypes
+      objectTypes
+      paymentTypes
+      serviceTypes
+      textHtml
+      textHtmlEn
+    }
+  }
+`;
+
+/**
+ * __useListAutoStations__
+ *
+ * To run a query within a React component, call `useListAutoStations` and pass it any options that fit your needs.
+ * When your component renders, `useListAutoStations` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListAutoStations({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useListAutoStations(
+  baseOptions?: Apollo.QueryHookOptions<
+    ListAutoStations,
+    ListAutoStationsVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<ListAutoStations, ListAutoStationsVariables>(
+    ListAutoStationsDocument,
+    options,
+  );
+}
+export function useListAutoStationsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ListAutoStations,
+    ListAutoStationsVariables
+  >,
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<ListAutoStations, ListAutoStationsVariables>(
+    ListAutoStationsDocument,
+    options,
+  );
+}
+export type ListAutoStationsHookResult = ReturnType<typeof useListAutoStations>;
+export type ListAutoStationsLazyQueryHookResult = ReturnType<
+  typeof useListAutoStationsLazyQuery
+>;
+export type ListAutoStationsQueryResult = Apollo.QueryResult<
+  ListAutoStations,
+  ListAutoStationsVariables
 >;
 export const ListCardsDocument = gql`
   query listCards {
@@ -5416,6 +5650,11 @@ export const ListOrdersDocument = gql`
             district
             city
           }
+          addressEn {
+            street
+            district
+            city
+          }
           coordinates {
             lat
             lng
@@ -5575,6 +5814,11 @@ export const ListOrdersByManagerDocument = gql`
         }
         location {
           address {
+            street
+            district
+            city
+          }
+          addressEn {
             street
             district
             city
@@ -5744,6 +5988,11 @@ export const ListProductByCategoryIdDocument = gql`
           district
           city
         }
+        addressEn {
+          street
+          district
+          city
+        }
         coordinates {
           lat
           lng
@@ -5868,6 +6117,11 @@ export const ListProductByProviderIdDocument = gql`
       }
       location {
         address {
+          street
+          district
+          city
+        }
+        addressEn {
           street
           district
           city
@@ -6144,6 +6398,11 @@ export const ListProductsDocument = gql`
           district
           city
         }
+        addressEn {
+          street
+          district
+          city
+        }
         coordinates {
           lat
           lng
@@ -6371,6 +6630,11 @@ export const SearchProductsDocument = gql`
       }
       location {
         address {
+          street
+          district
+          city
+        }
+        addressEn {
           street
           district
           city
