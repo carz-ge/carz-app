@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "tsc-build": "tsc --build --verbose tsconfig-build.json",
-    "start": "expo start --dev-client",
-    "tunnel": "expo start --tunnel",
+    "start": "expo start -c",
+    "tunnel": "expo start --tunnel -c",
     "android": "expo start --android -c",
     "ios": "expo start --ios -c",
     "web": "expo start --web -c",

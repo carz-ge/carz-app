@@ -34,8 +34,7 @@ export const SedanIcon: React.FC<CarTypeIconProps> = ({
 }: CarTypeIconProps) => {
   return (
     <Image
-      width={size}
-      height={size}
+      style={{width: size, height: size}}
       source={
         require('../../../../assets/images/car-type/sedan.png') as ImageSourcePropType
       }
@@ -48,8 +47,7 @@ export const HatchbackIcon: React.FC<CarTypeIconProps> = ({
 }: CarTypeIconProps) => {
   return (
     <Image
-      width={size}
-      height={size}
+      style={{width: size, height: size}}
       source={
         require('../../../../assets/images/car-type/hatchback.png') as ImageRequireSource
       }
@@ -75,8 +73,7 @@ export const VanIcon: React.FC<CarTypeIconProps> = ({
 }: CarTypeIconProps) => {
   return (
     <Image
-      width={size}
-      height={size}
+      style={{width: size, height: size}}
       source={
         require('../../../../assets/images/car-type/van.png') as ImageSourcePropType
       }
@@ -89,8 +86,7 @@ export const TruckIcon: React.FC<CarTypeIconProps> = ({
 }: CarTypeIconProps) => {
   return (
     <Image
-      width={size}
-      height={size}
+      style={{width: size, height: size}}
       source={
         require('../../../../assets/images/car-type/truck.png') as ImageSourcePropType
       }
@@ -104,8 +100,7 @@ export const MotorcycleIcon: React.FC<CarTypeIconProps> = ({
 }: CarTypeIconProps) => {
   return (
     <Image
-      width={size}
-      height={size}
+      style={{width: size, height: size}}
       source={
         require('../../../../assets/images/car-type/motorcycle.png') as ImageSourcePropType
       }

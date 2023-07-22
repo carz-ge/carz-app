@@ -98,14 +98,6 @@ const styles = StyleSheet.create({
   container: {
     height: 140,
     paddingHorizontal: 5,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.34,
-    shadowRadius: 6.27,
-    elevation: 10,
   },
   innerContainer: {
     flexDirection: 'row',

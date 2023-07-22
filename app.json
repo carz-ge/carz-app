@@ -24,6 +24,9 @@
       "infoPlist": {
         "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access camera.",
         "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
+      },
+      "config": {
+        "googleMapsApiKey": "AIzaSyCqIwF1AEqWV3wEI1Iq-weNuFwhsF393aE"
       }
     },
     "android": {
@@ -39,7 +42,12 @@
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.FOREGROUND_SERVICE"
-      ]
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCqIwF1AEqWV3wEI1Iq-weNuFwhsF393aE"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"

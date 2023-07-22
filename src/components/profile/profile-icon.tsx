@@ -15,11 +15,7 @@ interface ProfileIconProps {
 
 export default function ProfileIcon({onClick}: ProfileIconProps) {
   return (
-    <Pressable
-      onPress={onClick}
-      style={{
-        marginRight: 20,
-      }}>
+    <Pressable onPress={onClick}>
       <Avatar
         size={50}
         autoColor

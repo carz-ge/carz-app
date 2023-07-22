@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Platform,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -10,6 +11,7 @@ import {
 import CategoryList from '../../components/category/category-list';
 import {MainTabStackScreenProps} from '../../navigation/types';
 import ProfileIcon from '../../components/profile/profile-icon';
+import {StatusBar} from 'expo-status-bar';
 
 export default function HomeScreen({
   navigation,
@@ -17,11 +19,16 @@ export default function HomeScreen({
   console.log('HOME');
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar hidden={true} />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         showsVerticalScrollIndicator={false}>
         {/* Profile icon */}
-        <View style={styles.profileStyle}>
+        <View
+          style={[
+            styles.profileStyle,
+            Platform.OS === 'android' ? {marginTop: 20} : {},
+          ]}>
           <ProfileIcon onClick={() => navigation.navigate('profile')} />
         </View>
 
@@ -70,6 +77,7 @@ const styles = StyleSheet.create({
   },
   profileStyle: {
     marginTop: 0,
+    marginRight: 20,
     flex: 1,
     alignItems: 'flex-end',
   },
