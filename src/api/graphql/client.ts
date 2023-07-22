@@ -28,7 +28,7 @@ const defaultOptions: DefaultOptions = {
 
 export const cache = new InMemoryCache();
 
-function getAuthHeaders(headers: Record<string, any>, token: string | null) {
+function getAuthHeaders(headers: Record<string, string>, token: string | null) {
   const headersClone = {
     ...headers,
   };
@@ -50,7 +50,10 @@ const setupApollo = (httpUrl: string, wsUrl: string) => {
     // Return the headers to the context so httpLink can read them
     // console.log('apollo token', token, token ? isValidToken(token) : null);
 
-    const authHeaders = getAuthHeaders(headers as Record<string, any>, token);
+    const authHeaders = getAuthHeaders(
+      headers as Record<string, string>,
+      token,
+    );
 
     return {
       headers: authHeaders,

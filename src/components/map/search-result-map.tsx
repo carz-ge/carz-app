@@ -140,7 +140,7 @@ export default function SearchResultMap({products}: SearchResultsMapsProps) {
   useEffect(() => {
     (async () => {
       const {status} = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
+      if (status !== Location.PermissionStatus.GRANTED) {
         setErrorMsg('Permission to access location was denied');
         return;
       }
@@ -152,7 +152,7 @@ export default function SearchResultMap({products}: SearchResultsMapsProps) {
 
   async function goToCurrentLocation() {
     const {status} = await Location.requestForegroundPermissionsAsync();
-    if (status !== 'granted') {
+    if (status !== Location.PermissionStatus.GRANTED) {
       return;
     }
 

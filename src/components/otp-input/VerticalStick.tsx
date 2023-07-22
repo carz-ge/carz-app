@@ -9,7 +9,11 @@ interface VerticalStickProps {
 }
 
 export const VerticalStick: React.FC<VerticalStickProps> = memo(
-  ({focusColor, style, focusStickBlinkingDuration = 350}) => {
+  ({
+    focusColor,
+    style,
+    focusStickBlinkingDuration = 350,
+  }: VerticalStickProps) => {
     const opacityAnim = useRef(new Animated.Value(1)).current;
 
     useEffect(() => {

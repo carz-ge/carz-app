@@ -1,6 +1,6 @@
 import React from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
-import {useListCars} from '../../../graphql/operations';
+import {Car, useListCars} from '../../../graphql/operations';
 import {PressableCarItem} from '../../../components/car/car-item';
 import AddCarButton from '../../../components/car/add-car-button';
 import {AppDrawerScreenProps} from '../../../navigation/types';
@@ -10,10 +10,19 @@ export default function MyCars({navigation}: AppDrawerScreenProps<'myCar'>) {
     fetchPolicy: 'cache-and-network',
   });
 
+  const onPress = (car: Car) => {
+    navigation.navigate('carStack', {
+      screen: 'car',
+      params: {
+        carId: car.id,
+      },
+    });
+  };
   if (loading) {
     // TODO
     return <Text>Loading</Text>;
   }
+
   const noData = loading || !data;
   return (
     <View style={styles.container}>
@@ -21,7 +30,7 @@ export default function MyCars({navigation}: AppDrawerScreenProps<'myCar'>) {
         <FlatList
           data={data.listCars}
           renderItem={({item}) => (
-            <PressableCarItem item={item} navigation={navigation} />
+            <PressableCarItem car={item} onPress={onPress} />
           )}
           keyExtractor={item => item.id}
           horizontal={false}

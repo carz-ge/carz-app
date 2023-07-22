@@ -32,23 +32,15 @@ function CarItem({item}: {item: Car}) {
 }
 
 export function PressableCarItem({
-  item,
-  navigation,
+  car,
+  onPress,
 }: {
-  item: Car;
-  navigation: NavigationProp<any>;
+  car: Car;
+  onPress: (car: Car) => void;
 }) {
   return (
-    <Pressable
-      onPress={() => {
-        navigation.navigate('carStack', {
-          screen: 'car',
-          params: {
-            carId: item.id,
-          },
-        });
-      }}>
-      <CarItem item={item} />
+    <Pressable onPress={() => onPress(car)}>
+      <CarItem item={car} />
     </Pressable>
   );
 }

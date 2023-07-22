@@ -2,6 +2,7 @@ import {Image} from 'react-native';
 import {ImageSourcePropType} from 'react-native/Libraries/Image/Image';
 import React from 'react';
 import {CarType} from '../../../graphql/operations';
+import {ImageRequireSource} from 'react-native/Libraries/Image/ImageSource';
 
 // interface CarTypeIconGeneralProps {
 //   size: string | number;
@@ -25,7 +26,7 @@ import {CarType} from '../../../graphql/operations';
 // };
 
 interface CarTypeIconProps {
-  size: string | number;
+  size: number;
 }
 
 export const SedanIcon: React.FC<CarTypeIconProps> = ({
@@ -33,7 +34,8 @@ export const SedanIcon: React.FC<CarTypeIconProps> = ({
 }: CarTypeIconProps) => {
   return (
     <Image
-      style={{width: size, height: size}}
+      width={size}
+      height={size}
       source={
         require('../../../../assets/images/car-type/sedan.png') as ImageSourcePropType
       }
@@ -46,9 +48,10 @@ export const HatchbackIcon: React.FC<CarTypeIconProps> = ({
 }: CarTypeIconProps) => {
   return (
     <Image
-      style={{width: size, height: size}}
+      width={size}
+      height={size}
       source={
-        require('../../../../assets/images/car-type/hatchback.png') as ImageSourcePropType
+        require('../../../../assets/images/car-type/hatchback.png') as ImageRequireSource
       }
       resizeMode="contain"
     />
@@ -72,7 +75,8 @@ export const VanIcon: React.FC<CarTypeIconProps> = ({
 }: CarTypeIconProps) => {
   return (
     <Image
-      style={{width: size, height: size}}
+      width={size}
+      height={size}
       source={
         require('../../../../assets/images/car-type/van.png') as ImageSourcePropType
       }
@@ -85,7 +89,8 @@ export const TruckIcon: React.FC<CarTypeIconProps> = ({
 }: CarTypeIconProps) => {
   return (
     <Image
-      style={{width: size, height: size}}
+      width={size}
+      height={size}
       source={
         require('../../../../assets/images/car-type/truck.png') as ImageSourcePropType
       }
@@ -99,7 +104,8 @@ export const MotorcycleIcon: React.FC<CarTypeIconProps> = ({
 }: CarTypeIconProps) => {
   return (
     <Image
-      style={{width: size, height: size}}
+      width={size}
+      height={size}
       source={
         require('../../../../assets/images/car-type/motorcycle.png') as ImageSourcePropType
       }

@@ -1,3 +1,4 @@
+import React from 'react';
 import {SvgXml} from 'react-native-svg';
 
 const svgMarkup = `<svg xmlns="http://www.w3.org/2000/svg" width="420.143" height="79.491" viewBox="0 0 420.143 79.491">

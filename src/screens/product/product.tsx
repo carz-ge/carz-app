@@ -44,7 +44,7 @@ export default function ProductScreen({
   useEffect(() => {
     (async () => {
       const {status} = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
+      if (status !== Location.PermissionStatus.GRANTED) {
         return;
       }
 

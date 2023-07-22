@@ -3,7 +3,7 @@ module.exports = {
   extends: [
     "eslint:recommended",
     "plugin:react/recommended",
-    '@react-native-community',
+    // '@react-native-community',
     'plugin:security/recommended',
     'plugin:prettier/recommended',
     'plugin:sonarjs/recommended',
@@ -35,7 +35,8 @@ module.exports = {
     "prefer-const": "error",
     // Prefer template strings over concatenating with plus.
     "prefer-template": "error",
-    "sonarjs/no-duplicate-string": "warn"
+    "sonarjs/no-duplicate-string": "warn",
+    "react/display-name": "off",
   },
   plugins: ['react', 'security', 'prettier', 'sonarjs', '@typescript-eslint'],
 };
