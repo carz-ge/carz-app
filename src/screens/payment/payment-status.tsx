@@ -13,6 +13,7 @@ import SuccessAnimation from '../../components/animation-components/success-anim
 import FailAnimation from '../../components/animation-components/fail-animation';
 import {createWebsocket} from '../../api/websocket';
 import CarLoadingAnimation from '../../components/animation-components/car-loading-animation';
+import GoBack from '../../components/go-back';
 
 export default function PaymentStatusScreen({
   route,
@@ -60,6 +61,7 @@ export default function PaymentStatusScreen({
 
   return (
     <SafeAreaView>
+      <GoBack />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <Text>{success}</Text>
         {success ? (

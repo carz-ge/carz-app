@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FunctionComponent, memo} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Marker} from 'react-native-maps';
 import colors from '../../styles/colors';
@@ -13,23 +13,27 @@ interface CustomMarkerProps {
   isSelected: boolean;
 }
 
-export default function CustomMarker({
-  coordinate,
-  price,
-  onPress,
-  isSelected,
-}: CustomMarkerProps) {
-  console.log('CustomMarker', coordinate, isSelected);
-  return (
-    <Marker coordinate={coordinate} onPress={onPress}>
-      <View style={isSelected ? styles.view_black : styles.view_white}>
-        <Text style={isSelected ? styles.text_white : styles.text_black}>
-          {price} GEL
-        </Text>
-      </View>
-    </Marker>
-  );
-}
+const CustomMarker: FunctionComponent<CustomMarkerProps> = memo(
+  ({coordinate, price, onPress, isSelected}: CustomMarkerProps) => {
+    console.log('CustomMarker', coordinate, isSelected);
+    return (
+      <Marker coordinate={coordinate} onPress={onPress}>
+        <View style={isSelected ? styles.view_black : styles.view_white}>
+          <Text style={isSelected ? styles.text_white : styles.text_black}>
+            {price} GEL
+          </Text>
+        </View>
+      </Marker>
+    );
+  },
+  (prevProps, nextProps) =>
+    prevProps.isSelected === nextProps.isSelected &&
+    prevProps.onPress === nextProps.onPress &&
+    prevProps.price === nextProps.price &&
+    prevProps.coordinate === nextProps.coordinate,
+);
+
+export default CustomMarker;
 
 const styles = StyleSheet.create({
   view_white: {

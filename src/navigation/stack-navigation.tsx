@@ -15,6 +15,7 @@ import Profile from '../screens/profile/profile';
 import CheckoutScreen from '../screens/checkout/checkout';
 import PaymentScreen from '../screens/payment/payment';
 import PaymentStatusScreen from '../screens/payment/payment-status';
+import AutoStationsMapScreen from '../screens/map/auto-stations-map-screen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -75,7 +76,11 @@ function MainRouter() {
               component={PaymentStatusScreen}
               options={{title: 'გადახდისშედეგი', headerShown: false}}
             />
-
+            <Stack.Screen
+              name="stationsMap"
+              component={AutoStationsMapScreen}
+              options={{title: 'ავტო გასამართი სადგურები', headerShown: false}}
+            />
             <Stack.Screen
               options={{headerShown: false}}
               name="search"

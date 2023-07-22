@@ -30,6 +30,7 @@ export interface RootStackParamList extends ParamListBase {
     success: boolean;
     orderId: string;
   };
+  stationsMap: undefined;
 }
 
 export type RootStackScreenProps<T extends keyof RootStackParamList> =

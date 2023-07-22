@@ -67,7 +67,7 @@ function animateItemChange(
   mapRef.current.animateToRegion(region);
 }
 
-function SearchResultMap({products}: SearchResultsMapsProps) {
+export default function SearchResultMap({products}: SearchResultsMapsProps) {
   const [selectedProductId, setSelectedProductId] = useState<string | null>(
     products.length > 0 ? products[0].id : null,
   );
@@ -247,8 +247,6 @@ function SearchResultMap({products}: SearchResultsMapsProps) {
   );
 }
 
-export default SearchResultMap;
-
 const styles = StyleSheet.create({
   container: {width: '100%', height: '100%'},
   mapView: {width: '100%', height: '100%'},
@@ -259,7 +257,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 20,
     position: 'absolute',
-    bottom: 135,
+    bottom: 155,
     right: 10,
   },
 });

@@ -5,6 +5,10 @@ import {NavigationProp} from '@react-navigation/core/src/types';
 import {Category, useListCategories} from '../../graphql/operations';
 import colors from '../../styles/colors';
 import {RootStackParamList} from '../../navigation/types';
+import CustomActivityIndicator from '../activity-indicator/custom-activity-indicator';
+
+const PLACE_HOLDER_IMAGE =
+  'https://images.unsplash.com/photo-1608506375591-b90e1f955e4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80';
 
 export default function CategoryList() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -14,58 +18,61 @@ export default function CategoryList() {
   });
 
   console.log('useListCategories', data, loading, error);
-
+  const onPress = (category: Category) => {
+    if (category.internalName === 'AUTO_STATIONS') {
+      navigation.navigate('stationsMap');
+    } else {
+      navigation.navigate('mainTabs', {
+        screen: 'map',
+        params: {
+          categoryId: category.id,
+        },
+      });
+    }
+  };
   return (
     <View style={styles.categoriesWrapper}>
       <Text style={styles.categoriesTitle}>კატეგორიები</Text>
       <View style={styles.categoriesListWrapper}>
         {!loading &&
-          data?.listCategories.map((item, index) => (
-            <RenderCategoryItem
-              key={item.id}
-              navigation={navigation}
-              item={item}
-              index={index}
-            />
-          ))}
+          data?.listCategories.map((item, index) => {
+            return (
+              <RenderCategoryItem
+                key={item.id}
+                onPress={onPress}
+                category={item}
+                index={index}
+              />
+            );
+          })}
         {/* TODO Render skeletons */}
-        {loading && <Text>loading</Text>}
+        {loading && <CustomActivityIndicator />}
       </View>
     </View>
   );
 }
 
 function RenderCategoryItem({
-  navigation,
-  item,
+  onPress,
+  category,
   index,
 }: {
-  navigation: NavigationProp<RootStackParamList>;
-  item: Category;
+  category: Category;
+  onPress: (category: Category) => void;
   index: number;
 }) {
   return (
     <Pressable
-      onPress={() => {
-        navigation.navigate('mainTabs', {
-          screen: 'map',
-          params: {
-            categoryId: item.id,
-          },
-        });
-      }}
+      onPress={() => onPress(category)}
       style={styles.categoryItemContainer}>
       <ImageBackground
         source={{
-          uri:
-            index === 0
-              ? 'https://images.unsplash.com/photo-1608506375591-b90e1f955e4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80'
-              : 'https://plus.unsplash.com/premium_photo-1661909961389-7d501737abde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2059&q=80',
+          uri: category.image ?? PLACE_HOLDER_IMAGE,
         }}
         resizeMode="cover"
         style={[styles.categoryItem]}>
         <View style={styles.overlay} />
-        <Text style={styles.categoryItemTitle}>{item.name.ka}</Text>
+        <Text style={styles.categoryItemTitle}>{category.name.ka}</Text>
       </ImageBackground>
     </Pressable>
   );
