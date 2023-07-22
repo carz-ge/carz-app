@@ -76,7 +76,11 @@ export default function SignIn({navigation}: AuthStackScreenProps<'signIn'>) {
           </View>
           <Text style={styles.label}>შეიყვანე მობილურის ნომერი</Text>
 
-          <PhoneInput control={control} name="phone" placeholder="512345678" />
+          <PhoneInput
+            control={control}
+            name="phone"
+            placeholder="5XX XXX XXX"
+          />
 
           <FormButton
             text="კოდის გაგზავნა"
@@ -96,6 +100,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     justifyContent: 'center',
+    backgroundColor: colors.white,
   },
   label: {
     fontSize: 16,

@@ -16,6 +16,7 @@ import {AuthStackScreenProps} from '../../navigation/types';
 import {OtpInput} from '../../components/otp-input/OtpInput';
 import {Logo} from '../../assets/SVG';
 import colors from '../../styles/colors';
+import GoBack from '../../components/go-back';
 
 const OTP_CODE_LENGTH = 6;
 
@@ -106,51 +107,54 @@ function AuthenticateScreen({
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        style={{flex: 1}}>
-        <ScrollView
-          keyboardShouldPersistTaps={'handled'}
-          style={{paddingHorizontal: 25}}>
-          <View style={styles.logo}>
-            <Logo />
-          </View>
-          <Text style={[styles.label, {marginBottom: 20}]}>
-            დაადასტურე მობილურის ნომერი
-          </Text>
-          <OtpInput
-            numberOfDigits={OTP_CODE_LENGTH}
-            focusColor={colors.primary}
-            onTextChange={text => setCode(text)}
-            theme={{
-              pinCodeContainerStyle: error
-                ? {borderColor: colors.inputError}
-                : {},
-            }}
-            // containerStyle={styles.container}
-            // inputsContainerStyle={styles.inputsContainer}
-            // pinCodeTextStyle={styles.pinCodeText}
-            // focusStickStyle={styles.focusStick}
-            focusStickBlinkingDuration={500}
-          />
-          <Pressable
-            onPress={onConfirm}
-            disabled={loading && code.length !== OTP_CODE_LENGTH}
-            style={[styles.button, {backgroundColor: colors.primary}]}>
-            <Text style={styles.buttonText}>
-              {loading ? 'ვამოწმებთ...' : 'დადასტურება'}
+    <>
+      <GoBack />
+      <SafeAreaView style={styles.container}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          style={{flex: 1}}>
+          <ScrollView
+            keyboardShouldPersistTaps={'handled'}
+            style={{paddingHorizontal: 25}}>
+            <View style={styles.logo}>
+              <Logo />
+            </View>
+            <Text style={[styles.label, {marginBottom: 20}]}>
+              დაადასტურე მობილურის ნომერი
             </Text>
-          </Pressable>
-          <Pressable
-            onPress={onResend}
-            disabled={loading}
-            style={[styles.button, {backgroundColor: colors.gray}]}>
-            <Text style={styles.buttonText}>{'ახლიდან გაგზავნა'}</Text>
-          </Pressable>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+            <OtpInput
+              numberOfDigits={OTP_CODE_LENGTH}
+              focusColor={colors.primary}
+              onTextChange={text => setCode(text)}
+              theme={{
+                pinCodeContainerStyle: error
+                  ? {borderColor: colors.inputError}
+                  : {},
+              }}
+              // containerStyle={styles.container}
+              // inputsContainerStyle={styles.inputsContainer}
+              // pinCodeTextStyle={styles.pinCodeText}
+              // focusStickStyle={styles.focusStick}
+              focusStickBlinkingDuration={500}
+            />
+            <Pressable
+              onPress={onConfirm}
+              disabled={loading && code.length !== OTP_CODE_LENGTH}
+              style={[styles.button, {backgroundColor: colors.primary}]}>
+              <Text style={styles.buttonText}>
+                {loading ? 'ვამოწმებთ...' : 'დადასტურება'}
+              </Text>
+            </Pressable>
+            <Pressable
+              onPress={onResend}
+              disabled={loading}
+              style={[styles.button, {backgroundColor: colors.gray}]}>
+              <Text style={styles.buttonText}>{'ახლიდან გაგზავნა'}</Text>
+            </Pressable>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </>
   );
 }
 

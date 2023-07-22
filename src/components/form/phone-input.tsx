@@ -22,9 +22,21 @@ const rules = {
   },
   pattern: {
     value: /^5\d+$/,
-    message: 'ნომრის შეყვანა შეიძლება მხოლოდ ქართული ნომრებით',
+    message: 'ნომერი უნდა იწყებოდეს 5-ით',
   },
 };
+
+function formatPhoneInput(phone: string) {
+  if (phone.length < 4) {
+    return phone;
+  }
+  if (phone.length < 7) {
+    return [phone.slice(0, 3), ' ', phone.slice(3)].join('');
+  }
+  return [phone.slice(0, 3), ' ', phone.slice(3, 6), ' ', phone.slice(6)].join(
+    '',
+  );
+}
 
 function PhoneInput({
   control,
@@ -51,8 +63,10 @@ function PhoneInput({
               style={{...styles.countryCode, color: theme.colors.text}}
             />
             <TextInput
-              value={value as string} // TODO: fix this
-              onChangeText={onChange}
+              value={formatPhoneInput(value as string)} // TODO: fix this
+              onChangeText={text =>
+                onChange(text.replaceAll(' ', '').slice(0, 9))
+              }
               onBlur={onBlur}
               placeholder={placeholder}
               keyboardType="numeric"
@@ -67,7 +81,7 @@ function PhoneInput({
                 marginVertical: 5,
                 alignSelf: 'stretch',
               }}>
-              {error.message || 'შეცდომა'}
+              {error.message ?? 'შეცდომა'}
             </Text>
           )}
         </>
@@ -81,6 +95,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   countryCode: {
+    borderColor: Colors.black,
+    borderWidth: 1,
     padding: 10,
     fontSize: 18,
     marginVertical: 5,
@@ -90,15 +106,18 @@ const styles = StyleSheet.create({
     fontFamily: 'helv-55',
   },
   phoneInput: {
+    borderColor: Colors.black,
+    borderTopWidth: 1,
+    borderRightWidth: 1,
+    borderBottomWidth: 1,
     backgroundColor: '#f8f8f8',
     flex: 1,
     padding: 10,
-    fontSize: 16,
+    fontSize: 18,
     marginVertical: 5,
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10,
     height: 60,
-    borderWidth: 0,
   },
 });
 

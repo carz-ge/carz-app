@@ -6,7 +6,7 @@ import colors from '../styles/colors';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 interface GoBackProps {
-  size?: number | undefined;
+  size?: number;
 }
 
 export default function GoBack({size}: GoBackProps) {
@@ -22,7 +22,7 @@ export default function GoBack({size}: GoBackProps) {
       <MaterialCommunityIcons
         name={'arrow-left'}
         color={'#000'}
-        size={size || 24}
+        size={size ?? 24}
       />
     </TouchableOpacity>
   );

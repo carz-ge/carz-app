@@ -56,7 +56,8 @@ export function PackageCard({
   );
 
   return (
-    <View
+    <TouchableOpacity
+      onPress={handlePress}
       style={[styles.packageCard, isSelected && styles.packageCardSelected]}>
       <View>
         {/* Name */}
@@ -95,11 +96,11 @@ export function PackageCard({
         )}
 
         {/* book now button */}
-        <TouchableOpacity style={styles.selectButton} onPress={handlePress}>
+        <View style={styles.selectButton}>
           <Text style={styles.selectButtonText}>
             {isSelected ? 'წაშლა' : 'არჩევა'}
           </Text>
-        </TouchableOpacity>
+        </View>
       </View>
       <BottomSheetModal
         ref={infoModalRef}
@@ -108,7 +109,7 @@ export function PackageCard({
         backdropComponent={renderBackdrop}>
         <PackageInfo productPackage={productPackage} />
       </BottomSheetModal>
-    </View>
+    </TouchableOpacity>
   );
 }
 
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
   packageCard: {
     borderWidth: 2,
     borderRadius: 10,
-    padding: 25,
+    padding: 15,
     marginBottom: 10,
     borderColor: '#dfdfdf',
     backgroundColor: Colors.white,

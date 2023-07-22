@@ -22,6 +22,7 @@ import {getPriceRangeForPackage} from '../../utils/price';
 import ProductMapView from '../../components/product/product-map-view';
 import AvailablePackages from '../../components/product/available-packages';
 import CustomActivityIndicator from '../../components/activity-indicator/custom-activity-indicator';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 export default function ProductScreen({
   route,
@@ -52,6 +53,9 @@ export default function ProductScreen({
       setLocation(locationPosition);
     })();
   }, []);
+
+  const safeAreaInsets = useSafeAreaInsets();
+
   if (loading || !data) {
     return <CustomActivityIndicator />;
   }
@@ -204,7 +208,11 @@ export default function ProductScreen({
         {/* Checkout Button */}
       </ScrollView>
       {selectedPackage && selectedPackage.pricesForCarTypes && (
-        <View style={styles.checkoutContainer}>
+        <View
+          style={[
+            styles.checkoutContainer,
+            {paddingBottom: safeAreaInsets.bottom},
+          ]}>
           <View>
             <Text style={styles.priceText}>
               {getPriceRangeForPackage(selectedPackage.pricesForCarTypes || [])}{' '}
