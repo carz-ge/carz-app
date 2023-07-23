@@ -17,6 +17,7 @@ import {getMinProductPriceInGel} from '../../utils/price';
 import {calculateDistance} from '../../utils/map-distance';
 import MapSearchAndFilters from './filter-and-sort/filter-and-sort';
 import {ViewToken} from '@react-native/virtualized-lists';
+import mapStyles from './map-styles';
 
 interface SearchResultsMapsProps {
   products: Product[];
@@ -182,6 +183,7 @@ export default function SearchResultMap({products}: SearchResultsMapsProps) {
   return (
     <View style={styles.container}>
       <MapView
+        customMapStyle={mapStyles}
         ref={mapRef}
         style={styles.mapView}
         provider={PROVIDER_GOOGLE}
