@@ -104,7 +104,6 @@ export default function CheckoutScreen({
   );
 
   async function onCheckoutPressed() {
-    console.log('onCheckoutPressed');
     const orderResponse: FetchResult<CreateOrder> = await createOrder({
       variables: {
         order: {

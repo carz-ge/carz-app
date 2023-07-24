@@ -1,5 +1,6 @@
-import {ImageBackground, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {ImageBackground} from 'expo-image';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '@react-navigation/core/src/types';
 import {Category, useListCategories} from '../../graphql/operations';
