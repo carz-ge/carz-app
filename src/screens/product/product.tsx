@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {
-  Image,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+import {Image} from 'expo-image';
 import * as Location from 'expo-location';
 import {Ionicons} from '@expo/vector-icons';
 import {useGetProduct} from '../../graphql/operations';

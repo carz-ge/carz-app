@@ -1,4 +1,5 @@
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {Image} from 'expo-image';
 import {Order} from '../../graphql/operations';
 import colors from '../../styles/colors';
 import React from 'react';

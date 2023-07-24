@@ -1,7 +1,8 @@
 import React, {useRef} from 'react';
 import {AutoStation, useListAutoStations} from '../../graphql/operations';
 import {RootStackScreenProps} from '../../navigation/types';
-import {StyleSheet, View, Text, Image} from 'react-native';
+import {StyleSheet, View, Text} from 'react-native';
+import {Image} from 'expo-image';
 import MapView from 'react-native-map-clustering';
 import {Callout, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import colors from '../../styles/colors';

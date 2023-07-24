@@ -1,4 +1,4 @@
-import {Image} from 'react-native';
+import {Image} from 'expo-image';
 import {ImageSourcePropType} from 'react-native/Libraries/Image/Image';
 import React from 'react';
 import {CarType} from '../../../graphql/operations';

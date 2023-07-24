@@ -1,5 +1,6 @@
 import React from 'react';
-import {Image, StyleSheet, View, ImageSourcePropType} from 'react-native';
+import {StyleSheet, View, ImageSourcePropType} from 'react-native';
+import {Image} from 'expo-image';
 
 function SplashScreen() {
   return (

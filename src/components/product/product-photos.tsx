@@ -1,5 +1,6 @@
 import React from 'react';
-import {Text, View, Image, Dimensions, StyleSheet} from 'react-native';
+import {Text, View, Dimensions, StyleSheet} from 'react-native';
+import {Image} from 'expo-image';
 import Swiper from 'react-native-swiper';
 import colors from '../../styles/colors';
 const {width} = Dimensions.get('window');
