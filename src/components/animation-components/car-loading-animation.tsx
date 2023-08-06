@@ -1,7 +1,7 @@
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import React from 'react';
 import LottieView, {AnimationObject} from 'lottie-react-native';
-import colors from '../../styles/colors';
+import colorFilter from './color-filter';
 
 interface CarLoadingAnimationProps {
   onFinish?: () => void;
@@ -37,53 +37,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
+    paddingVertical: 32,
   },
   lottie: {width: 20, height: 200},
 });
-
-const colorFilter = [
-  {
-    keypath: 'BG',
-    color: colors.primary,
-  },
-  {
-    keypath: 'O-B',
-    color: colors.secondary,
-  },
-  {
-    keypath: 'L-B',
-    color: colors.secondary,
-  },
-  {
-    keypath: 'T1a-Y 2',
-    color: colors.secondary,
-  },
-  {
-    keypath: 'T1b-Y',
-    color: colors.secondary,
-  },
-  {
-    keypath: 'T2b-B',
-    color: colors.secondary,
-  },
-  {
-    keypath: 'T2a-B',
-    color: colors.secondary,
-  },
-  {
-    keypath: 'I-Y',
-    color: colors.secondary,
-  },
-  {
-    keypath: 'E1-Y',
-    color: colors.secondary,
-  },
-  {
-    keypath: 'E2-Y',
-    color: colors.secondary,
-  },
-  {
-    keypath: 'E3-Y',
-    color: colors.secondary,
-  },
-];

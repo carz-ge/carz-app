@@ -1,15 +1,12 @@
 import React from 'react';
 import {Alert, Pressable, SafeAreaView, StyleSheet, Text} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import {NavigationProp} from '@react-navigation/core/src/types';
 import colors from '../../styles/colors';
 import {useAuth} from '../../context/auth-context';
 import useUser from '../../hooks/user';
-import {RootStackParamList} from '../../navigation/types';
+import {RootStackScreenProps} from '../../navigation/types';
 
-export default function Profile() {
+export default function Profile({navigation}: RootStackScreenProps<'profile'>) {
   const user = useUser();
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const {removeAuthToken} = useAuth();
 

@@ -25,7 +25,6 @@ import {
 import DatePicker from '../../components/date-time-picker/date-picker';
 import TimePicker from '../../components/date-time-picker/time-picker';
 import {convertPriceIntoGel} from '../../utils/price';
-import Colors from '../../styles/colors';
 import {FetchResult} from '@apollo/client';
 import CarTypePickerV2 from '../../components/date-time-picker/car-type-picker-2';
 import {useAppSelector} from '../../store/hooks';
@@ -122,6 +121,9 @@ export default function CheckoutScreen({
     });
     // TODO if there is no data show error
     console.log('orderResponse', JSON.stringify(orderResponse));
+    if (orderResponse.errors && orderResponse.errors.length > 0) {
+      return;
+    }
 
     if (orderResponse.data?.createOrder.isAutomatic) {
       // TODO we dont now if payment was successful or not
@@ -326,7 +328,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   checkoutButton: {
-    backgroundColor: Colors.primary,
+    backgroundColor: colors.primary,
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',

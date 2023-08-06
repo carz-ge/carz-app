@@ -70,7 +70,7 @@ function RenderCategoryItem({
         source={{
           uri: category.image ?? PLACE_HOLDER_IMAGE,
         }}
-        resizeMode="cover"
+        contentFit="cover"
         style={[styles.categoryItem]}>
         <View style={styles.overlay} />
         <Text style={styles.categoryItemTitle}>{category.name.ka}</Text>

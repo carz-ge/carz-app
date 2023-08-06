@@ -15,7 +15,7 @@ export async function createWebsocket(
   }
 
   const ws = new WebSocket(
-    `${WS_API_URL}/${endpoint}?token=${'test'}`,
+    `${WS_API_URL}/${endpoint}`,
     undefined,
     // @ts-ignore  TODO
     {
@@ -32,7 +32,7 @@ export async function createWebsocket(
   };
 
   ws.onerror = error => {
-    console.error(error);
+    console.error('onerror', error);
   };
 
   ws.onclose = () => {

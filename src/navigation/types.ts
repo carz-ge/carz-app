@@ -9,6 +9,7 @@ export interface RootStackParamList extends ParamListBase {
   chooseCar: {
     categoryId: string;
   };
+  profile: undefined;
   map: {
     carType: CarType;
     categoryId: string;
