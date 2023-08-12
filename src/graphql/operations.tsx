@@ -58,6 +58,7 @@ export type AuthenticationOutput = {
   __typename?: 'AuthenticationOutput';
   accessToken: Scalars['String']['output'];
   refreshToken: Maybe<Scalars['String']['output']>;
+  shouldUpdateUserInfo: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type AutoStation = {
@@ -846,6 +847,7 @@ export type AuthenticateManager = {
     __typename?: 'AuthenticationOutput';
     accessToken: string;
     refreshToken: string | null;
+    shouldUpdateUserInfo: boolean | null;
   };
 };
 
@@ -859,6 +861,7 @@ export type Authorize = {
     __typename?: 'AuthenticationOutput';
     accessToken: string;
     refreshToken: string | null;
+    shouldUpdateUserInfo: boolean | null;
   };
 };
 
@@ -2663,6 +2666,7 @@ export const AuthenticateManagerDocument = gql`
     authenticateManager(input: $input) {
       accessToken
       refreshToken
+      shouldUpdateUserInfo
     }
   }
 `;
@@ -2714,6 +2718,7 @@ export const AuthorizeDocument = gql`
     authorize(input: $input) {
       accessToken
       refreshToken
+      shouldUpdateUserInfo
     }
   }
 `;

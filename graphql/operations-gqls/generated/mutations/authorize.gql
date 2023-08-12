@@ -2,5 +2,6 @@ mutation authorize($input: AuthenticationInput!){
     authorize(input: $input){
         accessToken
         refreshToken
+        shouldUpdateUserInfo
     }
 }

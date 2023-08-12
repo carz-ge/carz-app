@@ -13,7 +13,7 @@ export default function ActiveBookingsScreen(
     fetchPolicy: 'network-only',
   });
   const isFocused = useIsFocused();
-  console.log('List Orders', data, loading, error);
+  console.log('List Orders', data?.listOrders?.length, loading, error);
   useEffect(() => {
     if (isFocused) {
       refetch();

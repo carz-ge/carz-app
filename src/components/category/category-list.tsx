@@ -18,7 +18,7 @@ export default function CategoryList() {
     fetchPolicy: 'network-only',
   });
 
-  console.log('useListCategories', data, loading, error);
+  console.log('useListCategories', data?.listCategories.length, loading, error);
   const onPress = (category: Category) => {
     if (category.internalName === 'AUTO_STATIONS') {
       navigation.navigate('stationsMap');

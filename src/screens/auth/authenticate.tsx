@@ -73,12 +73,12 @@ function AuthenticateScreen({
       await updateAuthToken(data?.authorize.accessToken);
       // TODO save refresh token
       console.log('is registered', isRegistered);
-      if (isRegistered) {
+      if (data?.authorize.shouldUpdateUserInfo) {
+        navigation.navigate('customerInfo');
+      } else {
         navigation.navigate('mainTabs', {
           screen: 'mainTabs',
         });
-      } else {
-        navigation.navigate('customerInfo');
       }
     } catch (e) {
       setError('დაფიქსორდა შეცდომა');
