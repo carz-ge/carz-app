@@ -125,7 +125,7 @@ export default function Profile({navigation}: RootStackScreenProps<'profile'>) {
             leftIcon={
               <BaseIcon
                 containerStyle={{
-                  backgroundColor: '#FFADF2',
+                  backgroundColor: colors.black,
                 }}
                 icon={{
                   type: 'material',
@@ -177,7 +177,9 @@ export default function Profile({navigation}: RootStackScreenProps<'profile'>) {
             containerStyle={styles.listItemContainer}
             leftIcon={
               <BaseIcon
-                containerStyle={{backgroundColor: '#FEA8A1'}}
+                containerStyle={{
+                  backgroundColor: colors.black,
+                }}
                 icon={{
                   type: 'material',
                   name: 'language',
@@ -195,7 +197,9 @@ export default function Profile({navigation}: RootStackScreenProps<'profile'>) {
             containerStyle={styles.listItemContainer}
             leftIcon={
               <BaseIcon
-                containerStyle={{backgroundColor: '#A4C8F0'}}
+                containerStyle={{
+                  backgroundColor: colors.black,
+                }}
                 icon={{
                   type: 'ionicon',
                   name: 'md-information-circle',
@@ -210,7 +214,9 @@ export default function Profile({navigation}: RootStackScreenProps<'profile'>) {
             containerStyle={styles.listItemContainer}
             leftIcon={
               <BaseIcon
-                containerStyle={{backgroundColor: '#C6C7C6'}}
+                containerStyle={{
+                  backgroundColor: colors.black,
+                }}
                 icon={{
                   type: 'entypo',
                   name: 'light-bulb',
@@ -226,7 +232,7 @@ export default function Profile({navigation}: RootStackScreenProps<'profile'>) {
             leftIcon={
               <BaseIcon
                 containerStyle={{
-                  backgroundColor: '#C47EFF',
+                  backgroundColor: colors.black,
                 }}
                 icon={{
                   type: 'entypo',
@@ -243,7 +249,7 @@ export default function Profile({navigation}: RootStackScreenProps<'profile'>) {
             leftIcon={
               <BaseIcon
                 containerStyle={{
-                  backgroundColor: '#FECE44',
+                  backgroundColor: colors.black,
                 }}
                 icon={{
                   type: 'entypo',
@@ -260,7 +266,7 @@ export default function Profile({navigation}: RootStackScreenProps<'profile'>) {
             leftIcon={
               <BaseIcon
                 containerStyle={{
-                  backgroundColor: '#00C001',
+                  backgroundColor: colors.black,
                 }}
                 icon={{
                   type: 'materialicon',
