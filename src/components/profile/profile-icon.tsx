@@ -3,7 +3,7 @@ import React from 'react';
 import {Avatar} from '@react-native-material/core';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 interface ProfileIconProps {
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 // function useUsername() {

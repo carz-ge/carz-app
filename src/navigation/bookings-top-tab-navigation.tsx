@@ -24,7 +24,6 @@ export default function BookingsTopTabs() {
       screenOptions={{
         tabBarStyle: {
           paddingTop: insets.top,
-          paddingBottom: insets.bottom,
         },
       }}>
       <Tab.Screen
