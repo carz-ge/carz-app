@@ -14,7 +14,7 @@ import colors from '../../styles/colors';
 import {useAuth} from '../../context/auth-context';
 import useUser from '../../hooks/user';
 import {RootStackScreenProps} from '../../navigation/types';
-import {useRemoveUser} from '../../graphql/operations';
+import {useDeactivateUser, useRemoveUser} from '../../graphql/operations';
 import ProfileIcon from '../../components/profile/profile-icon';
 import InfoText from '../../components/profile/info-text';
 import BaseIcon from '../../components/profile/icon';
@@ -24,7 +24,6 @@ import {TextStyle} from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 interface ListItemProps {
   title: string;
   onPress?: () => void;
-  hideChevron?: boolean;
   containerStyle: ViewStyle;
   rightElement?: React.JSX.Element;
   rightTitle?: string;
@@ -36,7 +35,6 @@ interface ListItemProps {
 const ListItem = ({
   title,
   onPress,
-  hideChevron,
   containerStyle,
   rightElement,
   rightTitle,
@@ -71,6 +69,8 @@ const ListItem = ({
 export default function Profile({navigation}: RootStackScreenProps<'profile'>) {
   const user = useUser();
   const [removeUser] = useRemoveUser();
+  const [deactivateUser] = useDeactivateUser();
+
   const {removeAuthToken} = useAuth();
 
   const onPressSetting = () => {};
@@ -93,6 +93,11 @@ export default function Profile({navigation}: RootStackScreenProps<'profile'>) {
 
     onLogOut();
   };
+  const onDeactivateAccount = async () => {
+    await deactivateUser();
+    onLogOut();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -116,7 +121,6 @@ export default function Profile({navigation}: RootStackScreenProps<'profile'>) {
         <InfoText text="Account" />
         <View>
           <ListItem
-            hideChevron
             title="შეტყობინებები"
             containerStyle={styles.listItemContainer}
             rightElement={
@@ -280,7 +284,12 @@ export default function Profile({navigation}: RootStackScreenProps<'profile'>) {
         {/* Log out button */}
         <Pressable onPress={onLogOut} style={styles.button}>
           <Text style={[styles.buttonText, {color: colors.buttonPrimary}]}>
-            აპლიკაციიდან გასვლა
+            გასვლა
+          </Text>
+        </Pressable>
+        <Pressable onPress={onDeactivateAccount} style={styles.button}>
+          <Text style={[styles.buttonText, {color: colors.buttonPrimary}]}>
+            დეაქტივაცია
           </Text>
         </Pressable>
         <Pressable onPress={onRemoveAccount} style={styles.button}>
