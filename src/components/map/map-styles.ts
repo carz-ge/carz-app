@@ -62,9 +62,9 @@ const mapStyles: MapStyleElement[] = [
       {
         visibility: 'on',
       },
-      {
-        color: '#e0efef',
-      },
+      // {
+      //   color: '#e0efef',
+      // },
     ],
   },
   {
@@ -92,12 +92,12 @@ const mapStyles: MapStyleElement[] = [
       {
         visibility: 'on',
       },
-      {
-        hue: '#1900ff',
-      },
-      {
-        color: '#c0e8e8',
-      },
+      // {
+      //   hue: '#1900ff',
+      // },
+      // {
+      //   color: '#c0e8e8',
+      // },
     ],
   },
   {
@@ -236,9 +236,9 @@ const mapStyles: MapStyleElement[] = [
     featureType: 'water',
     elementType: 'all',
     stylers: [
-      {
-        color: '#7dcdcd',
-      },
+      // {
+      //   color: '#7dcdcd',
+      // },
       {
         visibility: 'on',
       },

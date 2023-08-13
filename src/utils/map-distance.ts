@@ -20,7 +20,7 @@ export function calculateDistance(
   );
   console.log('distance', distance);
   if (distance >= 1000) {
-    return `${Math.round(distance / 1000)} km`;
+    return `${Math.round(distance / 1000)} კმ`;
   }
-  return `${Math.round(distance)} m`;
+  return `${Math.round(distance)} მ`;
 }

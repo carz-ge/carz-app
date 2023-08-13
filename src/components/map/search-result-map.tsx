@@ -27,12 +27,17 @@ interface SearchResultsMapsProps {
 // const ASPECT_RATIO = screen.width / screen.height;
 // const LATITUDE_DELTA = 0.04;
 // const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+interface CoordinatesDelta {
+  latitudeDelta: number;
+  longitudeDelta: number;
+}
 
 function animateItemChange(
   selectedPlace: Product,
   index: number,
   flatListRef: React.MutableRefObject<FlatList<Product> | null>,
   mapRef: React.MutableRefObject<MapView | null>,
+  delta: CoordinatesDelta,
 ) {
   console.log('selected place id: ', selectedPlace.id);
   if (!selectedPlace.id || !flatListRef) {
@@ -57,8 +62,8 @@ function animateItemChange(
   const region = {
     latitude: selectedPlace.location.coordinates.lat,
     longitude: selectedPlace.location.coordinates.lng,
-    latitudeDelta: 0.1,
-    longitudeDelta: 0.1,
+    latitudeDelta: delta.latitudeDelta,
+    longitudeDelta: delta.longitudeDelta,
   };
   // Console.log('mapRef.current:', mapRef.current);
   if (!mapRef.current) {
@@ -75,7 +80,10 @@ export default function SearchResultMap({products}: SearchResultsMapsProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(
     products.length > 0 ? 0 : null,
   );
-
+  const [coordinatesDelta, setCoordinatesDelta] = useState<CoordinatesDelta>({
+    latitudeDelta: 0.2,
+    longitudeDelta: 0.2,
+  });
   const flatListRef = useRef<FlatList<Product> | null>(null);
   const mapRef = useRef<MapView | null>(null);
 
@@ -161,15 +169,21 @@ export default function SearchResultMap({products}: SearchResultsMapsProps) {
     mapRef.current?.animateToRegion({
       latitude: currLocation.coords.latitude,
       longitude: currLocation.coords.longitude,
-      latitudeDelta: 0.1,
-      longitudeDelta: 0.1,
+      latitudeDelta: coordinatesDelta.latitudeDelta,
+      longitudeDelta: coordinatesDelta.longitudeDelta,
     });
   }
 
   useEffect(() => {
     const product = products.find(place => place.id === selectedProductId);
     if (product) {
-      animateItemChange(product, selectedIndex || 0, flatListRef, mapRef);
+      animateItemChange(
+        product,
+        selectedIndex || 0,
+        flatListRef,
+        mapRef,
+        coordinatesDelta,
+      );
     } else {
       console.log('product not found', selectedProductId, products.length);
     }
@@ -192,10 +206,22 @@ export default function SearchResultMap({products}: SearchResultsMapsProps) {
         showsUserLocation
         // followsUserLocation
         showsMyLocationButton={false}
+        // onUserLocationChange={}
         // showsIndoors
         showsBuildings
         showsScale
         showsCompass
+        onRegionChange={(region, details) => {
+          console.log(JSON.stringify(region));
+          if (details.isGesture) {
+            setCoordinatesDelta({
+              latitudeDelta:
+                region.latitudeDelta > 1 ? 1 : region.latitudeDelta,
+              longitudeDelta:
+                region.longitudeDelta > 1 ? 1 : region.longitudeDelta,
+            });
+          }
+        }}
         initialRegion={{
           latitude: 41.8,
           longitude: 44.8,

@@ -12,6 +12,7 @@ export default function ProductMapView({name, lat, lng}: ProductMapViewProps) {
   return (
     <View>
       <MapView
+        showsUserLocation={true}
         provider={PROVIDER_GOOGLE}
         scrollEnabled={false}
         style={{

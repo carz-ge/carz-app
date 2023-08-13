@@ -145,8 +145,10 @@ export default function ProductScreen({
                   }}>
                   <Ionicons size={20} name="location" />
                   <Text style={[styles.value, {marginLeft: 12}]}>
-                    {product.location.address.street}{' '}
-                    {product.location.address.district}{' '}
+                    {product.location.address.street}
+                    {', '}
+                    {product.location.address.district}
+                    {', '}
                     {product.location.address.city}
                   </Text>
                 </View>

@@ -20,7 +20,7 @@ const CustomMarker: FunctionComponent<CustomMarkerProps> = memo(
       <Marker coordinate={coordinate} onPress={onPress}>
         <View style={isSelected ? styles.view_black : styles.view_white}>
           <Text style={isSelected ? styles.text_white : styles.text_black}>
-            {price} GEL
+            {price} ₾
           </Text>
         </View>
       </Marker>
@@ -38,14 +38,18 @@ export default CustomMarker;
 const styles = StyleSheet.create({
   view_white: {
     backgroundColor: 'white',
-    padding: 15,
+    alignItems: 'center',
+    minWidth: 50,
+    padding: 10,
     borderRadius: 20,
     borderColor: 'grey',
     borderWidth: 1,
   },
   view_black: {
-    backgroundColor: colors.primary,
-    padding: 15,
+    alignItems: 'center',
+    backgroundColor: colors.black,
+    padding: 10,
+    minWidth: 50,
     borderRadius: 20,
     borderColor: 'grey',
     borderWidth: 1,

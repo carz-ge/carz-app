@@ -12,6 +12,7 @@ import CategoryList from '../../components/category/category-list';
 import {MainTabStackScreenProps} from '../../navigation/types';
 import ProfileIcon from '../../components/profile/profile-icon';
 import {StatusBar} from 'expo-status-bar';
+import colors from '../../styles/colors';
 
 export default function HomeScreen({
   navigation,
@@ -68,6 +69,7 @@ export default function HomeScreen({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.white,
   },
   popularWrapper: {
     paddingHorizontal: 20,

@@ -1,8 +1,7 @@
 import React, {useRef} from 'react';
 import {AutoStation, useListAutoStations} from '../../graphql/operations';
 import {RootStackScreenProps} from '../../navigation/types';
-import {StyleSheet, View, Text} from 'react-native';
-import {Image} from 'expo-image';
+import {StyleSheet, View, Text, Image} from 'react-native';
 import MapView from 'react-native-map-clustering';
 import {Callout, Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import colors from '../../styles/colors';
@@ -56,21 +55,9 @@ export default function AutoStationsMapScreen({
                 console.log(station);
               }}>
               <Callout style={{zIndex: 9999}}>
-                <View>
+                <View style={{width: 200}}>
                   <Text>{station.name.ka}</Text>
                   <Text>{station.providerCode}</Text>
-                  {/*<Text>*/}
-                  {/*  "მარშალ გელოვანის გამზ. (პოლიციის სამმ. მიმდებარედ)"*/}
-                  {/*</Text>*/}
-                  {/*{station.description && (*/}
-                  {/*  <Text>*/}
-                  {/*    {station.description.ka*/}
-                  {/*      .replaceAll('.', ' ')*/}
-                  {/*      .replaceAll(',', ' ')*/}
-                  {/*      .replaceAll('-', ' ')*/}
-                  {/*      .replaceAll('\n', ' ')}*/}
-                  {/*  </Text>*/}
-                  {/*)}*/}
                   {station.image && (
                     <Image
                       source={{uri: station.image}}

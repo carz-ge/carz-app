@@ -14,7 +14,11 @@ import colors from '../../styles/colors';
 import {useAuth} from '../../context/auth-context';
 import useUser from '../../hooks/user';
 import {RootStackScreenProps} from '../../navigation/types';
-import {useDeactivateUser, useRemoveUser} from '../../graphql/operations';
+import {
+  Language,
+  useDeactivateUser,
+  useRemoveUser,
+} from '../../graphql/operations';
 import ProfileIcon from '../../components/profile/profile-icon';
 import InfoText from '../../components/profile/info-text';
 import BaseIcon from '../../components/profile/icon';
@@ -175,7 +179,7 @@ export default function Profile({navigation}: RootStackScreenProps<'profile'>) {
           {/*/>*/}
           <ListItem
             title="ენა"
-            rightTitle="ქართული"
+            rightTitle={user?.language === Language.En ? 'English' : 'ქართული'}
             rightTitleStyle={{fontSize: 15}}
             onPress={() => onPressSetting()}
             containerStyle={styles.listItemContainer}

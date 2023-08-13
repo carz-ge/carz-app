@@ -13,6 +13,7 @@ export default function PaymentScreen({
   return (
     <WebView
       source={{uri: route.params.redirectUrl}}
+      // incognito={true}
       onNavigationStateChange={navState => {
         console.log('nav State-> ', navState);
         if (navState.url.includes(successUrl)) {
