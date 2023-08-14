@@ -4,6 +4,7 @@ import colors from '../../styles/colors';
 import {CarType} from '../../graphql/operations';
 import {CarTypeToIconMap} from '../../assets/icons/car-type/car-types';
 import {convertPriceIntoGel} from '../../utils/price';
+import {carTypesMap} from '../car/add-car';
 
 interface CarTypePickerV2Props {
   carType: CarType | null;
@@ -44,7 +45,7 @@ export default function CarTypePickerV2({
                     : {},
                 ]}>
                 <CarIconComponent size={80} />
-                <Text style={styles.nameText}>{item.carType}</Text>
+                <Text style={styles.nameText}>{carTypesMap[item.carType]}</Text>
                 {item.price && (
                   <Text style={styles.nameText}>
                     {convertPriceIntoGel(item.price)} ₾

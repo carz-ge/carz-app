@@ -15,14 +15,24 @@ import {RootStackParamList} from '../../navigation/types';
 type Props = ComponentProps<typeof Ionicons>;
 export type IconName = Props['name'];
 
-export const carTypes: {type: CarType; icon: IconName}[] = [
-  {type: CarType.Hatchback, icon: 'ios-car-sport'},
-  {type: CarType.Motorcycle, icon: 'ios-bicycle'},
-  {type: CarType.Sedan, icon: 'ios-car'},
-  {type: CarType.Suv, icon: 'ios-car-sport'},
-  {type: CarType.Truck, icon: 'ios-car'},
-  {type: CarType.Van, icon: 'ios-bus-outline'},
+export const carTypes: {type: CarType; icon: IconName; name: string}[] = [
+  {type: CarType.Hatchback, icon: 'ios-car-sport', name: 'ჰეჩბეკი'},
+  {type: CarType.Motorcycle, icon: 'ios-bicycle', name: 'მოტო'},
+  {type: CarType.Sedan, icon: 'ios-car', name: 'სედანი'},
+  {type: CarType.Suv, icon: 'ios-car-sport', name: 'ჯიპი'},
+  {type: CarType.Truck, icon: 'ios-car', name: 'პიკაპი'},
+  {type: CarType.Van, icon: 'ios-bus-outline', name: 'ფურგონი'},
 ];
+export const carTypesMap: Record<CarType, string> = {
+  [CarType.Hatchback]: 'ჰეჩბეკი',
+  [CarType.Motorcycle]: 'მოტო',
+  [CarType.Sedan]: 'სედანი',
+  [CarType.Suv]: 'ჯიპი',
+  [CarType.Truck]: 'პიკაპი',
+  [CarType.Van]: 'ფურგონი',
+  [CarType.All]: 'ყველა ტიპი',
+  [CarType.Other]: 'სხვა დანარჩენი',
+};
 
 function CarSelection() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();

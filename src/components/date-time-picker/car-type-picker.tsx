@@ -10,7 +10,7 @@ import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import CustomBackdrop from '../bottom-sheet/customBackdrop';
 import colors from '../../styles/colors';
 import {CarType} from '../../graphql/operations';
-import {carTypes} from '../car/add-car';
+import {carTypes, carTypesMap} from '../car/add-car';
 import {CarTypeToIconMap} from '../../assets/icons/car-type/car-types';
 import {BottomSheetBackdropProps} from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop';
 
@@ -43,7 +43,7 @@ export default function CarTypePicker({carType, setCarType}: DatePickerProps) {
         <TouchableOpacity onPress={openDatePicker}>
           <View style={styles.input}>
             <Text style={styles.inputText}>
-              {carType || 'აირჩიე მანქანის ტიპი'}
+              {carType ? carTypesMap[carType] : 'აირჩიე მანქანის ტიპი'}
             </Text>
             <View style={styles.inputIcon}>
               <CarIconComponent size={40} />
@@ -83,7 +83,7 @@ export default function CarTypePicker({carType, setCarType}: DatePickerProps) {
                     carType === car.type && styles.carTypeOptionActive,
                   ]}>
                   <CarIconComponent size={40} />
-                  <Text style={styles.buttonText}>{car.type}</Text>
+                  <Text style={styles.buttonText}>{car.name}</Text>
                 </TouchableOpacity>
               );
             })}
