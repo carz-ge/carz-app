@@ -55,7 +55,7 @@ const orderStatusMap: Record<OrderStatus, {color: string; name: string}> = {
   },
   [OrderStatus.Rejected]: {
     color: 'red',
-    name: 'უარყოგილია',
+    name: 'უარყოფილია',
   },
   [OrderStatus.Processing]: {
     color: 'blue',
@@ -90,7 +90,7 @@ export default function OrderCard({order}: OrderCardProps) {
         });
       }}>
       <View style={styles.detailsContainer}>
-        <View style={{padding: 10, maxWidth: 200}}>
+        <View style={{maxWidth: 200}}>
           <View>
             <Text style={{fontWeight: 'bold'}}>{order.product.name.ka}</Text>
             <Text>{order.productPackage.name.ka}</Text>
@@ -120,7 +120,8 @@ export default function OrderCard({order}: OrderCardProps) {
                 {format(Date.parse(`${order.schedulingDate!}`), 'd MMMM', {
                   locale: ka,
                   weekStartsOn: 0,
-                })}
+                })}{' '}
+                {order.schedulingTime!}
               </Text>
               {/*<Ionicons size={20} name="calendar" />*/}
             </View>
