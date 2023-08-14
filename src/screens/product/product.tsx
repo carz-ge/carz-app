@@ -217,7 +217,7 @@ export default function ProductScreen({
           <View>
             <Text style={styles.priceText}>
               {getPriceRangeForPackage(selectedPackage.pricesForCarTypes || [])}{' '}
-              GEL
+              ₾
             </Text>
             <Text>{selectedPackage.name.ka}</Text>
           </View>

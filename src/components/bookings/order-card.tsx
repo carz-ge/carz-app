@@ -1,14 +1,13 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Image} from 'expo-image';
-import {Order} from '../../graphql/operations';
+import {Order, OrderStatus} from '../../graphql/operations';
 import colors from '../../styles/colors';
 import React from 'react';
-import {Ionicons} from '@expo/vector-icons';
 import {convertPriceIntoGel} from '../../utils/price';
 
-import {getLocales, getCalendars} from 'expo-localization';
+import {getCalendars, getLocales} from 'expo-localization';
 
-import {format, formatDistance, formatRelative} from 'date-fns';
+import {format} from 'date-fns';
 import {ka} from 'date-fns/locale';
 
 import dayjs from 'dayjs';
@@ -37,6 +36,49 @@ interface OrderCardProps {
   order: Order;
 }
 
+const orderStatusMap: Record<OrderStatus, {color: string; name: string}> = {
+  [OrderStatus.Active]: {
+    color: 'green',
+    name: 'დაჯავშნილია',
+  },
+  [OrderStatus.CancelledByManager]: {
+    color: 'red',
+    name: 'უარყოფილია მენეჯერის მიერ',
+  },
+  [OrderStatus.WaitingManager]: {
+    color: 'blue',
+    name: 'ველოდებით მენეჯერს',
+  },
+  [OrderStatus.Failed]: {
+    color: 'red',
+    name: 'წარუმატებელი',
+  },
+  [OrderStatus.Rejected]: {
+    color: 'red',
+    name: 'უარყოგილია',
+  },
+  [OrderStatus.Processing]: {
+    color: 'blue',
+    name: 'მუშავდება',
+  },
+  [OrderStatus.Cancelled]: {
+    color: 'yellow',
+    name: 'გაუქმებულია',
+  },
+  [OrderStatus.Reimbursed]: {
+    color: 'yellow',
+    name: 'თანხა დაბრუნებულია',
+  },
+  [OrderStatus.New]: {
+    color: 'blue',
+    name: 'ახალი',
+  },
+  [OrderStatus.Payed]: {
+    color: 'blue',
+    name: 'მუშავდება',
+  },
+};
+
 export default function OrderCard({order}: OrderCardProps) {
   const navigation = useNavigation<NavigationProp<MainTabParamList>>();
   const date = Date.parse(order.updatedAt || '');
@@ -48,54 +90,66 @@ export default function OrderCard({order}: OrderCardProps) {
         });
       }}>
       <View style={styles.detailsContainer}>
-        <Text>{order.productPackage.name.ka}</Text>
-        <Text>{order.product.name.ka}</Text>
-        <Text>{order.product.category.name.ka}</Text>
-        <Text>{order.product.provider.name}</Text>
-        <Text>{order.status}</Text>
-        <Text>{order.schedulingDate}</Text>
-        <Text>{order.schedulingTime}</Text>
-        <Text>{order.carType}</Text>
-        <Text>{order.carPlateNumber}</Text>
-        <Text>{dayjs(order.createdAt).toString()}</Text>
-        <Text>{Moment(order.updatedAt).format('LLLL').toLocaleString()}</Text>
-        <Text>
-          {formatRelative(date, new Date(), {
-            locale: ka,
-          })}
-        </Text>
-        <Text>
-          {format(date, 'HH:MM MMMM yyyy', {
-            locale: ka,
-            weekStartsOn: 0,
-          })}
-        </Text>
-        <Text>
-          {formatDistance(date, new Date(), {
-            locale: ka,
-          })}
-        </Text>
-        <Text>{order.errorMessage}</Text>
-        {order.product.location && (
-          <View
-            style={{
-              flexDirection: 'row',
-            }}>
-            <Ionicons size={20} name="location" />
+        <View style={{padding: 10, maxWidth: 200}}>
+          <View>
+            <Text style={{fontWeight: 'bold'}}>{order.product.name.ka}</Text>
+            <Text>{order.productPackage.name.ka}</Text>
+            {order.product.location && (
+              <View
+                style={{
+                  flexDirection: 'row',
+                }}>
+                <Text>
+                  {order.product.location.address.street},{' '}
+                  {order.product.location.address.district},{' '}
+                  {order.product.location.address.city}
+                </Text>
+                {/*<Ionicons size={20} name="location" />*/}
+              </View>
+            )}
+          </View>
+          <View style={{marginTop: 10}}>
+            <Text>მანქანა: {order.carPlateNumber}</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                gap: 10,
+              }}>
+              <Text>
+                დრო:{' '}
+                {format(Date.parse(`${order.schedulingDate!}`), 'd MMMM', {
+                  locale: ka,
+                  weekStartsOn: 0,
+                })}
+              </Text>
+              {/*<Ionicons size={20} name="calendar" />*/}
+            </View>
             <Text>
-              {order.product.location.address.street},{' '}
-              {order.product.location.address.district},{' '}
-              {order.product.location.address.city}
+              სერვისის ფასი:{' '}
+              {convertPriceIntoGel(order.totalPrice - order.commission)} ₾
             </Text>
           </View>
-        )}
-        <Text>{convertPriceIntoGel(order.commission)}</Text>
-        <Text>{convertPriceIntoGel(order.totalPrice)}</Text>
-
-        <Image
-          style={{width: 100, height: 100}}
-          source={{uri: order.product.mainImage}}
-        />
+        </View>
+        <View style={{alignItems: 'flex-end', justifyContent: 'space-between'}}>
+          <Image
+            style={{width: 50, height: 50, borderRadius: 25}}
+            source={{uri: order.product.mainImage}}
+          />
+          {order.status && (
+            <View
+              style={{
+                maxWidth: 150,
+                marginTop: 5,
+                padding: 5,
+                borderRadius: 15,
+                backgroundColor: orderStatusMap[order.status].color,
+              }}>
+              <Text style={{color: colors.white}}>
+                {orderStatusMap[order.status].name}
+              </Text>
+            </View>
+          )}
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -108,13 +162,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   detailsContainer: {
-    padding: 20,
-    gap: 5,
+    padding: 10,
     backgroundColor: colors.white,
     borderRadius: 10,
     borderWidth: 0.5,
     borderColor: colors.grayLight,
-    justifyContent: 'center',
-    marginVertical: 10,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    // alignItems: 'center',
+    marginVertical: 5,
   },
 });

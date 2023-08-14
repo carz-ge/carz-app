@@ -35,7 +35,35 @@ import {
 } from '../../store/slice/searchSlice';
 import CardPicker from '../../components/card/card-picker';
 import CustomActivityIndicator from '../../components/activity-indicator/custom-activity-indicator';
-
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+const UPPER_CASE_CHARS = [
+  'A',
+  'B',
+  'C',
+  'D',
+  'E',
+  'F',
+  'G',
+  'H',
+  'I',
+  'J',
+  'K',
+  'L',
+  'M',
+  'N',
+  'O',
+  'P',
+  'Q',
+  'R',
+  'S',
+  'T',
+  'U',
+  'V',
+  'W',
+  'X',
+  'Y',
+  'Z',
+];
 function extractPriceFromCarType(
   pricesForCarTypes: {carType: CarType; price: number | null}[],
   carType: CarType,
@@ -92,6 +120,7 @@ export default function CheckoutScreen({
   );
   const [plateNumber, setPlateNumber] = useState<string>('');
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
+  const safeAreaInsets = useSafeAreaInsets();
 
   if (loading || !data || createOrderLoading) {
     return <CustomActivityIndicator />;
@@ -184,7 +213,43 @@ export default function CheckoutScreen({
                 style={styles.plateNumberStyle}
                 value={plateNumber}
                 autoCapitalize={'characters'}
-                onChangeText={setPlateNumber}
+                onChangeText={value => {
+                  // if (value.length === 0) {
+                  //   setPlateNumber('');
+                  //   return;
+                  // }
+                  // let finalValue = plateNumber;
+                  // if (value.length >= 1 && value.length <= 2) {
+                  //   for (let i = 0; i < value.length; i++) {
+                  //     const char = value.at(i)!;
+                  //     const find = UPPER_CASE_CHARS.find((item) => item === char);
+                  //     if (!find) {
+                  //       return;
+                  //     }
+                  //   }
+                  //   finalValue = value;
+                  //   if (value.length === 2) {
+                  //     finalValue += '-';
+                  //     return;
+                  //   }
+                  // }
+                  //
+                  // if (value.length > 3 && value.length <= 6) {
+                  //   for (let i = 3; i < value.length; i++) {
+                  //     const numb = value.at(i)!;
+                  //     const number = Number(numb);
+                  //     if (number < 0 && number > 9) {
+                  //       return;
+                  //     }
+                  //   }
+                  //   finalValue = value;
+                  //   if (value.length === 6) {
+                  //     finalValue += '-';
+                  //     return;
+                  //   }
+                  // }
+                  setPlateNumber(value);
+                }}
                 placeholder={'AA-123-AA'}
               />
             </View>
@@ -233,34 +298,43 @@ export default function CheckoutScreen({
                         selectedPackage?.pricesForCarTypes || [],
                         selectedCarType,
                       ) || 0,
-                    )}{' '}
-                    ლარი
+                    )}
+                    {' ₾'}
                   </Text>
                 </View>
               )}
               {commission && (
                 <View style={styles.detailNameAndText}>
                   <Text style={styles.label}>ჯავშნის საკომისიო:</Text>
-                  <Text style={styles.label}>{commission} ლარი</Text>
+                  <Text style={styles.label}>{commission} ₾</Text>
                 </View>
               )}
             </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-      {selectedPackage && selectedPackage.pricesForCarTypes && (
-        <View style={styles.checkoutContainer}>
-          <View>
-            <Text style={styles.priceText}>{commission} GEL</Text>
-            <Text>{selectedPackage.name.ka}</Text>
+      {selectedPackage &&
+        selectedPackage.pricesForCarTypes &&
+        selectedDate &&
+        selectedTime &&
+        plateNumber &&
+        selectedCarType && (
+          <View
+            style={[
+              styles.checkoutContainer,
+              {paddingBottom: safeAreaInsets.bottom},
+            ]}>
+            <View>
+              <Text style={styles.priceText}>{commission} ₾</Text>
+              <Text>{selectedPackage.name.ka}</Text>
+            </View>
+            <TouchableOpacity
+              style={styles.checkoutButton}
+              onPress={onCheckoutPressed}>
+              <Text style={styles.checkoutButtonText}>გადახდა</Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={styles.checkoutButton}
-            onPress={onCheckoutPressed}>
-            <Text style={styles.checkoutButtonText}>გადახდა</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+        )}
     </SafeAreaView>
   );
 }
@@ -291,6 +365,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 0.5,
     textAlign: 'center',
+    color: colors.black,
   },
   plateNumberLabel: {
     fontSize: 18,

@@ -1,9 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit';
 import searchReducer from './slice/searchSlice';
+import carWashProductsReducer from './slice/carWashSlice';
 
 export const store = configureStore({
   reducer: {
     search: searchReducer,
+    carWashProducts: carWashProductsReducer,
   },
 });
 

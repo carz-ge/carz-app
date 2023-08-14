@@ -91,7 +91,7 @@ export function PackageCard({
         ) : (
           <View style={styles.priceTextComponent}>
             <FontAwesome5 size={15} name={'money-bill'} />
-            <Text>{priceInGel} ლარი</Text>
+            <Text>{priceInGel} ₾</Text>
           </View>
         )}
 
